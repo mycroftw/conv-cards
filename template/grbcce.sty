@@ -15,11 +15,14 @@
 \RequirePackage{helvet} %provides Helvetica typeface
 \RequirePackage{ifthen} %manipulate boolean values
 \RequirePackage{xstring} %allow us to parse the opening-lead strings
+\RequirePackage{currfile} %get filename
 \ProvidesPackage{grbcce}
 
 %Suit symbols:
 \newcommand{\h}{\ensuremath{\varheartsuit}}
+\newcommand{\rh}{\textcolor{red}{\ensuremath{\varheartsuit}}}
 \renewcommand{\d}{\ensuremath{\vardiamondsuit}}
+\newcommand{\rd}{\textcolor{red}{\ensuremath{\vardiamondsuit}}}
 \newcommand{\s}{\ensuremath{\spadesuit}}
 \renewcommand{\c}{\ensuremath{\clubsuit}}
 %Sizes of text used on the convention card:
@@ -1009,6 +1012,8 @@ cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt}
 \showlead{Q,T,9,x}{2}{}{\ntQTNx}{40}{40}
 \showlead{T,9,x,x}{1}{}{\TNxx}{40}{36}
 
+\node at (35,-2) {\raggedright{\scriptsize \textsf{\currfilename: \today{}.}}};
+\node at (128,-2) {\regtext{\textls[10]{Made with \LaTeX\ and grbcce (taigabridge.net)}}};
 \additionaltikz%optional extra user-defined fields
 \end{tikzpicture}%
 }%end of \drawconventioncard
