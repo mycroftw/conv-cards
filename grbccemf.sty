@@ -1,0 +1,1025 @@
+%LaTeX convention card editor
+%v1.0 - Gordon Bower - 17 December 2017
+%v1.0.1 - 17 December 2017 - alignment fixes, a bunch of \regtexts and \boldtexts 
+%			moved into the style sheet and reduce typing in the template
+
+%Fill out the fields in latex_cc_template.tex to create your own ACBL Convention Card in LaTeX
+
+%This package contains all of the TikZ formatting to draw the card.
+%It deliberately DOESNT hide anything with @-commands to make it easy to edit yourself.
+
+\RequirePackage{tikz} %graphics tools. Also install ``ms'' package.
+\RequirePackage{txfonts} %provides \varheartsuit and \vardiamondsuit
+\RequirePackage{microtype} % allows us to stretch/shrink fonts to match
+\RequirePackage[T1]{fontenc} % T1 font necessary to stretch and shrink
+\RequirePackage{helvet} %provides Helvetica typeface
+\RequirePackage{ifthen} %manipulate boolean values
+\RequirePackage{xstring} %allow us to parse the opening-lead strings
+\RequirePackage{currfile} %get filename
+\ProvidesPackage{grbccemf}
+
+%Suit symbols:
+\newcommand{\h}{\ensuremath{\varheartsuit}}
+\newcommand{\rh}{\textcolor{red}{\ensuremath{\varheartsuit}}}
+\renewcommand{\d}{\ensuremath{\vardiamondsuit}}
+\newcommand{\rd}{\textcolor{red}{\ensuremath{\vardiamondsuit}}}
+\newcommand{\s}{\ensuremath{\spadesuit}}
+\renewcommand{\c}{\ensuremath{\clubsuit}}
+%Sizes of text used on the convention card:
+%Big suit symbols in 2-bid section
+\newcommand{\bigtext}[1]{\large {\textsf{#1}}}
+%Headings for each block of the card
+\newcommand{\headtext}[1]{\scriptsize {\textsf{\textbf{\textls[10]{#1}}}}}
+%Inline text
+\newcommand{\regtext}[1]{\scriptsize \textsf{\textls[-70]{#1}}}
+\newcommand{\redreg}[1]{\scriptsize \textsf{\textls[-70]{\textcolor{red}{#1}}}}
+\newcommand{\bluereg}[1]{\scriptsize \textsf{\textls[-70]{\textcolor{blue}{#1}}}}
+\newcommand{\boldtext}[1]{\scriptsize \textsf{\textbf{\textls[-70]{#1}}}}
+\newcommand{\redbold}[1]{\scriptsize \textsf{\textbf{\textls[-70]{\textcolor{red}{#1}}}}}
+\newcommand{\bluebold}[1]{\scriptsize \textsf{\textbf{\textls[-70]{\textcolor{blue}{#1}}}}}
+%Bigger text for names/general approach etc - not used on the boilerplate
+\newcommand{\bigboldtext}[1]{\footnotesize \textsf{\textbf{#1}}}
+%The big text for ``SPECIAL CARDING - PLEASE ASK'' is hardcoded below.
+
+%Commands to provide filled vs. empty checkboxes
+%according to whether a boolean is set or cleared:
+\newcommand{\checkbox}[1]{\ifthenelse{\boolean{#1}}{\node [cbox]}{\node [box]}}
+\newcommand{\rcheckbox}[1]{\ifthenelse{\boolean{#1}}{\node [crbox]}{\node [rbox]}}
+\newcommand{\bcheckbox}[1]{\ifthenelse{\boolean{#1}}{\node [cbbox]}{\node [bbox]}}
+
+%If you want an X or checkmark instead of a filled box, you need to edit the
+%style commands at \begin{tikzpicture} below.
+
+%Draw one row of the opening lead section at once. 6 arguments:
+%\showlead{cardstodisplay}{boldcards}{redcards}{circledcards}{startingx}{startingy}
+%e.g. \showlead{x,x}{1}{2}{\suitxx}{1}{60} for doubletons vs. suit contracts
+
+\newcommand{\showlead}[6]{\foreach \card [count=\i] in {#1} {%
+\IfSubStr{#4}{\i}{\node at ($(#5 ,#6) + 2.5*(\i,0) $)[rectangle,draw=black,inner sep=1pt]}{\node at ($(#5 ,#6) + 2.5*(\i,0) $) }
+{
+\scriptsize{\textsf{%
+\IfSubStr{#2}{\i}{\bfseries}{}%
+\IfSubStr{#3}{\i}{\textcolor{red}{\card\xfix}}{\card\xfix}%
+}}}; %
+}%foreach
+}
+
+%Two formatting commands, since TikZ places text blocks by their centers not
+%their baselines: if you use p, y, or g, your text will look ``pushed upward'';
+%if you use only lowercase letters, your text will look ``too high''.
+\newcommand{\pfix}{\rule{0pt}{3.1mm}} %A way to re-center user text with p,y,g
+\newcommand{\xfix}{\rule{0pt}{2.0mm}} %re-center text with no capital letters
+
+
+%We have to initialize a million booleans (OK, only 175), for the state of every
+%checkbox on the convention card:
+
+%Listed below in order from top to bottom, front then back, of the card.
+%Generally every item has a 5-letter abbreviated name.
+\newboolean{gf}\newboolean{gfewsr}
+\newboolean{vlop}\newboolean{vl3h}\newboolean{vloc}\newboolean{vlpr}
+\newboolean{fo1c}\newboolean{fo2c}\newboolean{fon2b}\newboolean{foother}
+\newboolean{nt5cm}\newboolean{staym}\newboolean{puppe}\newboolean{jac2d}\newboolean{fstay}\newboolean{jac2h}
+\newboolean{texas}\newboolean{smole}\newboolean{leben}\newboolean{ntneg}
+\newboolean{pup2n}\newboolean{jac2n}\newboolean{tex2n}
+%Mtex current dateajor openings 
+\newboolean{h12l4}\newboolean{h34l4}\newboolean{h12l5}\newboolean{h34l5}
+\newboolean{dblrf}\newboolean{dblri}\newboolean{dblrw}
+\newboolean{ocdrf}\newboolean{ocdri}\newboolean{ocdrw}
+\newboolean{ra2nt}\newboolean{ra3nt}\newboolean{raspl}
+\newboolean{ntfor}\newboolean{ntsem}\newboolean{twonf}\newboolean{twoni}
+\newboolean{drury}\newboolean{drrev}\newboolean{dr2wy}\newboolean{drfit}
+%Minor openings 
+\newboolean{club4}\newboolean{club3}\newboolean{cl2nf}\newboolean{clcon}
+\newboolean{diam4}\newboolean{diam3}\newboolean{di2nf}\newboolean{dicon}
+\newboolean{midrf}\newboolean{midri}\newboolean{midrw}
+\newboolean{modrf}\newboolean{modri}\newboolean{modrw}
+\newboolean{jsomi}\newboolean{inver}\newboolean{bypas}
+\newboolean{m2ntf}\newboolean{m2nti}
+%Two-bids 
+\newboolean{st2cl}\newboolean{ot2cl}\newboolean{neg2d}\newboolean{wai2d}
+\newboolean{wk2di}\newboolean{in2di}\newboolean{st2di}\newboolean{co2di}\newboolean{dintf}\newboolean{dnsnf}
+\newboolean{wk2he}\newboolean{in2he}\newboolean{st2he}\newboolean{co2he}\newboolean{hentf}\newboolean{hnsnf}
+\newboolean{wk2sp}\newboolean{in2sp}\newboolean{st2sp}\newboolean{co2sp}\newboolean{spntf}\newboolean{snsnf}
+%Bottom of card 
+\newboolean{nmf1w}\newboolean{nmf2w}\newboolean{wjsnc}\newboolean{fsfrd}\newboolean{fsfgf}
+%Doubles/cuebids 
+\newboolean{penax}\newboolean{negax}\newboolean{respx}\newboolean{maxix}
+\newboolean{suppx}\newboolean{supxx}\newboolean{cardx}\newboolean{ostox}
+\newboolean{oc4cd}\newboolean{ocvls}
+\newboolean{nsfor}\newboolean{nsnfc}\newboolean{nsnon}
+\newboolean{jrfor}\newboolean{jrinv}\newboolean{jrwea}
+\newboolean{jostr}\newboolean{joint}\newboolean{jowea}
+\newboolean{prsou}\newboolean{prlig}\newboolean{prver}
+\newboolean{qnami}\newboolean{qnama}\newboolean{qnaar}
+\newboolean{qstmi}\newboolean{qstma}\newboolean{qstar}
+\newboolean{qmimi}\newboolean{qmima}\newboolean{qmiar}
+%NT defenses etc 
+\newboolean{syson}\newboolean{dntco}\newboolean{unumi}\newboolean{unu2l}\newboolean{bntco}
+\newboolean{nsf1l}\newboolean{nsf2l}\newboolean{jsfor}\newboolean{jsinv}\newboolean{jswea}\newboolean{xximp}
+\newboolean{maunl}\newboolean{malim}\newboolean{mawea}
+\newboolean{miunl}\newboolean{milim}\newboolean{miwea}
+\newboolean{opdto}\newboolean{oppen}\newboolean{opleb}
+%Slam conventions 
+\newboolean{gerbe}\newboolean{black}\newboolean{b0314}\newboolean{b1430}
+\newboolean{dopi}\newboolean{depo}\newboolean{ropi}
+%Signalling 
+\newboolean{stdsu}\newboolean{stdnt}\newboolean{excep}
+\newboolean{udcsu}\newboolean{udcnt}\newboolean{udasu}\newboolean{udant}
+\newboolean{lavsu}\newboolean{lavnt}\newboolean{oddsu}\newboolean{oddnt}
+\newboolean{othsu}\newboolean{othnt}\newboolean{smisu}\newboolean{smint}
+\newboolean{trump}\newboolean{fossu}\newboolean{fosnt}\newboolean{speci}
+
+\newboolean{su4th}\newboolean{nt4th}\newboolean{su3rd}\newboolean{nt3rd}
+\newboolean{ntatt}\newboolean{pratt}\newboolean{prcou}\newboolean{prsui}
+
+% And, finally, we define the convention card itself,
+% inside one huuuuuge command called \drawconventioncard:
+
+% All coordinates of items inside here are given in millimeters
+% from the bottom left corner of the card.
+\newcommand{\drawconventioncard}{%
+\usetikzlibrary{scopes}%
+\usetikzlibrary{calc}%needed to position stuff in strings
+\begin{tikzpicture}[xscale=0.1,yscale=0.1,
+box/.style={rectangle,draw=black,inner sep=3pt},
+cbox/.style={rectangle,draw=black,fill=black,inner sep=3pt},
+rbox/.style={rectangle,draw=red,inner sep=3pt},
+crbox/.style={rectangle,draw=red,fill=red,inner sep=3pt},
+bbox/.style={rectangle,draw=blue,inner sep=3pt},
+cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt}
+]; 
+% Dividers on convention card:
+{ [line width=3]
+	\draw (96,0) -- (96,200); %center divider
+	\draw (0,72) -- (96,72); %slam conventions
+	\draw (0,89) -- (96,89); 
+	\draw (49,89) -- (49,200); %left side splitter
+	\draw (0,112) -- +(96,0); %Special doubles to direct cuebid
+	\draw (0,130) -- +(49,0);
+	\draw (0,145) -- +(49,0);
+	\draw (0,173) -- +(49,0);
+	\draw (49,147) -- +(47,0); %Defense vs notrump bottom
+	\draw (49,177) -- +(47,0); %Defense vs notrump top
+	
+	\draw (96,65) -- +(98,0); %Minor/major openings
+	\draw (96,127) -- +(98,0); 
+	\draw (146,65) -- (146,127);
+	
+	\draw (96,173) -- (194,173) -- (194,195) -- (96,195); %General approach
+} % end of heavy divider lines
+
+% Names:
+\node [right] at (96,198) {\boldtext{NAMES}};
+%Insert name and player number here
+\node [right] at (108,198) {\boldtext{\textls[-20]{\names}}}; 
+\node [left] at (194,198) {\boldtext{\textls[-20]{\playernumber}}};
+\draw [thin] (108,196) -- (193,196);
+
+% General approach:
+\node at (144,191) {\headtext{GENERAL APPROACH}};
+%Insert system name here
+\node at (144,187) {\bigboldtext{\generalapproach}}; 
+\draw [thin] (98,185) -- (192,185);
+\node [right] at (98,182) (21gf) {\boldtext{Two Over One:} \regtext{Game Forcing}};
+\checkbox{gf} [right] at (21gf.east) {};
+\node [right] at (140,182) (gfewsr) { \regtext{Game Forcing Except When Suit Rebid}};
+\checkbox{gfewsr} [right] at (gfewsr.east) {};
+%Another checkbox needed! 
+\node [right] at (98,179) (vlop) {\boldtext{VERY LIGHT:} \regtext{Openings}};
+\checkbox{vlop}  at (vlop.east) {};
+\node [right] at (132,179) (vl3h) {\regtext{3rd Hand}};
+\checkbox{vl3h}  at (vl3h.east) {};
+\node [right] at (150,179) (vloc) {\regtext{Overcalls}};
+\checkbox{vloc}  at (vloc.east) {};
+\node [right] at (168,179) (vlpr) {\regtext{Preempts}};
+\checkbox{vlpr} at (vlpr.east) {};
+
+\node [right] at (98,176) (fo1c) {\boldtext{FORCING OPENING:} \redreg{1\,\c\ }};
+\rcheckbox{fo1c} at (fo1c.east) {};
+\node [right] at (132,176) (fo2c) {\regtext{2\,\c\ }};
+\checkbox{fo2c} at (fo2c.east) {};
+\node [right] at (140,176) (fon2b) {\redreg{Natural 2 Bids}};
+\rcheckbox{fon2b} at (fon2b.east) {};
+\node [right] at (160,176) (foother) {\redreg{Other}};
+\rcheckbox{foother}  at (foother.east) (foobox) {};
+\node [right] at (foobox.east) {\redreg{\foothertext}};
+\draw [thin,color=red] (172,174) -- (192,174);
+
+%Notrump openings:
+\node at (130,170) {\headtext{NOTRUMP OPENING BIDS}};
+\node at (110,165) {\bluereg{1NT}};
+\draw [thin,color=blue] (98,160) -- (107,160);
+\node at (110,161.5) {\bluereg{to}};
+\draw [thin,color=blue] (113,160) -- (122,160);
+\node at (102,161.5) {\bluebold{\ntlowtext}};
+\node at (117,161.5) {\bluebold{\nthightext}};
+\draw [thin,color=blue] (98,156.5) -- (107,156.5);
+\node at (110,158) {\bluereg{to}};
+\draw [thin,color=blue] (113,156.5) -- (122,156.5);
+\node at (102,158) {\bluebold{\altntlowtext}};
+\node at (117,158) {\bluebold{\altnthightext}};
+\node [right] at (98,154) (nt5cm) {\regtext{5-card Major Common}};%low for j
+\checkbox{nt5cm} at (nt5cm.east) {};
+\node [right] at (98,150.5) (syson) {\regtext{System on over}};%low for y
+\node [right] at (syson.east) {\regtext{\sysontext}};
+\draw [thin] (117,149) -- (128,149);
+\node [right] at (98,147) (staym) {\regtext{2\,\c\ Stayman}};%low for y
+\checkbox{staym} at (staym.east) {};
+\node [right] at (115,147) (puppe) {\redreg{Puppet}};%low for p
+\rcheckbox{puppe} at (puppe.east) {};
+\node [right] at (98,144) {\regtext{2\,\d\ }};
+\node [right] at (103,144) (jac2d) {\bluereg{Transfer to \h\ }};
+\bcheckbox{jac2d} at (jac2d.east) {};
+\node [right] at (103,140) (fstay) {\redreg{Forcing Stayman}};%0.5mm low because of g
+\rcheckbox{fstay} at (fstay.east) {};
+\node [right] at (98,137) {\regtext{2\,\h }};
+\node [right] at (103,137) (jac2h) {\bluereg{Transfer to \s\ }};
+\bcheckbox{jac2h} at (jac2h.east) {};
+\node [right] at (98,133.5)  {\regtext{2\,\s }};
+\draw [thin,color=red] (105,131.5) -- (128,131.5);
+\node [right] at (104,133.5) {\regtext{\ntsptext}};
+\node [right] at (98,130) (nt2nt) {\regtext{2NT}};
+\draw [thin,color=red] (105,128) -- (128,128);
+\node [right] at (104,130) {\regtext{\ntnttext}};
+
+%NT box, middle column
+\node [right] at (130,164) {\regtext{3\,\c\ }};
+\draw [thin,color=red] (135,162) -- (160,162);
+\node [right] at (135,164) {\regtext{\ntcjumptext}};
+\node [right] at (130,160) {\regtext{3\,\d\ }};
+\draw [thin,color=red] (135,158) -- (160,158);
+\node [right] at (135,160) {\regtext{\ntdjumptext}};
+\node [right] at (130,156) {\regtext{3\,\h\ }};
+\draw [thin,color=red] (135,154) -- (160,154);
+\node [right] at (135,156) {\regtext{\nthjumptext}};
+\node [right] at (130,152) {\regtext{3\,\s\ }};
+\draw [thin,color=red] (135,150) -- (160,150);
+\node [right] at (135,152) {\regtext{\ntsjumptext}};
+\node [right] at (130,148) {\regtext{\ntextratext}};
+\draw [thin,color=red] (130,146) -- (160,146);
+% Replace next two for following two for SA Texas
+%\node [right] at (130,144) (texas) {\bluereg{4\,\d, 4\,\h\ Transfer}};
+%\bcheckbox{texas} at (texas.east) {};
+\node [right] at (130,144) (texas) {\redreg{4\,\c, 4\,\rd\ SA Transfer}};
+\rcheckbox{texas} at (texas.east) {};
+\node [right] at (130,140.5) (smole) {\redreg{Smolen}};
+\rcheckbox{smole} at (smole.east) {};
+\node [right] at (130,137) (leben) {\redreg{Lebensohl}};
+\rcheckbox{leben} at (leben.east) (lebbox) {};
+\draw [thin,color=red] (147,135.5) -- (152,135.5);
+\node at (146,136.8) {\redreg{(}};
+\node [right] at (151,136.8) {\redreg{denies)}};%low for )
+\node at (149,137) {\redreg{\ntlebentext}};
+\node [right] at (130,133) (ntneg) {\regtext{Neg. Double}};%descender on 'g' means we have to adjust this row downward
+\checkbox{ntneg} at (ntneg.east) (ntnegbox) {};
+\node [right] at (ntnegbox) {\regtext{:}};
+\draw [thin] (149,131.5) -- (160,131.5);
+\node [right] at (149,133.5) {\regtext{\ntnegtext}};
+\node [right] at (130,130) (ntother) {\redreg{Other:}};
+\draw [thin,color=red] (138,128) -- (160,128);
+\node [right] at (138,130) {\regtext{\ntothertext}};
+
+%2NT/3NT box
+\draw [thin] (163,172) -- (194,172) -- (194,139) -- (163,139) -- cycle;
+\node [right] at (163,168.5) {\boldtext{2NT}};
+\node at (180,168.5) {\regtext{to}};
+\draw [thin] (170,166.5) -- (178,166.5);
+\draw [thin] (182,166.5) -- (190,166.5);
+\node at (174,168.5) {\boldtext{\twonlowtext}};
+\node at (186,168.5) {\boldtext{\twonhightext}};
+
+
+\node [right] at (165,164.5) (pup2n) {\redreg{Puppet Stayman}};%lowered for p
+\rcheckbox{pup2n} at (pup2n.east) {};
+\node [right] at (163,161.5) {\boldtext{Transfer Responses:}};
+\node [right] at (165,157.7) (jac2n) {\bluereg{Jacoby}};%lowered for y
+%Easiest way to get Jac and Texas checkboxes at same height is place them both relative to Texas label
+%Texas/SA Texas comment the relevant next lines
+%\node [right] at (177,158) (tex2n) {\hspace{2mm}\bluereg{Texas}};
+\node [right] at (177,158) (tex2n) {\redreg{SA Texas}};
+\bcheckbox{jac2n} [left] at (tex2n.west) {};
+%\bcheckbox{tex2n} at (tex2n.east) {};
+\rcheckbox{tex2n} at (tex2n.east) {};
+\node [right] at (163,154.5) {\regtext{3\,\s\ }};
+\node [right] at (168,154.5) {\regtext{\twonsptext}};
+\node [right] at (163,151) {\regtext{\twonextratext}};
+\draw [thin,color=red] (168,152.5) -- (192,152.5);
+\draw [thin,color=red] (165,149) -- (192,149);
+\draw [thin] (163,148) -- (194,148);
+\draw [thin] (163,147.5) -- (194,147.5);
+\node [right] at (163,145.5) {\boldtext{3NT}};
+\node at (180,145.5) {\regtext{to}};
+\draw [thin] (170,143.5) -- (178,143.5);
+\draw [thin] (182,143.5) -- (190,143.5);
+\node at (174,145.5) {\boldtext{\threenlowtext}};
+\node at (186,145.5) {\boldtext{\threenhightext}};
+\node [right] at (163,142) {\regtext{\threenextratext}};
+\draw [thin,color=red] (165,140) -- (192,140);
+%Below 2NT/3NT box:
+\node [right] at (161,137) {\redbold{Conventional NT Openings}};
+\draw [thin,color=red] (165,131.5) -- (192,131.5);
+\draw [thin,color=red] (165,128) -- (192,128);
+\node [right] at (165,133) {\regtext{\convnttext}};
+\node [right] at (165,129.5) {\regtext{\convntextratext}};
+
+%Major openings:
+
+\node at (122,124) {\headtext{MAJOR OPENING}};
+
+\node [right] at (98,117) {\regtext{Expected Min. Length}};
+\node at (130,117) {\regtext{4}};
+\node at (140,117) {\regtext{5}};
+\checkbox{h12l4} at (130,113) {};
+\checkbox{h12l5} at (140,113) {};
+\checkbox{h34l4} at (130,109) {};
+\checkbox{h34l5} at (140,109) {};
+\node [right] at (98,113) {\regtext{1st/2nd}};
+
+\node [right] at (98,109) {\regtext{3rd/4th}};
+
+
+\node at (122,104.5) {\boldtext{RESPONSES}};
+%Double raises
+\node [right] at (98,100) {\regtext{Double Raise:}};
+\node [right] at (115,100) (dblrf) {\regtext{Force}};
+\checkbox{dblrf} at (dblrf.east) {};
+\node [right] at (125,100) (dblri) {\regtext{Inv.}};
+\checkbox{dblri} at (dblri.east) {};
+\node [right] at (133,100) (dblrw) {\redreg{Weak}};
+\rcheckbox{dblrw} at (dblrw.east) {};
+\node [right] at (98,96) {\regtext{After Overcall:}};
+\node [right] at (115,96) (ocdrf) {\regtext{Force}};
+\checkbox{ocdrf} at (ocdrf.east) {};
+\node [right] at (125,96) (ocdri) {\regtext{Inv.}};
+\checkbox{ocdri} at (ocdri.east) {};
+\node [right] at (133,96) (ocdrw) {\regtext{Weak}};
+\checkbox{ocdrw} at (ocdrw.east) {};
+%Conventional raises
+\node [right] at (98,92) {\regtext{Conv. Raise:}};
+\node [right] at (113,92) (ra2nt) {\redreg{2NT}};
+\rcheckbox{ra2nt} at (ra2nt.east) {};
+\node [right] at (121,92) (ra3nt) {\redreg{3NT}};
+\rcheckbox{ra3nt} at (ra3nt.east) {};
+\node [right] at (130,91.6) (ra3nt) {\redreg{Splinter}};
+\rcheckbox{raspl} at (141,92) {};
+\node [right] at (98,88) {\redreg{Other:}};
+\draw [thin,color=red] (107,86) -- (145,86);
+\node [right] at (106,88) {\regtext{\majraisetext}};
+%1NT forcing
+\node [right] at (98,83.6) {\bluereg{1NT: Forcing\hspace{5mm}Semi-forcing}};%g lower
+\bcheckbox{ntfor} at (115,84) {};
+\bcheckbox{ntsem} at (134,84) {};
+%2NT response
+\node [right] at (98,79.5) {\regtext{2NT: Forcing}};% g lower
+\node [right] at (116,80) (maj2n) {\regtext{Inv.}};%checkbox relative to Inv
+\checkbox{twonf} [left] at (maj2n.west) {};
+\checkbox{twoni} at (maj2n.east) {};
+\draw [thin] (124,78) -- (132, 78);
+\draw [thin] (136,78) -- (144,78);
+\node at (128,80) {\regtext{\majtwonlowtext}};
+\node at (134,80) {\regtext{to}};
+\node at (140,80) {\regtext{\majtwonhightext}};
+%3NT response
+\node [right] at (98,76) {\regtext{3NT:}};
+\draw [thin] (108,74) -- (116,74);
+\draw [thin] (120,74) -- (128,74);
+\node at (112,76) {\regtext{\majthreenlowtext}};
+\node at (118,76) {\regtext{to}};
+\node at (124,76) {\regtext{\majthreenhightext}};
+\node [right] at (128,76) {\boldtext{\majthreennote}};
+%Drury
+\node [right] at (98,71.6) {\redreg{Drury}};
+\node [right] at (107,72) (drrev) {\redreg{: Reverse}};
+\rcheckbox{drury}  at (drrev.west) {};
+\rcheckbox{drrev} at (drrev.east) {};
+\node [right] at (122,71.6) {\redreg{2-Way}};
+\node [right] at (133,72) (drfit) {\redreg{Fit}};
+\rcheckbox{dr2wy} [left] at (drfit.west) {};
+\rcheckbox{drfit} at (drfit.east) {};
+\node [right] at (98,68) {\redreg{Other:}};
+\node [right] at (106,68) {\regtext{\majothertext}};
+\draw [thin,color=red] (107,66) -- (145,66);
+
+%Minor openings
+\node at (172,124) {\headtext{MINOR OPENING}};
+\node [right] at (147,117) {\regtext{Expected Min. Length}};
+\node [right] at (147,113) {\regtext{1\,\c\ }};
+\node [right] at (152,113) {\boldtext{\clopennote}};
+\node [right] at (147,109) {\regtext{1\,\d\ }};
+\node [right] at (152,109) {\boldtext{\diopennote}};
+\node at (176,117) {\regtext{4}};
+\node at (180,117) {\regtext{3}};
+\node at (184,120) {\bluereg{NF}};
+\node at (184,117) {\bluereg{0-2}};
+\node at (190,117) {\redreg{Conv.}};
+\checkbox{club4} at (176,113) {};
+\checkbox{club3} at (180,113) {};
+\bcheckbox{cl2nf} at (184,113) {};
+\rcheckbox{clcon} at (190,113) {};
+\checkbox{diam4} at (176,109) {};
+\checkbox{diam3} at (180,109) {};
+\bcheckbox{di2nf} at (184,109) {};
+\rcheckbox{dicon} at (190,109) {};
+\node at (172,104) {\boldtext{RESPONSES}};
+%Double raises
+\node [right] at (147,100) {\regtext{Double Raise:}};
+\node [right] at (164,100) (midrf) {\regtext{Force}};
+\checkbox{midrf} at (midrf.east) {};
+\node [right] at (174,100) (midri) {\regtext{Inv.}};
+\checkbox{midri} at (midri.east) {};
+\node [right] at (182,100) (midrw) {\redreg{Weak}};
+\rcheckbox{midrw} at (midrw.east) {};
+\node [right] at (147,96) {\regtext{After Overcall:}};
+\node [right] at (164,96) (modrf) {\regtext{Force}};
+\checkbox{modrf} at (modrf.east) {};
+\node [right] at (174,96) (modri) {\regtext{Inv.}};
+\checkbox{modri} at (modri.east) {};
+\node [right] at (182,96) (modrw) {\regtext{Weak}};
+\checkbox{modrw} at (modrw.east) {};
+%Forcing raises
+\node [right] at (147,91.6) {\regtext{Forcing Raise:}};
+\node [right] at (163,92) (jsomi) {\redreg{J/S in other minor}};
+\rcheckbox{jsomi} at (jsomi.east) {};
+\node [right] at (147,87.6) {\redreg{Single raise}};
+\node [right] at (164,88) (inver) {\redreg{Other:}};
+\rcheckbox{inver} [left] at (inver.west) {};
+\draw [thin,color=red] (173,86) -- (193,86);
+\node [right] at (172,88) {\regtext{\minraisetext}};
+\node [right] at (147,83.6) {\regtext{Frequently bypass 4+ \d}};
+\checkbox{bypas} at (175.5,84) {};
+%NT responses
+\node [right] at (147,80) {\regtext{1NT/1\,\c\ }};
+\draw [thin] (159,78) -- (167,78);
+\draw [thin] (171,78) -- (179,78);
+\node at (163,80) {\regtext{\minonenlowtext}};
+\node at (169,80) {\regtext{to}};
+\node at (175,80) {\regtext{\minonenhightext}};
+\node [right] at (147,75.5) {\regtext{2NT: Forcing}};% g lower
+\node [right] at (165,76) (min2n) {\regtext{Inv.}};%checkbox relative to Inv
+\checkbox{m2ntf} [left] at (min2n.west) {};
+\checkbox{m2nti} at (min2n.east) {};
+\draw [thin] (173,74) -- (181, 74);
+\draw [thin] (185,74) -- (193,74);
+\node at (177,76) {\regtext{\mintwonlowtext}};
+\node at (183,76) {\regtext{to}};
+\node at (189,76) {\regtext{\mintwonhightext}};
+\node [right] at (147,72) {\regtext{3NT:}};
+\draw [thin] (157,70) -- (165,70);
+\draw [thin] (169,70) -- (177,70);
+\node at (161,72) {\regtext{\minthreenlowtext}};
+\node at (167,72) {\regtext{to}};
+\node at (173,72) {\regtext{\minthreenhightext}};
+\node [right] at (147,68) {\redreg{Other:}};
+\node [right] at (155,68) {\regtext{\minothertext}};
+\draw [thin,color=red] (156,66) -- (194,66);
+
+%Outline of 2-bid area
+{ [line width=1]
+\draw (96,48) -- (194,48);
+\draw (96,39) -- (194,39);
+\draw (96,30) -- (194,30);
+\draw (96,21) -- (194,21);
+}
+\draw [thin] (160,21) -- (160,65);
+\draw [thin] (139,53) -- (194,53);
+\draw [thin] (139,44) -- (194,44);
+\draw [thin] (139,35) -- (194,35);
+\draw [thin] (139,26) -- (194,26);
+\node at (150,62) {\headtext{DESCRIBE}};
+\node at (177,62) {\headtext{RESPONSES/REBIDS}};
+
+%2C
+\node [right] at (98,60) {\bigtext{2\c}};
+\draw [thin] (108,58) -- (116,58);
+\draw [thin] (120,58) -- (128,58);
+\node at (112,60) {\boldtext{\twoclowtext}};
+\node at (118,60) {\regtext{to}};
+\node at (124,60) {\boldtext{\twochightext}};
+\node [right] at (128,60) {\regtext{HCP}};
+\node [right] at (105,54.7) {\regtext{Strong}};
+\checkbox{st2cl} at (115,55) {};
+\node [right] at (120,55) (ot2cl) {\redreg{Other}};
+\rcheckbox{ot2cl} at (ot2cl.east) {};
+\node [right] at (100,50) (neg2d) {\regtext{2\,\d\ Resp: Neg}};
+\checkbox{neg2d} at (neg2d.east) {};
+\node [right] at (122,50) (wai2d) {\regtext{Waiting}};
+\checkbox{wai2d} at (wai2d.east) {};
+\node [left] at (160,58.5) {\regtext{\twocldescribetop}};
+\node [left] at (160,55) {\regtext{\twocldescribemiddle}};
+\node [left] at (160,50.5) {\regtext{\twocldescribebottom}};
+\node [right] at (160,58.5) {\regtext{\twoclresponsetop}};
+\node [right] at (160,55) {\regtext{\twoclresponsemiddle}};
+\node [right] at (160,50.5) {\regtext{\twoclresponsebottom}};
+
+
+%2D
+\node [right] at (98,45) {\bigtext{2\d}};
+\draw [thin] (108,44) -- (116,44);
+\draw [thin] (120,44) -- (128,44);
+\node at (112,46) {\boldtext{\twodlowtext}};
+\node at (118,46) {\regtext{to}};
+\node at (124,46) {\boldtext{\twodhightext}};
+\node [right] at (128,46) {\regtext{HCP}};
+\node [left] at (160,46) {\regtext{\twoddescribe}};
+\node [right] at (160,46) {\regtext{\twodresponse}};
+\node [right] at (98,41) (wk2di) {\regtext{Natural: Weak}};
+\checkbox{wk2di} at (wk2di.east) {};
+\node [right] at (118,41) (in2di) {\redreg{Intermediate}};
+\rcheckbox{in2di} at (in2di.east) {};
+\node [right] at (136,40.7) (st2di) {\redreg{Strong}};%low g
+\rcheckbox{st2di} at (146,41) {};
+\node [right] at (148,41) (co2di) {\redreg{Conv.}};
+\rcheckbox{co2di} at (co2di.east) {};
+\node [right] at (160,41.5) (dintf) {\regtext{2NT Force}};
+\checkbox{dintf} at (dintf.east) {};
+\node [right] at (175,41.5) (dnsnf) {\redreg{New Suit NF}};
+\rcheckbox{dnsnf} at (dnsnf.east) {};
+%2H
+\node [right] at (98,36) {\bigtext{2\h}};
+\draw [thin] (108,35) -- (116,35);
+\draw [thin] (120,35) -- (128,35);
+\node at (112,37) {\boldtext{\twohlowtext}};
+\node at (118,37) {\regtext{to}};
+\node at (124,37) {\boldtext{\twohhightext}};
+\node [right] at (128,37) {\regtext{HCP}};
+\node [left] at (160,37) {\regtext{\twohdescribe}};
+\node [right] at (160,37) {\regtext{\twohresponse}};
+\node [right] at (98,32) (wk2he) {\regtext{Natural: Weak}};
+\checkbox{wk2he} at (wk2he.east) {};
+\node [right] at (118,32) (in2he) {\redreg{Intermediate}};
+\rcheckbox{in2he} at (in2he.east) {};
+\node [right] at (136,31.7) (st2he) {\redreg{Strong}};%low g
+\rcheckbox{st2he} at (146,32) {};
+\node [right] at (148,32) (co2he) {\redreg{Conv.}};
+\rcheckbox{co2he} at (co2he.east) {};
+\node [right] at (160,32.5) (hentf) {\regtext{2NT Force}};
+\checkbox{hentf} at (hentf.east) {};
+\node [right] at (175,32.5) (hnsnf) {\redreg{New Suit NF}};
+\rcheckbox{hnsnf} at (hnsnf.east) {};
+%2S
+\node [right] at (98,27) {\bigtext{2\s}};
+\draw [thin] (108,26) -- (116,26);
+\draw [thin] (120,26) -- (128,26);
+\node at (112,28) {\boldtext{\twoslowtext}};
+\node at (118,28) {\regtext{to}};
+\node at (124,28) {\boldtext{\twoshightext}};
+\node [right] at (128,28) {\regtext{HCP}};
+\node [left] at (160,28) {\regtext{\twosdescribe}};
+\node [right] at (160,28) {\regtext{\twosresponse}};
+\node [right] at (98,23) (wk2sp) {\regtext{Natural: Weak}};
+\checkbox{wk2sp} at (wk2sp.east) {};
+\node [right] at (118,23) (in2sp) {\redreg{Intermediate}};
+\rcheckbox{in2sp} at (in2sp.east) {};
+\node [right] at (136,22.7) (st2sp) {\redreg{Strong}};%low g
+\rcheckbox{st2sp} at (146,23) {};
+\node [right] at (148,23) (co2sp) {\redreg{Conv.}};
+\rcheckbox{co2sp} at (co2sp.east) {};
+\node [right] at (160,23.5) (spntf) {\regtext{2NT Force}};
+\checkbox{spntf} at (spntf.east) {};
+\node [right] at (175,23.5) (snsnf) {\redreg{New Suit NF}};
+\rcheckbox{snsnf} at (snsnf.east) {};
+
+%Bottom of card
+\node [right] at (98,18) {\headtext{OTHER CONV. CALLS:}};
+\node [right] at (130,17.7) {\redreg{New Minor Forcing:}};
+\rcheckbox{nmf1w} at (154,18) {};
+\draw [thin,color=red] (156,16) -- (164,16);
+\node at (160,18) {\regtext{\nmftext}};
+\node [right] at (165,18) (nmf2w) {\redreg{2-Way NMF}};
+\rcheckbox{nmf2w} at (nmf2w.east) {};
+\draw [thin,color=red] (183,16) -- (194,16);
+\node at (187,18) {\regtext{\twowaytext}};
+\node [right] at (98,13.6)  {\redreg{Weak Jump Shifts not in Comp.}};
+\rcheckbox{wjsnc} at (135.5,14) {};
+\draw [thin,color=red] (138,12) -- (150,12);
+\node at (144,14) {\regtext{\wjstext}};
+\node [right]  at (150,13.7) {\redreg{4th Suit Forcing: 1 Round}};
+\node [right] at (182,14) (fsfgf) {\redreg{Game}};
+\rcheckbox{fsfrd} [left] at (fsfgf.west) {};
+\rcheckbox{fsfgf} at (fsfgf.east) {};
+\draw [thin,color=red] (99,8) -- (193,8);
+\draw [thin,color=red] (99,4) -- (193,4);
+\draw [thin,color=red] (99,0) -- (193,0);
+\node [right] at (98,10) {\regtext{\footnotestop}};
+\node [right] at (98,6) {\regtext{\footnotesmiddle}};
+\node [right] at (98,2) {\regtext{\footnotesbottom}};
+
+%Back of card: 
+%Left column (special doubles)
+\node at (24,199) {\headtext{SPECIAL DOUBLES}};
+
+\node [right] at (0,195) {\regtext{After Overcall:}};
+\node [right] at (16,194.6)  {\redreg{Penalty}};%low y
+\rcheckbox{penax} at (27,195) {};
+\draw [thin,color=red] (30,193) -- (45,193);
+\node at (38,195) {\boldtext{\penaxthru}};
+
+\node [right] at (3,190.7) {\regtext{Negative}};%low g
+\checkbox{negax} at (16,191) {};
+\node [right] at (17,191) {\regtext{thru}};
+\draw [thin] (24,189) -- (45,189);
+\node [right] at (24,191) {\boldtext{\negaxthru}};
+
+\node [right] at (0,186.6) {\regtext{Responsive}};%low p
+\checkbox{respx} at (16,187) {};
+\node [right] at (16,187) {\regtext{: thru}};
+\draw [thin] (24,185) -- (32,185);
+\node at (28,187) {\boldtext{\respxthru}};
+\node [right] at (32,187) (maxix) {\regtext{Maximal}};
+\checkbox{maxix} at (maxix.east) {};
+
+\node [right] at (0,182.6) {\redreg{Support: Dbl.}};%low p
+\rcheckbox{suppx} at (17,183) {};
+\node [right] at (18,183) {\redreg{thru}};
+\draw [thin,color=red] (24,181) -- (32,181);
+\node at (28,183) {\boldtext{\suppxthru}};
+\node [right] at (32,183) (supxx) {\redreg{Redbl}};
+\rcheckbox{supxx} at (supxx.east) {};
+
+\node [right] at (0,178.7) {\regtext{Card-showing}};%low g
+\checkbox{cardx} at (18,179) {};
+\node [right] at (21,178.6)  {\regtext{Min. Offshape T/O}};%low p
+\checkbox{ostox} at (44,179) {};
+\draw [thin] (1,174) -- (46,174);
+\node at (23,175.5) {\regtext{\doubletext}};
+
+%Simple overcalls
+\node at (23,170) {\headtext{SIMPLE OVERCALL}};
+\node [right] at (0,166) {\regtext{1 level}};
+\draw [thin] (9,164.5) -- (17,164.5);
+\draw [thin] (21,164.5) -- (29,164.5);
+\node at (13,166) {\boldtext{\oclowtext}};
+\node at (19,166) {\regtext{to}};
+\node at (25,166) {\boldtext{\ochightext}};
+\node [right] at (29,166) {\regtext{HCP (usually)}};
+\node [right] at (0,162.5) (oc4cd) {\regtext{often 4 cards}};
+\checkbox{oc4cd} at (oc4cd.east) {};
+\node [right] at (20,162.2) {\regtext{very light style}};
+\checkbox{ocvls} at (39,162.5) {}; 
+\node at (23,159) {\boldtext{Responses}};
+\node [right] at (0,155.1) {\regtext{New suit: Forcing}}; %low g
+\checkbox{nsfor} at (22,155.5) {};
+\node [right] at (24,155.5) (nsnfc) {\regtext{NFConst}};
+\checkbox{nsnfc} at (nsnfc.east) {};
+\node [right] at (38,155.5) (nsnon) {\regtext{NF}};
+\checkbox{nsnon} at (nsnon.east) {};
+\node [right] at (0,151.6) {\regtext{Jump raise: Forcing}}; %low g
+\checkbox{jrfor} at (24.5,152) {};
+\node [right] at (26,152) (jrinv) {\regtext{Inv.}};
+\checkbox{jrinv} at (jrinv.east) {};
+\node [right] at (34,152) (jrwea) {\regtext{Weak}};
+\checkbox{jrwea} at (jrwea.east) {};
+\draw [thin] (1,146) -- (46,146);
+\node  at (23,148) {\regtext{\overcalltext}};
+
+%Jump overcalls
+\node at (23,142) {\headtext{JUMP OVERCALL}};
+\node [right] at (0,136.7) {\redreg{Strong}};
+\rcheckbox{jostr} at (10,137) {};
+\node [right] at (15,137) (joint) {\redreg{Intermediate}};
+\rcheckbox{joint} at (joint.east) {};
+\node [right] at (35,137) (jowea) {\regtext{Weak}};
+\checkbox{jowea} at (jowea.east) {};
+\draw [thin] (1,131) -- (46,131);
+\node at (23,133) {\regtext{\jumpovercalltext}};
+
+%Opening preempts
+\node at (23,127) {\headtext{OPENING PREEMPTS}};
+\node [right] at (0,120) {\regtext{3/4-bids}};
+
+\node at (20,123) {\regtext{Sound}};
+\node at (30,122.6) {\regtext{Light}};%low for g
+\node at (42,122.6) {\regtext{Very Light}};%low for g
+\checkbox{prsou} at (20,120) {};
+\checkbox{prlig} at (30,120) {};
+\checkbox{prver} at (42,120) {};
+\node [right] at (0,116) {\redreg{Conv./Resp.}};
+\draw [thin,color=red] (15,114) -- (46,114);
+\node [right] at (15,116) {\regtext{\preempttext}};
+
+%Direct cuebid 
+\node at (23,109) {\headtext{DIRECT CUEBID}};
+
+\node at (12,105) {\regtext{OVER:}};
+\node at (20,105) {\regtext{Minor}};
+\node at (30,104.7) {\regtext{Major}};
+\node at (42,105) {\regtext{Artif. Bid}};
+
+\node [right] at (0,102) {\regtext{Natural}};
+\node [right] at (0,98.5) {\regtext{Strong T/O}};
+\node [right] at (0,95) {\regtext{Michaels}};
+
+\rcheckbox{qnami} at (20,102) {};
+\rcheckbox{qnama} at (30,102) {};
+\checkbox{qnaar} at (42,102) {};
+\checkbox{qstmi} at (20,98.5) {};
+\checkbox{qstma} at (30,98.5) {};
+\checkbox{qstar} at (42,98.5) {};
+\checkbox{qmimi} at (20,95) {};
+\checkbox{qmima} at (30,95) {};
+\checkbox{qmiar} at (42,95) {};
+
+\node at (23,91.5) {\regtext{\cuebidtext}};
+\draw [thin] (1,90) -- (46,90);
+
+%Competitive bids column: NT overcalls
+%rows 49-96
+%cols 177 upward
+\node at (73,199) {\headtext{NOTRUMP OVERCALLS}};
+\node [right] at (49,195) {\boldtext{Direct:}};
+\draw [thin] (59,193.5) -- (66,193.5);
+\draw [thin] (70,193.5) -- (77,193.5);
+\node at (62.5,195) {\boldtext{\directlowtext}};
+\node at (68,195) {\regtext{to}};
+\node at (73.5,195) {\boldtext{\directhightext}};
+\node [right] at (76,194.7) {\regtext{Systems on}};%low y
+\checkbox{syson} at (92,195) {};
+
+\node [right] at (49,191.5) (dntco) {\redreg{Conv.}};
+\rcheckbox{dntco} at (dntco.east) {};
+\draw [thin,color=red] (61,190) -- (94,190);
+\node [right] at (61,191.5) {\regtext{\directconvtext}};
+
+\node [right] at (49,188) {\boldtext{Balancing:}};
+\draw [thin] (65,186.5) -- (73,186.5);
+\draw [thin] (77,186.5) -- (85,186.5);
+\node at (69,188) {\boldtext{\ballowtext}};
+\node at (75,188) {\regtext{to}};
+\node at (81,188) {\boldtext{\balhightext}};
+
+\node [right] at (49,184.5) (unumi) {\regtext{Jump to 2NT:\ \ Minors}};
+\checkbox{unumi} at (unumi.east) {};
+\node [right] at (79,184.5) (unu2l) {\regtext{2 Lowest}};
+\checkbox{unu2l} at (unu2l.east) {};
+
+\node [right] at (49,181) (bntco) {\redreg{Conv.}};
+\rcheckbox{bntco} at (bntco.east) {};
+\draw [thin,color=red] (61,179) -- (94,179);
+\node [right] at (61,181) {\regtext{\ntconvtext}};
+
+%defense vs. notrump: tightest section of the card. 147-177 for 8 lines and a title
+\node at (75,174) {\headtext{DEFENSE VS NOTRUMP}};
+\node [right] at (49,170.5) {\boldtext{vs:}};
+\node [right] at (49,167.5) {\regtext{2\,\c\ }};
+\node [right] at (49,164.5) {\regtext{2\,\d\ }};
+\node [right] at (49,161.5) {\regtext{2\,\h\ }};
+\node [right] at (49,158.5) {\regtext{2\,\s\ }};
+\node [right] at (49,155.5) {\boldtext{Dbl:}};
+\node [right] at (49,152.5) {\redreg{Other}};
+
+{ [thin,color=red]
+\draw (56,169) -- (74,169);
+\draw (76,169) -- (94,169);
+\draw (56,166) -- (74,166);
+\draw (76,166) -- (94,166);
+\draw (56,163) -- (74,163);
+\draw (76,163) -- (94,163);
+\draw (56,160) -- (74,160);
+\draw (76,160) -- (94,160);
+\draw (56,157) -- (74,157);
+\draw (76,157) -- (94,157);
+\draw (56,154) -- (74,154);
+\draw (76,154) -- (94,154);
+\draw (58,151) -- (94,151);
+\draw (50,148) -- (94,148);
+}
+\node [right] at (56,170.5) {\regtext{\firstcondition}};
+\node [right] at (56,167.5) {\regtext{\firstvstwocl}};
+\node [right] at (56,164.5) {\regtext{\firstvstwodi}};
+\node [right] at (56,161.5) {\regtext{\firstvstwohe}};
+\node [right] at (56,158.5) {\regtext{\firstvstwosp}};
+\node [right] at (56,155.5) {\regtext{\firstvsdbl}};
+\node [right] at (76,170.5) {\regtext{\secondcondition}};
+\node [right] at (76,167.5) {\regtext{\secondvstwocl}};
+\node [right] at (76,164.5) {\regtext{\secondvstwodi}};
+\node [right] at (76,161.5) {\regtext{\secondvstwohe}};
+\node [right] at (76,158.5) {\regtext{\secondvstwosp}};
+\node [right] at (76,155.5) {\regtext{\secondvsdbl}};
+\node [right] at (58,152.5) {\regtext{\othernttop}};
+\node at (73,149.5) {\regtext{\otherntbottom}};
+
+%Over Opp's takeout double: 147 to 112
+\node at (73,144) {\headtext{OVER OPP'S T/O DOUBLE}};
+
+\node [right] at (49,138.6) {\regtext{New Suit Forcing:\ \ 1 level}};
+\node [right] at (81,139) (nsf2l) {\regtext{2 level}};
+\checkbox{nsf1l} [left] at (nsf2l.west) {};
+\checkbox{nsf2l} at (nsf2l.east) {};
+
+\node [right] at (49,134.6) {\regtext{Jump Shift: Forcing}}; 
+\node [right] at (74,135) (jsinv) {\regtext{Inv.}};
+\node [right] at (83,135) (jswea) {\regtext{Weak}};
+\checkbox{jsfor} [left] at (jsinv.west) {};
+\checkbox{jsinv} at (jsinv.east) {};
+\checkbox{jswea} at (jswea.east) {};
+
+\node [right] at (49,130.6) {\regtext{Redouble implies no fit}};
+\checkbox{xximp} at (77,131) {};
+\node [right] at (77,131) {\boldtext{\xxtext}};
+
+\node [right] at (49,127) {\redreg{2NT Over}};
+
+\node [right] at (49,122.7) {\redreg{Majors}};
+\node [right] at (49,119) {\redreg{Minors}};
+
+\node at (68,127) {\redreg{Limit+}};
+\node at (78,127) {\redreg{Limit}};
+\node at (88,127) {\redreg{Weak}};
+\rcheckbox{maunl} at (68,123) {};
+\rcheckbox{malim} at (78,123) {};
+\rcheckbox{mawea} at (88,123) {};
+\rcheckbox{miunl} at (68,119) {};
+\rcheckbox{milim} at (78,119) {};
+\rcheckbox{miwea} at (88,119) {};
+
+\node [right] at (49,115) {\redreg{Other}};
+\draw [thin,color=red] (58,113) -- (94,113);
+\node [right] at (57,115) {\regtext{\toxothertext}};
+
+%Vs. Opening Preempts - 89 to 112
+\node at (72,109) {\boldtext{\textls[0]{VS Opening Preempts Double Is}}};
+\node [right] at (49,104) (opdto) {\regtext{Takeout}};
+\checkbox{opdto} at (opdto.east) {};
+\node [right] at (62,104) {\regtext{thru}};
+\draw [thin] (69,102) -- (79,102);
+\node at (74,104) {\boldtext{\opdtothru}};
+\node [right] at (80,103.7) {\redreg{Penalty}};
+\rcheckbox{oppen} at (91,104) {};
+
+\node [right] at (49,99.5) {\redreg{Conv. Takeout:}};
+\draw [thin,color=red] (67,98) -- (94,98);
+\node [right] at (67,99.5) {\regtext{\opconvtakeout}};
+
+\node [right] at (49,95.5) (opleb) {\redreg{Lebensohl 2NT Response}};
+\rcheckbox{opleb} at (opleb.east) {};
+
+\node [right] at (49,92) {\redreg{Other:}};
+\draw [thin,color=red] (58,90) -- (94,90);
+\node [right] at (57,92) {\regtext{\opothertext}};
+
+%Slam conventions - 72 to 89
+\node [right] at (0,86) {\boldtext{\textls[0]{SLAM CONVENTIONS}}};
+\node [right] at (32,86) (gerbe) {\regtext{Gerber}};
+\checkbox{gerbe} at (gerbe.east) {};
+\node [right] at (46,86) (black) {\regtext{4NT: Blackwood}};
+\checkbox{black} at (black.east) {};
+\node [right] at (72,86) (b0314) {\regtext{RKC}};
+\checkbox{b0314} at (b0314.east) {};
+\node [right] at (83,86) (b1430) {\regtext{1430}};
+\checkbox{b1430} at (b1430.east) {};
+
+\draw [thin] (0,81) -- (94,81);
+\draw [thin] (0,77) -- (94,77);
+\draw [thin] (51,73) -- (81,73);
+\node [right] at (0,82.5) {\regtext{\slamtexttop}};
+\node [right] at (0,78.5) {\regtext{\slamtextbottom}};
+
+\node [right] at (0,75) (dopi) {\regtext{vs. Interference: DOPI}};
+\checkbox{dopi} at (dopi.east) {};
+\node [right] at (30,75) (depo) {\regtext{DEPO}};
+\checkbox{depo} at (depo.east) {};
+\node [right] at (42,75) {\regtext{Level:}};
+\node [right] at (82,75) (ropi) {\regtext{ROPI}};
+\checkbox{ropi} at (ropi.east) {};
+\node at (76,75) {\regtext{\dopilevel}};
+
+%Leads
+\draw [thin] (55,5) -- (55,72);
+\draw [thin] (0,13.5) -- (55,13.5);
+%Carding:
+\node at (75,69) {\headtext{DEFENSIVE CARDING}};
+
+\node [right] at (55,60.5) {\regtext{Standard:}};
+\node [right] at (57,56.7)  {\regtext{Except}};%p
+\node at (81,64) {\regtext{vs SUITS}};
+\node at (91,64) {\regtext{vs NT}};
+\checkbox{stdsu} at (81,60.5) {};
+\checkbox{stdnt} at (91,60.5) {};
+\checkbox{excep} at (69,57) {};
+\draw [thin] (56,52) -- (94,52);
+\draw [thin] (56,48.5) -- (94,48.5);
+\node [right] at (55,53.5) {\regtext{\signaltexttop}};
+\node [right] at (55,50) {\regtext{\signaltextbottom}};
+
+\node [right] at (55,46) {\regtext{Upside-Down:}};
+\node [left] at (77,42.5) {\regtext{count}};
+\node [left] at (77,39) {\regtext{attitude}};
+\checkbox{udcsu} at (81,42.5) {};
+\checkbox{udcnt} at (91,42.5) {};
+\checkbox{udasu} at (81,39) {};
+\checkbox{udant} at (91,39) {};
+\draw [thin] (65,35.5) -- (85,35.5);
+\node [right] at (55,31.5) {\boldtext{FIRST DISCARD}};
+\node [right] at (56,28) {\regtext{Lavinthal}};
+\node [right] at (56,24.5) {\regtext{Odd/Even}};
+\checkbox{lavsu} at (81,28) {};
+\checkbox{lavnt} at (91,28) {};
+\checkbox{oddsu} at (81,24.5) {};
+\checkbox{oddnt} at (91,24.5) {};
+\checkbox{othsu} at (81,21) {};
+\checkbox{othnt} at (91,21) {};
+\draw [thin] (57,19.5) -- (77,19.5);
+\node at (67,21) {\boldtext{\discardtext}};
+
+\node [right] at (55,17) {\boldtext{OTHER CARDING}};
+\node [right] at (55,13.5) {\regtext{Smith Echo}};
+\node [right] at (55,9.7) {\regtext{Trump Suit Pref.}};
+\node [right] at (55,6.5) {\regtext{Foster Echo}};
+\checkbox{smisu} at (81,13.5) {};
+\checkbox{smint} at (91,13.5) {};
+\checkbox{trump} at (81,10) {};
+\checkbox{fossu} at (81,6.5) {};
+\checkbox{fosnt} at (91,6.5) {};
+
+%Bottom half of leads
+
+\node at (27,29) {\boldtext{LENGTH LEADS:}};
+\node [right] at (10,25) {\regtext{4th Best}};
+\node [right] at (10,21) {\regtext{3rd/5th Best}};
+
+\checkbox{ntatt} (ntatt) at (52,17) {};
+\node [left] at (ntatt.west) {\regtext{Attitude vs NT}};
+\checkbox{nt3rd} (nt3rd) at (52,21) {};
+\node [left] at (nt3rd.west) {\regtext{vs NT}};
+\checkbox{nt4th} (nt4th) at (52,25) {};
+\node [left] at (nt4th.west) {\regtext{vs NT}};
+\checkbox{su3rd} (su3rd) at (40,21) {};
+\node [left] at (su3rd.west) {\regtext{vs SUITS}};
+\checkbox{su4th} (su4th) at (40,25) {};
+\node [left] at (su4th.west) {\regtext{vs SUITS}};
+
+
+\node [right] at (0,15) {\regtext{\leadtext}};
+\node [left] at (53,10) {\boldtext{\textls[10]{Primary signal to partner's leads}}};
+\node [right] at (5,6.5) (pratt) {\regtext{Attitude\ \ }};
+\checkbox{pratt} at (pratt.east) {};
+\node [right] at (19,6.5) (prcou) {\regtext{Count\ \ }};
+\checkbox{prcou} at (prcou.east) {};
+\node [right] at (32,6.2)  {\regtext{Suit preference}};
+\checkbox{prsui} at (52,6.5) {};
+
+
+%SPECIAL CARDING - PLEASE ASK: different size than everything else on card
+\node at (30,2) {\textsf{\textbf{\textls[0]{SPECIAL CARDING}}}};
+\node at (75,2) {\textsf{\textbf{\textls[0]{PLEASE ASK}}}};
+\ifthenelse{\boolean{speci}}
+{\node [rectangle,draw=black,fill=red,inner sep=4pt] at (55,2) {};}
+{\node [rectangle,draw=black,inner sep=4pt] at (55,2) {};}
+
+%Circle card led:
+%columns: vertical marks at 28 and 55.
+%so under NT I need 10 equally spaced spots 30-53: 23/9=2.5. Center can be narrower.
+%so left half of NT is at 30.5 33 35.5 38
+%right half af NT is at 42 44.5 47 49.5 52?
+
+%For suits, the same, minus 27?
+
+% vertical spacing: bottom-most row at 34
+% title at 69
+% vs suits/NT at 64
+% so 7 rows, 60 to 60-24=36? raise bottom 1 or 2mm
+
+\node [right] at (6,69) {\headtext{LEADS}};
+\node [right] at (17,68.8) {\regtext{\textls[-50]{(circle card led, if not in bold)}}};% low for parenthesis
+\draw [thin] (28,64) -- (28,34);
+\node at (14,64) {\regtext{versus Suits}};
+\node at (40,64) {\regtext{versus Notrump}};
+
+%showlead{list of cards}{bold cards}{red cards}{circled cards}{x}{y}
+\showlead{x,x}{1}{2}{\suitxx}{1}{60}
+\showlead{x,x,x}{3}{}{\suitxxx}{1}{56}
+\showlead{A,K,x}{2}{}{\AKx}{1}{52}
+\showlead{K,Q,x}{1}{}{\KQx}{1}{48}
+\showlead{Q,J,x}{1}{}{\QJx}{1}{44}
+\showlead{J,T,9}{1}{}{\JTN}{1}{40}
+\showlead{K,Q,T,9}{1}{}{\suitKQTN}{1}{36}
+
+\showlead{x,x,x,x}{4}{}{\suitxxxx}{13}{60}
+\showlead{x,x,x,x,x}{4}{}{\suitxxxxx}{13}{56}
+\showlead{T,9,x}{1}{}{\TNx}{13}{52}
+\showlead{K,J,T,x}{2}{}{\KJTx}{13}{48}
+\showlead{K,T,9,x}{2}{}{\KTNx}{13}{44}
+\showlead{Q,T,9,x}{2}{}{\suitQTNx}{13}{40}
+
+\showlead{x,x}{1}{2}{\ntxx}{28}{60}
+\showlead{x,x,x}{3}{}{\ntxxx}{28}{56}
+\showlead{A,K,J,x}{2}{}{\AKJx}{28}{52}
+\showlead{A,J,T,9}{2}{}{\AJTN}{28}{48}
+\showlead{K,Q,J,x}{1}{}{\KQJx}{28}{44}
+\showlead{Q,J,T,x}{1}{}{\QJTx}{28}{40}
+\showlead{J,T,9,x}{1}{}{\JTNx}{28}{36}
+
+\showlead{x,x,x,x}{4}{}{\ntxxxx}{40}{60}
+\showlead{x,x,x,x,x}{4}{}{\ntxxxxx}{40}{56}
+\showlead{A,Q,J,x}{2}{}{\AQJx}{40}{52}
+\showlead{A,T,9,x}{2}{}{\ATNx}{40}{48}
+\showlead{K,Q,T,9}{2}{}{\ntKQTN}{40}{44}
+\showlead{Q,T,9,x}{2}{}{\ntQTNx}{40}{40}
+\showlead{T,9,x,x}{1}{}{\TNxx}{40}{36}
+
+\node at (35,-2) {\raggedright{\scriptsize \textsf{\currfilename: \today{}.}}};
+\node at (128,-2) {\regtext{\textls[10]{Made with \LaTeX\ and grbcce (taigabridge.net)}}};
+\additionaltikz%optional extra user-defined fields
+\end{tikzpicture}%
+}%end of \drawconventioncard
