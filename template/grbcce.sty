@@ -13,7 +13,7 @@
 \RequirePackage{microtype} % allows us to stretch/shrink fonts to match
 \RequirePackage[T1]{fontenc} % T1 font necessary to stretch and shrink
 \RequirePackage{helvet} %provides Helvetica typeface
-\RequirePackage{ifthen} %manipulate boolena values
+\RequirePackage{ifthen} %manipulate boolean values
 \RequirePackage{xstring} %allow us to parse the opening-lead strings
 \ProvidesPackage{grbcce}
 
@@ -44,7 +44,7 @@
 \newcommand{\rcheckbox}[1]{\ifthenelse{\boolean{#1}}{\node [crbox]}{\node [rbox]}}
 \newcommand{\bcheckbox}[1]{\ifthenelse{\boolean{#1}}{\node [cbbox]}{\node [bbox]}}
 
-%If you want an X or checkmark instead of a fillex box, you need to edit the
+%If you want an X or checkmark instead of a filled box, you need to edit the
 %style commands at \begin{tikzpicture} below.
 
 %Draw one row of the opening lead section at once. 6 arguments:
@@ -288,7 +288,7 @@ cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt}
 \rcheckbox{pup2n} at (pup2n.east) {};
 \node [right] at (163,161.5) {\boldtext{Transfer Responses:}};
 \node [right] at (165,157.7) (jac2n) {\bluereg{Jacoby}};%lowered for y
-%Easiest way to get Jac and Texas checkboxes at same height is palce them both relative to Texas label
+%Easiest way to get Jac and Texas checkboxes at same height is place them both relative to Texas label
 \node [right] at (177,158) (tex2n) {\hspace{2mm}\bluereg{Texas}};
 \bcheckbox{jac2n} [left] at (tex2n.west) {};
 \bcheckbox{tex2n} at (tex2n.east) {};
@@ -1012,7 +1012,4 @@ cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt}
 \additionaltikz%optional extra user-defined fields
 \end{tikzpicture}%
 }%end of \drawconventioncard
-
-
-
 
