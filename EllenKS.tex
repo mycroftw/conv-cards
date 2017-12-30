@@ -47,7 +47,7 @@
 
 %\newcommand{\rd}{\textcolor{red}{\d}}
 %\newcommand{\rh}{\textcolor{red}{\h}}
-\newcommand{\names}{Michael Farebrother -- Ellen Kuiper}
+\newcommand{\names}{Michael Farebrother --- Ellen Kuiper}
 \newcommand{\playernumber}{8550794}
 
 %General approach:
@@ -62,7 +62,7 @@
 \setboolean{fo2c}{true}
 %\setboolean{fon2b}{true}
 \setboolean{foother}{true}
-\newcommand{\foothertext}{\hspace{2mm}4\c\, 4\rd}%Other forcing opening bids
+\newcommand{\foothertext}{\hspace{2mm}4\,\c{}, 4\,\rd}%Other forcing opening bids
 
 %Notrump openings:
 %First column:
@@ -71,22 +71,22 @@
 \newcommand{\altntlowtext}{} %If variable NT, second range here
 \newcommand{\altnthightext}{}
 %\setboolean{nt5cm}{true}
-\newcommand{\sysontext}{2\c} %Systems on after 1NT-(X), 2\c, etc...
+\newcommand{\sysontext}{2\,\c} %Systems on after 1NT-(X), 2\c, etc...
 %\setboolean{staym}{true}
 %\setboolean{puppe}{true}
 \setboolean{jac2d}{true}
 %\setboolean{fstay}{true}
 \setboolean{jac2h}{true}
-\newcommand{\ntsptext}{\redreg{Range Ask}} %1NT-2S
+\newcommand{\ntsptext}{\redreg{Range Ask}\pfix{}} %1NT-2S
 \newcommand{\ntnttext}{\redreg{Clubs}} %1NT-2NT
 
 %NT openings - 2nd column:
-\newcommand{\ntcjumptext}{\redreg{\rd{} splinter}} %1NT-3C
-\newcommand{\ntdjumptext}{\redreg{\rh{} splinter}}
-\newcommand{\nthjumptext}{\s{} \redreg{splinter}}
-\newcommand{\ntsjumptext}{\c{} \redreg{splinter}} %1NT-3S
-\newcommand{\ntextratext}{2\c{} \redreg{Keri: \rd{} or INV+}} %Blank line next to puppet stayman
-\setboolean{texas}{true} %MDF: see extratikz for SATexas
+\newcommand{\ntcjumptext}{\redreg{\rd{} splinter}\pfix{}} %1NT-3C
+\newcommand{\ntdjumptext}{\redreg{\rh{} splinter}\pfix{}}
+\newcommand{\nthjumptext}{\s{} \redreg{splinter}\pfix{}}
+\newcommand{\ntsjumptext}{\c{} \redreg{splinter}\pfix{}} %1NT-3S
+\newcommand{\ntextratext}{2\,\c{} \redreg{Keri: \rd{} or INV+}} %Blank line next to puppet stayman
+\setboolean{texas}{true} 
 %\setboolean{smole}{true}
 \setboolean{leben}{true}
 \newcommand{\ntlebentext}{fast} %Lebensohl: Fast or slow denies?
@@ -180,8 +180,8 @@
 \newcommand{\twocldescribemiddle}{}
 \newcommand{\twocldescribebottom}{}
 \newcommand{\twoclresponsetop}{suit positive} %3 lines of text on right side of 2C divider
-\newcommand{\twoclresponsemiddle}{Cheap 3 2nd neg}
-\newcommand{\twoclresponsebottom}{X, XX bust, pass waiting GF}
+\newcommand{\twoclresponsemiddle}{Cheap 3 2nd neg\pfix{}}
+\newcommand{\twoclresponsebottom}{X, XX bust, pass waiting GF\pfix{}}
 
 \newcommand{\twodlowtext}{6} %2D point range
 \newcommand{\twodhightext}{11}
@@ -197,7 +197,7 @@
 %2H:
 \newcommand{\twohlowtext}{6}
 \newcommand{\twohhightext}{10}
-\newcommand{\twohdescribe}{..."Anything goes"...}
+\newcommand{\twohdescribe}{..."Anything goes"...\pfix{}}
 \newcommand{\twohresponse}{}
 \setboolean{wk2he}{true}
 %\setboolean{in2he}{true}
@@ -208,7 +208,7 @@
 %2S:
 \newcommand{\twoslowtext}{6}
 \newcommand{\twoshightext}{10}
-\newcommand{\twosdescribe}{...style}
+\newcommand{\twosdescribe}{...style\pfix{}}
 \newcommand{\twosresponse}{}
 \setboolean{wk2sp}{true}
 %\setboolean{in2sp}{true}
@@ -221,22 +221,22 @@
 %\setboolean{nmf1w}{true} %1-way new minor
 \newcommand{\nmftext}{}
 \setboolean{nmf2w}{true} %2-way new minor
-\newcommand{\twowaytext}{XYZ/NT}
+\newcommand{\twowaytext}{\hspace{2mm}XYZ/NT}
 %\setboolean{wjsnc}{true} %Weak jump shifts
 \newcommand{\wjstext}{}
 %\setboolean{fsfrd}{true} %Fourth suit
 \setboolean{fsfgf}{true}
 \newcommand{\footnotestop}{Unusual/Unusual (Low/low)} % 3 lines for additional conventions at bottom
 \newcommand{\footnotesmiddle}{Fit J/S: ~LR}
-\newcommand{\footnotesbottom}{Mathe vs Strong minor (but systems on over non-strong ART)}
+\newcommand{\footnotesbottom}{Mathe vs Strong minor (but systems on over non-strong ART)\pfix{}}
 
 %Back of card:
 %\setboolean{penax}{true} %Penalty doubles through...
 \newcommand{\penaxthru}{*} 
 \setboolean{negax}{true} %Negative doubles through...
-\newcommand{\negaxthru}{3\s}
+\newcommand{\negaxthru}{3\,\s}
 \setboolean{respx}{true} %Responsive
-\newcommand{\respxthru}{3\s}
+\newcommand{\respxthru}{3\,\s}
 \setboolean{maxix}{true} %Maximal
 \setboolean{suppx}{true} %Support
 \newcommand{\suppxthru}{2x}
@@ -256,7 +256,7 @@
 %\setboolean{jrfor}{true} %Jump raise...
 %\setboolean{jrinv}{true}
 \setboolean{jrwea}{true}
-\newcommand{\overcalltext}{Top end extended if short in opener's suit} %Other info about simple overcalls
+\newcommand{\overcalltext}{Top end extended if short in opener's suit\pfix{}} %Other info about simple overcalls
 
 % Jump overcalls
 %\setboolean{jostr}{true} %strong
@@ -280,7 +280,7 @@
 \setboolean{qmimi}{true} %michaels
 \setboolean{qmima}{true}
 %\setboolean{qmiar}{true}
-\newcommand{\cuebidtext}{Systems on/Prec D, Polish C, etc} %other cuebid comments
+\newcommand{\cuebidtext}{Systems on/Prec D, Polish C, etc\pfix{}} %other cuebid comments
 
 %Competitive bidding column - NT overcalls
 \newcommand{\directlowtext}{4-8} %range
@@ -290,14 +290,14 @@
 \newcommand{\directconvtext}{\redreg{T/O, low varies by seat/vul}} %info line re direct overcalls
 \newcommand{\ballowtext}{11} %balancing range
 \newcommand{\balhightext}{14}
-%\setboolean{unumi}{true}
-\setboolean{unu2l}{true} %Unusual: minors
-%\setboolean{bntco}{true} %Unusual: 2 lowers
+%\setboolean{unumi}{true} %Unusual: minors
+\setboolean{unu2l}{true} %Unusual: 2 lower
+%\setboolean{bntco}{true}
 \newcommand{\ntconvtext}{} %conventional overcalls (Sandwich etc)
 
 %Defense vs. NT:
 \newcommand{\firstcondition}{} %''vs.'' line, first half
-\newcommand{\firstvstwocl}{\redreg{Majors, 2\d\ asks}} %1NT-2C
+\newcommand{\firstvstwocl}{\redreg{Majors, 2\d\ asks}\pfix{}} %1NT-2C
 \newcommand{\firstvstwodi}{\redreg{\rh{} or }\s{}} %1NT-2D
 \newcommand{\firstvstwohe}{\redreg{5+\rh{} + minor}} %1NT-2H
 \newcommand{\firstvstwosp}{\redreg{5+}\s{} \redreg{+ minor}} %1NT-2S
@@ -307,7 +307,7 @@
 \newcommand{\secondvstwodi}{}
 \newcommand{\secondvstwohe}{\redreg{\rh{} + minor}}
 \newcommand{\secondvstwosp}{\s\ \redreg{+ minor}}
-\newcommand{\secondvsdbl}{Penalty}
+\newcommand{\secondvsdbl}{Penalty\pfix{}}
 \newcommand{\othernttop}{} %two lines of other NT defense info
 \newcommand{\otherntbottom}{}
 
@@ -329,7 +329,7 @@
 
 %vs. opening preempts
 \setboolean{opdto}{true}
-\newcommand{\opdtothru}{4\rh} %Takeout through...
+\newcommand{\opdtothru}{4\,\rh} %Takeout through...
 %\setboolean{oppen}{true}
 \newcommand{\opconvtakeout}{} %Conv Takeout line
 \setboolean{opleb}{true} %Lebensohl
@@ -343,7 +343,7 @@
 \setboolean{dopi}{true}
 \setboolean{depo}{true}
 %\setboolean{ropi}{true}
-\newcommand{\slamtexttop}{1NT-2\s; rebid-new suit RKC} %Two lines for slam convention info
+\newcommand{\slamtexttop}{1NT-2\,\s; rebid-new suit RKC} %Two lines for slam convention info
 \newcommand{\slamtextbottom}{}
 \newcommand{\dopilevel}{5 trump+ } %DOPI/ROPI level
 

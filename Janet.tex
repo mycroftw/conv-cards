@@ -75,7 +75,7 @@
 \setboolean{jac2d}{true}
 %\setboolean{fstay}{true}
 \setboolean{jac2h}{true}
-\newcommand{\ntsptext}{$\rightarrow$ \c\ (gap neg)} %1NT-2S
+\newcommand{\ntsptext}{$\rightarrow$ \c\ (gap neg)\pfix{}} %1NT-2S
 \newcommand{\ntnttext}{$\rightarrow$ \d} %1NT-2NT
 
 %NT openings - 2nd column:
@@ -103,7 +103,7 @@
 \newcommand{\threenlowtext}{} %3NT range
 \newcommand{\threenhightext}{}
 \newcommand{\threenextratext}{} %Blank line in 3NT box
-\newcommand{\convnttext}{3NT Gambling, 0 outside} % Blank lines under 3NT box
+\newcommand{\convnttext}{3NT Gambling, 0 outside\pfix{}} % Blank lines under 3NT box
 \newcommand{\convntextratext}{}
 
 %Major openings:
@@ -176,21 +176,21 @@
 \newcommand{\twochightext}{}
 \newcommand{\twocldescribetop}{2\rh\ rebid Kokish} %3 lines of text on left side of 2C divider
 \newcommand{\twocldescribemiddle}{}
-\newcommand{\twocldescribebottom}{X, XX neg; P wait,GF}
+\newcommand{\twocldescribebottom}{X, XX neg; P wait,GF\pfix{}}
 \newcommand{\twoclresponsetop}{} %3 lines of text on right side of 2C divider
 \newcommand{\twoclresponsemiddle}{}
 \newcommand{\twoclresponsebottom}{}
 
 \newcommand{\twodlowtext}{6} %2D point range
 \newcommand{\twodhightext}{10}
-\newcommand{\twoddescribe}{Sound Style}
+\newcommand{\twoddescribe}{Sound Style\pfix{}}
 \newcommand{\twodresponse}{}
 
 \setboolean{wk2di}{true} %2D weak
 %\setboolean{in2di}{true}
 %\setboolean{st2di}{true}
 %\setboolean{co2di}{true} %2D conventional
-%\setboolean{dintf}{true} %2NT forcing
+\setboolean{dintf}{true} %2NT forcing
 %\setboolean{dnsnf}{true} %new suit NF
 %2H:
 \newcommand{\twohlowtext}{6}
@@ -201,7 +201,7 @@
 %\setboolean{in2he}{true}
 %\setboolean{st2he}{true}
 %\setboolean{co2he}{true}
-%\setboolean{hentf}{true}
+\setboolean{hentf}{true}
 %\setboolean{hnsnf}{true}
 %2S:
 \newcommand{\twoslowtext}{6}
@@ -212,7 +212,7 @@
 %\setboolean{in2sp}{true}
 %\setboolean{st2sp}{true}
 %\setboolean{co2sp}{true}
-%\setboolean{spntf}{true}
+\setboolean{spntf}{true}
 %\setboolean{snsnf}{true}
 
 %Bottom of card:
@@ -254,7 +254,7 @@
 %\setboolean{jrfor}{true} %Jump raise...
 %\setboolean{jrinv}{true}
 \setboolean{jrwea}{true}
-\newcommand{\overcalltext}{Jump Cue = Mixed Raise} %Other info about simple overcalls
+\newcommand{\overcalltext}{Jump Cue = Mixed Raise\pfix{}} %Other info about simple overcalls
 
 % Jump overcalls
 %\setboolean{jostr}{true} %strong
@@ -282,7 +282,7 @@
 
 %Competitive bidding column - NT overcalls
 \newcommand{\directlowtext}{15+} %range
-\newcommand{\directhightext}{19}
+\newcommand{\directhightext}{18}
 \setboolean{syson}{true} %systems on
 %\setboolean{dntco}{true}
 \newcommand{\directconvtext}{} %info line re direct overcalls
@@ -291,23 +291,23 @@
 %\setboolean{unumi}{true}
 \setboolean{unu2l}{true} %Unusual: minors
 %\setboolean{bntco}{true} %Unusual: 2 lowers
-\newcommand{\ntconvtext}{cue=Stayman/BAL NTO} %conventional overcalls (sandwich etc)
+\newcommand{\ntconvtext}{cue=Stayman/BAL NTO\pfix{}} %conventional overcalls (sandwich etc)
 
 %Defense vs. NT:
 \newcommand{\firstcondition}{} %''vs.'' line, first half
-\newcommand{\firstvstwocl}{\redreg{\d\ or Major + minor}} %1NT-2C
+\newcommand{\firstvstwocl}{\redreg{\d\ or Major + minor}\pfix{}} %1NT-2C
 \newcommand{\firstvstwodi}{\redreg{Hearts}} %1NT-2D
-\newcommand{\firstvstwohe}{\redreg{Majors}} %1NT-2H
-\newcommand{\firstvstwosp}{Spades} %1NT-2S
-\newcommand{\firstvsdbl}{Penalty} %1NT-X
+\newcommand{\firstvstwohe}{\redreg{Majors}\pfix{}} %1NT-2H
+\newcommand{\firstvstwosp}{Spades\pfix{}} %1NT-2S
+\newcommand{\firstvsdbl}{Penalty\pfix{}} %1NT-X
 \newcommand{\secondcondition}{} %the same six lines, right half
 \newcommand{\secondvstwocl}{}
 \newcommand{\secondvstwodi}{}
 \newcommand{\secondvstwohe}{}
 \newcommand{\secondvstwosp}{}
 \newcommand{\secondvsdbl}{}
-\newcommand{\othernttop}{\redreg{2NT=Clubs; 3\,\c{}=minors;}} %two lines of other NT defense info
-\newcommand{\otherntbottom}{\redreg{3\,\rd{}=Majors, strong}}
+\newcommand{\othernttop}{\redreg{2NT=Clubs; 3\,\c{}=minors;}\xfix{}} %two lines of other NT defense info
+\newcommand{\otherntbottom}{\redreg{3\,\rd{}=Majors, strong}\pfix{}}
 
 %Over opp's takeout double
 \setboolean{nsf1l}{true} %New suit forcing?
