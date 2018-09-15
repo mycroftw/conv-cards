@@ -51,27 +51,27 @@
 \newcommand{\playernumber}{8550794}
 
 %General approach:
-\newcommand{\generalapproach}{Kaplan/Sheinwold, Keri/NT, 1NT O/C takeout}
+\newcommand{\generalapproach}{Phantom Club Normal: WARNING not GCC legal}
 %\setboolean{gf}{true} %2/1 Game Forcing
-\setboolean{gfewsr}{true}
-%\setboolean{vlop}{true} %Very light...
+%\setboolean{gfewsr}{true}
+\setboolean{vlop}{true} %Very light...
 %\setboolean{vl3h}{true}
 %\setboolean{vloc}{true}
 %\setboolean{vlpr}{true}
-%\setboolean{fo1c}{true} %Forcing openings...
-\setboolean{fo2c}{true}
+\setboolean{fo1c}{true} %Forcing openings...
+%\setboolean{fo2c}{true}
 %\setboolean{fon2b}{true}
-\setboolean{foother}{true}
-\newcommand{\foothertext}{\hspace{2mm}4\,\c{}, 4\,\rd}%Other forcing opening bids
+%\setboolean{foother}{true}
+\newcommand{\foothertext}{}%Other forcing opening bids
 
 %Notrump openings:
 %First column:
-\newcommand{\ntlowtext}{(11++)12} %NT range
-\newcommand{\nthightext}{14}
+\newcommand{\ntlowtext}{15+} %NT range
+\newcommand{\nthightext}{18}
 \newcommand{\altntlowtext}{} %If variable NT, second range here
 \newcommand{\altnthightext}{}
 %\setboolean{nt5cm}{true}
-\newcommand{\sysontext}{2\,\c} %Systems on after 1NT-(X), 2\c, etc...
+\newcommand{\sysontext}{X,2\,\c} %Systems on after 1NT-(X), 2\c, etc...
 %\setboolean{staym}{true}
 %\setboolean{puppe}{true}
 \setboolean{jac2d}{true}
@@ -95,17 +95,17 @@
 \newcommand{\ntothertext}{2\c\ \redreg{scramble rescues}} %Other conventions over 1NT
 
 %2NT/3NT openings
-\newcommand{\twonlowtext}{20}
-\newcommand{\twonhightext}{21}
+\newcommand{\twonlowtext}{}
+\newcommand{\twonhightext}{}
 %\setboolean{pup2n}{true}
-\setboolean{jac2n}{true}
-\setboolean{tex2n}{true} 
-\newcommand{\twonsptext}{\redreg{$\rightarrow$ 3NT, 1- or 2-m ST}} %2NT-3S
+%\setboolean{jac2n}{true}
+%\setboolean{tex2n}{true}
+\newcommand{\twonsptext}{} %2NT-3S
 \newcommand{\twonextratext}{} %Blank line in 2NT box
 \newcommand{\threenlowtext}{} %3NT range
 \newcommand{\threenhightext}{}
 \newcommand{\threenextratext}{\redreg{3NT 4m PRE (broken m)}}  %Blank line in 3NT box
-\newcommand{\convnttext}{} % Blank lines under 3NT box
+\newcommand{\convnttext}{2NT Minors, 5--11} % Blank lines under 3NT box
 \newcommand{\convntextratext}{}
 
 %Major openings:
@@ -114,13 +114,13 @@
 \setboolean{h12l5}{true}
 \setboolean{h34l5}{true}
 %\setboolean{dblrf}{true} %double raise
-\setboolean{dblri}{true}
-%\setboolean{dblrw}{true}
+%\setboolean{dblri}{true}
+\setboolean{dblrw}{true}
 %\setboolean{ocdrf}{true} %double raise in comp
 %\setboolean{ocdri}{true}
 \setboolean{ocdrw}{true}
-\setboolean{ra2nt}{true} %Jacoby
-\setboolean{ra3nt}{true} %1M-3NT
+%\setboolean{ra2nt}{true} %Jacoby
+%\setboolean{ra3nt}{true} %1M-3NT
 \setboolean{raspl}{true} %Splinter
 \newcommand{\majraisetext}{\redreg{Fit J/S}} %Text line for Bergen, fitjumps, etc
 \setboolean{ntfor}{true} %1NT forcing
@@ -136,17 +136,17 @@
 \setboolean{drrev}{true}
 %\setboolean{dr2wy}{true}
 \setboolean{drfit}{true}
-\newcommand{\majothertext}{\redreg{Kokish GT}, \redreg{Frivolous 3NT}} %Other major methods: HSGT, Mathe asking bid, etc
+\newcommand{\majothertext}{2,\c{} drury by UPH, FitJ/S} %Other major methods: HSGT, Mathe asking bid, etc
 
 %Minor openings:
 %\setboolean{club4}{true} %1C length
-\setboolean{club3}{true}
+%\setboolean{club3}{true}
 %\setboolean{cl2nf}{true}
-%\setboolean{clcon}{true}
-\newcommand{\clopennote}{1m sound or 6+} % Insert text in blank space next to 1C
-\newcommand{\diopennote}{4+ or 4=4=3=2} % Insert text in blank space next to 1D e.g. ``4 unless 4-4-3-2'' 
-%\setboolean{diam4}{true} %1D length
-\setboolean{diam3}{true}
+\setboolean{clcon}{true}
+\newcommand{\clopennote}{15+ or t/o \c} % Insert text in blank space next to 1C
+\newcommand{\diopennote}{usually 5+} % Insert text in blank space next to 1D e.g. ``4 unless 4-4-3-2''
+\setboolean{diam4}{true} %1D length
+%\setboolean{diam3}{true}
 %\setboolean{di2nf}{true}
 %\setboolean{dicon}{true}
 %\setboolean{midrf}{true} %double raise
@@ -156,10 +156,10 @@
 %\setboolean{modri}{true}
 \setboolean{modrw}{true}
 %\setboolean{jsomi}{true} %JS in other minor
-\setboolean{inver}{true} %Inverted raise
-\newcommand{\minraisetext}{Limit+} %Textbox next to inverted raise
-\setboolean{bypas}{true}
-\newcommand{\minonenlowtext}{8 (6/\rd)} %1C-1NT range
+%\setboolean{inver}{true} %Inverted raise
+\newcommand{\minraisetext}{} %Textbox next to inverted raise
+%\setboolean{bypas}{true}
+\newcommand{\minonenlowtext}{8} %1C-1NT range
 \newcommand{\minonenhightext}{10-}
 %\setboolean{m2ntf}{true} %1C-2NT
 \setboolean{m2nti}{true}
@@ -167,25 +167,25 @@
 \newcommand{\mintwonhightext}{12}
 \newcommand{\minthreenlowtext}{13}
 \newcommand{\minthreenhightext}{15}
-\newcommand{\minothertext}{\redreg{Fit J/S}} %Other minor suit methods (1m-3M splinter etc)
+\newcommand{\minothertext}{2,\c{} / 1\rd{\d} Limit+, FJS/\rd{\d}} %Other minor suit methods (1m-3M splinter etc)
 
 %2-bids
-\setboolean{st2cl}{true} %2C strong?
+%\setboolean{st2cl}{true} %2C strong?
 %\setboolean{ot2cl}{true}
 %\setboolean{neg2d}{true} %2D neg or waiting?
-\setboolean{wai2d}{true}
-\newcommand{\twoclowtext}{22+} %2C point range
-\newcommand{\twochightext}{}
-\newcommand{\twocldescribetop}{or 8.5+ PT w/defence} %3 lines of text on left side of 2C divider
+%\setboolean{wai2d}{true}
+\newcommand{\twoclowtext}{5} %2C point range
+\newcommand{\twochightext}{14}
+\newcommand{\twocldescribetop}{5=5+ Majors} %3 lines of text on left side of 2C divider
 \newcommand{\twocldescribemiddle}{}
 \newcommand{\twocldescribebottom}{}
-\newcommand{\twoclresponsetop}{suit positive} %3 lines of text on right side of 2C divider
-\newcommand{\twoclresponsemiddle}{Cheap 3 2nd neg\pfix{}}
-\newcommand{\twoclresponsebottom}{X, XX bust, pass waiting GF\pfix{}}
+\newcommand{\twoclresponsetop}{} %3 lines of text on right side of 2C divider
+\newcommand{\twoclresponsemiddle}{}
+\newcommand{\twoclresponsebottom}{}
 
-\newcommand{\twodlowtext}{6} %2D point range
-\newcommand{\twodhightext}{11}
-\newcommand{\twoddescribe}{6 cards, ...}
+\newcommand{\twodlowtext}{3} %2D point range
+\newcommand{\twodhightext}{8}
+\newcommand{\twoddescribe}{6 cards, \ldots}
 \newcommand{\twodresponse}{Ogust, RONF}
 
 \setboolean{wk2di}{true} %2D weak
@@ -195,9 +195,9 @@
 \setboolean{dintf}{true} %2NT forcing
 %\setboolean{dnsnf}{true} %new suit NF
 %2H:
-\newcommand{\twohlowtext}{6}
-\newcommand{\twohhightext}{10}
-\newcommand{\twohdescribe}{..."Anything goes"...\pfix{}}
+\newcommand{\twohlowtext}{3}
+\newcommand{\twohhightext}{8}
+\newcommand{\twohdescribe}{\ldots"Anything goes"\ldots\pfix{}}
 \newcommand{\twohresponse}{}
 \setboolean{wk2he}{true}
 %\setboolean{in2he}{true}
@@ -206,9 +206,9 @@
 \setboolean{hentf}{true}
 %\setboolean{hnsnf}{true}
 %2S:
-\newcommand{\twoslowtext}{6}
-\newcommand{\twoshightext}{10}
-\newcommand{\twosdescribe}{...style\pfix{}}
+\newcommand{\twoslowtext}{3}
+\newcommand{\twoshightext}{8}
+\newcommand{\twosdescribe}{\ldots\ style\pfix{}}
 \newcommand{\twosresponse}{}
 \setboolean{wk2sp}{true}
 %\setboolean{in2sp}{true}
@@ -301,7 +301,7 @@
 \newcommand{\firstvstwodi}{\redreg{\rh{} or }\s{}} %1NT-2D
 \newcommand{\firstvstwohe}{\redreg{5+\rh{} + minor}} %1NT-2H
 \newcommand{\firstvstwosp}{\redreg{5+}\s{} \redreg{+ minor}} %1NT-2S
-\newcommand{\firstvsdbl}{\redreg{usu. 4M + 5+m}} %1NT-X
+\newcommand{\firstvsdbl}{\redreg{usu.\ 4M + 5+m}} %1NT-X
 \newcommand{\secondcondition}{If max <16} %the same six lines, right half
 \newcommand{\secondvstwocl}{}
 \newcommand{\secondvstwodi}{}
