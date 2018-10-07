@@ -76,13 +76,13 @@
 %\setboolean{fstay}{true}
 \setboolean{jac2h}{true}
 \newcommand{\ntsptext}{$\rightarrow$ \c\ (gap neg)\pfix{}} %1NT-2S
-\newcommand{\ntnttext}{$\rightarrow$ \d} %1NT-2NT
+\newcommand{\ntnttext}{$\rightarrow$ \rd} %1NT-2NT
 
 %NT openings - 2nd column:
-\newcommand{\ntcjumptext}{5-5 minors weak} %1NT-3C
-\newcommand{\ntdjumptext}{5-5 minors GF}
-\newcommand{\nthjumptext}{3=1-(54)}
-\newcommand{\ntsjumptext}{1=3-(54)} %1NT-3S
+\newcommand{\ntcjumptext}{\redreg{5-5 minors weak}} %1NT-3C
+\newcommand{\ntdjumptext}{\redreg{5-5 minors GF}}
+\newcommand{\nthjumptext}{\redreg{3=1-(54)}}
+\newcommand{\ntsjumptext}{\redreg{1=3-(54)}} %1NT-3S
 \newcommand{\ntextratext}{} %Blank line next to puppet Stayman
 \setboolean{texas}{true}
 \setboolean{smole}{true}
@@ -90,7 +90,7 @@
 \newcommand{\ntlebentext}{fast} %Lebensohl: Fast or slow denies?
 \setboolean{ntneg}{true}
 \newcommand{\ntnegtext}{} %Negative doubles over 1NT?
-\newcommand{\ntothertext}{DONT runout/PEN X (P to play)\pfix{}} %Other conventions over 1NT
+\newcommand{\ntothertext}{\redreg{DONT runout/PEN X (P to play)\pfix{}}} %Other conventions over 1NT
 
 %2NT/3NT openings
 \newcommand{\twonlowtext}{20}
@@ -98,12 +98,12 @@
 %\setboolean{pup2n}{true}
 \setboolean{jac2n}{true}
 \setboolean{tex2n}{true}
-\newcommand{\twonsptext}{1- or 2-minor} %2NT-3S
-\newcommand{\twonextratext}{slam try} %Blank line in 2NT box
+\newcommand{\twonsptext}{\hspace{-1mm}\redreg{1- or 2-minor slam try}\pfix{}} %2NT-3S
+\newcommand{\twonextratext}{} %Blank line in 2NT box
 \newcommand{\threenlowtext}{} %3NT range
 \newcommand{\threenhightext}{}
 \newcommand{\threenextratext}{} %Blank line in 3NT box
-\newcommand{\convnttext}{3NT Gambling, 0 outside\pfix{}} % Blank lines under 3NT box
+\newcommand{\convnttext}{\hspace{-2mm}\redreg{3NT Gambling, 0 outside}\pfix{}} % Blank lines under 3NT box
 \newcommand{\convntextratext}{}
 
 %Major openings:
@@ -120,7 +120,7 @@
 \setboolean{ra2nt}{true} %Jacoby
 \setboolean{ra3nt}{true} %1M-3NT
 \setboolean{raspl}{true} %Splinter
-\newcommand{\majraisetext}{Fit J/S, Kokish GT} %Text line for Bergen, fitjumps, etc
+\newcommand{\majraisetext}{\redreg{Fit J/S, Kokish GT}} %Text line for Bergen, fitjumps, etc
 \setboolean{ntfor}{true} %1NT forcing
 %\setboolean{ntsem}{true} %1NT semiforcing
 \setboolean{twonf}{true}
@@ -224,8 +224,8 @@
 \newcommand{\wjstext}{}
 %\setboolean{fsfrd}{true} %Fourth suit
 \setboolean{fsfgf}{true}
-\newcommand{\footnotestop}{NT Defence (Hello) vs NT Overcalls\hspace{5mm}Ingbermann/Rev (2M/2\rd)} % 3 lines for additional conventions at bottom
-\newcommand{\footnotesmiddle}{Unusual v.\ Unusual (Low shows Low)}
+\newcommand{\footnotestop}{NT Defence (Hello) vs NT Overcalls\hspace{5mm}Ingbermann/Rev (2M/2\rd)\pfix{}} % 3 lines for additional conventions at bottom
+\newcommand{\footnotesmiddle}{Unusual v.\ Unusual (Low shows Low)\pfix{}}
 \newcommand{\footnotesbottom}{}
 
 %Back of card:
@@ -237,14 +237,14 @@
 \newcommand{\respxthru}{7\,\rh}
 \setboolean{maxix}{true} %Maximal
 \setboolean{suppx}{true} %Support
-\newcommand{\suppxthru}{2x}
+\newcommand{\suppxthru}{\redreg{2x}}
 %\setboolean{supxx}{true} %Support redouble
 %\setboolean{cardx}{true}
 %\setboolean{ostox}{true}
 \newcommand{\doubletext}{} %Other special doubles
 
 %Simple overcalls:
-\newcommand{\oclowtext}{7+} %point range
+\newcommand{\oclowtext}{7 +} %point range
 \newcommand{\ochightext}{}
 %\setboolean{oc4cd}{true}
 %\setboolean{ocvls}{true}
@@ -306,7 +306,7 @@
 \newcommand{\secondvstwohe}{}
 \newcommand{\secondvstwosp}{}
 \newcommand{\secondvsdbl}{}
-\newcommand{\othernttop}{\redreg{2NT=Clubs;\ 3\,\c{}=minors;}\xfix{}} %two lines of other NT defense info
+\newcommand{\othernttop}{\redreg{2NT=Clubs;\ 3\,\c{}=minors;}\pfix{}} %two lines of other NT defense info
 \newcommand{\otherntbottom}{\redreg{3\,\rd{}=Majors, strong}\pfix{}}
 
 %Over opp's takeout double
