@@ -10,3 +10,6 @@
 *.fot
 *.cb
 *.cb2
+*.dvi
+*.*latexmk
+*.ps
