@@ -175,8 +175,8 @@
 \setboolean{wai2d}{true}
 \newcommand{\twoclowtext}{22} %2C point range
 \newcommand{\twochightext}{+}
-\newcommand{\twocldescribetop}{or 8.5 PT w/Def} %3 lines of text on left side of 2C divider
-\newcommand{\twocldescribemiddle}{}
+\newcommand{\twocldescribetop}{} %3 lines of text on left side of 2C divider
+\newcommand{\twocldescribemiddle}{or 8.5 PT w/Def}
 \newcommand{\twocldescribebottom}{}
 \newcommand{\twoclresponsetop}{2 \rh\ U-Neg\pfix} %3 lines of text on right side of 2C divider
 \newcommand{\twoclresponsemiddle}{2NT = \rh}
@@ -225,7 +225,7 @@
 \newcommand{\wjstext}{}
 %\setboolean{fsfrd}{true} %Fourth suit
 \setboolean{fsfgf}{true}
-\newcommand{\footnotestop}{Unusual v. Unusual (Low shows Low)} % 3 lines for additional conventions at bottom
+\newcommand{\footnotestop}{Unusual v.\ Unusual (Low shows Low)} % 3 lines for additional conventions at bottom
 \newcommand{\footnotesmiddle}{}
 \newcommand{\footnotesbottom}{}
 
@@ -296,11 +296,11 @@
 
 %Defense vs. NT:
 \newcommand{\firstcondition}{} %''vs.'' line, first half
-\newcommand{\firstvstwocl}{\redreg{\c\ + Higher\}pfix} %1NT-2C
+\newcommand{\firstvstwocl}{\c\ \redreg{+ Higher}\pfix} %1NT-2C
 \newcommand{\firstvstwodi}{\redreg{\rd\ + Major}\pfix} %1NT-2D
 \newcommand{\firstvstwohe}{\regtext{Hearts}} %1NT-2H
 \newcommand{\firstvstwosp}{\regtext{Spades}\pfix} %1NT-2S
-\newcommand{\firstvsdbl}{\redreg{one minor or both Majors}\pfix} %1NT-X
+\newcommand{\firstvsdbl}{\c\ \redreg{or \rd\ or \rh\ + }\s\pfix} %1NT-X
 \newcommand{\secondcondition}{} %the same six lines, right half
 \newcommand{\secondvstwocl}{}
 \newcommand{\secondvstwodi}{}
@@ -344,7 +344,7 @@
 %\setboolean{ropi}{true}
 \newcommand{\slamtexttop}{Gerber: first and last NT only\pfix} %Two lines for slam convention info
 \newcommand{\slamtextbottom}{}
-\newcommand{\dopilevel}{5 x} %DOPI/ROPI level
+\newcommand{\dopilevel}{\hspace{-20mm}5 x} %DOPI/ROPI level
 
 %Carding:
 
