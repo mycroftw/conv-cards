@@ -1,1 +1,1 @@
-$pdf_previewer = "start evince %O %S"
+$pdf_previewer = "SumatraPDF %O %S"
