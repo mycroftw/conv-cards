@@ -1,9 +1,14 @@
 <component name="ProjectDictionaryState">
   <dictionary name="mycroft">
     <words>
+      <w>acbl</w>
+      <w>alertable</w>
+      <w>announceable</w>
       <w>bypas</w>
       <w>cardx</w>
+      <w>conv</w>
       <w>dblri</w>
+      <w>dblrw</w>
       <w>depo</w>
       <w>dintf</w>
       <w>dntco</w>
@@ -14,11 +19,14 @@
       <w>farebrother</w>
       <w>foother</w>
       <w>fsfgf</w>
+      <w>gerbe</w>
       <w>gfewsr</w>
+      <w>grbccemf</w>
       <w>hentf</w>
       <w>inver</w>
       <w>jowea</w>
       <w>jrwea</w>
+      <w>jsomi</w>
       <w>jswea</w>
       <w>kaplan</w>
       <w>kokish</w>
@@ -33,6 +41,7 @@
       <w>modrw</w>
       <w>negax</w>
       <w>nsfor</w>
+      <w>nsnfc</w>
       <w>ntfor</w>
       <w>ntneg</w>
       <w>ocdrw</w>
@@ -47,9 +56,11 @@
       <w>raspl</w>
       <w>respx</w>
       <w>ronf</w>
+      <w>ropi</w>
       <w>serafini</w>
       <w>sheinwold</w>
       <w>smint</w>
+      <w>smole</w>
       <w>speci</w>
       <w>splinter</w>
       <w>spntf</w>
@@ -63,7 +74,9 @@
       <w>udasu</w>
       <w>udcnt</w>
       <w>udcsu</w>
+      <w>wjsnc</w>
       <w>xximp</w>
+      <w>xynt</w>
     </words>
   </dictionary>
 </component>
