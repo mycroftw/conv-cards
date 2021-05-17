@@ -43,7 +43,7 @@
 %If you use the default, you may choose to circle none, \newcommand{\TNxx}{}
 
 %You WILL get errors if you delete any \newcommand statements!
-%If you lead the default card, you may use \newcommand}{cardcombination}{}.
+%If you lead the default card, you may use \newcommand{cardcombination}{}.
 
 \newcommand{\names}{Michael Farebrother --- Doug Mann}
 \newcommand{\playernumber}{Q550794 --- }
@@ -69,14 +69,14 @@
 \newcommand{\altntlowtext}{} %If variable NT, second range here
 \newcommand{\altnthightext}{}
 %\setboolean{nt5cm}{true}
-\newcommand{\sysontext}{X, 2\c} %Systems on after 1NT-(X), 2\c, etc...
+\newcommand{\sysontext}{X, 2\ \c} %Systems on after 1NT-(X), 2\c, etc...
 \setboolean{staym}{true}
 %\setboolean{puppe}{true}
 \setboolean{jac2d}{true}
 %\setboolean{fstay}{true}
 \setboolean{jac2h}{true}
-\newcommand{\ntsptext}{\c (gap neg)} %1NT-2S
-\newcommand{\ntnttext}{\d (gap neg)} %1NT-2NT
+\newcommand{\ntsptext}{\c\ \redreg{(gap neg)}\pfix} %1NT-2S
+\newcommand{\ntnttext}{\rd\ \redreg{(gap neg)}\pfix} %1NT-2NT
 
 %NT openings - 2nd column:
 \newcommand{\ntcjumptext}{\redreg{5-5 minors weak}} %1NT-3C
@@ -103,7 +103,7 @@
 \newcommand{\threenlowtext}{} %3NT range
 \newcommand{\threenhightext}{}
 \newcommand{\threenextratext}{} %Blank line in 3NT box
-\newcommand{\convnttext}{3NT Gambling, 0 o/s} % Blank lines under 3NT box
+\newcommand{\convnttext}{3NT Gambling, 0 o/s\pfix} % Blank lines under 3NT box
 \newcommand{\convntextratext}{}
 
 %Major openings:
@@ -184,7 +184,7 @@
 \newcommand{\twodlowtext}{6} %2D point range
 \newcommand{\twodhightext}{11}
 \newcommand{\twoddescribe}{}
-\newcommand{\twodresponse}{Feature ask (3NT only)}
+\newcommand{\twodresponse}{Feature ask (3NT only)\pfix}
 
 \setboolean{wk2di}{true} %2D weak
 %\setboolean{in2di}{true}
@@ -196,7 +196,7 @@
 \newcommand{\twohlowtext}{5}
 \newcommand{\twohhightext}{10}
 \newcommand{\twohdescribe}{}
-\newcommand{\twohresponse}{2NT: 3x short, 3NT Feature}
+\newcommand{\twohresponse}{2NT: 3x short, 3NT Feature\pfix}
 \setboolean{wk2he}{true}
 %\setboolean{in2he}{true}
 %\setboolean{st2he}{true}
@@ -207,7 +207,7 @@
 \newcommand{\twoslowtext}{5}
 \newcommand{\twoshightext}{10}
 \newcommand{\twosdescribe}{}
-\newcommand{\twosresponse}{2NT: 3x short, 3NT Feature}
+\newcommand{\twosresponse}{2NT: 3x short, 3NT Feature\pfix}
 \setboolean{wk2sp}{true}
 %\setboolean{in2sp}{true}
 %\setboolean{st2sp}{true}
@@ -226,7 +226,7 @@
 \setboolean{fsfgf}{true}
 \newcommand{\footnotestop}{Unusual v.\ Unusual (Low shows Low)} % 3 lines for additional conventions at bottom
 \newcommand{\footnotesmiddle}{}
-\newcommand{\footnotesbottom}{CRaSh vs strong or "CBS" 1m}
+\newcommand{\footnotesbottom}{CRaSh vs strong or "could be short" 1m\pfix}
 
 %Back of card:
 %\setboolean{penax}{true} %Penalty doubles through...
@@ -254,7 +254,7 @@
 %\setboolean{jrfor}{true} %Jump raise...
 %\setboolean{jrinv}{true}
 \setboolean{jrwea}{true}
-\newcommand{\overcalltext}{Cue = F1, Jump cue if possible: LR}
+\newcommand{\overcalltext}{Cue = F1, Jump cue if possible: LR\pfix}
 
 % Jump overcalls
 %\setboolean{jostr}{true} %strong
@@ -285,7 +285,7 @@
 \newcommand{\directhightext}{18}
 \setboolean{syson}{true} %systems on
 %\setboolean{dntco}{true}
-\newcommand{\directconvtext}{} %info line re direct overcalls
+\newcommand{\directconvtext}{} %info line re: direct overcalls
 \newcommand{\ballowtext}{11} %balancing range
 \newcommand{\balhightext}{14}
 %\setboolean{unumi}{true} %Unusual: minors
@@ -295,7 +295,7 @@
 
 %Defense vs. NT:
 \newcommand{\firstcondition}{} %''vs.'' line, first half
-\newcommand{\firstvstwocl}{\redreg{\rd or M+m}} %1NT-2C
+\newcommand{\firstvstwocl}{\redreg{\rd\ or M+m}} %1NT-2C
 \newcommand{\firstvstwodi}{\bluereg{Hearts}} %1NT-2D
 \newcommand{\firstvstwohe}{\redreg{Majors\pfix}} %1NT-2H
 \newcommand{\firstvstwosp}{\regtext{Spades\pfix}} %1NT-2S
@@ -306,7 +306,7 @@
 \newcommand{\secondvstwohe}{}
 \newcommand{\secondvstwosp}{}
 \newcommand{\secondvsdbl}{}
-\newcommand{\othernttop}{\bluereg{2NT=\c\,}\redreg{ 3\c minors, 3\d Majors\pfix}} %two lines of other NT defense info
+\newcommand{\othernttop}{\bluereg{2NT=\c,}\redreg{\ 3\c\ minors, 3\d\ Majors\pfix}} %two lines of other NT defense info
 \newcommand{\otherntbottom}{}
 
 %Over opp's takeout double
