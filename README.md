@@ -16,4 +16,3 @@ Permission to use any of the tex files as a template for your own cards granted,
    - Version date and advertising for GRB and LaTeX.
  - grbccemf.sty is a special "template" that tweaks the base card for South African Texas:
    - 4C transfers to Hearts, 4D to spades
-   - Red Alertable rather than Blue Announceable
