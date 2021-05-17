@@ -9,7 +9,7 @@
 %grbcce requires the following packages: tikz, txfonts, microtype, ifthen, xstring
 
 \documentclass[12pt]{article}
-%the card is 8'' wide so the margins are very narrow to fit on letter size paper:
+%the card is 8'' wide, so the margins are very narrow to fit on letter size paper:
 %\usepackage{grbcce}
 \usepackage{grbccemf}
 \usepackage[left=5mm,right=5mm,top=5mm]{geometry}
@@ -39,7 +39,7 @@
 
 %To specify what card you lead from a given holding, indicate that card's
 %POSITION in the given sequence:
-%e.g. if you lead T from KJTx, \newcommand}{\KTJx}{3}
+%e.g. if you lead T from KJTx, \newcommand{\KTJx}{3}
 %You MAY circle more than one card if you wish. e.g., \newcommand{\TNxx}{14}
 
 %You WILL get errors if you delete any \newcommand statements!
@@ -62,7 +62,7 @@
 \setboolean{fo2c}{true}
 %\setboolean{fon2b}{true}
 \setboolean{foother}{true}
-\newcommand{\foothertext}{\hspace{2mm}4\,\c{}, 4\,\rd}%Other forcing opening bids
+\newcommand{\foothertext}{\hspace{2mm}4\,\regtext{\c{}}, 4\,\rd}%Other forcing opening bids
 
 %Notrump openings:
 %First column:
@@ -86,25 +86,25 @@
 \newcommand{\nthjumptext}{\s{} \redreg{splinter}\pfix{}}
 \newcommand{\ntsjumptext}{\c{} \redreg{splinter}\pfix{}} %1NT-3S
 \newcommand{\ntextratext}{2\,\c{} \redreg{Keri: \rd{} or INV+}} %Blank line next to puppet stayman
-\setboolean{texas}{true} 
+\setboolean{texas}{true}
 %\setboolean{smole}{true}
 \setboolean{leben}{true}
 \newcommand{\ntlebentext}{fast} %Lebensohl: Fast or slow denies?
 \setboolean{ntneg}{true}
 \newcommand{\ntnegtext}{} %Negative doubles over 1NT?
-\newcommand{\ntothertext}{2\c\ \redreg{scramble rescues}} %Other conventions over 1NT
+\newcommand{\ntothertext}{2\,\c\ \redreg{scramble rescues}} %Other conventions over 1NT
 
 %2NT/3NT openings
 \newcommand{\twonlowtext}{20}
 \newcommand{\twonhightext}{21}
 %\setboolean{pup2n}{true}
 \setboolean{jac2n}{true}
-\setboolean{tex2n}{true} 
+\setboolean{tex2n}{true}
 \newcommand{\twonsptext}{\redreg{$\rightarrow$ 3NT, 1- or 2-m ST}} %2NT-3S
 \newcommand{\twonextratext}{} %Blank line in 2NT box
 \newcommand{\threenlowtext}{} %3NT range
 \newcommand{\threenhightext}{}
-\newcommand{\threenextratext}{\redreg{3NT 4m PRE (broken m)}}  %Blank line in 3NT box
+\newcommand{\threenextratext}{\redreg{3NT 4m PRE (broken m)\pfix}}  %Blank line in 3NT box
 \newcommand{\convnttext}{} % Blank lines under 3NT box
 \newcommand{\convntextratext}{}
 
@@ -144,8 +144,8 @@
 %\setboolean{cl2nf}{true}
 %\setboolean{clcon}{true}
 \newcommand{\clopennote}{1m sound or 6+} % Insert text in blank space next to 1C
-\newcommand{\diopennote}{4+ or 4=4=3=2} % Insert text in blank space next to 1D e.g. ``4 unless 4-4-3-2'' 
-%\setboolean{diam4}{true} %1D length
+\newcommand{\diopennote}{4+ or 4=4=3=2} % Insert text in blank space next to 1D e.g. ``4 unless 4-4-3-2''
+\setboolean{diam4}{true} %1D length
 \setboolean{diam3}{true}
 %\setboolean{di2nf}{true}
 %\setboolean{dicon}{true}
@@ -157,7 +157,7 @@
 \setboolean{modrw}{true}
 %\setboolean{jsomi}{true} %JS in other minor
 \setboolean{inver}{true} %Inverted raise
-\newcommand{\minraisetext}{Limit+} %Textbox next to inverted raise
+\newcommand{\minraisetext}{\redreg{Limit+}} %Textbox next to inverted raise
 \setboolean{bypas}{true}
 \newcommand{\minonenlowtext}{8 (6/\rd)} %1C-1NT range
 \newcommand{\minonenhightext}{10-}
@@ -221,29 +221,29 @@
 %\setboolean{nmf1w}{true} %1-way new minor
 \newcommand{\nmftext}{}
 \setboolean{nmf2w}{true} %2-way new minor
-\newcommand{\twowaytext}{\hspace{2mm}XYZ/NT}
+\newcommand{\twowaytext}{\hspace{2mm}\redreg{XYZ/NT}}
 %\setboolean{wjsnc}{true} %Weak jump shifts
 \newcommand{\wjstext}{}
 %\setboolean{fsfrd}{true} %Fourth suit
 \setboolean{fsfgf}{true}
 \newcommand{\footnotestop}{Unusual/Unusual (Low/low)} % 3 lines for additional conventions at bottom
-\newcommand{\footnotesmiddle}{Fit J/S: ~LR}
+\newcommand{\footnotesmiddle}{Fit J/S: \~\,LR}
 \newcommand{\footnotesbottom}{Mathe vs Strong minor (but systems on over non-strong ART)\pfix{}}
 
 %Back of card:
 %\setboolean{penax}{true} %Penalty doubles through...
-\newcommand{\penaxthru}{*} 
+\newcommand{\penaxthru}{}
 \setboolean{negax}{true} %Negative doubles through...
 \newcommand{\negaxthru}{3\,\s}
 \setboolean{respx}{true} %Responsive
 \newcommand{\respxthru}{3\,\s}
 \setboolean{maxix}{true} %Maximal
 \setboolean{suppx}{true} %Support
-\newcommand{\suppxthru}{2x}
+\newcommand{\suppxthru}{2\,x}
 \setboolean{supxx}{true} %Support redouble
 \setboolean{cardx}{true}
 %\setboolean{ostox}{true}
-\newcommand{\doubletext}{* Power X, 15+ "any"} %Other special doubles
+\newcommand{\doubletext}{\hspace*{-18mm}\boldtext{Power X/1\,x opening}} %Other special doubles
 
 %Simple overcalls:
 \newcommand{\oclowtext}{8+} %point range
@@ -266,9 +266,9 @@
 
 % Opening preempts
 %\setboolean{prsou}{true} %sound -- rule of 2/3/4
-\setboolean{prlig}{true} %light 
+\setboolean{prlig}{true} %light
 \setboolean{prver}{true} %very light
-\newcommand{\preempttext}{} %other info about preempts
+\newcommand{\preempttext}{\bluereg{4m->M}\redreg{, 4M weaker}} %other info about preempts
 
 %Direct cuebid
 %\setboolean{qnami}{true} %natural...
@@ -280,14 +280,14 @@
 \setboolean{qmimi}{true} %michaels
 \setboolean{qmima}{true}
 %\setboolean{qmiar}{true}
-\newcommand{\cuebidtext}{Systems on/Prec D, Polish C, etc\pfix{}} %other cuebid comments
+\newcommand{\cuebidtext}{Systems on/Prec. D, Polish C, etc.\pfix{}} %other cuebid comments
 
 %Competitive bidding column - NT overcalls
 \newcommand{\directlowtext}{4-8} %range
-\newcommand{\directhightext}{14(16)}
+\newcommand{\directhightext}{14(16)\pfix}
 %\setboolean{syson}{true} %systems on
 \setboolean{dntco}{true}
-\newcommand{\directconvtext}{\redreg{T/O, low varies by seat/vul}} %info line re direct overcalls
+\newcommand{\directconvtext}{\hspace*{-2mm}\redreg{T/O, low varies seat/vul/chart}} %info line re: direct overcalls
 \newcommand{\ballowtext}{11} %balancing range
 \newcommand{\balhightext}{14}
 %\setboolean{unumi}{true} %Unusual: minors
@@ -297,7 +297,7 @@
 
 %Defense vs. NT:
 \newcommand{\firstcondition}{} %''vs.'' line, first half
-\newcommand{\firstvstwocl}{\redreg{Majors, 2\d\ asks}\pfix{}} %1NT-2C
+\newcommand{\firstvstwocl}{\redreg{Majors, 2\,\d\ ask}\pfix{}} %1NT-2C
 \newcommand{\firstvstwodi}{\redreg{\rh{} or }\s{}} %1NT-2D
 \newcommand{\firstvstwohe}{\redreg{5+\rh{} + minor}} %1NT-2H
 \newcommand{\firstvstwosp}{\redreg{5+}\s{} \redreg{+ minor}} %1NT-2S
@@ -324,8 +324,8 @@
 %\setboolean{miunl}{true}
 %\setboolean{milim}{true}
 \setboolean{miwea}{true}
-\newcommand{\xxtext}{} %Blank space next to Rdbl implies no fit. Can write in ``any 10+'' 
-\newcommand{\toxothertext}{Fit J/S} %Line at bottom of Opps TOX section
+\newcommand{\xxtext}{} %Blank space next to Rdbl implies no fit. Can write in ``any 10+''
+\newcommand{\toxothertext}{\redreg{Fit J/S}} %Line at bottom of Opps TOX section
 
 %vs. opening preempts
 \setboolean{opdto}{true}
@@ -345,13 +345,13 @@
 %\setboolean{ropi}{true}
 \newcommand{\slamtexttop}{1NT-2\,\s; rebid-new suit RKC} %Two lines for slam convention info
 \newcommand{\slamtextbottom}{}
-\newcommand{\dopilevel}{5 trump+ } %DOPI/ROPI level
+\newcommand{\dopilevel}{\hspace*{-40mm}5 trump+\pfix} %DOPI/ROPI level
 
 %Carding:
 
 %Leads:
 %Leads vs. suit:  indicate whether to circle the 1st, 2nd, etc. card (more than one is OK)
-%e.g. if you lead Ace from Ace-King, \newcommand{AKx}{1} 
+%e.g. if you lead Ace from Ace-King, \newcommand{AKx}{1}
 \newcommand{\suitxx}{}
 \newcommand{\suitxxx}{}
 \newcommand{\AKx}{12}
@@ -409,7 +409,7 @@
 %\setboolean{oddsu}{true} %Odd-Even
 %\setboolean{oddnt}{true}
 \newcommand{\discardtext}{} %Other discard info
-%\setboolean{othsu}{true} 
+%\setboolean{othsu}{true}
 %\setboolean{othnt}{true}
 %\setboolean{smisu}{true} %Smith echo - suit
 \setboolean{smint}{true} %Smith - NT
