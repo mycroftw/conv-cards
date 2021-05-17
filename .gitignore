@@ -13,3 +13,5 @@
 *.dvi
 *.*latexmk
 *.ps
+# SonarLint files
+/.idea/sonarlint/*
