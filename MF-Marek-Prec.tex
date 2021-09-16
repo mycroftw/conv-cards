@@ -9,7 +9,7 @@
 %grbcce requires the following packages: tikz, txfonts, microtype, ifthen, xstring
 
 \documentclass[12pt]{article}
-%the card is 8'' wide so the margins are very narrow to fit on letter size paper:
+%the card is 8'' wide, so the margins are very narrow to fit on letter size paper:
 \usepackage{grbcceprec}
 \usepackage[left=5mm,right=5mm,top=5mm]{geometry}
 \begin{document}
@@ -44,7 +44,7 @@
 %If you use the default, you may choose to circle none, \newcommand{\TNxx}{}
 
 %You WILL get errors if you delete any \newcommand statements!
-%If you lead the default card, you may use \newcommand}{cardcombination}{}.
+%If you lead the default card, you may use \newcommand{cardcombination}{}.
 
 \newcommand{\names}{Michael Farebrother --- Marek Foff}
 \newcommand{\playernumber}{8550794}
@@ -84,7 +84,7 @@
 \newcommand{\ntdjumptext}{To play / \pfix{}}
 \newcommand{\nthjumptext}{INV / }
 \newcommand{\ntsjumptext}{INV / } %1NT-3S
-\newcommand{\ntextratext}{Forc.\@ Stm/wk, Txfs/str} %Blank line next to puppet Stayman
+\newcommand{\ntextratext}{F.\@ Sty/wk, Txf/str} %Blank line next to puppet Stayman
 \setboolean{texas}{true}
 %\setboolean{smole}{true}
 \setboolean{leben}{true}
@@ -104,7 +104,7 @@
 \newcommand{\threenlowtext}{} %3NT range
 \newcommand{\threenhightext}{}
 \newcommand{\threenextratext}{} %Blank line in 3NT box
-\newcommand{\convnttext}{\hspace{-2mm}\redreg{2NT 5+5+m, 4-8NV/8-12V}} % Blank lines under 3NT box
+\newcommand{\convnttext}{\hspace{-2mm}\redreg{2NT 5+5+m, 4--8NV/8--12V}} % Blank lines under 3NT box
 \newcommand{\convntextratext}{\hspace{-2mm}\redreg{3NT broken minor PRE}}
 
 %Major openings:
@@ -180,7 +180,7 @@
 \newcommand{\twocldescribebottom}{INV+ relay}
 \newcommand{\twoclresponsetop}{2M, NAT, Const, 2NT INV} %3 lines of text on right side of 2C divider
 \newcommand{\twoclresponsemiddle}{3\c\ PRE, 3\rd,M GF NAT}
-\newcommand{\twoclresponsebottom}{2M 4cM, 2NT BAL, 3\c unbal, }
+\newcommand{\twoclresponsebottom}{2M 4cM, 2NT BAL, 3\c unbal}
 
 \newcommand{\twodlowtext}{11} %2D point range
 \newcommand{\twodhightext}{15}
@@ -229,7 +229,7 @@
     1\c: 1\rd\ 0-7(8) NGF;
          1M, 2m GF Txf;
          1NT 8--11;
-         2M HHxxxx 3-6;
+         2M HHxxxx 3--6;
          2NT 12+, 4+AKC, F4NT
 } % 3 lines for additional conventions at bottom
 \newcommand{\footnotesmiddle}{\hspace{3mm}
@@ -295,7 +295,7 @@
 \newcommand{\directhightext}{18}
 \setboolean{syson}{true} %systems on
 %\setboolean{dntco}{true}
-\newcommand{\directconvtext}{Strong NT system} %info line re direct overcalls
+\newcommand{\directconvtext}{Strong NT system} %info line re: direct overcalls
 \newcommand{\ballowtext}{11} %balancing range
 \newcommand{\balhightext}{14}
 %\setboolean{unumi}{true} %Unusual: minors
