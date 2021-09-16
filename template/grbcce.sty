@@ -1,7 +1,9 @@
 %LaTeX convention card editor
 %v1.0 - Gordon Bower - 17 December 2017
-%v1.0.1 - 17 December 2017 - alignment fixes, a bunch of \regtexts and \boldtexts 
+%v1.0.1 - 17 December 2017 - alignment fixes, a bunch of \regtexts and \boldtexts
 %			moved into the style sheet and reduce typing in the template
+%v1.0.2 - 17 May 2021 - Michael Farebrother - spelling fixes, change to 2021
+%           alert rules
 
 %Fill out the fields in latex_cc_template.tex to create your own ACBL Convention Card in LaTeX
 
@@ -82,28 +84,28 @@
 \newboolean{nt5cm}\newboolean{staym}\newboolean{puppe}\newboolean{jac2d}\newboolean{fstay}\newboolean{jac2h}
 \newboolean{texas}\newboolean{smole}\newboolean{leben}\newboolean{ntneg}
 \newboolean{pup2n}\newboolean{jac2n}\newboolean{tex2n}
-%Major openings 
+%Major openings
 \newboolean{h12l4}\newboolean{h34l4}\newboolean{h12l5}\newboolean{h34l5}
 \newboolean{dblrf}\newboolean{dblri}\newboolean{dblrw}
 \newboolean{ocdrf}\newboolean{ocdri}\newboolean{ocdrw}
 \newboolean{ra2nt}\newboolean{ra3nt}\newboolean{raspl}
 \newboolean{ntfor}\newboolean{ntsem}\newboolean{twonf}\newboolean{twoni}
 \newboolean{drury}\newboolean{drrev}\newboolean{dr2wy}\newboolean{drfit}
-%Minor openings 
+%Minor openings
 \newboolean{club4}\newboolean{club3}\newboolean{cl2nf}\newboolean{clcon}
 \newboolean{diam4}\newboolean{diam3}\newboolean{di2nf}\newboolean{dicon}
 \newboolean{midrf}\newboolean{midri}\newboolean{midrw}
 \newboolean{modrf}\newboolean{modri}\newboolean{modrw}
 \newboolean{jsomi}\newboolean{inver}\newboolean{bypas}
 \newboolean{m2ntf}\newboolean{m2nti}
-%Two-bids 
+%Two-bids
 \newboolean{st2cl}\newboolean{ot2cl}\newboolean{neg2d}\newboolean{wai2d}
 \newboolean{wk2di}\newboolean{in2di}\newboolean{st2di}\newboolean{co2di}\newboolean{dintf}\newboolean{dnsnf}
 \newboolean{wk2he}\newboolean{in2he}\newboolean{st2he}\newboolean{co2he}\newboolean{hentf}\newboolean{hnsnf}
 \newboolean{wk2sp}\newboolean{in2sp}\newboolean{st2sp}\newboolean{co2sp}\newboolean{spntf}\newboolean{snsnf}
-%Bottom of card 
+%Bottom of card
 \newboolean{nmf1w}\newboolean{nmf2w}\newboolean{wjsnc}\newboolean{fsfrd}\newboolean{fsfgf}
-%Doubles/cuebids 
+%Doubles/cuebids
 \newboolean{penax}\newboolean{negax}\newboolean{respx}\newboolean{maxix}
 \newboolean{suppx}\newboolean{supxx}\newboolean{cardx}\newboolean{ostox}
 \newboolean{oc4cd}\newboolean{ocvls}
@@ -114,16 +116,16 @@
 \newboolean{qnami}\newboolean{qnama}\newboolean{qnaar}
 \newboolean{qstmi}\newboolean{qstma}\newboolean{qstar}
 \newboolean{qmimi}\newboolean{qmima}\newboolean{qmiar}
-%NT defenses etc 
+%NT defenses etc
 \newboolean{syson}\newboolean{dntco}\newboolean{unumi}\newboolean{unu2l}\newboolean{bntco}
 \newboolean{nsf1l}\newboolean{nsf2l}\newboolean{jsfor}\newboolean{jsinv}\newboolean{jswea}\newboolean{xximp}
 \newboolean{maunl}\newboolean{malim}\newboolean{mawea}
 \newboolean{miunl}\newboolean{milim}\newboolean{miwea}
 \newboolean{opdto}\newboolean{oppen}\newboolean{opleb}
-%Slam conventions 
+%Slam conventions
 \newboolean{gerbe}\newboolean{black}\newboolean{b0314}\newboolean{b1430}
 \newboolean{dopi}\newboolean{depo}\newboolean{ropi}
-%Signalling 
+%Signalling
 \newboolean{stdsu}\newboolean{stdnt}\newboolean{excep}
 \newboolean{udcsu}\newboolean{udcnt}\newboolean{udasu}\newboolean{udant}
 \newboolean{lavsu}\newboolean{lavnt}\newboolean{oddsu}\newboolean{oddnt}
@@ -148,12 +150,12 @@ rbox/.style={rectangle,draw=red,inner sep=3pt},
 crbox/.style={rectangle,draw=red,fill=red,inner sep=3pt},
 bbox/.style={rectangle,draw=blue,inner sep=3pt},
 cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt}
-]; 
+];
 % Dividers on convention card:
 { [line width=3]
 	\draw (96,0) -- (96,200); %center divider
 	\draw (0,72) -- (96,72); %slam conventions
-	\draw (0,89) -- (96,89); 
+	\draw (0,89) -- (96,89);
 	\draw (49,89) -- (49,200); %left side splitter
 	\draw (0,112) -- +(96,0); %Special doubles to direct cuebid
 	\draw (0,130) -- +(49,0);
@@ -161,31 +163,31 @@ cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt}
 	\draw (0,173) -- +(49,0);
 	\draw (49,147) -- +(47,0); %Defense vs notrump bottom
 	\draw (49,177) -- +(47,0); %Defense vs notrump top
-	
+
 	\draw (96,65) -- +(98,0); %Minor/major openings
-	\draw (96,127) -- +(98,0); 
+	\draw (96,127) -- +(98,0);
 	\draw (146,65) -- (146,127);
-	
+
 	\draw (96,173) -- (194,173) -- (194,195) -- (96,195); %General approach
 } % end of heavy divider lines
 
 % Names:
 \node [right] at (96,198) {\boldtext{NAMES}};
 %Insert name and player number here
-\node [right] at (108,198) {\boldtext{\textls[-20]{\names}}}; 
+\node [right] at (108,198) {\boldtext{\textls[-20]{\names}}};
 \node [left] at (194,198) {\boldtext{\textls[-20]{\playernumber}}};
 \draw [thin] (108,196) -- (193,196);
 
 % General approach:
 \node at (144,191) {\headtext{GENERAL APPROACH}};
 %Insert system name here
-\node at (144,187) {\bigboldtext{\generalapproach}}; 
+\node at (144,187) {\bigboldtext{\generalapproach}};
 \draw [thin] (98,185) -- (192,185);
 \node [right] at (98,182) (21gf) {\boldtext{Two Over One:} \regtext{Game Forcing}};
 \checkbox{gf} [right] at (21gf.east) {};
 \node [right] at (140,182) (gfewsr) { \regtext{Game Forcing Except When Suit Rebid}};
 \checkbox{gfewsr} [right] at (gfewsr.east) {};
-%Another checkbox needed! 
+%Another checkbox needed!
 \node [right] at (98,179) (vlop) {\boldtext{VERY LIGHT:} \regtext{Openings}};
 \checkbox{vlop}  at (vlop.east) {};
 \node [right] at (132,179) (vl3h) {\regtext{3rd Hand}};
@@ -268,7 +270,7 @@ cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt}
 \node at (146,136.8) {\redreg{(}};
 \node [right] at (151,136.8) {\redreg{denies)}};%low for )
 \node at (149,137) {\redreg{\ntlebentext}};
-\node [right] at (130,133) (ntneg) {\regtext{Neg.\ Double}};%descender on 'g' means we have to adjust this row downward
+\node [right] at (130,133) (ntneg) {\regtext{Neg. Double}};%descender on 'g' means we have to adjust this row downward
 \checkbox{ntneg} at (ntneg.east) (ntnegbox) {};
 \node [right] at (ntnegbox) {\regtext{:}};
 \draw [thin] (149,131.5) -- (160,131.5);
@@ -321,7 +323,7 @@ cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt}
 
 \node at (122,124) {\headtext{MAJOR OPENING}};
 
-\node [right] at (98,117) {\regtext{Expected Min.\ Length}};
+\node [right] at (98,117) {\regtext{Expected Min. Length}};
 \node at (130,117) {\regtext{4}};
 \node at (140,117) {\regtext{5}};
 \checkbox{h12l4} at (130,113) {};
@@ -336,8 +338,8 @@ cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt}
 \node at (122,104.5) {\boldtext{RESPONSES}};
 %Double raises
 \node [right] at (98,100) {\regtext{Double Raise:}};
-\node [right] at (115,100) (dblrf) {\regtext{Force}};
-\checkbox{dblrf} at (dblrf.east) {};
+\node [right] at (115,100) (dblrf) {\redreg{Force}};
+\rcheckbox{dblrf} at (dblrf.east) {};
 \node [right] at (125,100) (dblri) {\regtext{Inv.}};
 \checkbox{dblri} at (dblri.east) {};
 \node [right] at (133,100) (dblrw) {\redreg{Weak}};
@@ -350,7 +352,7 @@ cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt}
 \node [right] at (133,96) (ocdrw) {\regtext{Weak}};
 \checkbox{ocdrw} at (ocdrw.east) {};
 %Conventional raises
-\node [right] at (98,92) {\regtext{Conv.\ Raise:}};
+\node [right] at (98,92) {\regtext{Conv. Raise:}};
 \node [right] at (113,92) (ra2nt) {\redreg{2NT}};
 \rcheckbox{ra2nt} at (ra2nt.east) {};
 \node [right] at (121,92) (ra3nt) {\redreg{3NT}};
@@ -397,7 +399,7 @@ cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt}
 
 %Minor openings
 \node at (172,124) {\headtext{MINOR OPENING}};
-\node [right] at (147,117) {\regtext{Expected Min.\ Length}};
+\node [right] at (147,117) {\regtext{Expected Min. Length}};
 \node [right] at (147,113) {\regtext{1\,\c\ }};
 \node [right] at (152,113) {\boldtext{\clopennote}};
 \node [right] at (147,109) {\regtext{1\,\d\ }};
@@ -418,8 +420,8 @@ cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt}
 \node at (172,104) {\boldtext{RESPONSES}};
 %Double raises
 \node [right] at (147,100) {\regtext{Double Raise:}};
-\node [right] at (164,100) (midrf) {\regtext{Force}};
-\checkbox{midrf} at (midrf.east) {};
+\node [right] at (164,100) (midrf) {\redreg{Force}};
+\rcheckbox{midrf} at (midrf.east) {};
 \node [right] at (174,100) (midri) {\regtext{Inv.}};
 \checkbox{midri} at (midri.east) {};
 \node [right] at (182,100) (midrw) {\redreg{Weak}};
@@ -599,7 +601,7 @@ cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt}
 \node [right] at (98,6) {\regtext{\footnotesmiddle}};
 \node [right] at (98,2) {\regtext{\footnotesbottom}};
 
-%Back of card: 
+%Back of card:
 %Left column (special doubles)
 \node at (24,199) {\headtext{SPECIAL DOUBLES}};
 
@@ -623,17 +625,17 @@ cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt}
 \node [right] at (32,187) (maxix) {\regtext{Maximal}};
 \checkbox{maxix} at (maxix.east) {};
 
-\node [right] at (0,182.6) {\redreg{Support: Dbl.}};%low p
-\rcheckbox{suppx} at (17,183) {};
-\node [right] at (18,183) {\redreg{thru}};
-\draw [thin,color=red] (24,181) -- (32,181);
+\node [right] at (0,182.6) {\regtext{Support: Dbl.}};%low p
+\checkbox{suppx} at (17,183) {};
+\node [right] at (18,183) {\regtext{thru}};
+\draw [thin] (24,181) -- (32,181);
 \node at (28,183) {\boldtext{\suppxthru}};
-\node [right] at (32,183) (supxx) {\redreg{Redbl}};
-\rcheckbox{supxx} at (supxx.east) {};
+\node [right] at (32,183) (supxx) {\regtext{Redbl}};
+\checkbox{supxx} at (supxx.east) {};
 
 \node [right] at (0,178.7) {\regtext{Card-showing}};%low g
 \checkbox{cardx} at (18,179) {};
-\node [right] at (21,178.6)  {\regtext{Min.\ Offshape T/O}};%low p
+\node [right] at (21,178.6)  {\regtext{Min. Offshape T/O}};%low p
 \checkbox{ostox} at (44,179) {};
 \draw [thin] (1,174) -- (46,174);
 \node at (23,175.5) {\regtext{\doubletext}};
@@ -650,7 +652,7 @@ cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt}
 \node [right] at (0,162.5) (oc4cd) {\regtext{often 4 cards}};
 \checkbox{oc4cd} at (oc4cd.east) {};
 \node [right] at (20,162.2) {\regtext{very light style}};
-\checkbox{ocvls} at (39,162.5) {}; 
+\checkbox{ocvls} at (39,162.5) {};
 \node at (23,159) {\boldtext{Responses}};
 \node [right] at (0,155.1) {\regtext{New suit: Forcing}}; %low g
 \checkbox{nsfor} at (22,155.5) {};
@@ -692,13 +694,13 @@ cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt}
 \draw [thin,color=red] (15,114) -- (46,114);
 \node [right] at (15,116) {\regtext{\preempttext}};
 
-%Direct cuebid 
+%Direct cuebid
 \node at (23,109) {\headtext{DIRECT CUEBID}};
 
 \node at (12,105) {\regtext{OVER:}};
 \node at (20,105) {\regtext{Minor}};
 \node at (30,104.7) {\regtext{Major}};
-\node at (42,105) {\regtext{Artif.\ Bid}};
+\node at (42,105) {\regtext{Artif. Bid}};
 
 \node [right] at (0,102) {\regtext{Natural}};
 \node [right] at (0,98.5) {\regtext{Strong T/O}};
@@ -801,7 +803,7 @@ cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt}
 \checkbox{nsf1l} [left] at (nsf2l.west) {};
 \checkbox{nsf2l} at (nsf2l.east) {};
 
-\node [right] at (49,134.6) {\regtext{Jump Shift: Forcing}}; 
+\node [right] at (49,134.6) {\regtext{Jump Shift: Forcing}};
 \node [right] at (74,135) (jsinv) {\regtext{Inv.}};
 \node [right] at (83,135) (jswea) {\regtext{Weak}};
 \checkbox{jsfor} [left] at (jsinv.west) {};
@@ -841,7 +843,7 @@ cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt}
 \node [right] at (80,103.7) {\redreg{Penalty}};
 \rcheckbox{oppen} at (91,104) {};
 
-\node [right] at (49,99.5) {\redreg{Conv.\ Takeout:}};
+\node [right] at (49,99.5) {\redreg{Conv. Takeout:}};
 \draw [thin,color=red] (67,98) -- (94,98);
 \node [right] at (67,99.5) {\regtext{\opconvtakeout}};
 
@@ -869,7 +871,7 @@ cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt}
 \node [right] at (0,82.5) {\regtext{\slamtexttop}};
 \node [right] at (0,78.5) {\regtext{\slamtextbottom}};
 
-\node [right] at (0,75) (dopi) {\regtext{vs.\ Interference: DOPI}};
+\node [right] at (0,75) (dopi) {\regtext{vs. Interference: DOPI}};
 \checkbox{dopi} at (dopi.east) {};
 \node [right] at (30,75) (depo) {\regtext{DEPO}};
 \checkbox{depo} at (depo.east) {};
@@ -1017,4 +1019,3 @@ cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt}
 \additionaltikz%optional extra user-defined fields
 \end{tikzpicture}%
 }%end of \drawconventioncard
-

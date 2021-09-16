@@ -9,7 +9,7 @@
 %grbcce requires the following packages: tikz, txfonts, microtype, ifthen, xstring
 
 \documentclass[12pt]{article}
-%the card is 8'' wide so the margins are very narrow to fit on letter size paper:
+%the card is 8'' wide, so the margins are very narrow to fit on letter size paper:
 %\usepackage{grbcce}
 \usepackage{grbccemf}
 \usepackage[left=5mm,right=5mm,top=5mm]{geometry}
@@ -39,7 +39,7 @@
 
 %To specify what card you lead from a given holding, indicate that card's
 %POSITION in the given sequence:
-%e.g. if you lead T from KJTx, \newcommand}{\KTJx}{3}
+%e.g. if you lead T from KJTx, \newcommand{\KTJx}{3}
 %You MAY circle more than one card if you wish. e.g., \newcommand{\TNxx}{14}
 
 %You WILL get errors if you delete any \newcommand statements!
@@ -86,7 +86,7 @@
 \newcommand{\nthjumptext}{\s{} \redreg{splinter}\pfix{}}
 \newcommand{\ntsjumptext}{\c{} \redreg{splinter}\pfix{}} %1NT-3S
 \newcommand{\ntextratext}{2\,\c{} \redreg{Keri: \rd{} or INV+}} %Blank line next to puppet stayman
-\setboolean{texas}{true} 
+\setboolean{texas}{true}
 %\setboolean{smole}{true}
 \setboolean{leben}{true}
 \newcommand{\ntlebentext}{fast} %Lebensohl: Fast or slow denies?
@@ -99,7 +99,7 @@
 \newcommand{\twonhightext}{24}
 %\setboolean{pup2n}{true}
 \setboolean{jac2n}{true}
-\setboolean{tex2n}{true} 
+\setboolean{tex2n}{true}
 \newcommand{\twonsptext}{\redreg{$\rightarrow$ 3NT, 1- or 2-m ST}} %2NT-3S
 \newcommand{\twonextratext}{} %Blank line in 2NT box
 \newcommand{\threenlowtext}{25} %3NT range
@@ -287,7 +287,7 @@
 \newcommand{\directhightext}{18}
 \setboolean{syson}{true} %systems on
 %\setboolean{dntco}{true}
-\newcommand{\directconvtext}{} %info line re direct overcalls
+\newcommand{\directconvtext}{} %info line re: direct overcalls
 \newcommand{\ballowtext}{11} %balancing range
 \newcommand{\balhightext}{14}
 %\setboolean{unumi}{true} %Unusual: minors
@@ -324,7 +324,7 @@
 %\setboolean{miunl}{true}
 %\setboolean{milim}{true}
 \setboolean{miwea}{true}
-\newcommand{\xxtext}{} %Blank space next to Rdbl implies no fit. Can write in ``any 10+'' 
+\newcommand{\xxtext}{} %Blank space next to Rdbl implies no fit. Can write in ``any 10+''
 \newcommand{\toxothertext}{Fit J/S} %Line at bottom of Opps TOX section
 
 %vs. opening preempts
@@ -351,7 +351,7 @@
 
 %Leads:
 %Leads vs. suit:  indicate whether to circle the 1st, 2nd, etc. card (more than one is OK)
-%e.g. if you lead Ace from Ace-King, \newcommand{AKx}{1} 
+%e.g. if you lead Ace from Ace-King, \newcommand{AKx}{1}
 \newcommand{\suitxx}{}
 \newcommand{\suitxxx}{}
 \newcommand{\AKx}{12}
@@ -409,7 +409,7 @@
 %\setboolean{oddsu}{true} %Odd-Even
 %\setboolean{oddnt}{true}
 \newcommand{\discardtext}{} %Other discard info
-%\setboolean{othsu}{true} 
+%\setboolean{othsu}{true}
 %\setboolean{othnt}{true}
 %\setboolean{smisu}{true} %Smith echo - suit
 \setboolean{smint}{true} %Smith - NT

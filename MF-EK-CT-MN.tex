@@ -9,7 +9,7 @@
 %grbcce requires the following packages: tikz, txfonts, microtype, ifthen, xstring
 
 \documentclass[12pt]{article}
-%the card is 8'' wide so the margins are very narrow to fit on letter size paper:
+%the card is 8'' wide, so the margins are very narrow to fit on letter size paper:
 \usepackage{template/grbcce}
 \usepackage[left=5mm,right=5mm,top=5mm]{geometry}
 \begin{document}
@@ -44,7 +44,7 @@
 %If you use the default, you may choose to circle none, \newcommand{\TNxx}{}
 
 %You WILL get errors if you delete any \newcommand statements!
-%If you lead the default card, you may use \newcommand}{cardcombination}{}.
+%If you lead the default card, you may use \newcommand{cardcombination}{}.
 
 \newcommand{\names}{Michael/Ellen --- Cindy/Mollie}
 \newcommand{\playernumber}{}
@@ -231,7 +231,7 @@
 
 %Back of card:
 %\setboolean{penax}{true} %Penalty doubles through...
-\newcommand{\penaxthru}{} 
+\newcommand{\penaxthru}{}
 \setboolean{negax}{true} %Negative doubles through...
 \newcommand{\negaxthru}{3 \s}
 %\setboolean{respx}{true} %Responsive
@@ -286,12 +286,12 @@
 \newcommand{\directhightext}{18}
 \setboolean{syson}{true} %systems on
 %\setboolean{dntco}{true}
-\newcommand{\directconvtext}{} %info line re direct overcalls
+\newcommand{\directconvtext}{} %info line re: direct overcalls
 \newcommand{\ballowtext}{11} %balancing range
 \newcommand{\balhightext}{14}
 %\setboolean{unumi}{true} %Unusual: minors
 \setboolean{unu2l}{true} %Unusual: 2 lowers
-%\setboolean{bntco}{true} 
+%\setboolean{bntco}{true}
 \newcommand{\ntconvtext}{} %conventional overcalls (sandwich etc)
 
 %Defense vs. NT:
@@ -350,7 +350,7 @@
 
 %Leads:
 %Leads vs. suit:  indicate whether to circle the 1st, 2nd, etc. card (more than one, or zero, is OK)
-%e.g. if you lead Ace from Ace-King, \newcommand{AKx}{1} 
+%e.g. if you lead Ace from Ace-King, \newcommand{AKx}{1}
 %e.g. if you lead the default from Queen-Jack, \newcommand{QJx}{}
 \newcommand{\suitxx}{}
 \newcommand{\suitxxx}{}
@@ -409,7 +409,7 @@
 %\setboolean{oddsu}{true} %Odd-Even
 %\setboolean{oddnt}{true}
 \newcommand{\discardtext}{} %Other discard info
-%\setboolean{othsu}{true} 
+%\setboolean{othsu}{true}
 %\setboolean{othnt}{true}
 %\setboolean{smisu}{true} %Smith echo - suit
 %\setboolean{smint}{true} %Smith - NT

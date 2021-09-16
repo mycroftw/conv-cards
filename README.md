@@ -14,6 +14,6 @@ Permission to use any of the tex files as a template for your own cards granted,
  - Everything in the `template` folder is what I use for my cards.  This includes:
    - Spelling and formatting fixes, automatic red diamonds and hearts.
    - Version date and advertising for GRB and LaTeX.
+   - Colour changes to match 2021 Alert/Announcements.
  - grbccemf.sty is a special "template" that tweaks the base card for South African Texas:
    - 4C transfers to Hearts, 4D to spades
-   - Red Alertable rather than Blue Announceable
