@@ -1,0 +1,567 @@
+%LaTeX convention card editor
+
+%v1.0 - Gordon Bower - 17 December 2017
+%v1.0.1 - alignment fixes, default text formatting in style file
+
+%Fill out the fields below to create your own ACBL Convention Card in LaTeX
+%grbcce.sty contains the TikZ formatting instructions
+
+%grbcce requires the following packages: tikz, txfonts, microtype, ifthen, xstring
+
+\documentclass[12pt]{article}
+%the card is 8'' wide, so the margins are very narrow to fit on letter size paper:
+\usepackage{template/grbcce2022}
+\usepackage[left=5mm,right=5mm,top=5mm]{geometry}
+\begin{document}
+
+%There is a boolean to turn on or off every checkbox on the card.
+%To fill in any checkbox, remove the ``%'' in front of the \setboolean statement
+%that activates that particular checkbox.
+%You may delete unused setboolean statements.
+
+%There is a text item to insert a description on every blank line of the card.
+%You WILL get errors if you delete any \newcommand statements!
+%if you want to leave a line blank, use \newcommand{\nameoftextfield}{} .
+
+%If you insert plain text into any text field, default formatting is applied.
+%To override my default, use any of the following predefined styles:
+%\regtext{...} for regular black text
+%\redreg{...} for regular red text (for conventions you will alert)
+%\bluereg{...} for regular blue text (for announcements)
+%\boldtext{...} for bold black text
+%\redbold{...} for bold red text
+%\bluebold{...} for bold blue text (e.g. more visible 1NT ranges)
+%Use whatever other LaTeX formatting you wish. Default font size is \scriptsize.
+
+%To insert (black) suit symbols: \s, \h, \d, \c.
+%To insert a red suit: \rd, \rh
+%To insert a red spade: \textcolor{red}{\s}
+
+%To specify what card you lead from a given holding, indicate that card's
+%POSITION in the given sequence:
+%e.g. if you lead T from KJTx, \newcommand{\KTJx}{3}
+%You MAY circle more than one card if you wish. e.g., \newcommand{\TNxx}{14}
+%If you use the default, you may choose to circle none, \newcommand{\TNxx}{}
+
+%You WILL get errors if you delete any \newcommand statements!
+%If you lead the default card, you may use \newcommand{cardcombination}{}.
+
+\newcommand{\names}{Ellen Kuiper --- Lane Galloway\pfix{}}
+\newcommand{\playernumber}{O007899}
+
+%General approach:
+\newcommand{\generalapproach}{Sub-standard American}
+\setboolean{gf}{true} %2/1 Game Forcing
+%\setboolean{gfewsr}{true}
+%\setbooleab{vlop}{true} %Very light...
+%\setboolean{vl3h}{true}
+%\setboolean{vloc}{true}
+%\setboolean{vlpr}{true}
+%\setboolean{fo1c}{true} %Forcing openings...
+\setboolean{fo2c}{true}
+%\setboolean{fon2b}{true}
+%\setboolean{foother}{true}
+\newcommand{\foothertext}{Hello}%Other forcing opening bids
+
+% MDF NEW
+\newcommand{\minHCPopen}{11++}
+\newcommand{\minHCPresp}{Ace or 6}
+\newcommand{\bidspreptop}{Mathé/Strong Club} % Bids that Require Preparation
+\newcommand{\bidsprepbottom}{Keri/NT, Multi 2\rd\ } % Bids that Require Prep line 2
+\setboolean{1nts}{true} % 1NT strength
+%\setboolean{1ntw}{true}
+%\setboolean{1ntv}{true}
+
+%Notrump openings:
+%First column:
+\newcommand{\ntlowtext}{15} %NT range
+\newcommand{\nthightext}{17}
+\newcommand{\ntseatvul}{all/all}
+\newcommand{\altntlowtext}{12} %If variable NT, second range here
+\newcommand{\altnthightext}{14}
+\setboolean{ntasr}{true} %Same responses for alt NT range?
+\newcommand{\altntresponse}{when we forget}
+%\setboolean{nt5cm}{true}
+\newcommand{\sysontext}{X, 2\c} %Systems on after 1NT-(X), 2\c, etc...
+\setboolean{staym}{true}
+%\setboolean{puppe}{true}
+\setboolean{jac2d}{true}
+\newcommand{\ntditext}{} %Other meaning for 1NT-2\d
+%\setboolean{fstay}{true}
+\setboolean{jac2h}{true}
+\newcommand{\nthetext}{} %Other meaning for 1NT-2\h
+\setboolean{trf2s}{true}
+\newcommand{\ntsptext}{\bluereg{Transfer to }\regtext{\c}} %1NT-2S
+\setboolean{trf2n}{true}
+\newcommand{\ntnttext}{\bluereg{Transfer to }\d} %1NT-2NT
+
+%NT openings - 2nd column:
+\newcommand{\ntcjumptext}{minors INV} %1NT-3C
+\newcommand{\ntdjumptext}{minors GF}
+\newcommand{\nthjumptext}{Majors INV\pfix{}}
+\newcommand{\ntsjumptext}{Majors GF\pfix{}} %1NT-3S
+%\setboolean{tex4c}{true}
+\setboolean{tex4d}{true}
+\setboolean{tex4h}{true}
+\setboolean{smole}{true}
+\setboolean{leben}{true}
+\newcommand{\ntlebentext}{slow shows} %Lebensohl: Fast or slow denies?
+%\setboolean{ntneg}{true}
+\newcommand{\ntnegtext}{} %Negative doubles over 1NT?
+\setboolean{ntpen}{true}
+\newcommand{\ntxothertext}{} %Other doubles over 1NT
+\newcommand{\ntothertext}{} %Other conventions over 1NT
+\newcommand{\ntextratext}{} %blank line after texas transfers
+
+%2NT/3NT openings
+\newcommand{\twonlowtext}{20}
+\newcommand{\twonhightext}{21}
+\setboolean{pup2n}{true}
+\setboolean{jac2n}{true}
+\setboolean{tex2n}{true}
+\newcommand{\twonsptext}{one- or two-minor slam try\pfix{}} %2NT-3S
+\newcommand{\twonextratext}{slam try\pfix{}} %Blank line in 2NT box
+\newcommand{\threenlowtext}{} %3NT range
+\newcommand{\threenhightext}{}
+\setboolean{gam3n}{true}
+\newcommand{\threenextratext}{Gambling 3NT (0 o/s)\pfix{}} %One suit description 3NT box
+\newcommand{\convnttext}{} % Conventional 2NT
+\newcommand{\convntextratext}{}
+
+%Major openings:
+%\setboolean{h12l4}{true} %4 cards in 1st/2nd seat
+%\setboolean{h34l4}{true} %4 cards in 3rd/4th seat
+\setboolean{h12l5}{true}
+\setboolean{h34l5}{true}
+%\setboolean{dblrf}{true} %double raise
+\setboolean{dblri}{true}
+%\setboolean{dblrw}{true}
+%\setboolean{ocdrf}{true} %double raise in comp
+%\setboolean{ocdri}{true}
+\setboolean{ocdrw}{true}
+\setboolean{ra2nt}{true} %Jacoby
+%\setboolean{ra3nt}{true} %1M-3NT
+\setboolean{raspl}{true} %Splinter
+\newcommand{\majraisetext}{J/S mini Splinter, Kokish GTry\pfix{}} %Text line for Bergen, fitjumps, etc
+\setboolean{ntfor}{true} %1NT forcing
+%\setboolean{ntsem}{true} %1NT semiforcing
+\setboolean{twonf}{true}
+%\setboolean{twoni}{true}
+\newcommand{\majtwonlowtext}{}
+\newcommand{\majtwonhightext}{}
+\newcommand{\majthreenlowtext}{13} %1M-3NT range
+\newcommand{\majthreenhightext}{15}
+\newcommand{\majthreennote}{2M BAL} %Empty space next to the 1M-3NT box: I might write ``4333'' here if I play 1M-3NT as a 13-15 4333 hand.
+\setboolean{drury}{true} %What kind of Drury?
+\setboolean{drrev}{true}
+%\setboolean{dr2wy}{true}
+\setboolean{drfit}{true}
+\newcommand{\majothertext}{} %Other major methods: HSGT, Mathe asking bid, etc
+\newcommand{\majothertexttwo}{} %Other major methods line two
+\newcommand{\majdrurytext}{} %Other Drury information
+
+%Minor openings:
+%\setboolean{club4}{true} %1C length
+\setboolean{club3}{true}
+%\setboolean{cl2nf}{true}
+%\setboolean{clcon}{true}
+\newcommand{\clopennote}{weaker minor if BAL} % Insert text in blank space next to 1C
+
+% MDF NEW 1C
+%\setboolean{club5}{true}
+%\setboolean{c4432}{true}
+%\setboolean{cl1nf}{true}
+%\setboolean{cl0nf}{true}
+\newcommand{\clresponses}{}
+%\setboolean{ctxfr}{true} % transfer responses to 1C
+\newcommand{\clrespdi}{} % text after "1D response"
+
+\newcommand{\diopennote}{4 unless 4-4-3-2} % Insert text in blank space next to 1D e.g. ``4 unless 4-4-3-2''
+%\setboolean{diam4}{true} %1D length
+\setboolean{diam3}{true}
+%\setboolean{di2nf}{true}
+\newcommand{\diresponses}{}
+
+%\setboolean{dicon}{true}
+%\setboolean{midrf}{true} %double raise
+%\setboolean{midri}{true}
+\setboolean{midrw}{true}
+%\setboolean{modrf}{true} %double raise in comp
+%\setboolean{modri}{true}
+\setboolean{modrw}{true}
+%\setboolean{jsomi}{true} %JS in other minor
+\setboolean{inver}{true} %Inverted raise
+\newcommand{\minraisetext}{Limit+} %Textbox next to inverted raise
+\setboolean{bypas}{true}
+\newcommand{\minonenlowtext}{6} %1C-1NT range
+\newcommand{\minonenhightext}{10-}
+%\setboolean{m2ntf}{true} %1C-2NT
+\setboolean{m2nti}{true}
+\newcommand{\mintwonlowtext}{10+}
+\newcommand{\mintwonhightext}{12}
+\newcommand{\minthreenlowtext}{13}
+\newcommand{\minthreenhightext}{15}
+\newcommand{\minothertext}{} %Other minor suit methods (1m-3M splinter etc)
+
+\newcommand{\minonedionenlowtext}{6} %1D-1NT range
+\newcommand{\minonedionenhightext}{10-}
+%\setboolean{m2ntf}{true} %1C-2NT
+\setboolean{m2nti}{true}
+\newcommand{\minoneditwonlowtext}{10+}
+\newcommand{\minoneditwonhightext}{12}
+
+
+%2-bids
+\setboolean{vs2cl}{true} %2C Very strong?
+%\setboolean{st2cl}{true}
+%\setbollean{na2cl}{true} %2C Natural?
+%\setboolean{ot2cl}{true} %2C conventional?
+%\setboolean{neg2d}{true} %2D neg or waiting?
+\setboolean{wai2d}{true}
+%\setboolean{steps}{true}
+\newcommand{\twoclstepstext}{}
+\setboolean{neg2h}{true}
+\newcommand{\twoclowtext}{22+} %2C point range
+\newcommand{\twochightext}{}
+\newcommand{\twocldescribetop}{or 8.5 QT w/def} %line of text on left side of 2C divider
+\newcommand{\twoclresponsetop}{} %Other text on right side of 2C divider
+
+\newcommand{\twodlowtext}{5} %2D point range
+\newcommand{\twodhightext}{11}
+\newcommand{\twoddescribe}{}
+\newcommand{\twodntresp}{Ogust\pfix{}}
+\newcommand{\twodresponse}{}
+
+\setboolean{wk2di}{true} %2D weak
+%\setboolean{in2di}{true}
+%\setboolean{st2di}{true}
+%\setboolean{co2di}{true} %2D conventional
+\setboolean{dintf}{true} %2NT forcing
+%\setboolean{dnsnf}{true} %new suit NF
+%2H:
+\newcommand{\twohlowtext}{5}
+\newcommand{\twohhightext}{10}
+\newcommand{\twohdescribe}{}
+\newcommand{\twohntresp}{Ogust\pfix{}}
+\newcommand{\twohresponse}{2\s\ fr.psych}
+\setboolean{wk2he}{true}
+%\setboolean{in2he}{true}
+%\setboolean{st2he}{true}
+%\setboolean{co2he}{true}
+\setboolean{hentf}{true}
+%\setboolean{hnsnf}{true}
+%2S:
+\newcommand{\twoslowtext}{5}
+\newcommand{\twoshightext}{10}
+\newcommand{\twosdescribe}{}
+\newcommand{\twosntresp}{Ogust\pfix{}}
+\newcommand{\twosresponse}{}
+\setboolean{wk2sp}{true}
+%\setboolean{in2sp}{true}
+%\setboolean{st2sp}{true}
+%\setboolean{co2sp}{true}
+\setboolean{spntf}{true}
+%\setboolean{snsnf}{true}
+
+%Bottom of card:
+\setboolean{nmf1w}{true} %1-way new minor
+\newcommand{\nmftext}{}
+%\setboolean{nmf2w}{true} %2-way new minor
+%\setboolean{xyz2w}{true} %2-way new minor
+\newcommand{\twowaytext}{}
+\setboolean{wjsnc}{true} %Weak jump shifts
+\newcommand{\wjstext}{Weak NC, Fit in comp or by PH} % now "jump shift responses"
+%\setboolean{fsfrd}{true} %Fourth suit
+\setboolean{fsfgf}{true}
+\newcommand{\footnotestop}{Random information here} % 3 lines for additional conventions at bottom
+\newcommand{\footnotesmiddle}{and 1C responses here}
+\newcommand{\footnotesbottom}{Mathé} % "vs str/VS openings" - MDF to fix
+
+%Back of card:
+%\setboolean{penax}{true} %Penalty doubles through...
+\newcommand{\penaxthru}{}
+\setboolean{negax}{true} %Negative doubles through...
+\newcommand{\negaxthru}{3\,\s}
+\setboolean{respx}{true} %Responsive
+\newcommand{\respxthru}{3\,\s}
+\setboolean{maxix}{true} %Maximal
+\setboolean{suppx}{true} %Support
+\newcommand{\suppxthru}{2\,x}
+\setboolean{supxx}{true} %Support redouble
+%\setboolean{cardx}{true}
+%\setboolean{ostox}{true}
+\newcommand{\doubletext}{} %Other special doubles
+
+%Simple overcalls:
+\newcommand{\oclowtext}{8} %point range
+\newcommand{\ochightext}{16}
+%\setboolean{oc4cd}{true}
+%\setboolean{ocvls}{true}
+\newcommand{\twooclowtext}{10} %2-lev point range
+\newcommand{\twoochightext}{18}
+
+\setboolean{nsfor}{true} %New suit forcing
+%\setboolean{nsnfc}{true} %NF Constructive
+%\setboolean{nsnon}{true} %NF
+%\setboolean{onstf}{true} %transfer
+%\setboolean{jrfor}{true} %Jump raise... MDF TODO - mixed
+%\setboolean{jrinv}{true}
+\setboolean{jrwea}{true}
+\newcommand{\overcallcuetext}{limit+}
+\setboolean{occus}{true} % cue response support?
+\newcommand{\overcalltext}{} % Other responses
+
+% Jump overcalls
+%\setboolean{jostr}{true} %strong
+%\setboolean{joint}{true}
+\setboolean{jowea}{true} %weak
+\setboolean{jocon}{true}
+\newcommand{\jumpovercalltext}{first two Roman JO} %Other info about jump overcalls
+
+% Opening preempts
+%MDF TODO - completely replaced
+%\setboolean{prsou}{true} %sound -- rule of 2/3/4
+%\setboolean{prlig}{true} %light
+%\newvoolean{prver}{true} %very light
+%\newcommand{\preempttext}{\hsp%ace{0.2cm}Vul\hspace{0.5cm}NV} %other info about preempts
+%MDF END OF TODO
+\newcommand{\threelevelstyletop}{Sound V1\textsuperscript{st}, any 2\textsuperscript{nd}}
+\newcommand{\threelevelstylebottom}{Aggressive NV1\textsuperscript{st}, any 3\textsuperscript{rd}}
+\newcommand{\threelevelresp}{NSF}
+\newcommand{\fourlevelstyle}{usually 8}
+\newcommand{\fourlevelresp}{mumble}
+\setboolean{namya}{true}
+\newcommand{\fourlevelother}{\bluereg{solid or 1-loser w/A or K}}
+
+%Direct cuebid
+%MDF TODO - completely replaced
+%\setboolean{qnami}{true} %natural...
+%\setboolean{qnama}{true}
+%\setboolean{qnaar}{true}
+%\setboolean{qstmi}{true} %takeout...
+%\setboolean{qstma}{true}
+%\setboolean{qstar}{true}
+%\setboolean{qmimi}{true} %Michaels
+%\setboolean{qmima}{true}
+%\setboolean{qmiar}{true}
+%MDF END OF TODO
+%\setboolean{qamim}{true} %Michaels
+\setboolean{qqmim}{true}
+\setboolean{qnmim}{true}
+\setboolean{qnmam}{true}
+\setboolean{qamin}{true} %Natural
+%\setboolean{qqmin}{true}
+%\setboolean{qnmin}{true}
+%\setboolean{qnman}{true}
+%\setboolean{qamio}{true} %Other
+%\setboolean{qqmio}{true}
+%\setboolean{qnmio}{true}
+%\setboolean{qnmao}{true}
+\newcommand{\cuebidtext}{Mathé vs Str, NAT vs Polish} %"Describe" other cuebid comments
+
+%Competitive bidding column - NT overcalls
+\newcommand{\directlowtext}{15} %range
+\newcommand{\directhightext}{18}
+\setboolean{syson}{true} %systems on
+%\setboolean{dntco}{true}
+\newcommand{\directconvtext}{} %info line re direct overcalls
+\newcommand{\ballowtext}{11} %balancing range
+\newcommand{\balhightext}{14}
+%\setboolean{unumi}{true} %Unusual: minors
+\setboolean{unu2l}{true} %Unusual: 2 lowers
+%\setboolean{bntco}{true}
+\newcommand{\ntconvtext}{} %conventional overcalls (sandwich etc)
+
+%Defense vs. NT:
+\newcommand{\firstcondition}{Str Direct} %''vs.'' line, first half
+\newcommand{\firstvstwocl}{\rd\ or M + m} %1NT-2C
+\newcommand{\firstvstwodi}{Majors\pfix{}} %1NT-2D
+\newcommand{\firstvstwohe}{\rh\xfix{}} %1NT-2H
+\newcommand{\firstvstwosp}{\s\xfix{}} %1NT-2S
+\newcommand{\firstvsdbl}{Penalty\pfix{}} %1NT-X
+\newcommand{\firstvstwont}{Minors} %1NT-2NT
+\newcommand{\secondcondition}{Weak or Bal} %the same six lines, right half
+\newcommand{\secondvstwocl}{Nat}
+\newcommand{\secondvstwodi}{Nat}
+\newcommand{\secondvstwohe}{Nat}
+\newcommand{\secondvstwosp}{Natural}
+\newcommand{\secondvsdbl}{Penalty\pfix{}}
+\newcommand{\secondvstwont}{Natural}
+\newcommand{\othernttop}{3x NAT PRE} %two lines of other NT defense info
+
+%Over opp's takeout double
+%\setboolean{nsf2l}{true} %New suit forcing?
+%\setboolean{xnstf}{true} %New suit transfer?
+\newcommand{\toxtrftext}{except 1NT} %transfers through?
+%\setboolean{jsfor}{true} %Jump shifts
+%\setboolean{jsinv}{true}
+\setboolean{jswea}{true}
+%\setboolean{jsfit}{true}
+\setboolean{xximp}{true} %Rdbl implies no fit
+\setboolean{xxcon}{true}
+%MDF TODO - totally replaced
+%\setboolean{maunl}{true} %Jordan
+%\setboolean{malim}{true}
+%\setboolean{mawea}{true}
+%\setboolean{miunl}{true}
+%\setboolean{milim}{true}
+%\setboolean{miwea}{true}
+% MDF END OF TODO
+
+\newcommand{\xxtext}{10+, defence} %Blank space next to Rdbl implies no fit. Can write in ``any 10+''
+\newcommand{\toxothertext}{} %Line at bottom of Opps TOX section
+%\setboolean{minnt}{true} % 1m-X-2NT Nat
+\setboolean{minrs}{true}
+\newcommand{\xtwontminormin}{6}
+\newcommand{\xtwontminormax}{9}
+%\setboolean{majnt}{true}
+\setboolean{majrs}{true}
+\newcommand{\xtwontmajormin}{10}
+\newcommand{\xtwontmajormax}{+}
+
+%vs. opening preempts
+\newcommand{\optwontoc}{15--17 Bal w/stop\pfix{}} % (2x)-2NT
+\setboolean{opdto}{true}
+\newcommand{\opdtothru}{4\rh} %Takeout through...
+%\setboolean{oppen}{true}
+\setboolean{opleb}{true} %Lebensohl
+\newcommand{\oplebtext}{slow shows} %leb text
+\newcommand{\opcuebid}{stopper ask\pfix{}}
+\newcommand{\opjumpoc}{Leaping Michaels\pfix{}}
+\newcommand{\opothertext}{spl only in pre suit\pfix{}} %Other line
+
+%Slam conventions
+\setboolean{gednt}{true} %Gerber
+\setboolean{geseq}{true} %NT Seq G
+%\setboolean{genon}{true} %non-seq G
+\newcommand{\gerbertext}{1430/Sty or Trf\pfix{}}
+%\setboolean{black}{true} %Blackwood
+%\setboolean{b0314}{true} %RKC
+\setboolean{b1430}{true} %1430
+\newcommand{\blackwoodtext}{0123 1\textsuperscript{st} round}
+\newcommand{\controlcuetext}{1\textsuperscript{st}/2\textsuperscript{nd}, Frivolous 3NT}
+\newcommand{\slaminterftext}{DFS/PSS, DEPO (5 trump+)\pfix{}}
+\newcommand{\slamtexttop}{2\c\ opener's suit is trump unless suit agreement\pfix{}} %Two lines for slam convention info
+
+%Carding:
+
+%Leads:
+%Leads vs. suit:  indicate whether to circle the 1st, 2nd, etc. card (more than one, or zero, is OK)
+%e.g. if you lead Ace from Ace-King, \newcommand{AKx}{1}
+%e.g. if you lead the default from Queen-Jack, \newcommand{QJx}{}
+\newcommand{\suitxx}{1}
+\newcommand{\suitxxx}{2}
+\newcommand{\suitxxxx}{4}
+\newcommand{\suitxxxxx}{4}
+\newcommand{\suitHxx}{3}
+\newcommand{\suitHxxx}{4}
+\newcommand{\suitHxxxx}{4}
+\newcommand{\suitafterfirst}{K from AK}
+\newcommand{\AKx}{1}
+\setboolean{suakv}{true}
+\newcommand{\suitAKxvaries}{K Kount}
+\newcommand{\KQx}{}
+\newcommand{\QJx}{}
+\newcommand{\JTx}{}
+\newcommand{\suitKQTN}{}
+\newcommand{\TNx}{}
+\newcommand{\KJTx}{}
+\newcommand{\KTNx}{}
+\newcommand{\suitQTNx}{}
+\newcommand{\suitexcepttop}{mutter}
+\newcommand{\suitexceptbottom}{frequent suit preference leads\pfix{}}
+
+%Leads vs. NT:
+\newcommand{\ntxx}{1}
+\newcommand{\ntxxx}{1}
+\newcommand{\ntxxxx}{2}
+\newcommand{\ntxxxxx}{45}
+\newcommand{\ntHxx}{3}
+\newcommand{\ntHxxx}{4}
+\newcommand{\ntHxxxx}{4}
+\newcommand{\ntafterfirst}{K from AK}
+\newcommand{\AKxx}{1}
+\setboolean{ntakv}{true}
+\newcommand{\ntAKxvaries}{K Kount/unblock}
+\newcommand{\AJTx}{}
+\newcommand{\KQJx}{}
+\newcommand{\QJTx}{}
+\newcommand{\JTNx}{}
+\newcommand{\ntexcepttop}{mutter}
+\newcommand{\ntexceptbottom}{frequent underlead aces}
+
+\newcommand{\AQJx}{}
+\newcommand{\ATNx}{}
+\newcommand{\ntKQTN}{}
+\newcommand{\ntKTNx}{}
+\newcommand{\ntQTNx}{}
+\newcommand{\TNxx}{}
+
+\setboolean{su4th}{true} %4th best vs. suit
+%\setboolean{su3rd}{true} %3/5 suit
+%\setboolean{su3lo}{true} %3/low suit
+%\setboolean{suatt}{true} %attitude suit
+%\setboolean{susxx}{true} %low from xx
+%\setboolean{suatt}{true} %attitude suit
+
+\setboolean{nt4th}{true} %4th best vs. NT
+%\setboolean{nt3rd}{true} %3/5 NT
+%\setboolean{nt3lo}{true}
+%\setboolean{ntatt}{true} %Attitude vs NT
+\setboolean{nt2xx}{true} %2nd from xxxx+
+
+\newcommand{\leadtext}{} %Other lead info:e.g. A-attitude K-kount
+
+%Signals:
+%\setboolean{stasu}{true} %std attitude vs suits
+%\setboolean{stcsu}{true} %count
+\setboolean{udasu}{true} %upside down attitude suits
+\setboolean{udcnt}{true} %NT
+%\setboolean{stant}{true} %std attitude vs NT
+%\setboolean{stcnt}{true} %count
+\setboolean{udant}{true} %NT
+\setboolean{udcsu}{true} %upside down count suits
+\newcommand{\cardexcepttext}{Alarm clock honours}
+%\setboolean{smisu}{true} %Smith echo - suit
+%\setboolean{smint}{true} %Smith - NT
+%\setboolean{smirv}{true} %reverse Smith
+\newcommand{\othercardingtext}{Foster Echo}
+\newcommand{\trumpsignaltext}{suit pref w/obvious\pfix{}}
+
+%\setboolean{deatt}{true} %Primary signal to declarer's lead
+\setboolean{decou}{true}
+%\setboolean{desui}{true}
+\setboolean{pratt}{true} %Primary signal to partner's lead
+%\setboolean{prcou}{true}
+%\setboolean{prsui}{true}
+\newcommand{\signalexcepttext}{Obvious Shift Trick 1}
+\newcommand{\signaltexttop}{lavinthal vs NT only\pfix{}}
+\newcommand{\signaltextbottom}{mutterings}
+
+%\setboolean{std1d}{true}
+\setboolean{udn1d}{true}
+%\setboolean{lav1d}{true}
+%\setboolean{odd1d}{true}
+%\setboolean{oth1d}{true}
+%\setboolean{trump}{true} %Trump suit pref
+%\setboolean{fossu}{true} %Foster echo - suit
+%\setboolean{fosnt}{true} %Foster echo - NT
+%\setboolean{speci}{true} %Special Carding Please Ask ``red dot''
+
+% END of pre-set blanks on the convention card
+
+% Finally, if you want to insert a completely new field in the place of your
+% choice, you may do so by placing additional TikZ commands into this wrapper
+% if you don't want to edit the style file.
+
+% If not, leave it blank as it is below.
+
+% To create a new text field:
+% \node at (x,y) {Text to position at this location};
+% The semicolon is essential!
+
+\newcommand{\additionaltikz}{%
+%
+}%end of \additionaltikz
+\drawconventioncard
+\end{document}
