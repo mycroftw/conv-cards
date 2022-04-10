@@ -49,6 +49,7 @@
 
 \newcommand{\names}{}
 \newcommand{\playernumber}{}
+%\setboolean{visib}{true}  % show guidelines
 
 %General approach:
 \newcommand{\generalapproach}{}
@@ -180,7 +181,7 @@
 \newcommand{\nthjumptext}{}
 \newcommand{\ntsjumptext}{} %1NT-3S
 \newcommand{\ntothertext}{} %Other conventions over 1NT
-\newcommand{\ntextratext}{} %blank line after texas transfers
+\newcommand{\ntextratext}{} %Second "Other Conventions"
 
 % NT openings - bottom
 %\setboolean{smole}{true}
@@ -192,7 +193,7 @@
 %\setboolean{ntpen}{true}
 \newcommand{\ntxothertext}{} %Other doubles over 1NT
 %\setboolean{leben}{true}
-\newcommand{\ntlebentext}{} %Lebensohl: Fast or slow denies?
+\newcommand{\ntlebentext}{} %Lebensohl style
 
 %2NT/3NT openings
 \newcommand{\twonlowtext}{}
@@ -204,11 +205,11 @@
 %\setboolean{jac2n}{true}
 %\setboolean{tex2n}{true}
 %\setboolean{neg2n}{true}
-\newcommand{\twonextratext}{} %Blank line in 2NT box
+\newcommand{\twonextratext}{} %Other line in 2NT box
 
 \newcommand{\threenlowtext}{} %3NT range
 \newcommand{\threenhightext}{}
-%\setboolean{gam3n}{true}
+%\setboolean{gam3n}{true} % One suit?
 \newcommand{\threenextratext}{} %One suit description 3NT box
 
 %2C
@@ -267,10 +268,10 @@
 \newcommand{\vsstrongart}{} % "vs str/VS openings" - MDF to fix
 %\setboolean{nmf1w}{true} %1-way new minor
 %\setboolean{nmf2w}{true} %2-way new minor
-%\setboolean{xyz2w}{true} %2-way new minor
+%\setboolean{xyz2w}{true} %XYZ
 %\setboolean{fsfrd}{true} %Fourth suit
 %\setboolean{fsfgf}{true}
-\newcommand{\footnotestop}{} % 3 lines for additional conventions at bottom
+\newcommand{\footnotestop}{} % 2 lines for additional conventions at bottom
 \newcommand{\footnotesbottom}{}
 
 %Back of card:
@@ -339,10 +340,10 @@
 \newcommand{\othernttop}{} %two lines of other NT defense info
 
 %Direct cuebid
-%\setboolean{qamim}{true} %Michaels
-%\setboolean{qqmim}{true}
-%\setboolean{qnmim}{true}
-%\setboolean{qnmam}{true}
+%\setboolean{qamim}{true} %Michaels - Art minor
+%\setboolean{qqmim}{true} %         - Quasi Natural minor
+%\setboolean{qnmim}{true} %         - Natural minor
+%\setboolean{qnmam}{true} %         - Natural Major
 %\setboolean{qamin}{true} %Natural
 %\setboolean{qqmin}{true}
 %\setboolean{qnmin}{true}
@@ -351,7 +352,7 @@
 %\setboolean{qqmio}{true}
 %\setboolean{qnmio}{true}
 %\setboolean{qnmao}{true}
-\newcommand{\cuebidtext}{} %"Describe" other cuebid comments
+\newcommand{\cuebidtext}{} %other cuebid comments
 
 %Over opp's takeout double
 %\setboolean{nsf2l}{true} %New suit forcing?
@@ -363,7 +364,7 @@
 %\setboolean{jsfit}{true}
 %\setboolean{xximp}{true} %Rdbl 10+
 %\setboolean{xxcon}{true}
-\newcommand{\xxtext}{} %Blank space next to Rdbl implies no fit. Can write in ``any 10+''
+\newcommand{\xxtext}{} % Conventional XX explanation
 %\setboolean{minnt}{true} % 1m-X-2NT Nat
 %\setboolean{minrs}{true}
 \newcommand{\xtwontminormin}{}
@@ -411,11 +412,11 @@
 %\setboolean{stasu}{true} %std attitude vs suits
 %\setboolean{stcsu}{true} %count
 %\setboolean{udasu}{true} %upside down attitude suits
-%\setboolean{udcnt}{true} %NT
+%\setboolean{udcsu}{true} %count
 %\setboolean{stant}{true} %std attitude vs NT
 %\setboolean{stcnt}{true} %count
-%\setboolean{udant}{true} %NT
-%\setboolean{udcsu}{true} %upside down count suits
+%\setboolean{udant}{true} %upside down attitude NT
+%\setboolean{udcnt}{true} %count
 \newcommand{\cardexcepttext}{}
 %\setboolean{smisu}{true} %Smith echo - suit
 %\setboolean{smint}{true} %Smith - NT
@@ -424,21 +425,21 @@
 \newcommand{\trumpsignaltext}{}
 
 % Signals:
-%\setboolean{deatt}{true} %Primary signal to declarer's lead
-%\setboolean{decou}{true}
-%\setboolean{desui}{true}
-%\setboolean{pratt}{true} %Primary signal to partner's lead
-%\setboolean{prcou}{true}
-%\setboolean{prsui}{true}
+%\setboolean{deatt}{true} %Primary signal to declarer's lead - attitude
+%\setboolean{decou}{true} % count
+%\setboolean{desui}{true} % suit preference
+%\setboolean{pratt}{true} %Primary signal to partner's lead - attitude
+%\setboolean{prcou}{true} % count
+%\setboolean{prsui}{true} % suit preference
 \newcommand{\signalexcepttext}{}
 \newcommand{\signaltexttop}{}
 \newcommand{\signaltextbottom}{}
 
-%\setboolean{std1d}{true}
-%\setboolean{udn1d}{true}
-%\setboolean{lav1d}{true}
-%\setboolean{odd1d}{true}
-%\setboolean{oth1d}{true}
+%\setboolean{std1d}{true} % first discard: standard attitude
+%\setboolean{udn1d}{true} % UD attitude
+%\setboolean{lav1d}{true} % Lavinthal
+%\setboolean{odd1d}{true} % Odd/Even
+%\setboolean{oth1d}{true} % Other
 
 %Leads:
 %Leads vs. suit:  indicate whether to circle the 1st, 2nd, etc. card (more than one, or zero, is OK)
@@ -456,10 +457,10 @@
 \newcommand{\suitHxx}{}
 \newcommand{\suitHxxx}{}
 \newcommand{\suitHxxxx}{}
-\newcommand{\suitafterfirst}{}
+\newcommand{\suitafterfirst}{} % Difference after Trick 1?
 \newcommand{\AKx}{}
 %\setboolean{suakv}{true} % AK leads vary/suits?
-\newcommand{\suitAKxvaries}{}
+\newcommand{\suitAKxvaries}{} % how?
 \newcommand{\KQx}{}
 \newcommand{\QJx}{}
 \newcommand{\JTx}{}
@@ -483,10 +484,10 @@
 \newcommand{\ntHxx}{}
 \newcommand{\ntHxxx}{}
 \newcommand{\ntHxxxx}{}
-\newcommand{\ntafterfirst}{}
+\newcommand{\ntafterfirst}{} % NT: change after Trick 1?
 \newcommand{\AKxx}{}
-%\setboolean{ntakv}{true}
-\newcommand{\ntAKxvaries}{}
+%\setboolean{ntakv}{true} % AK leads vary / NT?
+\newcommand{\ntAKxvaries}{} % how?
 \newcommand{\KQJx}{}
 \newcommand{\ntKQTN}{}
 \newcommand{\QJTx}{}
