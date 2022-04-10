@@ -17,3 +17,9 @@ Permission to use any of the tex files as a template for your own cards granted,
    - Colour changes to match 2021 Alert/Announcements.
  - grbccemf.sty is a special "template" that tweaks the base card for South African Texas:
    - 4C transfers to Hearts, 4D to spades
+
+Feb 2022 update: Added the new 2022 ACBL convention card legal in June.  It is still in
+draft format, and may be incomplete, or badly kerned.  I have made a couple of small changes 
+that either feel righter or "since I have the space anyway..." and one big change: I have removed
+all the guide lines, as all they do with printed text is clutter the card.  I may add a
+tikz layer with all the guide lines for preference, or to print blank cards for manual filling out.  I may not.   
