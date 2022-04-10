@@ -75,7 +75,7 @@
 \setboolean{clcon}{true}
 \newcommand{\clresponses}{1M, 2m GF 5+}
 \setboolean{ctxfr}{true} % transfer responses to 1C
-\newcommand{\clopennote}{weaker minor if BAL} % Insert text in blank space next to 1C
+\newcommand{\cldescribe}{weaker minor if BAL} % Insert text in blank space next to 1C
 
 \newcommand{\clrespdi}{0--7} % text after "1D response"
 \setboolean{bypas}{true}
@@ -105,7 +105,7 @@
 \setboolean{dicon}{true}
 \newcommand{\diresponses}{1M = other major}
 \setboolean{dascl}{true} % 1D responses like 1C
-\newcommand{\diopennote}{4 unless 4-4-3-2} % Insert text in blank space next to 1D e.g. ``4 unless 4-4-3-2''
+\newcommand{\didescribe}{4 unless 4-4-3-2} % Insert text in blank space next to 1D e.g. ``4 unless 4-4-3-2''
 
 \newcommand{\minonedionenlowtext}{6} %1D-1NT range
 \newcommand{\minonedionenhightext}{10-}
@@ -130,8 +130,8 @@
 \setboolean{ntfor}{true} %1NT forcing
 \setboolean{ntsem}{true} %1NT semiforcing
 \setboolean{ntbps}{true} %1H-1NT bypass 4+S
-\newcommand{\majothertext}{HSGT, fit J/S in comp\pfix{}} %Other major methods: HSGT, Mathe asking bid, etc
-\newcommand{\majothertexttwo}{1\rh -- 2\s\, J2N} %Other major methods line two
+\newcommand{\majothertexttop}{HSGT, fit J/S in comp\pfix{}} %Other major methods: HSGT, Mathe asking bid, etc
+\newcommand{\majothertextbottom}{1\rh -- 2\s\, J2N} %Other major methods line two
 
 \setboolean{ra2nt}{true} %Jacoby
 \setboolean{ra3nt}{true} %1M-3NT
@@ -180,8 +180,8 @@
 \newcommand{\ntdjumptext}{minors GF}
 \newcommand{\nthjumptext}{Majors INV\pfix{}}
 \newcommand{\ntsjumptext}{Majors GF\pfix{}} %1NT-3S
-\newcommand{\ntothertext}{Over weak: 2-way, no smol/tex\pfix{}} %Other conventions over 1NT
-\newcommand{\ntextratext}{\hspace{4mm}and negX throughout\pfix{}} %blank line after texas transfers
+\newcommand{\ntothertexttop}{Over weak: 2-way, no smol/tex\pfix{}} %Other conventions over 1NT
+\newcommand{\ntothertextbottom}{\hspace{4mm}and negX throughout\pfix{}} %blank line after texas transfers
 
 % NT openings - bottom
 \setboolean{smole}{true}
@@ -205,12 +205,12 @@
 \setboolean{jac2n}{true}
 \setboolean{tex2n}{true}
 \setboolean{neg2n}{true}
-\newcommand{\twonextratext}{slam try\pfix{}} %Blank line in 2NT box
+\newcommand{\twonothertext}{slam try\pfix{}} %Blank line in 2NT box
 
 \newcommand{\threenlowtext}{24} %3NT range
 \newcommand{\threenhightext}{27}
 \setboolean{gam3n}{true}
-\newcommand{\threenextratext}{solid suit (0 outside)\pfix{}} %One suit description 3NT box
+\newcommand{\threenonesuittext}{solid suit (0 outside)\pfix{}} %One suit description 3NT box
 
 %2C
 \newcommand{\twoclowtext}{22+} %2C point range
@@ -264,7 +264,7 @@
 \newcommand{\twosresponse}{Bingo\pfix{}}
 
 %Bottom of card:
-\newcommand{\wjstext}{Weak NC, Fit in comp or by PH\pfix{}} % now "jump shift responses"
+\newcommand{\jshifttext}{Weak NC, Fit in comp or by PH\pfix{}} % jump shift responses
 \newcommand{\vsstrongart}{Mathé} % "vs str/VS openings" - MDF to fix
 \setboolean{nmf1w}{true} %1-way new minor
 \setboolean{nmf2w}{true} %2-way new minor
@@ -285,7 +285,7 @@
 \newcommand{\suppxthru}{2\,x}
 \setboolean{supxx}{true} %Support redouble
 \newcommand{\toxstyletext}{very aggr. w/perfect shape\pfix{}}
-\newcommand{\doubletext}{Rosencrans, snapdragon\pfix{}} %Other special doubles
+\newcommand{\doubleothertext}{Rosencrans, snapdragon\pfix{}} %Other special doubles
 
 %Competitive bidding column - NT overcalls
 \newcommand{\directlowtext}{15} %range
@@ -297,7 +297,7 @@
 \setboolean{dntco}{true} %conventional NT O/c
 \newcommand{\directconvtext}{Raptor: 4M--5+m\pfix{}}
 \setboolean{unu2l}{true} %Unusual: 2 lowers
-\newcommand{\ntconvtext}{minors/Quasi\c\,\rd} %conventional overcalls (sandwich etc)
+\newcommand{\ntothertext}{minors/Quasi\c\,\rd} %conventional overcalls (sandwich etc)
 
 %Simple overcalls:
 \newcommand{\oclowtext}{8} %point range
@@ -320,7 +320,7 @@
 \setboolean{jrinv}{true}
 \newcommand{\overcallcuetext}{limit+}
 \setboolean{occus}{true} % cue response support?
-\newcommand{\overcalltext}{Fit J/S} % Other responses
+\newcommand{\overcallothertext}{Fit J/S} % Other responses
 
 %Defense vs. NT:
 \newcommand{\firstcondition}{Str Direct} %''vs.'' line, first half
@@ -337,7 +337,7 @@
 \newcommand{\secondvstwohe}{Nat}
 \newcommand{\secondvstwosp}{Natural}
 \newcommand{\secondvstwont}{Natural}
-\newcommand{\othernttop}{3x NAT PRE} %two lines of other NT defense info
+\newcommand{\othernt}{3x NAT PRE} %two lines of other NT defense info
 
 %Direct cuebid
 \setboolean{qamim}{true} %Michaels
@@ -352,7 +352,7 @@
 \setboolean{qqmio}{true}
 \setboolean{qnmio}{true}
 \setboolean{qnmao}{true}
-\newcommand{\cuebidtext}{Mathé vs Str, NAT vs Polish} %"Describe" other cuebid comments
+\newcommand{\cuebiddescribe}{Mathé vs Str, NAT vs Polish} %"Describe" other cuebid comments
 
 %Over opp's takeout double
 \setboolean{nsf2l}{true} %New suit forcing?
@@ -406,7 +406,7 @@
 \newcommand{\blackwoodtext}{0123 1\textsuperscript{st} round}
 \newcommand{\controlcuetext}{1\textsuperscript{st}/2\textsuperscript{nd}, Frivolous 3NT}
 \newcommand{\slaminterftext}{DFS/PSS, DEPO (5 trump+)\pfix{}}
-\newcommand{\slamtexttop}{2\c\ opener's suit is trump unless suit agreement\pfix{}} %Two lines for slam convention info
+\newcommand{\slamothertext}{2\c\ opener's suit is trump unless suit agreement\pfix{}} %Two lines for slam convention info
 
 %Carding:
 \setboolean{stasu}{true} %std attitude vs suits
