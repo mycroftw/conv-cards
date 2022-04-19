@@ -13,7 +13,6 @@
 %the card is 8'' wide, so the margins are very narrow to fit on letter size paper:
 \usepackage{template/grbcce2022}
 \usepackage[left=5mm,right=5mm,top=5mm]{geometry}
-% \usepackage{grbcce2022}
 \begin{document}
 
 %There is a boolean to turn on or off every checkbox on the card.
@@ -35,8 +34,8 @@
 %\bluebold{...} for bold blue text (e.g. more visible 1NT ranges)
 %Use whatever other LaTeX formatting you wish. Default font size is \scriptsize.
 
-%To insert (black) suit symbols: \s, \h, \d, \c.
-%To insert a red suit: \rd, \rh
+% To insert suit symbols: \s, \h, \d, \c.
+% To insert a naturally coloured suit: \bc, \rd, \rh, \bs
 %To insert a red spade: \textcolor{red}{\s}
 
 %To specify what card you lead from a given holding, indicate that card's
@@ -50,7 +49,7 @@
 
 \newcommand{\names}{Michael Farebrother -- Ellen Kuiper\pfix{}}
 \newcommand{\playernumber}{O007899}
-\setboolean{visib}{true}  % show guidelines
+%\setboolean{visib}{true}  % show guidelines
 
 %General approach:
 \newcommand{\generalapproach}{Weak NT, Keri/NT}
@@ -74,9 +73,9 @@
 %\setboolean{cl1nf}{true}
 %\setboolean{cl0nf}{true}
 %\setboolean{clcon}{true}
+\newcommand{\cldescribe}{Sound unless 6+\ \c} % Insert text in blank space next to 1C
 \newcommand{\clresponses}{}
 %\setboolean{ctxfr}{true} % transfer responses to 1C
-\newcommand{\cldescribe}{Sound unless 6+\ \c} % Insert text in blank space next to 1C
 
 \newcommand{\clrespdi}{} % text after "1D response"
 \setboolean{bypas}{true}
@@ -104,9 +103,9 @@
 %\setboolean{di1nf}{true}
 %\setboolean{di0nf}{true}
 %\setboolean{dicon}{true}
+\newcommand{\didescribe}{4 unless 4--4--3--2, sound unless 6+\ \rd} % Insert text in blank space next to 1D e.g. ``4 unless 4-4-3-2''
 \newcommand{\diresponses}{}
 \setboolean{dascl}{true} % 1D responses like 1C
-\newcommand{\didescribe}{4 unless 4-4-3-2, sound unless 6+\ \rd} % Insert text in blank space next to 1D e.g. ``4 unless 4-4-3-2''
 
 \newcommand{\minonedionenlowtext}{5} %1D-1NT range
 \newcommand{\minonedionenhightext}{8-}
@@ -123,7 +122,7 @@
 %\setboolean{diocm}{true} %                - Mixed
 %\setboolean{dioci}{true} %                - Inv
 
-%Major openings:
+% 1 Major
 %\setboolean{h12l4}{true} %4 cards in 1st/2nd seat
 \setboolean{h12l5}{true}
 \setboolean{h34l4}{true} %4 cards in 3rd/4th seat
@@ -138,8 +137,8 @@
 \setboolean{ra3nt}{true} %1M-3NT
 \setboolean{raspl}{true} %Splinter
 \newcommand{\majraisetext}{Fit J/S (Limit-ish)} %Text line for Bergen, fitjumps, etc
-\setboolean{drury}{true} %What kind of Drury?
-%\setboolean{dr2wy}{true}
+\setboolean{drury}{true} % 2 clubs Drury?
+%\setboolean{dr2wy}{true} % 2 diamonds Drury?
 %\setboolean{drcmp}{true}
 \newcommand{\majdrurytext}{}
 %\setboolean{dblrw}{true} %double raise
@@ -149,15 +148,18 @@
 %\setboolean{ocdrm}{true}
 %\setboolean{ocdri}{true}
 
-%Notrump openings:
-%First column:
-\newcommand{\ntlowtext}{11++} %NT range
+% 1NT: Top
+\newcommand{\ntlowtext}{11++}
 \newcommand{\nthightext}{14}
 \newcommand{\ntseatvul}{}
 \newcommand{\altntlowtext}{} %If variable NT, second range here
 \newcommand{\altnthightext}{}
 %\setboolean{ntasr}{true} %Same responses for alt NT range?
-\newcommand{\altntresponse}{}
+% This next line is "differences between ranges" if a second range defined,
+% or a space for "style" if only one range.
+\newcommand{\altntresponse}{could have singleton A or K in a minor, could be 6m322\pfix{}}
+
+% 1NT: First column
 %\setboolean{nt5cm}{true}
 \newcommand{\sysontext}{2\,\c} %Systems on after 1NT-(X), 2\c, etc...
 %\setboolean{staym}{true}
@@ -176,7 +178,7 @@
 \setboolean{trf2n}{true}
 \newcommand{\ntnttext}{\regtext{clubs}} %1NT-2NT
 
-%NT openings - 2nd column:
+% 1NT: second column
 \newcommand{\ntcjumptext}{\rd\ \redreg{splinter\ }\boldtext{[2]}\pfix{}} %1NT-3C
 \newcommand{\ntdjumptext}{\rh\ \redreg{splinter}\pfix{}}
 \newcommand{\nthjumptext}{\s\ \redreg{splinter}\pfix{}}
@@ -184,7 +186,7 @@
 \newcommand{\ntothertexttop}{2\,\bc\ forces 2\,\rd, to play or INV \boldtext{[1]}\pfix{}} %Other conventions over 1NT
 \newcommand{\ntothertextbottom}{\regtext{Over 1NT--X,} 2\,\bc\ scramble, \regtext{all else to play} \boldtext{[3]}\pfix{}} % second "Other Conventions"
 
-% NT openings - bottom
+% 1NT: Bottom
 %\setboolean{smole}{true}
 \setboolean{tex4c}{true}
 \setboolean{tex4d}{true}
@@ -196,7 +198,7 @@
 \setboolean{leben}{true}
 \newcommand{\ntlebentext}{fast denies} %Lebensohl style
 
-%2NT/3NT openings
+% 2NT
 \newcommand{\twonlowtext}{20}
 \newcommand{\twonhightext}{21}
 %\setboolean{pup2n}{true}
@@ -208,12 +210,13 @@
 \setboolean{neg2n}{true}
 \newcommand{\twonothertext}{SATexas} %Other line in 2NT box
 
+% 3NT
 \newcommand{\threenlowtext}{} %3NT range
 \newcommand{\threenhightext}{}
 \setboolean{gam3n}{true} % One suit?
 \newcommand{\threenonesuittext}{4m preempt, NOT solid\pfix{}} %One suit description 3NT box
 
-%2C
+% 2 Clubs
 \newcommand{\twoclowtext}{22+} %2C point range
 \newcommand{\twochightext}{}
 \newcommand{\twocldescribe}{or 8.5 QT w/Defence} %line of text on left side of 2C divider
@@ -229,7 +232,7 @@
 %\setboolean{neg2h}{true}
 \newcommand{\twoclresponse}{cheapest 3, x, xx 2-neg\pfix{}} %Other text on right side of 2C divider
 
-% 2D
+% 2 Diamonds
 \newcommand{\twodlowtext}{6} %2D point range
 \newcommand{\twodhightext}{11}
 \newcommand{\twoddescribe}{Anything goes style \boldtext{[7]}}
@@ -241,7 +244,7 @@
 \newcommand{\twodntresp}{Ogust\pfix{}}
 \newcommand{\twodresponse}{Fit Raise/X...}
 
-%2H:
+% 2 Hearts
 \newcommand{\twohlowtext}{6}
 \newcommand{\twohhightext}{10}
 \newcommand{\twohdescribe}{as 2\,\rd}
@@ -252,7 +255,8 @@
 %\setboolean{2s2he}{true}
 \newcommand{\twohntresp}{Ogust\pfix{}}
 \newcommand{\twohresponse}{..ParkingLot XX\pfix{}}
-%2S:
+
+% 2 Spades
 \newcommand{\twoslowtext}{6}
 \newcommand{\twoshightext}{10}
 \newcommand{\twosdescribe}{as 2\,\rd}
@@ -264,7 +268,7 @@
 \newcommand{\twosntresp}{Ogust\pfix{}}
 \newcommand{\twosresponse}{}
 
-%Bottom of card:
+%Bottom of card
 \newcommand{\jshifttext}{Fit (Limit-ish, 9+ in two suits)} % jump shift responses
 \newcommand{\vsstrongart}{Mathé/Str 1m} % "vs str/VS openings" - MDF to fix
 %\setboolean{nmf1w}{true} %1-way new minor
@@ -275,7 +279,9 @@
 \newcommand{\footnotestop}{} % 2 lines for additional conventions at bottom
 \newcommand{\footnotesbottom}{Very aggressive competition against 2-fit}
 
-%Back of card:
+% Back of card (left to right, top to bottom)
+
+% Doubles
 \setboolean{negax}{true} %Negative doubles through...
 \newcommand{\negaxthru}{3\,\s}
 %\setboolean{penax}{true}
@@ -288,7 +294,7 @@
 \newcommand{\toxstyletext}{\redreg{15+ "any" (xx+ if min.) \boldtext{[5]}}\pfix{}}
 \newcommand{\doubleothertext}{see 1NT for takeout "double"} %Other special doubles
 
-%Competitive bidding column - NT overcalls
+% NT overcalls
 \newcommand{\directlowtext}{(6)8} %range
 \newcommand{\directhightext}{14(18)}
 %\setboolean{syson}{true} %systems on
@@ -300,11 +306,11 @@
 \setboolean{unu2l}{true} %Unusual: 2 lowers
 \newcommand{\ntothertext}{} %conventional overcalls (sandwich etc)
 
-%Simple overcalls:
+% Overcalls
 \newcommand{\oclowtext}{8} %point range
 \newcommand{\ochightext}{14(18)}
 %\setboolean{oc4cd}{true}
-\newcommand{\twooclowtext}{11} %2-lev point range
+\newcommand{\twooclowtext}{11} %2-level point range
 \newcommand{\twoochightext}{14(18)}
 %\setboolean{jostr}{true} %Jump overcalls strong
 %\setboolean{joint}{true}
@@ -323,7 +329,7 @@
 \setboolean{occus}{true} % cue response support?
 \newcommand{\overcallothertext}{} % Other responses
 
-%Defense vs. NT:
+%Defense vs. NT
 \newcommand{\firstcondition}{Strong/All\pfix{}} %''vs.'' line, first half
 \newcommand{\firstvsdbl}{\redreg{usu. 4M--5+m}} %1NT-X
 \newcommand{\firstvstwocl}{\rh\,\redreg{ + }\bs\xfix{}} %1NT-2C
@@ -335,8 +341,8 @@
 \newcommand{\secondvsdbl}{Penalty\pfix{}}
 \newcommand{\secondvstwocl}{}
 \newcommand{\secondvstwodi}{}
-\newcommand{\secondvstwohe}{\redreg{\rh\, + m}}
-\newcommand{\secondvstwosp}{\redreg{\bs\, + m}}
+\newcommand{\secondvstwohe}{\redreg{\rh\, + m}\xfix{}}
+\newcommand{\secondvstwosp}{\redreg{\bs\, + m}\xfix{}}
 \newcommand{\secondvstwont}{}
 \newcommand{\othernt}{} %two lines of other NT defense info
 
@@ -355,8 +361,8 @@
 %\setboolean{qnmao}{true}
 \newcommand{\cuebiddescribe}{Mathé vs Str, std vs multi-1m} % other cuebid comments
 
-%Over opp's takeout double
-%\setboolean{nsf2l}{true} %New suit forcing?
+% vs. takeout double
+%\setboolean{nsf2l}{true} % New suit forcing at 2 level?
 %\setboolean{xnstf}{true} %New suit transfer?
 \newcommand{\toxtrftext}{} %transfers through?
 %\setboolean{jswea}{true} %Jump shifts
@@ -409,7 +415,7 @@
 \newcommand{\slaminterftext}{DFS/RFS/PSS, DEPO $\rightarrow$ 5 trump\pfix{}}
 \newcommand{\slamothertext}{1NT-2\,\s;resp-3\,x RKC\pfix{}} %Two lines for slam convention info
 
-%Carding:
+% Carding
 %\setboolean{stasu}{true} %std attitude vs suits
 %\setboolean{stcsu}{true} %count
 \setboolean{udasu}{true} %upside down attitude suits
@@ -425,7 +431,7 @@
 \newcommand{\othercardingtext}{\boldtext{Upside Down Suit Pref. [6]}\pfix{}}
 \newcommand{\trumpsignaltext}{(UD)SP}
 
-% Signals:
+% Signals
 %\setboolean{deatt}{true} %Primary signal to declarer's lead - attitude
 \setboolean{decou}{true} % count
 %\setboolean{desui}{true} % suit preference
@@ -443,9 +449,11 @@
 %\setboolean{oth1d}{true} % Other
 
 %Leads:
-%Leads vs. suit:  indicate whether to circle the 1st, 2nd, etc. card (more than one, or zero, is OK)
+% indicate whether to circle the 1st, 2nd, etc. card (more than one, or zero, is OK)
 %e.g. if you lead Ace from Ace-King, \newcommand{AKx}{1}
 %e.g. if you lead the default from Queen-Jack, \newcommand{QJx}{}
+
+% Leads vs suit
 \setboolean{su4th}{true} %4th best vs. suit
 %\setboolean{su3rd}{true} %3/5 suit
 %\setboolean{su3lo}{true} %3/low suit
@@ -472,7 +480,7 @@
 \newcommand{\suitexcepttop}{K from AK}
 \newcommand{\suitexceptbottom}{Pd's suit low: Qxx/support, xxx/not}
 
-%Leads vs. NT:
+% Leads vs. NT
 \setboolean{nt4th}{true} %4th best vs. NT
 %\setboolean{nt3rd}{true} %3/5 NT
 %\setboolean{nt3lo}{true}
