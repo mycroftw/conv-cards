@@ -4,6 +4,7 @@
 %			moved into the style sheet and reduce typing in the template
 %v1.0.2 - 17 May 2021 - Michael Farebrother - spelling fixes, change to 2021
 %           alert rules
+%v2.0 - 1 April 2022 - Michael Farebrother - complete rewrite for 2022 card.
 
 %Fill out the fields in latex_cc_template.tex to create your own ACBL Convention Card in LaTeX
 
@@ -15,7 +16,7 @@
 \RequirePackage{microtype} % allows us to stretch/shrink fonts to match
 \RequirePackage[T1]{fontenc} % T1 font necessary to stretch and shrink
 \RequirePackage{helvet} %provides Helvetica typeface
-\RequirePackage{ifthen} %manipulate boolean values
+\RequirePackage{xifthen} %manipulate boolean values
 \RequirePackage{xstring} %allow us to parse the opening-lead strings
 \RequirePackage{xcolor} %red and blue
 \RequirePackage{currfile} %get filename
@@ -255,7 +256,7 @@
     \node [right] at (101, 212) {\bigboldtext{Names:}};
 %Insert name and player number here
     \node [right] at (115, 212) {\bigboldtext{\textls[-20]{\names}}};
-    \node [left] at (203, 212) {\bigboldtext{\textls[-20]{\playernumber}}};
+    \node [left] at (203, 211.7) {\boldtext{\textls[-20]{\playernumber}}};
 
 % Overview:
     \node [right] at (104, 205.5) {\headtext{General Approach}};
@@ -465,25 +466,33 @@
     \bguideline{115.5}{121}{109}
     \node at (127, 110.5) {\bluebold{\nthightext}};
     \bguideline{125}{129}{109}
-    \node [right] at (128, 110.5) (ntseatvul){\bluereg{(Seat/Vul }};
-    \node [left] at (148, 110.5) {\bluereg{\ntseatvul\,)}};
-    \bguideline{140}{145}{109}
-    \node [right] at (145, 111) {\bigblue{1NT}};
-    \node [right] at (160, 110.5) {\bluereg{to}};
-    \node at (158, 110.5) {\bluebold{\altntlowtext}};
-    \bguideline{156}{161}{109}
-    \node at (166, 110.5) {\bluebold{\altnthightext}};
-    \bguideline{164}{168}{109}
-    \node [right] at (167, 110.2) {\regtext{Same Resp?}};
-    \checkbox{ntasr} at (184.5, 110.5) {};
-    \node [right] at (184.5, 110.5) {\regtext{\altntresponse}};
-    \guideline{186}{202}{109}
+
+    % We can use the area past the first range for explanation...
+    \ifthenelse{\equal{\altntlowtext}{}}{
+        \node [right] at (130, 110.2) {\bluereg{Style:}};
+        \node [right] at (138, 110.5) {\bluereg{\altntresponse}};
+        \bguideline{138}{202}{109}
+    }{
+        \node [right] at (128, 110.5) (ntseatvul){\bluereg{(Seat/Vul }};
+        \node [left] at (148, 110.5) {\bluereg{\ntseatvul\,)}};
+        \bguideline{140}{145}{109}
+        \node [right] at (145, 111) {\bigblue{1NT}};
+        \node [right] at (160, 110.5) {\bluereg{to}};
+        \node at (158, 110.5) {\bluebold{\altntlowtext}};
+        \bguideline{156}{161}{109}
+        \node at (166, 110.5) {\bluebold{\altnthightext}};
+        \bguideline{164}{168}{109}
+        \node [right] at (167, 110.2) {\regtext{Same Resp?}};
+        \checkbox{ntasr} at (184.5, 110.5) {};
+        \node [right] at (184.5, 110.5) {\regtext{\altntresponse}};
+        \guideline{186}{202}{109}
+    }
 
     \node [right] at (104, 106.7) (nt5cm) {\regtext{5-Card Major\ }};
     \checkbox{nt5cm} at (nt5cm.east) {};
     \node [right] at (123, 106.7) (syson){\regtext{Sys on vs}};
-    \node at (140, 107) {\regtext{\sysontext}};
-    \guideline{135}{150}{105.5}
+    \node at (143, 107) {\regtext{\sysontext}};
+    \guideline{136}{150}{105.5}
 
     \node [right] at (104, 102.7) {\regtext{2\,\c: Stayman}\hspace{4mm}\regtext{Puppet}\hspace{4mm}\redreg{Other}};
     \checkbox{staym} at (122, 103) {};
@@ -818,7 +827,7 @@
     \node [right] at (53, 173) {\regtext{2\,\rh\ }};
     \node [right] at (53, 169) {\regtext{2\,\s\ }};
     \node [right] at (52.5, 165) {\regtext{2NT\ }};
-    \node [right] at (58, 189) {\boldtext{\firstcondition}};
+    \node at (68, 189) {\boldtext{\firstcondition}};
 	\guideline{59}{76}{187.5}
     \node [right] at (58, 185) {\regtext{\firstvsdbl}};
 	\guideline{59}{76}{183.5}
@@ -834,27 +843,36 @@
 	\guideline{59}{76}{163.5}
 
     % second set
-    \node [right] at (76.5, 189) {\boldtext{Vs:}};
-    \node [right] at (76, 185) {\regtext{Dbl\ }};
-    \node [right] at (76, 181) {\regtext{2\,\c\ }};
-    \node [right] at (76, 177) {\regtext{2\,\rd\ }};
-    \node [right] at (76, 173) {\regtext{2\,\rh\ }};
-    \node [right] at (76, 169) {\regtext{2\,\s\ }};
-    \node [right] at (75.5, 165) {\regtext{2NT\ }};
-    \node [right] at (81, 189) {\boldtext{\secondcondition}};
-	\guideline{83}{100}{187.5}
-    \node [right] at (81, 185) {\regtext{\secondvsdbl}};
-	\guideline{83}{100}{183.5}
-    \node [right] at (81, 181) {\regtext{\secondvstwocl}};
-	\guideline{83}{100}{179.5}
-    \node [right] at (81, 177) {\regtext{\secondvstwodi}};
-    \guideline{83}{100}{175.5}
-    \node [right] at (81, 173) {\regtext{\secondvstwohe}};
-    \guideline{83}{100}{171.5}
-    \node [right] at (81, 169) {\regtext{\secondvstwosp}};
-    \guideline{83}{100}{167.5}
-    \node [right] at (81, 165) {\regtext{\secondvstwont}};
-    \guideline{83}{100}{163.5}
+    \ifthenelse{\equal{\secondcondition}{}}{
+        \guideline{76}{100}{183.5}
+        \guideline{76}{100}{179.5}
+        \guideline{76}{100}{175.5}
+        \guideline{76}{100}{171.5}
+        \guideline{76}{100}{167.5}
+        \guideline{76}{100}{163.5}
+    }{
+        \node [right] at (76.5, 189) {\boldtext{Vs:}};
+        \node [right] at (76, 185) {\regtext{Dbl\ }};
+        \node [right] at (76, 181) {\regtext{2\,\c\ }};
+        \node [right] at (76, 177) {\regtext{2\,\rd\ }};
+        \node [right] at (76, 173) {\regtext{2\,\rh\ }};
+        \node [right] at (76, 169) {\regtext{2\,\s\ }};
+        \node [right] at (75.5, 165) {\regtext{2NT\ }};
+        \node at (91, 189) {\boldtext{\secondcondition}};
+    	\guideline{83}{100}{187.5}
+        \node [right] at (81, 185) {\regtext{\secondvsdbl}};
+    	\guideline{83}{100}{183.5}
+        \node [right] at (81, 181) {\regtext{\secondvstwocl}};
+    	\guideline{83}{100}{179.5}
+        \node [right] at (81, 177) {\regtext{\secondvstwodi}};
+        \guideline{83}{100}{175.5}
+        \node [right] at (81, 173) {\regtext{\secondvstwohe}};
+        \guideline{83}{100}{171.5}
+        \node [right] at (81, 169) {\regtext{\secondvstwosp}};
+        \guideline{83}{100}{167.5}
+        \node [right] at (81, 165) {\regtext{\secondvstwont}};
+        \guideline{83}{100}{163.5}
+    }
 
     \node [right] at (52.5, 160) {\redreg{Other:\,}};
     \node [right] at (60, 160) {\redreg{\othernt}};
@@ -997,11 +1015,11 @@
     \node [right] at (38, 97) {\regtext{\blackwoodtext}};
 	\guideline{38}{100}{95.5}
     \node [right] at (3, 93) {\regtext{Control Bids: \controlcuetext}};
-	\guideline{5}{100}{91.5}
+	\guideline{19}{100}{91.5}
     \node [right] at (3, 89) {\regtext{Vs. Interference: \slaminterftext}};
-	\guideline{5}{100}{87.5}
+	\guideline{23}{100}{87.5}
     \node [right] at (3, 85) {\regtext{Other: \slamothertext}};
-	\guideline{5}{100}{83.5}
+	\guideline{12}{100}{83.5}
 
 %Carding
     \node at (7, 80) {\regtext{Suits}};
@@ -1064,10 +1082,10 @@
 
 %leads vs suits
 
-    \node [right] at (3, 44.7) {\regtext{Length Leads: 4th}\hspace{4mm}\regtext{3\textsuperscript{rd}/5\textsuperscript{th}}\hspace{4mm}\regtext{3\textsuperscript{rd}/Low}};
+    \node [right] at (3, 44.7) {\regtext{Length Leads: 4th}\hspace{4mm}\regtext{3\textsuperscript{rd}/5\textsuperscript{th}}\hspace{3.5mm}\regtext{3\textsuperscript{rd}/Low}};
     \checkbox{su4th} at (26, 45) {};
-    \checkbox{su3rd} at (37, 45)  {};
-    \checkbox{su3lo} at (48, 45) {};
+    \checkbox{su3rd} at (36.5, 45)  {};
+    \checkbox{su3lo} at (48.5, 45) {};
     \node [right] at (10, 41) {\regtext{Attitude}\hspace{4mm}\regtext{Small from xx}};
     \checkbox{suatt} at (21.5, 41) {};
     \checkbox{susxx} at (40, 41) {};
@@ -1107,10 +1125,10 @@
 
 %leads vs NT
 
-    \node [right] at (53, 44.7) {\regtext{Length Leads: 4th}\hspace{4mm}\regtext{3\textsuperscript{rd}/5\textsuperscript{th}}\hspace{4mm}\regtext{3\textsuperscript{rd}/Low}};
+    \node [right] at (53, 44.7) {\regtext{Length Leads: 4th}\hspace{4mm}\regtext{3\textsuperscript{rd}/5\textsuperscript{th}}\hspace{3.5mm}\regtext{3\textsuperscript{rd}/Low}};
     \checkbox{nt4th} at (76, 45) {};
-    \checkbox{nt3rd} at (87, 45)  {};
-    \checkbox{nt3lo} at (98, 45) {};
+    \checkbox{nt3rd} at (86.5, 45)  {};
+    \checkbox{nt3lo} at (98.5, 45) {};
     \node [right] at (60, 41) {\regtext{Attitude}\hspace{4mm}\regtext{2\textsuperscript{nd} from xxxx(+)}};
     \checkbox{ntatt} at (71.5, 41) {};
     \checkbox{nt2xx} at (93, 41) {};
