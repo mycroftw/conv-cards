@@ -108,7 +108,7 @@
 \newboolean{h12l4}\newboolean{h12l5}\newboolean{h34l4}\newboolean{h34l5}
 \newboolean{ntfor}\newboolean{ntsem}\newboolean{ntbps}
 \newboolean{ra2nt}\newboolean{ra3nt}\newboolean{raspl}
-\newboolean{drury}\newboolean{dr2wy}\newboolean{drcmp}
+\newboolean{dru2c}\newboolean{dru2d}\newboolean{drcmp}
 \newboolean{dblrw}\newboolean{dblrm}\newboolean{dblri}
 \newboolean{ocdrw}\newboolean{ocdrm}\newboolean{ocdri}
 % 1NT - 20
@@ -442,8 +442,8 @@
     \node [right] at (majraise.east) {\redreg{\majraisetext}};
     \rguideline{160}{202}{132.5}
     \node [right] at (149, 129.7) {\redreg{Drury: 2\,\bc\hspace{4mm}2\,\rd\hspace{4mm}In Comp}};
-    \rcheckbox{drury} at (163, 130) {};
-    \rcheckbox{dr2wy} at (170.5, 130) {};
+    \rcheckbox{dru2c} at (163, 130) {};
+    \rcheckbox{dru2d} at (170.5, 130) {};
     \rcheckbox{drcmp} at (183.5, 130) (drurycmp) {};
     \node [right] at (drurycmp.east) {\redreg{\majdrurytext}};
     \rguideline{185.5}{202}{128.5}
@@ -472,7 +472,7 @@
         \node [right] at (130, 110.2) {\bluereg{Style:}};
         \node [right] at (138, 110.5) {\bluereg{\altntresponse}};
         \bguideline{138}{202}{109}
-    }{
+    }{ % if there's no second range.
         \node [right] at (128, 110.5) (ntseatvul){\bluereg{(Seat/Vul }};
         \node [left] at (148, 110.5) {\bluereg{\ntseatvul\,)}};
         \bguideline{140}{145}{109}
@@ -842,7 +842,7 @@
     \node [right] at (58, 165) {\regtext{\firstvstwont}};
 	\guideline{59}{76}{163.5}
 
-    % second set
+    % second set if exists, else remove headers and extend guidelines
     \ifthenelse{\equal{\secondcondition}{}}{
         \guideline{76}{100}{183.5}
         \guideline{76}{100}{179.5}
