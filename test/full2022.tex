@@ -12,7 +12,7 @@
 \documentclass[12pt]{article}
 %the card is 8'' wide, so the margins are very narrow to fit on letter size paper:
 \usepackage{template/grbcce2022}
-\usepackage[left=5mm,right=5mm,top=5mm]{geometry}
+\usepackage[left=0mm,right=5mm,top=20mm]{geometry}
 \begin{document}
 
 %There is a boolean to turn on or off every checkbox on the card.
@@ -50,6 +50,12 @@
 \newcommand{\names}{Ellen Kuiper --- Lane Galloway\pfix{}}
 \newcommand{\playernumber}{O007899}
 \setboolean{visib}{true}  % show guidelines
+% Select Exactly One of the following three lines for "user input serif?"
+% top is "serif only if no guidelines" (otherwise output can be a bit confusing)
+% but you can force yes or no with the next lines.
+\ifthenelse{\boolean{visib}}{}{\setboolean{serif}{true}}
+%\setboolean{serif}{true}
+%\setboolean{serif}{false}
 
 %General approach:
 \newcommand{\generalapproach}{Sub-standard American}

@@ -50,6 +50,12 @@
 \newcommand{\names}{}
 \newcommand{\playernumber}{}
 \setboolean{visib}{true}  % show guidelines
+% Select Exactly One of the following three lines for "user input serif?"
+% top is "serif only if no guidelines" (otherwise output can be a bit confusing)
+% but you can force yes or no with the next lines.
+\ifthenelse{\boolean{visib}}{}{\setboolean{serif}{true}}
+%\setboolean{serif}{true}
+%\setboolean{serif}{false}
 
 % General approach:
 \newcommand{\generalapproach}{}

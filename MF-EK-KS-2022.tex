@@ -12,7 +12,7 @@
 \documentclass[12pt]{article}
 %the card is 8'' wide, so the margins are very narrow to fit on letter size paper:
 \usepackage{template/grbcce2022}
-\usepackage[left=5mm,right=5mm,top=5mm]{geometry}
+\usepackage[left=0mm,right=5mm,top=20mm]{geometry}
 \begin{document}
 
 %There is a boolean to turn on or off every checkbox on the card.
@@ -50,14 +50,20 @@
 \newcommand{\names}{Michael Farebrother -- Ellen Kuiper\pfix{}}
 \newcommand{\playernumber}{O007899}
 %\setboolean{visib}{true}  % show guidelines
+% Select Exactly One of the following three lines for "user input serif?"
+% top is "serif only if no guidelines" (otherwise output can be a bit confusing)
+% but you can force yes or no with the next lines.
+\ifthenelse{\boolean{visib}}{}{\setboolean{serif}{true}}
+%\setboolean{serif}{true}
+%\setboolean{serif}{false}
 
 %General approach:
-\newcommand{\generalapproach}{Weak NT, Keri/NT}
+\newcommand{\generalapproach}{Weak NT, Keri/NT\pfix{}}
 \newcommand{\minHCPopen}{12 (11 M)}
 \newcommand{\minHCPresp}{A or 6 (5/m)}
 %\setboolean{fo1c}{true} %Forcing openings...
 \setboolean{fo2c}{true}
-\newcommand{\foothertext}{4\bc, 4\rd}%Other forcing opening bids
+\newcommand{\foothertext}{4\bc, 4\rd\pfix{}}%Other forcing opening bids
 %\setboolean{1nts}{true} % 1NT strength
 \setboolean{1ntw}{true}
 %\setboolean{1ntv}{true}
@@ -103,7 +109,7 @@
 %\setboolean{di1nf}{true}
 %\setboolean{di0nf}{true}
 %\setboolean{dicon}{true}
-\newcommand{\didescribe}{4 unless 4--4--3--2, sound unless 6+\ \rd} % Insert text in blank space next to 1D e.g. ``4 unless 4-4-3-2''
+\newcommand{\didescribe}{4 unless 4--4--3--2, sound unless 6+\ \rd\pfix{}} % Insert text in blank space next to 1D e.g. ``4 unless 4-4-3-2''
 \newcommand{\diresponses}{}
 \setboolean{dascl}{true} % 1D responses like 1C
 
@@ -269,7 +275,7 @@
 \newcommand{\twosresponse}{}
 
 %Bottom of card
-\newcommand{\jshifttext}{Fit (Limit-ish, 9+ in two suits)} % jump shift responses
+\newcommand{\jshifttext}{Fit (Limit-ish, 9+ in two suits)\pfix{}} % jump shift responses
 \newcommand{\vsstrongart}{Mathé/Str 1m} % "vs str/VS openings" - MDF to fix
 %\setboolean{nmf1w}{true} %1-way new minor
 %\setboolean{nmf2w}{true} %2-way new minor
@@ -277,7 +283,7 @@
 %\setboolean{fsfrd}{true} %Fourth suit
 \setboolean{fsfgf}{true}
 \newcommand{\footnotestop}{} % 2 lines for additional conventions at bottom
-\newcommand{\footnotesbottom}{Very aggressive competition against 2-fit}
+\newcommand{\footnotesbottom}{Very aggressive competition against 2-fit\pfix{}}
 
 % Back of card (left to right, top to bottom)
 
@@ -302,7 +308,7 @@
 \newcommand{\balhightext}{14}
 \setboolean{sysba}{true}
 \setboolean{dntco}{true} %conventional NT O/c
-\newcommand{\directconvtext}{1NT takeout, 3+ in unbid suits \boldtext{[5]}}
+\newcommand{\directconvtext}{1NT takeout, 3+ in unbid suits \boldtext{[5]}\pfix{}}
 \setboolean{unu2l}{true} %Unusual: 2 lowers
 \newcommand{\ntothertext}{} %conventional overcalls (sandwich etc)
 
@@ -336,7 +342,7 @@
 \newcommand{\firstvstwodi}{\rh\,\redreg{ or }\bs\xfix{}} %1NT-2D
 \newcommand{\firstvstwohe}{\redreg{5\,\rh\, +\, m}} %1NT-2H
 \newcommand{\firstvstwosp}{\redreg{5\,\bs\, +\, m}} %1NT-2S
-\newcommand{\firstvstwont}{\bc\,+\,\rd} %1NT-2NT
+\newcommand{\firstvstwont}{\redreg{\bc\,+\,\rd}} %1NT-2NT
 \newcommand{\secondcondition}{Weak (< 16)} %the same six lines, right half
 \newcommand{\secondvsdbl}{Penalty\pfix{}}
 \newcommand{\secondvstwocl}{}
@@ -359,7 +365,7 @@
 %\setboolean{qqmio}{true}
 %\setboolean{qnmio}{true}
 %\setboolean{qnmao}{true}
-\newcommand{\cuebiddescribe}{Mathé vs Str, std vs multi-1m} % other cuebid comments
+\newcommand{\cuebiddescribe}{Mathé vs Str, std vs multi-1m\pfix{}} % other cuebid comments
 
 % vs. takeout double
 %\setboolean{nsf2l}{true} % New suit forcing at 2 level?
@@ -386,7 +392,7 @@
 \newcommand{\threelevelstyletop}{Aggressive (esp NV)\pfix{}}
 \newcommand{\threelevelstylebottom}{but 3m 1\textsuperscript{st}/2\textsuperscript{nd} "happy to play 3NT" \boldtext{[7]}\pfix{}}
 \newcommand{\threelevelresp}{NSF}
-\newcommand{\fourlevelstyle}{4m SOL or 1-loser+A or K}
+\newcommand{\fourlevelstyle}{4m Solid M, or 1-loser+A or K}
 \newcommand{\fourlevelresp}{gap asks which\pfix{}}
 \setboolean{namya}{true}
 \newcommand{\fourlevelother}{}
@@ -413,7 +419,7 @@
 \newcommand{\blackwoodtext}{0123 first round}
 \newcommand{\controlcuetext}{1\textsuperscript{st}/2\textsuperscript{nd} up the line, Frivolous 3NT/M\pfix{}}
 \newcommand{\slaminterftext}{DFS/RFS/PSS, DEPO $\rightarrow$ 5 trump\pfix{}}
-\newcommand{\slamothertext}{1NT-2\,\s;resp-3\,x RKC\pfix{}} %Two lines for slam convention info
+\newcommand{\slamothertext}{1NT-2\,\s; resp-3\,x RKC\pfix{}} %Two lines for slam convention info
 
 % Carding
 %\setboolean{stasu}{true} %std attitude vs suits
@@ -478,7 +484,7 @@
 \newcommand{\KTNx}{}
 \newcommand{\suitQTNx}{}
 \newcommand{\suitexcepttop}{K from AK}
-\newcommand{\suitexceptbottom}{Pd's suit low: Qxx/support, xxx/not}
+\newcommand{\suitexceptbottom}{Pd's suit low: Qxx/support, xxx/not\pfix{}}
 
 % Leads vs. NT
 \setboolean{nt4th}{true} %4th best vs. NT
