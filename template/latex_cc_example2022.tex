@@ -48,15 +48,25 @@
 % You WILL get errors if you delete any \newcommand statements!
 % If you lead the default card, you may use \newcommand{cardcombination}{}.
 
-\newcommand{\names}{The Duck -- Anony Mouse\namefix{}}  % use \namefix{} for \pfix{} here
-\newcommand{\playernumber}{1234567/9876543}
+% The following two booleans determine the formatting of the card.
+%     If visib is true, the guidelines under the user text are printed.
+%     Comment this out to remove them (looks cleaner, but may seem odd)
+%
+%     If serif is true, then user text is in a serif font, to differentiate
+%     if from pre-printed card text (this is especially useful when
+%     guidelines are off).  If false, user text is the same sans-serif font
+%     as the pre-printed text.  Pick exactly one of the three lines for true,
+%     false, or "serif if no guidelines, sans if guidelines" (the default).
+%
 \setboolean{visib}{true}  % show guidelines
-% Select Exactly One of the following three lines for "user input serif?"
-% top is "serif only if no guidelines" (otherwise output can be a bit confusing)
-% but you can force yes or no with the next lines.
+
 \ifthenelse{\boolean{visib}}{}{\setboolean{serif}{true}}
 %\setboolean{serif}{true}
 %\setboolean{serif}{false}
+
+% And now the card itself. Right side first, top to bottom, then left side.
+\newcommand{\names}{The Duck -- Anony Mouse\namefix{}}  % use \namefix{} for \pfix{} here
+\newcommand{\playernumber}{1234567/9876543}
 
 % General approach:
 \newcommand{\generalapproach}{Sub-Standard American}  % use \namefix{} for \pfix{} here
