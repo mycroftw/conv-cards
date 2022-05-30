@@ -48,7 +48,7 @@
 % You WILL get errors if you delete any \newcommand statements!
 % If you lead the default card, you may use \newcommand{cardcombination}{}.
 
-\newcommand{\names}{Ellen Kuiper -- Michael Farebrother}
+\newcommand{\names}{Ellen Kuiper -- Michael Farebrother\namefix{}}
 \newcommand{\playernumber}{O007899/Q550794}
 \setboolean{visib}{true}  % show guidelines
 % Select Exactly One of the following three lines for "user input serif?"
@@ -59,7 +59,7 @@
 %\setboolean{serif}{false}
 
 % General approach:
-\newcommand{\generalapproach}{Every Hand An Adventure}
+\newcommand{\generalapproach}{Every Hand An Adventure\namefix{}}
 \newcommand{\minHCPopen}{13}
 \newcommand{\minHCPresp}{A or 5}
 %\setboolean{fo1c}{true} % Forcing openings...
@@ -68,8 +68,8 @@
 %\setboolean{1nts}{true} % 1NT strength
 \setboolean{1ntw}{true}
 %\setboolean{1ntv}{true}
-\newcommand{\bidspreptop}{Highly Undisciplined 2 bids, VERY weak 3+bids} % Bids that Require Preparation
-\newcommand{\bidsprepbottom}{2\,--level overcalls like 2 openers, Sound 1--level action, 10--12 1NT} % Bids that Require Prep line 2
+\newcommand{\bidspreptop}{Highly Undisciplined 2 bids, VERY weak 3+bids\pfix{}} % Bids that Require Preparation
+\newcommand{\bidsprepbottom}{2\,--level overcalls like 2 openers, Sound 1--level action, 10--12 1NT\pfix{}} % Bids that Require Prep line 2
 
 % 1 Club
 %\setboolean{club5}{true} % 1C length
@@ -224,9 +224,9 @@
 \newcommand{\threenonesuittext}{} % One suit description 3NT box
 
 % 2 Clubs
-\newcommand{\twoclowtext}{(4)6} % 2C point range
+\newcommand{\twoclowtext}{(4)\,6} % 2C point range
 \newcommand{\twochightext}{12}
-\newcommand{\twocldescribe}{\boldtext{5+cards, ANY SHAPE\textellipsis}}
+\newcommand{\twocldescribe}{\boldtext{5+cards, ANY SHAPE \textellipsis}}
 %\setboolean{vs2cl}{true} % 2C Very strong
 %\setboolean{st2cl}{true} % 2C Strong
 \setboolean{na2cl}{true} % 2C Natural
@@ -240,7 +240,7 @@
 \newcommand{\twoclresponse}{NSNF to play; 3-raise INV, SJS\pfix{}} % Other text on right side of 2C divider
 
 % 2 Diamonds
-\newcommand{\twodlowtext}{(4)6} % 2D point range
+\newcommand{\twodlowtext}{(4)\,6} % 2D point range
 \newcommand{\twodhightext}{12}
 \newcommand{\twoddescribe}{\boldtext{ALL hands 6+HCP, 5+suit are opened;\pfix{}}}
 \setboolean{dnsnf}{true} % new suit NF
@@ -248,11 +248,11 @@
 %\setboolean{in2di}{true}
 %\setboolean{st2di}{true}
 %\setboolean{co2di}{true} % 2D conventional
-\newcommand{\twodntresp}{INV, 0-2}
+\newcommand{\twodntresp}{INV, 0--2}
 \newcommand{\twodresponse}{as 2\,\bc}
 
 % 2 Hearts
-\newcommand{\twohlowtext}{(4)6}
+\newcommand{\twohlowtext}{(4)\,6}
 \newcommand{\twohhightext}{12}
 \newcommand{\twohdescribe}{\boldtext{\textellipsis{}95\,\% are opened 2 of longest suit\pfix{}}}
 \setboolean{hnsnf}{true}
@@ -264,7 +264,7 @@
 \newcommand{\twohresponse}{as above}
 
 % 2 Spades
-\newcommand{\twoslowtext}{(4)6}
+\newcommand{\twoslowtext}{(4)\,6}
 \newcommand{\twoshightext}{12}
 \newcommand{\twosdescribe}{as above}
 \setboolean{snsnf}{true}
@@ -283,7 +283,7 @@
 \setboolean{xyz2w}{true} % XYZ
 %\setboolean{fsfrd}{true} % Fourth suit 1 round
 \setboolean{fsfgf}{true} % game
-\newcommand{\footnotestop}{Unusual/Unusual (low = low)} % 2 lines for additional conventions at bottom
+\newcommand{\footnotestop}{Unusual/Unusual (low = low)\hspace{4mm}Wolff signoff after 1\,x--1\,y; 2NT\pfix{}} % 2 lines for additional conventions at bottom
 \newcommand{\footnotesbottom}{Sound actions at 1 level, esp. opposite PH\pfix{}}
 
 % Back of card (left to right, top to bottom)
@@ -299,7 +299,7 @@
 \newcommand{\suppxthru}{2\,x}
 \setboolean{supxx}{true} % Support redouble
 \newcommand{\toxstyletext}{Very Sound}
-\newcommand{\doubleothertext}{X-and-bid usu. 1--\textonehalf suiter} % Other special doubles
+\newcommand{\doubleothertext}{X-and-bid usu. 1-\textonehalf\ suiter} % Other special doubles
 
 % NT overcalls
 \newcommand{\directlowtext}{15+} % range
@@ -338,18 +338,18 @@
 
 % Defense vs. NT
 \newcommand{\firstcondition}{Strong/All\pfix{}} %''vs.'' line, first half
-\newcommand{\firstvsdbl}{\redreg{usu. 4M--5+m}} %1NT-X
-\newcommand{\firstvstwocl}{\rh\,\redreg{ + }\bs\xfix{}} %1NT-2C
-\newcommand{\firstvstwodi}{\rh\,\redreg{ or }\bs\xfix{}} %1NT-2D
-\newcommand{\firstvstwohe}{\redreg{5\,\rh\, +\, m}} %1NT-2H
-\newcommand{\firstvstwosp}{\redreg{5\,\bs\, +\, m}} %1NT-2S
+\newcommand{\firstvsdbl}{\redreg{usu. 4\,M--5+m}} %1NT-X
+\newcommand{\firstvstwocl}{\rh\ \redreg{ + }\bs\xfix{}} %1NT-2C
+\newcommand{\firstvstwodi}{\rh\ \redreg{ or }\bs\xfix{}} %1NT-2D
+\newcommand{\firstvstwohe}{\redreg{5\,\rh\ +\, m}} %1NT-2H
+\newcommand{\firstvstwosp}{\redreg{5\,\bs\ +\, m}} %1NT-2S
 \newcommand{\firstvstwont}{\bc\,+\,\rd} %1NT-2NT
 \newcommand{\secondcondition}{Weak (< 16)} %the same six lines, right half
 \newcommand{\secondvsdbl}{Penalty\pfix{}}
 \newcommand{\secondvstwocl}{}
 \newcommand{\secondvstwodi}{}
-\newcommand{\secondvstwohe}{\redreg{\rh\, + m}\xfix{}}
-\newcommand{\secondvstwosp}{\redreg{\bs\, + m}\xfix{}}
+\newcommand{\secondvstwohe}{\redreg{\rh\ + m}\xfix{}}
+\newcommand{\secondvstwosp}{\redreg{\bs\ + m}\xfix{}}
 \newcommand{\secondvstwont}{}
 \newcommand{\othernt}{} %two lines of other NT defense info
 
@@ -366,7 +366,7 @@
 %\setboolean{qqmio}{true}
 %\setboolean{qnmio}{true}
 %\setboolean{qnmao}{true}
-\newcommand{\cuebiddescribe}{Michaels Very Sound} % other cuebid comments
+\newcommand{\cuebiddescribe}{Michaels Very Sound\pfix{}} % other cuebid comments
 
 % vs. takeout double
 %\setboolean{nsf2l}{true} % New suit forcing at 2 level?
@@ -420,7 +420,7 @@
 %\setboolean{b1430}{true} % 1430
 \newcommand{\blackwoodtext}{0123 first round}
 \newcommand{\controlcuetext}{1\textsuperscript{st}/2\textsuperscript{nd}}
-\newcommand{\slaminterftext}{DOPI / DEPO \textrightarrow 5 trump\pfix{}}
+\newcommand{\slaminterftext}{DOPI / DEPO \textrightarrow\ 5 trump\pfix{}}
 \newcommand{\slamothertext}{Frivolous 3NT/Major fit, 1NT-2\,\bs; rebid-new suit RKC\pfix{}} % slam convention info
 
 % Carding

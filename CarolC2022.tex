@@ -48,7 +48,7 @@
 % You WILL get errors if you delete any \newcommand statements!
 % If you lead the default card, you may use \newcommand{cardcombination}{}.
 
-\newcommand{\names}{Carol Cortéz -- Ellen Kuiper}
+\newcommand{\names}{Carol Cortéz -- Ellen Kuiper\namefix{}}  % use \namefix{} for \pfix{} here
 \newcommand{\playernumber}{O007899}
 \setboolean{visib}{true}  % show guidelines
 % Select Exactly One of the following three lines for "user input serif?"
@@ -59,7 +59,7 @@
 %\setboolean{serif}{false}
 
 % General approach:
-\newcommand{\generalapproach}{2/1 Game Forcing\pfix{}}
+\newcommand{\generalapproach}{2/1 Game Forcing\namefix{}}  % use \namefix{} for \pfix{} here
 \newcommand{\minHCPopen}{12}
 \newcommand{\minHCPresp}{A or 6}
 %\setboolean{fo1c}{true} % Forcing openings...
@@ -147,7 +147,7 @@
 \setboolean{dru2c}{true} % 2 Clubs Drury?
 \setboolean{dru2d}{true} % 2 Diamonds Drury?
 %\setboolean{drcmp}{true}
-\newcommand{\majdrurytext}{2\,\bc: 3, 2\,\rd: 4}
+\newcommand{\majdrurytext}{2\,\bc: 3, 2\,\rd: 4\pfix{}}
 %\setboolean{dblrw}{true} % double raise
 %\setboolean{dblrm}{true}
 \setboolean{dblri}{true}
@@ -168,7 +168,7 @@
 
 % 1NT: First column
 %\setboolean{nt5cm}{true}
-\newcommand{\sysontext}{X, 2\,\bc} % Systems on after 1NT-(X), 2\c, etc...
+\newcommand{\sysontext}{X, 2\,\bc\pfix{}} % Systems on after 1NT-(X), 2\c, etc...
 \setboolean{staym}{true}
 %\setboolean{puppe}{true}
 %\setboolean{2coth}{true}
@@ -209,19 +209,19 @@
 \newcommand{\twonlowtext}{20}
 \newcommand{\twonhightext}{21}
 \setboolean{pup2n}{true}
-\newcommand{\twonsptext}{\textrightarrow3NT to play or minor(s) ST\pfix{}} % 2NT-3S
+\newcommand{\twonsptext}{\textrightarrow\ 3NT to play or minor(s) ST\pfix{}} % 2NT-3S
 %\setboolean{con2n}{true}
 \newcommand{\convnttext}{} % Conventional 2NT
 \setboolean{jac2n}{true}
 \setboolean{tex2n}{true}
 %\setboolean{neg2n}{true}
-\newcommand{\twonothertext}{3NT: \redreg{5\,\bs + 4\,\rh}} % Other line in 2NT box
+\newcommand{\twonothertext}{3NT: \redreg{5\,\bs\ + 4\,\rh}} % Other line in 2NT box
 
 % 3NT
 \newcommand{\threenlowtext}{} % 3NT range
 \newcommand{\threenhightext}{}
 \setboolean{gam3n}{true} % One suit?
-\newcommand{\threenonesuittext}{Solid minor, 0 Outside A/K} % One suit description 3NT box
+\newcommand{\threenonesuittext}{Solid minor, 0 Outside A/K\pfix{}} % One suit description 3NT box
 
 % 2 Clubs
 \newcommand{\twoclowtext}{22+} % 2C point range
@@ -340,10 +340,10 @@
 \newcommand{\firstcondition}{} % ''vs.'' line, first half
 \newcommand{\firstvsdbl}{\redreg{Single suit (if \bs, good)}\pfix{}}   % 1NT-X
 \newcommand{\firstvstwocl}{\redreg{\bc\,+ higher\pfix{}}\pfix{}} % 1NT-2C
-\newcommand{\firstvstwodi}{\redreg{\rd\, + higher\pfix{}}\pfix{}} % 1NT-2D
-\newcommand{\firstvstwohe}{\redreg{\rh + \bs}\xfix{}} % 1NT-2H
+\newcommand{\firstvstwodi}{\redreg{\rd\,+ higher\pfix{}}\pfix{}} % 1NT-2D
+\newcommand{\firstvstwohe}{\redreg{\rh\,+ \bs}\xfix{}} % 1NT-2H
 \newcommand{\firstvstwosp}{bad spades\pfix{}} % 1NT-2S
-\newcommand{\firstvstwont}{\redreg{\bc + \rd}\xfix{}} % 1NT-2NT
+\newcommand{\firstvstwont}{\redreg{\bc\,+ \rd}\xfix{}} % 1NT-2NT
 \newcommand{\secondcondition}{} % the same six lines, right half
 \newcommand{\secondvsdbl}{}
 \newcommand{\secondvstwocl}{}
@@ -419,7 +419,7 @@
 \setboolean{b1430}{true} % 1430
 \newcommand{\blackwoodtext}{Specific Ks\pfix{}}
 \newcommand{\controlcuetext}{1\textsuperscript{st} round first}
-\newcommand{\slaminterftext}{DOPI / DEPO \textrightarrow 5 trump\pfix{}}
+\newcommand{\slaminterftext}{DOPI / DEPO \textrightarrow\ 5 trump\pfix{}}
 \newcommand{\slamothertext}{} % slam convention info
 
 % Carding

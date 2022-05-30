@@ -47,8 +47,9 @@
 %You WILL get errors if you delete any \newcommand statements!
 %If you lead the default card, you may use \newcommand{cardcombination}{}.
 
-\newcommand{\names}{Michael Farebrother -- Ellen Kuiper\pfix{}}
+\newcommand{\names}{Michael Farebrother -- Ellen Kuiper\namefix{}}  % use \namefix{} for \pfix{} here
 \newcommand{\playernumber}{O007899}
+
 %\setboolean{visib}{true}  % show guidelines
 % Select Exactly One of the following three lines for "user input serif?"
 % top is "serif only if no guidelines" (otherwise output can be a bit confusing)
@@ -58,17 +59,17 @@
 %\setboolean{serif}{false}
 
 %General approach:
-\newcommand{\generalapproach}{Weak NT, Keri/NT\pfix{}}
-\newcommand{\minHCPopen}{12 (11 M)}
-\newcommand{\minHCPresp}{A or 6 (5/m)}
+\newcommand{\generalapproach}{Weak NT, Keri/NT\namefix{}}  % use \namefix{} for \pfix{} here
+\newcommand{\minHCPopen}{12 (11 M)\pfix{}}
+\newcommand{\minHCPresp}{A or 6 (5/m)\pfix{}}
 %\setboolean{fo1c}{true} %Forcing openings...
 \setboolean{fo2c}{true}
 \newcommand{\foothertext}{4\bc, 4\rd\pfix{}}%Other forcing opening bids
 %\setboolean{1nts}{true} % 1NT strength
 \setboolean{1ntw}{true}
 %\setboolean{1ntv}{true}
-\newcommand{\bidspreptop}{1NT-2\c\ Keri, Upside Down Suit Preference\pfix{}} % Bids that Require Preparation
-\newcommand{\bidsprepbottom}{1NT Overcall takeout, 1suit-X 15+ "any"\hspace{9mm}Notes [\#] on back for detail\pfix{}} % Bids that Require Prep line 2
+\newcommand{\bidspreptop}{1NT--2\c\ Keri, Upside Down Suit Preference\pfix{}} % Bids that Require Preparation
+\newcommand{\bidsprepbottom}{1NT Overcall takeout, 1 suit-X 15+ "any"\hspace{9mm}Notes [\#] on back for detail\pfix{}} % Bids that Require Prep line 2
 
 % 1 Club
 %\setboolean{club5}{true} %1C length
@@ -142,7 +143,7 @@
 \setboolean{ra2nt}{true} %Jacoby
 \setboolean{ra3nt}{true} %1M-3NT
 \setboolean{raspl}{true} %Splinter
-\newcommand{\majraisetext}{Fit J/S (Limit-ish)} %Text line for Bergen, fitjumps, etc
+\newcommand{\majraisetext}{Fit J/S (Limit-ish)\pfix{}} %Text line for Bergen, fitjumps, etc
 \setboolean{dru2c}{true} % 2 clubs Drury?
 %\setboolean{dru2d}{true} % 2 diamonds Drury?
 %\setboolean{drcmp}{true}
@@ -173,24 +174,24 @@
 \setboolean{2coth}{true}
 %\setboolean{nat2d}{true}
 \setboolean{jac2d}{true}
-\newcommand{\ntditext}{very rare 4\,\rh\,\boldtext{[2]}\pfix{}} %Other meaning for 1NT-2\d
+\newcommand{\ntditext}{very rare 4\,\rh\,\boldtext{[1.3]}\pfix{}} %Other meaning for 1NT-2\d
 %\setboolean{nat2h}{true}
 \setboolean{jac2h}{true}
 \newcommand{\nthetext}{} %Other meaning for 1NT-2\h
 %\setboolean{nat2s}{true}
 %\setboolean{trf2s}{true}
-\newcommand{\ntsptext}{Range Ask \boldtext{[2]}\pfix{}} %1NT-2S
+\newcommand{\ntsptext}{range ask \boldtext{[1.3]}\pfix{}} %1NT-2S
 %\setboolean{nat2n}{true}
 \setboolean{trf2n}{true}
 \newcommand{\ntnttext}{\regtext{clubs}} %1NT-2NT
 
 % 1NT: second column
-\newcommand{\ntcjumptext}{\rd\ \redreg{splinter\ }\boldtext{[2]}\pfix{}} %1NT-3C
+\newcommand{\ntcjumptext}{\rd\ \redreg{splinter\ \boldtext{[1.3]}}\pfix{}} %1NT-3C
 \newcommand{\ntdjumptext}{\rh\ \redreg{splinter}\pfix{}}
 \newcommand{\nthjumptext}{\s\ \redreg{splinter}\pfix{}}
 \newcommand{\ntsjumptext}{\c\ \redreg{splinter}\pfix{}} %1NT-3S
-\newcommand{\ntothertexttop}{2\,\bc\ forces 2\,\rd, to play or INV \boldtext{[1]}\pfix{}} %Other conventions over 1NT
-\newcommand{\ntothertextbottom}{\regtext{Over 1NT--X,} 2\,\bc\ scramble, \regtext{all else to play} \boldtext{[3]}\pfix{}} % second "Other Conventions"
+\newcommand{\ntothertexttop}{2\,\bc\ forces 2\,\rd, to play or INV \boldtext{[1.1]}\pfix{}} %Other conventions over 1NT
+\newcommand{\ntothertextbottom}{\regtext{Over 1NT--X,} 2\,\bc\ scramble, \regtext{all else to play} \boldtext{[1.4]}\pfix{}} % second "Other Conventions"
 
 % 1NT: Bottom
 %\setboolean{smole}{true}
@@ -241,7 +242,7 @@
 % 2 Diamonds
 \newcommand{\twodlowtext}{6} %2D point range
 \newcommand{\twodhightext}{11}
-\newcommand{\twoddescribe}{Anything goes style \boldtext{[7]}}
+\newcommand{\twoddescribe}{Anything goes style \boldtext{[6]}}
 %\setboolean{dnsnf}{true} %new suit NF
 \setboolean{wk2di}{true} %2D weak
 %\setboolean{in2di}{true}
@@ -276,13 +277,13 @@
 
 %Bottom of card
 \newcommand{\jshifttext}{Fit (Limit-ish, 9+ in two suits)\pfix{}} % jump shift responses
-\newcommand{\vsstrongart}{Mathé/Str 1m} % "vs str/VS openings" - MDF to fix
+\newcommand{\vsstrongart}{Mathé/Str 1\,m} % "vs str/VS openings" - MDF to fix
 %\setboolean{nmf1w}{true} %1-way new minor
 %\setboolean{nmf2w}{true} %2-way new minor
 \setboolean{xyz2w}{true} %XYZ
 %\setboolean{fsfrd}{true} %Fourth suit
 \setboolean{fsfgf}{true}
-\newcommand{\footnotestop}{} % 2 lines for additional conventions at bottom
+\newcommand{\footnotestop}{Wolff Signoff after 1\,x--1\,y; 2NT\pfix{}} % 2 lines for additional conventions at bottom
 \newcommand{\footnotesbottom}{Very aggressive competition against 2-fit\pfix{}}
 
 % Back of card (left to right, top to bottom)
@@ -295,29 +296,29 @@
 \newcommand{\respxthru}{3\,\s}
 \setboolean{maxix}{true} %Maximal
 \setboolean{suppx}{true} %Support
-\newcommand{\suppxthru}{2x (-1NT)}
+\newcommand{\suppxthru}{2x (-1NT)\pfix{}}
 \setboolean{supxx}{true} %Support redouble
-\newcommand{\toxstyletext}{\redreg{15+ "any" (xx+ if min.) \boldtext{[5]}}\pfix{}}
+\newcommand{\toxstyletext}{\redreg{15+ "any" (xx+ if min.) \boldtext{[2.1]}}\pfix{}}
 \newcommand{\doubleothertext}{see 1NT for takeout "double"} %Other special doubles
 
 % NT overcalls
-\newcommand{\directlowtext}{(6)8} %range
-\newcommand{\directhightext}{14(18)}
+\newcommand{\directlowtext}{\redreg{(6)\,8}\pfix{}} %range
+\newcommand{\directhightext}{\redreg{14(18)}\pfix{}}
 %\setboolean{syson}{true} %systems on
 \newcommand{\ballowtext}{11} %balancing range
 \newcommand{\balhightext}{14}
 \setboolean{sysba}{true}
 \setboolean{dntco}{true} %conventional NT O/c
-\newcommand{\directconvtext}{1NT takeout, 3+ in unbid suits \boldtext{[5]}\pfix{}}
+\newcommand{\directconvtext}{1NT takeout, 3+ in unbid suits \boldtext{[2.2]}\pfix{}}
 \setboolean{unu2l}{true} %Unusual: 2 lowers
 \newcommand{\ntothertext}{} %conventional overcalls (sandwich etc)
 
 % Overcalls
 \newcommand{\oclowtext}{8} %point range
-\newcommand{\ochightext}{14(18)}
+\newcommand{\ochightext}{14(18)\pfix{}}
 %\setboolean{oc4cd}{true}
 \newcommand{\twooclowtext}{11} %2-level point range
-\newcommand{\twoochightext}{14(18)}
+\newcommand{\twoochightext}{14(18)\pfix{}}
 %\setboolean{jostr}{true} %Jump overcalls strong
 %\setboolean{joint}{true}
 \setboolean{jowea}{true} %weak
@@ -339,11 +340,11 @@
 \newcommand{\firstcondition}{Strong/All\pfix{}} %''vs.'' line, first half
 \newcommand{\firstvsdbl}{\redreg{usu. 4M--5+m}} %1NT-X
 \newcommand{\firstvstwocl}{\rh\,\redreg{ + }\bs\xfix{}} %1NT-2C
-\newcommand{\firstvstwodi}{\rh\,\redreg{ or }\bs\xfix{}} %1NT-2D
+\newcommand{\firstvstwodi}{\rh\,\redbold{ or }\bs\xfix{}} %1NT-2D
 \newcommand{\firstvstwohe}{\redreg{5\,\rh\, +\, m}} %1NT-2H
 \newcommand{\firstvstwosp}{\redreg{5\,\bs\, +\, m}} %1NT-2S
 \newcommand{\firstvstwont}{\redreg{\bc\,+\,\rd}} %1NT-2NT
-\newcommand{\secondcondition}{Weak (< 16)} %the same six lines, right half
+\newcommand{\secondcondition}{Weak (< 16)\pfix{}} %the same six lines, right half
 \newcommand{\secondvsdbl}{Penalty\pfix{}}
 \newcommand{\secondvstwocl}{}
 \newcommand{\secondvstwodi}{}
@@ -390,7 +391,7 @@
 
 % Opening preempts
 \newcommand{\threelevelstyletop}{Aggressive (esp NV)\pfix{}}
-\newcommand{\threelevelstylebottom}{but 3m 1\textsuperscript{st}/2\textsuperscript{nd} "happy to play 3NT" \boldtext{[7]}\pfix{}}
+\newcommand{\threelevelstylebottom}{but 3m 1\textsuperscript{st}/2\textsuperscript{nd} "happy to play 3NT" \boldtext{[6]}\pfix{}}
 \newcommand{\threelevelresp}{NSF}
 \newcommand{\fourlevelstyle}{4m Solid M, or 1-loser+A or K}
 \newcommand{\fourlevelresp}{gap asks which\pfix{}}
@@ -419,7 +420,7 @@
 \newcommand{\blackwoodtext}{0123 first round}
 \newcommand{\controlcuetext}{1\textsuperscript{st}/2\textsuperscript{nd} up the line, Frivolous 3NT/M\pfix{}}
 \newcommand{\slaminterftext}{DFS/RFS/PSS, DEPO $\rightarrow$ 5 trump\pfix{}}
-\newcommand{\slamothertext}{1NT-2\,\s; resp-3\,x RKC\pfix{}} %Two lines for slam convention info
+\newcommand{\slamothertext}{1NT--2\,\s; resp-3\,x RKC\pfix{}} %Two lines for slam convention info
 
 % Carding
 %\setboolean{stasu}{true} %std attitude vs suits
@@ -434,8 +435,8 @@
 %\setboolean{smisu}{true} %Smith echo - suit
 \setboolean{smint}{true} %Smith - NT
 \setboolean{smirv}{true} %reverse Smith
-\newcommand{\othercardingtext}{\boldtext{Upside Down Suit Pref. [6]}\pfix{}}
-\newcommand{\trumpsignaltext}{(UD)SP}
+\newcommand{\othercardingtext}{\boldtext{Upside Down Suit Pref. [5]}\pfix{}}
+\newcommand{\trumpsignaltext}{(UD)SP\pfix{}}
 
 % Signals
 %\setboolean{deatt}{true} %Primary signal to declarer's lead - attitude
