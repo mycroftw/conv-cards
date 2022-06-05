@@ -45,9 +45,6 @@
 % You MAY circle more than one card if you wish. e.g., \newcommand{\TNxx}{14}
 % If you use the default, you may choose to circle none, \newcommand{\TNxx}{}
 
-% You WILL get errors if you delete any \newcommand statements!
-% If you lead the default card, you may use \newcommand{cardcombination}{}.
-
 % The following two booleans determine the formatting of the card.
 %     If visib is true, the guidelines under the user text are printed.
 %     Comment this out to remove them (looks cleaner, but may seem odd)
@@ -65,11 +62,11 @@
 %\setboolean{serif}{false}
 
 % And now the card itself. Right side first, top to bottom, then left side.
-\newcommand{\names}{The Duck -- Anony Mouse\namefix{}}  % use \namefix{} for \pfix{} here
+\newcommand{\names}{The Duck -- Anony Mouse\namefix{}}  % use \namefix{} for descenders
 \newcommand{\playernumber}{1234567/9876543}
 
 % General approach:
-\newcommand{\generalapproach}{Sub-Standard American}  % use \namefix{} for \pfix{} here
+\newcommand{\generalapproach}{Sub-Standard American}
 \newcommand{\minHCPopen}{12}
 \newcommand{\minHCPresp}{6}
 %\setboolean{fo1c}{true} % Forcing openings...
@@ -168,7 +165,7 @@
 % 1NT: Top
 \newcommand{\ntlowtext}{14+} % NT range
 \newcommand{\nthightext}{17}
-\newcommand{\ntseatvul}{not Fav or 4\textsuperscript{th}}
+\newcommand{\ntseatvul}{not fav or 4\textsuperscript{th}}
 \newcommand{\altntlowtext}{10} % If variable NT, second range here
 \newcommand{\altnthightext}{13}
 %\setboolean{ntasr}{true} % Same responses for alt NT range?
@@ -219,7 +216,7 @@
 \newcommand{\twonlowtext}{20}
 \newcommand{\twonhightext}{21}
 \setboolean{pup2n}{true}
-\newcommand{\twonsptext}{\redreg{\textrightarrow 3NT, to play or minor(s) ST}\pfix{}} % 2NT-3S
+\newcommand{\twonsptext}{\redreg{\textrightarrow 3NT, to play or minor(s) ST}} % 2NT-3S
 %\setboolean{con2n}{true}
 \newcommand{\convnttext}{} % Conventional 2NT
 \setboolean{jac2n}{true}
@@ -247,12 +244,12 @@
 %\setboolean{steps}{true} % step/control responses?
 \newcommand{\twoclstepstext}{}
 \setboolean{neg2h}{true}
-\newcommand{\twoclresponse}{2NT = \rh positive\pfix{}} % Other text on right side of 2C divider
+\newcommand{\twoclresponse}{2NT = \rh positive} % Other text on right side of 2C divider
 
 % 2 Diamonds
 \newcommand{\twodlowtext}{6} % 2D point range
 \newcommand{\twodhightext}{11}
-\newcommand{\twoddescribe}{Disciplined 1\textsuperscript{st} and 2\textsuperscript{nd}\pfix{}}
+\newcommand{\twoddescribe}{Disciplined 1\textsuperscript{st} and 2\textsuperscript{nd}}
 %\setboolean{dnsnf}{true} % new suit NF
 \setboolean{wk2di}{true} % 2D weak
 %\setboolean{in2di}{true}
@@ -286,7 +283,7 @@
 \newcommand{\twosresponse}{}
 
 % Bottom of card
-\newcommand{\jshifttext}{Soloway in non-comp, Fit J/S in comp and by PH\pfix{}} % jump shift responses
+\newcommand{\jshifttext}{Soloway in non-comp, Fit J/S in comp and by PH} % jump shift responses
 \newcommand{\vsstrongart}{CRaSh} % vs str/VS openings
 %\setboolean{nmf1w}{true} % 1-way new minor
 %\setboolean{nmf2w}{true} % 2-way new minor
@@ -294,7 +291,7 @@
 %\setboolean{fsfrd}{true} % Fourth suit 1 round
 \setboolean{fsfgf}{true} % game
 \newcommand{\footnotestop}{DYWAD over disasters} % 2 lines for additional conventions at bottom
-\newcommand{\footnotesbottom}{\redreg{CRaSh after strong 1\,\bc--1\,\rd}\pfix{}}
+\newcommand{\footnotesbottom}{\redreg{CRaSh after strong 1\,\bc--1\,\rd}}
 
 % Back of card (left to right, top to bottom)
 
@@ -309,7 +306,7 @@
 \newcommand{\suppxthru}{2\,x}
 \setboolean{supxx}{true} % Support redouble
 \newcommand{\toxstyletext}{}
-\newcommand{\doubleothertext}{Snapdragon, DSIX at 3-level\pfix{}} % Other special doubles
+\newcommand{\doubleothertext}{Snapdragon, DSIX at 3-level} % Other special doubles
 
 % NT overcalls
 \newcommand{\directlowtext}{15+} % range
@@ -333,7 +330,7 @@
 \setboolean{joint}{true}
 %\setboolean{jowea}{true} % weak
 \setboolean{jocon}{true}
-\newcommand{\jumpovercalltext}{First 2 Jump O/C Roman\pfix{}} % Other info about jump overcalls
+\newcommand{\jumpovercalltext}{First 2 Jump O/C Roman} % Other info about jump overcalls
 
 %\setboolean{nsfor}{true} % New suit forcing
 \setboolean{nsnfc}{true} % NF Constructive
@@ -347,19 +344,19 @@
 \newcommand{\overcallothertext}{} % Other responses
 
 % Defense vs. NT
-\newcommand{\firstcondition}{Strong Direct\pfix{}} % ''vs.'' line, first half
-\newcommand{\firstvsdbl}{Penalty\pfix{}}   % 1NT-X
+\newcommand{\firstcondition}{Strong Direct} % ''vs.'' line, first half
+\newcommand{\firstvsdbl}{Penalty}   % 1NT-X
 \newcommand{\firstvstwocl}{\bluereg{Diamonds}} % 1NT-2C
 \newcommand{\firstvstwodi}{\bluereg{Hearts}} % 1NT-2D
-\newcommand{\firstvstwohe}{\bluereg{Spades}\pfix{}} % 1NT-2H
+\newcommand{\firstvstwohe}{\bluereg{Spades}} % 1NT-2H
 \newcommand{\firstvstwosp}{\bluereg{Clubs}} % 1NT-2S
 \newcommand{\firstvstwont}{\redreg{Minors}} % 1NT-2NT
 \newcommand{\secondcondition}{Weak or Bal} % the same six lines, right half
-\newcommand{\secondvsdbl}{Penalty\pfix{}}
-\newcommand{\secondvstwocl}{\bc\xfix{}}
-\newcommand{\secondvstwodi}{\rd\xfix{}}
-\newcommand{\secondvstwohe}{\rh\xfix{}}
-\newcommand{\secondvstwosp}{\bs\xfix{}}
+\newcommand{\secondvsdbl}{Penalty}
+\newcommand{\secondvstwocl}{\bc}
+\newcommand{\secondvstwodi}{\rd}
+\newcommand{\secondvstwohe}{\rh}
+\newcommand{\secondvstwosp}{\bs}
 \newcommand{\secondvstwont}{\redreg{Minors}}
 \newcommand{\othernt}{} % other NT defense info
 
@@ -401,7 +398,7 @@
 
 % Opening preempts
 \newcommand{\threelevelstyletop}{Sound 1/2 seat}
-\newcommand{\threelevelstylebottom}{Anything in 3rd\pfix{}}
+\newcommand{\threelevelstylebottom}{Anything in 3rd}
 \newcommand{\threelevelresp}{}
 \newcommand{\fourlevelstyle}{Sound 1/2 seat}
 \newcommand{\fourlevelresp}{}
@@ -415,8 +412,8 @@
 %\setboolean{oppen}{true}
 \setboolean{opleb}{true} % Lebensohl
 \newcommand{\oplebtext}{\bluereg{Transfer rsps}} % leb text
-\newcommand{\opcuebid}{stopper ask\pfix{}}
-\newcommand{\opjumpoc}{Leaping Michaels\pfix{}}
+\newcommand{\opcuebid}{stopper ask}
+\newcommand{\opjumpoc}{Leaping Michaels}
 \newcommand{\opothertext}{} % Other line
 
 % Slam conventions
@@ -428,7 +425,7 @@
 %\setboolean{b0314}{true} % RKC
 \setboolean{b1430}{true} % 1430
 \newcommand{\blackwoodtext}{}
-\newcommand{\controlcuetext}{Italian Style\pfix{}}
+\newcommand{\controlcuetext}{Italian Style}
 \newcommand{\slaminterftext}{DOPI/DEPO}
 \newcommand{\slamothertext}{} % slam convention info
 
