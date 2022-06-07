@@ -21,7 +21,7 @@
 \RequirePackage{xstring} %allow us to parse the opening-lead strings
 \RequirePackage{xcolor} %red and blue
 \RequirePackage{currfile} %get filename
-\ProvidesPackage{template/grbcce2022}
+\ProvidesPackage{acbl2022cc}
 
 %Suit symbols:
 \newcommand{\h}{\ensuremath{\varheartsuit}}
@@ -91,8 +91,10 @@
 %Two formatting commands, since TikZ places text blocks by their centers not
 %their baselines: if you use p, y, or g, your text will look ``pushed upward'';
 %if you use only lowercase letters, your text will look ``too high''.
+% Note: these are obsolete; they just stay here so that cards that did use them don't fail.
 \newcommand{\pfix}{\rule{0pt}{2.6mm}} %A way to re-center user text with p,y,g
 \newcommand{\xfix}{\rule{0pt}{2.0mm}} %re-center text with no capital letters
+
 \newcommand{\namefix}{\rule{0pt}{3.4mm}} %re-center BigBold text with p,y,g
 
 
@@ -428,7 +430,7 @@
     \checkbox{diocm} at (190, 143) {};
     \checkbox{dioci} at (198.5, 143) {};
 
-% MAJOR OPENINGS
+% Major Openings
     \node [t, right] at (104, 137.5) {\bigtext{1\rh/\s\ }};
 
     \node [t, right] at (107, 133) (h12length4) {\tRegtext{1\textsuperscript{st}/2\textsuperscript{nd} Length: 4\,}};
@@ -476,7 +478,7 @@
     \checkbox{ocdrm} at (189.5, 122) {};
     \checkbox{ocdri} at (197, 122) {};
 
-%Notrump openings:
+%1 NT opening:
     \node [t, right] at (104, 110.5) {\bigblue{1NT}};
     \node [t, right] at (120.5, 111.3) {\tBluereg{to}};
     \node [t] at (118, 111.3) {\bluebold{\ntlowtext}};
@@ -489,7 +491,7 @@
         \node [t, right] at (130, 111.3) {\tBluereg{Style:}};
         \node [t, right] at (138, 111.3) {\bluereg{\altntresponse}};
         \bguideline{138}{202}{109.8}
-    }{ % if there's no second range.
+    }{ % unless there is a second range.
         \node [t, right] at (128, 111.3) (ntseatvul){\tBluereg{(If: }};
         \node [t, left] at (148, 111.3) {\bluereg{\ntseatvul\,)}};
         \bguideline{132}{145}{109.8}
@@ -505,6 +507,7 @@
         \guideline{186}{202}{109.8}
     }
 
+% 1NT box, left column
     \node [t, right] at (104, 107) (nt5cm) {\tRegtext{5-Card Major\ }};
     \checkbox{nt5cm} at (nt5cm.east) {};
     \node [t, right] at (123, 107) (syson){\tRegtext{Sys on vs}};
@@ -560,7 +563,7 @@
     \node [t, right] at (ntlebbox.east) {\redreg{\ntlebentext}};
     \rguideline{187}{202}{77.5}
 
-%NT box, right column
+%1NT box, right column
     \node [t, right] at (150, 106) {\tRegtext{3\,\c\ }};
     \node [t, right] at (155, 106) {\regtext{\ntcjumptext}};
     \guideline{155}{202}{104.5}
@@ -579,7 +582,7 @@
     \node [t, right] at (150, 86) {\redreg{\ntothertextbottom}};
     \rguideline{151}{202}{84.5}
 
-%2NT/3NT
+%2NT/3NT Openings
     \node [t, right] at (104, 72.5) {\bigtext{2NT}};
     \node [t, right] at (121, 73.3) {\tRegtext{to}};
     \node [t] at (118, 73.3) {\boldtext{\twonlowtext}};
@@ -610,7 +613,7 @@
     \rcheckbox{gam3n} at (144, 62.8) {};
     \rguideline{146}{202}{61.3}
 
-%2C
+%2C Opening
     \node [t, right] at (104, 56.5) {\bigtext{2\c}};
     \node [t] at (115, 57.5) {\boldtext{\twoclowtext}};
     \guideline{112.5}{118}{56}
@@ -639,7 +642,7 @@
     \node [t, right] at (160, 50) {\tRedreg{Other: }\redreg{\twoclresponse}};
     \rguideline{169}{202}{48.5}
 
-%2D
+%2D Opening
     \node [t, right] at (104, 44.5) {\bigtext{2\rd}};
     \node [t] at (115, 45.5) {\boldtext{\twodlowtext}};
     \guideline{112.5}{118}{44}
@@ -662,7 +665,8 @@
     \rcheckbox{dnsnf} at (dnsnf.east) {};
     \node [t, right] at (177, 40.5) {\tRedreg{Other: }\redreg{\twodresponse}};
     \rguideline{186}{202}{39}
-%2H
+
+%2H Opening
     \node [t, right] at (104, 34.5) {\bigtext{2\rh}};
     \node [t] at (115, 35.5) {\boldtext{\twohlowtext}};
     \guideline{112.5}{118}{34}
@@ -686,7 +690,7 @@
     \node [t, right] at (177, 30.5) {\tRedreg{Other: }\redreg{\twohresponse}};
     \rguideline{186}{202}{29}
 
-%2S
+%2S Opening
     \node [t, right] at (104, 24.5) {\bigtext{2\s}};
     \node [t] at (115, 25.5) {\boldtext{\twoslowtext}};
     \guideline{112.5}{118}{24}
@@ -837,7 +841,7 @@
     \node [t, right] at (3, 159.5) {\tRedreg{Other: }\redreg{\overcallothertext}};
     \rguideline{12.5}{49}{158}
 
-%defense vs. notrump:
+%Defense vs. NT:
     % first set
     \node [t, right] at (53.5, 189) {\tBoldtext{Vs:}};
     \node [t, right] at (53, 185) {\tRegtext{Dbl\ }};
@@ -975,7 +979,7 @@
     \node [t, right] at (61, 131.5) {\redreg{\toxothertext}};
 	\rguideline{62}{100}{130}
 
-%preempts section: totally replaced
+%Preempts
     \node [t, right] at (3, 126.5) {\tRegtext{3-Lvl Style (Seat/Vul):}};
     \node [t, right] at (26, 126.5) {\regtext{\threelevelstyletop}};
 	\guideline{27.5}{49}{125}
@@ -1099,7 +1103,7 @@
     \node [t, right] at (53, 49) {\regtext{\signaltextbottom}};
 	\guideline{54}{100}{47.5}
 
-%leads vs suits
+%Leads vs suits
 
     \node [t, right] at (3, 45) {\tRegtext{Length Leads: 4th}\hspace{4mm}\tRegtext{3\textsuperscript{rd}/5\textsuperscript{th}}\hspace{3.5mm}\tRegtext{3\textsuperscript{rd}/Low}};
     \checkbox{su4th} at (26, 45) {};
@@ -1109,7 +1113,7 @@
     \checkbox{suatt} at (21.5, 41) {};
     \checkbox{susxx} at (40, 41) {};
 
-%showlead{list of cards}{bold cards}{red cards}{circled cards}{x}{y}
+% format: \showlead{list of cards}{bold cards}{red cards}{circled cards}{x}{y}
     \showlead{x,x}{1}{}{\suitxx}{5}{37}
     \showlead{x,x,x}{1}{}{\suitxxx}{13}{37}
     \showlead{x,x,x,x}{}{}{\suitxxxx}{23}{37}
@@ -1142,7 +1146,7 @@
     \node [t, right] at (5, 5) {\regtext{\suitexceptbottom}};
 	\guideline{6}{49}{3.5}
 
-%leads vs NT
+%Leads vs NT
 
     \node [t, right] at (53, 45) {\tRegtext{Length Leads: 4th}\hspace{4mm}\tRegtext{3\textsuperscript{rd}/5\textsuperscript{th}}\hspace{3.5mm}\tRegtext{3\textsuperscript{rd}/Low}};
     \checkbox{nt4th} at (76, 45) {};
@@ -1152,7 +1156,7 @@
     \checkbox{ntatt} at (71.5, 41) {};
     \checkbox{nt2xx} at (93, 41) {};
 
-%showlead{list of cards}{bold cards}{red cards}{circled cards}{x}{y}
+% format: \showlead{list of cards}{bold cards}{red cards}{circled cards}{x}{y}
     \showlead{x,x}{1}{}{\ntxx}{55}{37}
     \showlead{x,x,x}{1}{}{\ntxxx}{63}{37}
     \showlead{x,x,x,x}{}{}{\ntxxxx}{73}{37}
