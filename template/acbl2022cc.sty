@@ -98,7 +98,7 @@
 \newcommand{\namefix}{\rule{0pt}{3.4mm}} %re-center BigBold text with p,y,g
 
 
-%We have to initialize a million booleans (OK, only 207), for the state of every
+%We have to initialize a million booleans (OK, only 201), for the state of every
 %checkbox on the convention card:
 
 %Listed below in order from top to bottom, front then back, of the card.
@@ -172,8 +172,6 @@
 \newboolean{stcsu}\newboolean{stcnt}\newboolean{stasu}\newboolean{stant}
 \newboolean{udcsu}\newboolean{udcnt}\newboolean{udasu}\newboolean{udant}
 \newboolean{smisu}\newboolean{smint}\newboolean{smirv}
-\newboolean{deatt}\newboolean{decou}\newboolean{desui}
-\newboolean{pratt}\newboolean{prcou}\newboolean{prsui}
 \newboolean{std1d}\newboolean{udn1d}\newboolean{lav1d}\newboolean{odd1d}\newboolean{oth1d}
 % Leads - 12
 \newboolean{su4th}\newboolean{su3rd}\newboolean{su3lo}\newboolean{suatt}\newboolean{susxx}
@@ -1077,13 +1075,13 @@
 % Signals
     \node [t, right] at (53, 80) {\tRegtext{Primary Signals to:}};
     \node [t] at (63, 77) {\tRegtext{Declarer's Lead}};
-    \checkbox{deatt} at (63, 74) {};
-    \checkbox{decou} at (63, 71) {};
-    \checkbox{desui} at (63, 68) {};
+    \node [t] at (63, 74) {\regtext{\deatt}};
+    \node [t] at (63, 71) {\regtext{\decou}};
+    \node [t] at (63, 68) {\regtext{\desui}};
     \node [t] at (92, 77) {\tRegtext{Partner's Lead}};
-    \checkbox{pratt} at (92, 74) {};
-    \checkbox{prcou} at (92, 71) {};
-    \checkbox{prsui} at (92, 68) {};
+    \node [t] at (92, 74) {\regtext{\pratt}};
+    \node [t] at (92, 71) {\regtext{\prcou}};
+    \node [t] at (92, 68) {\regtext{\prsui}};
     \node [t] at (77.5, 74) {\tRegtext{Attitude}};
     \node [t] at (77.5, 71) {\tRegtext{Count}};
     \node [t] at (77.5, 68) {\tRegtext{Suit Preference}}; %low p
