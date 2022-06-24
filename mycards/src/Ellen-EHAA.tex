@@ -440,12 +440,22 @@
 \newcommand{\trumpsignaltext}{(UD) suit preference}
 
 % Signals
+% Two alternatives here:
+%    1. uncomment the setboolean to check the box that is "primary signal", as the card suggests.
+%    2. Do not uncomment any checkbox, but rank the entries by putting a single
+%       character in each box with the {*rank} commands.
 %\setboolean{deatt}{true} % Primary signal to declarer's lead - attitude
 \setboolean{decou}{true} % count
 %\setboolean{desui}{true} % suit preference
+\newcommand{\deattrank}{}
+\newcommand{\decourank}{}
+\newcommand{\desuirank}{}
 \setboolean{pratt}{true} % Primary signal to partner's lead - attitude
 %\setboolean{prcou}{true} % count
 %\setboolean{prsui}{true} % suit preference
+\newcommand{\prattrank}{}
+\newcommand{\prcourank}{}
+\newcommand{\prsuirank}{}
 \newcommand{\signalexcepttext}{}
 \newcommand{\signaltexttop}{Frequent suit preference second signal}
 \newcommand{\signaltextbottom}{}
