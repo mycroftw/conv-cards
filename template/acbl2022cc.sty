@@ -193,7 +193,7 @@
 \newcommand{\drawconventioncard}{%
     \usetikzlibrary{scopes}%
     \usetikzlibrary{calc}%needed to position stuff in strings
-    \begin{tikzpicture}[xscale=0.1,yscale=0.1,
+    \begin{tikzpicture}[xscale=0.2,yscale=0.1,
         t/.style={text depth=.1\baselineskip,
                   text height=.5\baselineskip},
         box/.style={rectangle,draw=black,inner sep=3pt},
@@ -205,10 +205,10 @@
         header/.style={right, rectangle, rotate=90, white, inner sep=3pt},
     ];
     % draw a box around everything
-    \draw (0, 0) -- (0, 215) -- (203, 215) -- (203, 0) -- cycle;
-    % \draw [help lines] (0, 0) grid [step = 10] (203, 215);
+    \draw (101, 0) -- (101, 215) -- (203, 215) -- (203, 0) -- cycle;
+    %\draw [help lines] (101, 0) grid [step = 10] (203, 215);
     % dividers on convention card:
-        {
+    {
         % Front Side
         \draw (101, 209) -- (101, 215);
         \draw (104, 209) -- +(99, 0);
@@ -235,41 +235,6 @@
         \draw (104, 18) -- +(99, 0); % 2S
         \draw [fill=gray] (101, 0) rectangle (104, 18);
         \node [header] at (102.5, 3) {\tBoldtext{OTHER}};
-
-        % Back side
-        \draw [fill=black] (0, 193) rectangle (3, 215);
-        \node [header] at (1.5, 197) {\tBoldtext{DOUBLES}};
-        \draw [fill=black] (50, 193) rectangle (53, 215);
-        \node [header] at (51.5, 193) {\tBoldtext{NT OVERCALLS}};
-        \draw (3, 193) -- +(98, 0);
-        \draw [fill=gray] (0, 157) rectangle (3, 193);
-        \node [header] at (1.5, 165) {\tBoldtext{OVERCALLS}};
-        \draw [fill=gray] (50, 157) rectangle (53, 193);
-        \node [header] at (51.5, 163) {\tBoldtext{vs NT OPENING}};
-        \draw (3, 157) -- +(98, 0);
-        \draw [fill=black] (0, 129) rectangle (3, 157);
-        \node [header] at (1.5, 131) {\tBoldtext{DIRECT CUEBIDS}};
-        \draw [fill=black] (50, 129) rectangle (53, 157);
-        \node [header] at (51.5, 131) {\tBoldtext{vs TAKEOUT DBL}};
-        \draw (3, 129) -- +(98, 0);
-        \draw [fill=gray] (0, 103) rectangle (3, 129);
-        \node [header] at (1.5, 108) {\tBoldtext{PREEMPTS}};
-        \draw (3, 116) -- +(47, 0); % divider between 3 and 4 level PRE
-        \draw [fill=gray] (50, 103) rectangle (53, 129);
-        \node [header] at (51.5, 106) {\tBoldtext{vs PREEMPTS}};
-        \draw (3, 103) -- +(98, 0);
-        \draw [fill=black] (0, 82) rectangle (3, 103);
-        \node [header] at (1.5, 87) {\tBoldtext{SLAMS}};
-        \draw (3, 82) -- +(98, 0);
-        \draw [fill=gray] (0, 47) rectangle (3, 82);
-        \node [header] at (1.5, 57) {\tBoldtext{CARDING}};
-        \draw [fill=gray] (50, 47) rectangle (53, 82);
-        \node [header] at (51.5, 57) {\tBoldtext{SIGNALS}};
-        \draw (3, 47) -- +(98, 0);
-        \draw [fill=black] (0, 0) rectangle (3, 47);
-        \node [header] at (1.5, 12) {\tBoldtext{LEADS vs SUITS}};
-        \draw [fill=black] (50, 0) rectangle (53, 47);
-        \node [header] at (51.5, 15) {\tBoldtext{LEADS vs NT}};
     }
 
 % Names:
@@ -731,6 +696,65 @@
     \guideline{105}{202}{5.5}
     \node [t, right] at (104, 3) {\regtext{\footnotesbottom}};
     \guideline{105}{202}{1.5}
+
+    %\node [right] at (3,-2) {\scriptsize \textsf{\currfilename: \today{}.}};
+    %\node [right] at (103,-2) {\tRegtext{\textls[10]{Made with \LaTeX\ and acbl2022cc (github.com/mycroftw/conv-cards)}}};
+    \additionaltikz %optional extra user-defined fields
+
+    \end{tikzpicture}%
+    \newpage;
+    \begin{tikzpicture}[xscale=0.2,yscale=0.1,
+        t/.style={text depth=.1\baselineskip,
+                  text height=.5\baselineskip},
+        box/.style={rectangle,draw=black,inner sep=3pt},
+        cbox/.style={rectangle,draw=black,fill=black,inner sep=3pt},
+        rbox/.style={rectangle,draw=red,inner sep=3pt},
+        crbox/.style={rectangle,draw=red,fill=red,inner sep=3pt},
+        bbox/.style={rectangle,draw=blue,inner sep=3pt},
+        cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt},
+        header/.style={right, rectangle, rotate=90, white, inner sep=3pt},
+    ];
+
+    % draw a box around everything
+    \draw (0, 0) -- (0, 215) -- (101, 215) -- (101, 0) -- cycle;
+    %\draw [help lines] (0, 0) grid [step = 10] (101, 215);
+    {
+         % Back Side
+        \draw [fill=black] (0, 193) rectangle (3, 215);
+        \node [header] at (1.5, 197) {\tBoldtext{DOUBLES}};
+        \draw [fill=black] (50, 193) rectangle (53, 215);
+        \node [header] at (51.5, 193) {\tBoldtext{NT OVERCALLS}};
+        \draw (3, 193) -- +(98, 0);
+        \draw [fill=gray] (0, 157) rectangle (3, 193);
+        \node [header] at (1.5, 165) {\tBoldtext{OVERCALLS}};
+        \draw [fill=gray] (50, 157) rectangle (53, 193);
+        \node [header] at (51.5, 163) {\tBoldtext{vs NT OPENING}};
+        \draw (3, 157) -- +(98, 0);
+        \draw [fill=black] (0, 129) rectangle (3, 157);
+        \node [header] at (1.5, 131) {\tBoldtext{DIRECT CUEBIDS}};
+        \draw [fill=black] (50, 129) rectangle (53, 157);
+        \node [header] at (51.5, 131) {\tBoldtext{vs TAKEOUT DBL}};
+        \draw (3, 129) -- +(98, 0);
+        \draw [fill=gray] (0, 103) rectangle (3, 129);
+        \node [header] at (1.5, 108) {\tBoldtext{PREEMPTS}};
+        \draw (3, 116) -- +(47, 0); % divider between 3 and 4 level PRE
+        \draw [fill=gray] (50, 103) rectangle (53, 129);
+        \node [header] at (51.5, 106) {\tBoldtext{vs PREEMPTS}};
+        \draw (3, 103) -- +(98, 0);
+        \draw [fill=black] (0, 82) rectangle (3, 103);
+        \node [header] at (1.5, 87) {\tBoldtext{SLAMS}};
+        \draw (3, 82) -- +(98, 0);
+        \draw [fill=gray] (0, 47) rectangle (3, 82);
+        \node [header] at (1.5, 57) {\tBoldtext{CARDING}};
+        \draw [fill=gray] (50, 47) rectangle (53, 82);
+        \node [header] at (51.5, 57) {\tBoldtext{SIGNALS}};
+        \draw (3, 47) -- +(98, 0);
+        \draw [fill=black] (0, 0) rectangle (3, 47);
+        \node [header] at (1.5, 12) {\tBoldtext{LEADS vs SUITS}};
+        \draw [fill=black] (50, 0) rectangle (53, 47);
+        \node [header] at (51.5, 15) {\tBoldtext{LEADS vs NT}};
+    }
+
 
 %Back of card: Left to right, top to bottom
 %Doubles
@@ -1196,8 +1220,8 @@
     \node [t, right] at (55, 5) {\regtext{\ntexceptbottom}};
 	\guideline{55}{100}{3.5}
 
-    \node [right] at (3,-2) {\scriptsize \textsf{\currfilename: \today{}.}};
-    \node [right] at (103,-2) {\tRegtext{\textls[10]{Made with \LaTeX\ and acbl2022cc (github.com/mycroftw/conv-cards)}}};
+    %\node [right] at (3,-2) {\scriptsize \textsf{\currfilename: \today{}.}};
+    %\node [right] at (103,-2) {\tRegtext{\textls[10]{Made with \LaTeX\ and acbl2022cc (github.com/mycroftw/conv-cards)}}};
     \additionaltikz %optional extra user-defined fields
     \end{tikzpicture}%
 }%end of \drawconventioncard
