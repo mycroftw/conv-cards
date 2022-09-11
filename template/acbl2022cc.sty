@@ -206,7 +206,7 @@
     ];
     % draw a box around everything
     \draw (0, 0) -- (0, 215) -- (203, 215) -- (203, 0) -- cycle;
-    % \draw [help lines] (0, 0) grid [step = 10] (203, 215);
+    \draw [help lines] (0, 0) grid [step = 10] (203, 215);
     % dividers on convention card:
         {
         % Front Side
@@ -288,22 +288,22 @@
     \node [t] at (191, 201) {\regtext{\minHCPresp}};
     \guideline{184}{202}{199.5}
 
-    \node [t, right] at (104, 197) {\tRegtext{Forcing Open: }\tRedbold{1\,\c\ }};
-    \rcheckbox{fo1c} at (127, 197) {};
-    \node [t, right] at (128, 197) (fo2c) {\tBoldtext{2\,\c\ }};
-    \checkbox{fo2c} at (fo2c.east) {};
-    \node [t, right] at (136, 197) {\tRedreg{Other:}};
-    \node [t, right] at (144, 197) {\redreg{\foothertext}};
+    \rcheckbox{fo1c} at (127, 197) (fo1c) {};
+    \node [t, left, xshift=1mm] at (fo1c.west) {\tRegtext{Forcing Open: }\tRedbold{1\,\c\ }};
+    \checkbox{fo2c} at (135, 197) (fo2c) {};
+    \node [t, left,xshift=0.5mm] at (fo2c.west) {\tBoldtext{2\,\c\ }};
+    \node [t, right] at (145, 197) (foother) {\redreg{\foothertext}};
+    \node [t, left, xshift=1mm] at (foother.west) {\tRedreg{Other:}};
     \rguideline{145}{160}{195.5}
-    \node [t, right] at (160, 197) (1nts) {\tRegtext{1NT Open: Str\,}};
-    \checkbox{1nts} at (1nts.east) (1ntsbox) {};
-    \node [t, right] at (1ntsbox.east) (1ntw) {\tRegtext{ Wk\, }};
+    \checkbox{1nts} at (179,197) (1nts) {};
+    \node [t, left, xshift=1mm] at (1nts.west) {\tRegtext{1NT Open: Str\,}};
+    \node [t, right, xshift=-2mm] at (1nts.east) (1ntw) {\tRegtext{Wk\, }};
     \checkbox{1ntw} at (1ntw.east) (1ntwbox) {};
     \node [t, right] at (1ntwbox) (1ntv) {\tRegtext{ Variable\, }};
     \checkbox{1ntv} at (1ntv.east) {};
 
     \node[t, right] at (104, 193) (btmrp) {\tRegtext{Bids That May Require Preparation: }};
-    \node[t, right] at (144, 193) {\boldtext{\bidspreptop}};
+    \node[t, right] at (btmrp.east) {\boldtext{\bidspreptop}};
     \guideline{145}{202}{191.5}
     \node[t, right] at (110, 189) {\boldtext{\bidsprepbottom}};
 
@@ -324,8 +324,8 @@
 
     \node [t, right] at (119.5, 181) {\regtext{\cldescribe}};
     \guideline{120}{202}{179.5}
-    \node [t, right] at (111, 177) (clubresp) {\tRegtext{Resp: }};
-    \node [t, right] at (119.5, 177) {\regtext{\clresponses}};
+    \node [t, right] at (119.5, 177) (clubresp){\regtext{\clresponses}};
+    \node [t, left] at (clubresp.west) {\tRegtext{Resp: }};
     \guideline{120}{180}{175.5}
     \node [t, right] at (180, 177) (ctxfr) {\tBluereg{Transfer Resp }};
     \bcheckbox{ctxfr} at (ctxfr.east) {};
@@ -336,40 +336,40 @@
     \node [t, right] at (130, 173) (bypas) {\tRegtext{Bypass 5+\,}};
     \checkbox{bypas} at (bypas.east) {};
     \node [t, right] at (104, 169.5) {\tRegtext{1\,NT }};
-    \node [t] at (115, 169.5) {\regtext{\minonenlowtext}};
+    \node [t, right] at (117, 169.5) (clresponent) {\tRegtext{ to }};
+    \node [t, xshift=-2mm] at (clresponent.west) {\regtext{\minonenlowtext}};
     \guideline{112}{118}{168}
-    \node [t, right] at (117, 169.5) {\tRegtext{ to }};
-    \node  at (124, 169.5) {\regtext{\minonenhightext}};
+    \node [t, xshift=2mm] at (clresponent.east) {\regtext{\minonenhightext}};
     \guideline{122}{127}{168}
     \node [t, right] at (104, 166) {\tRegtext{2\,NT }};
-    \node [t] at (115, 166) {\regtext{\mintwonlowtext}};
+    \node [t, right] at (117, 166) (clresptwont) {\tRegtext{ to }};
+    \node [t, xshift=-2mm] at (clresptwont.west) {\regtext{\mintwonlowtext}};
     \guideline{112}{118}{164.5}
-    \node [t, right] at (117, 166) {\tRegtext{ to }};
-    \node [t] at (124, 166) {\regtext{\mintwonhightext}};
+    \node [t, xshift=2mm] at (clresptwont.east) {\regtext{\mintwonhightext}};
     \guideline{122}{127}{164.5}
 
     \node [t, right] at (170, 174) {\tRegtext{Raises}};
     \node [t, right] at (149, 171) {\tRegtext{Single:}};
-    \node [t, right] at (170.2, 171) (clsrn) {\tRegtext{NF\,}\hspace{1.2mm}};
-    \node [t, right] at (182, 171) (clsri) {\tRedreg{Inv+\,}};
+    \node [t, right] at (170.2, 171) (clsrn) {\tRegtext{NF\,}\hspace{1.3mm}};
+    \node [t, right] at (182, 171) (clsri) {\tRedreg{Inv+}\hspace{2.3mm}};
     \node [t, right] at (191.5, 171) (clsrf) {\tRedreg{GF\,}};
-    \checkbox{clsrn} at (177.5, 171) {};
-    \rcheckbox{clsri} at (190, 171) {};
-    \rcheckbox{clsrf} at (198.5, 171) {};
+    \checkbox{clsrn} at (clsrn.east) {};
+    \rcheckbox{clsri} at (clsri.east) {};
+    \rcheckbox{clsrf} at (clsrf.east) {};
     \node [t, right] at (149, 168.5) {\tRegtext{Jump:}};
     \node [t, right] at (170, 168.5) (cljrw) {\tRedreg{Wk\,}};
     \node [t, right] at (180, 168.5) (cljrm) {\tRedreg{Mixed\,}};
     \node [t, right] at (192, 168.5) (cljri) {\tRegtext{Inv\,}};
-    \rcheckbox{cljrw} at (177.5, 168.5) {};
-    \rcheckbox{cljrm} at (190, 168.5) {};
-    \checkbox{cljri} at (198.5, 168.5) {};
+    \rcheckbox{cljrw} at (cljrw.east) {};
+    \rcheckbox{cljrm} at (cljrm.east) {};
+    \checkbox{cljri} at (cljri.east) {};
     \node [t, right] at (153, 166) {\tRegtext{After Overcall:}};
     \node [t, right] at (170, 166) (clocw) {\tRegtext{Wk\,}};
     \node [t, right] at (180, 166) (clocm) {\tRegtext{Mixed\,}};
     \node [t, right] at (192, 166) (cloci) {\tRegtext{Inv\,}};
-    \checkbox{clocw} at (177.5, 166) {};
-    \checkbox{clocm} at (190, 166) {};
-    \checkbox{cloci} at (198.5, 166) {};
+    \checkbox{clocw} at (clocw.east) {};
+    \checkbox{clocm} at (clocm.east) {};
+    \checkbox{cloci} at (cloci.east) {};
 
 % 1D opening
 
@@ -388,23 +388,23 @@
 
     \node [t, right] at (119.5, 158.5) {\regtext{\didescribe}};
     \guideline{120}{202}{157}
-    \node [t, right] at (111, 155) (diamresp) {\tRegtext{Resp: }};
-    \node [t, right] at (119.5, 155) {\regtext{\diresponses}};
+    \node [t, right] at (119.5, 155) (diamresp) {\regtext{\diresponses}};
+    \node [t, left] at (diamresp.west) {\tRegtext{Resp: }};
     \guideline{120}{178}{153.5}
     \node [t, right] at (177, 155) (dascl) {\tRegtext{Same as over 1\c\,}};
     \checkbox{dascl} at (dascl.east) {};
 
     \node [t, right] at (104, 146.5) {\tRegtext{1\,NT }};
-    \node [t] at (115, 146.5) {\regtext{\minonedionenlowtext}};
+    \node [t, right] at (117, 146.5) (diam1nt){\tRegtext{ to }};
+    \node [t, xshift=-2mm] at (diam1nt.west) {\regtext{\minonedionenlowtext}};
     \guideline{112}{118}{145}
-    \node [t, right] at (117, 146.5) {\tRegtext{ to }};
-    \node [t] at (124, 146.5) {\regtext{\minonedionenhightext}};
+    \node [t, xshift=2mm] at (diam1nt.east) {\regtext{\minonedionenhightext}};
     \guideline{122}{127}{145}
     \node [t, right] at (104, 143) {\tRegtext{2\,NT }};
-    \node [t] at (115, 143) {\regtext{\minoneditwonlowtext}};
+    \node [t, right] at (117, 143) (diam2nt) {\tRegtext{ to }};
+    \node [t, xshift=-2mm] at (diam2nt.west) {\regtext{\minoneditwonlowtext}};
     \guideline{112}{118}{141.5}
-    \node [t, right] at (117, 143) {\tRegtext{ to }};
-    \node [t] at (124, 143) {\regtext{\minoneditwonhightext}};
+    \node [t, xshift=2mm] at (diam2nt.east) {\regtext{\minoneditwonhightext}};
     \guideline{122}{127}{141.5}
 
     \node [t, right] at (160, 151) {\tRegtext{Raises}};
@@ -412,23 +412,23 @@
     \node [t, right] at (170.2, 148) (disrn) {\tRegtext{NF\,}\hspace{1.2mm}};
     \node [t, right] at (182, 148) (disri) {\tRedreg{Inv+\,}};
     \node [t, right] at (191.75, 148) (disrf) {\tRedreg{GF\,}};
-    \checkbox{disrn} at (177, 148) {};
-    \rcheckbox{disri} at (190, 148) {};
-    \rcheckbox{disrf} at (198.5, 148) {};
+    \checkbox{disrn} at (disrn.east) {};
+    \rcheckbox{disri} at (disri.east) {};
+    \rcheckbox{disrf} at (disrf.east) {};
     \node [t, right] at (149, 145.5) {\tRegtext{Jump:}};
     \node [t, right] at (170, 145.5) (dijrw) {\tRedreg{Wk\,}};
     \node [t, right] at (180, 145.5) (dijrm) {\tRedreg{Mixed\,}};
     \node [t, right] at (192, 145.5) (dijri) {\tRegtext{Inv\,}};
-    \rcheckbox{dijrw} at (177, 145.5) {};
-    \rcheckbox{dijrm} at (190, 145.5) {};
-    \checkbox{dijri} at (198.5, 145.5) {};
+    \rcheckbox{dijrw} at (dijrw.east) {};
+    \rcheckbox{dijrm} at (dijrm.east) {};
+    \checkbox{dijri} at (dijri.east) {};
     \node [t, right] at (153, 143) {\tRegtext{After Overcall:}};
     \node [t, right] at (170, 143) (diocw) {\tRegtext{Wk\,}};
     \node [t, right] at (180, 143) (diocm) {\tRegtext{Mixed\,}};
     \node [t, right] at (192, 143) (dioci) {\tRegtext{Inv\,}};
-    \checkbox{diocw} at (177, 143) {};
-    \checkbox{diocm} at (190, 143) {};
-    \checkbox{dioci} at (198.5, 143) {};
+    \checkbox{diocw} at (diocw.east) {};
+    \checkbox{diocm} at (diocm.east) {};
+    \checkbox{dioci} at (dioci.east) {};
 
 % Major Openings
     \node [t, right] at (104, 137.5) {\bigtext{1\rh/\s\ }};
@@ -437,7 +437,7 @@
     \checkbox{h12l4} at (h12length4.east) (h12l4) {};
     \node [t, right] at (h12l4.east) (h12length5) {\tRegtext{5\,}};
     \checkbox{h12l5} at (h12length5.east) {};
-    \node [t, right] at (107, 130) (h34length4) {\tRegtext{3\textsuperscript{rd}/4\textsuperscript{th}\, Length: 4\,}};
+    \node [t, right] at (107, 130) (h34length4) {\tRegtext{3\textsuperscript{rd}/4\textsuperscript{th} Length: 4\,}};
     \checkbox{h34l4} at (h34length4.east) (h34l4) {};
     \node [t, right] at (h34l4.east) (h34length5) {\tRegtext{5\,}};
     \checkbox{h34l5} at (h34length5.east) {};
@@ -448,7 +448,7 @@
     \bcheckbox{ntbps} at (145, 127) {};
 
     \node [t, right] at (104, 121) (majother){\tRedreg{Other:}};
-    \node [t, right] at (majother.east) {\hspace{-1.5mm}\redreg{\majothertexttop}};
+    \node [t, right, xshift=-1.5mm] at (majother.east) {\redreg{\majothertexttop}};
     \rguideline{113}{147}{119.5}
     \node [t, right] at (104, 117) {\redreg{\majothertextbottom}};
     \rguideline{105}{202}{115.5}
@@ -458,7 +458,7 @@
     \rcheckbox{ra3nt} at (178, 138.3) {};
     \rcheckbox{raspl} at (191, 138.3) {};
     \node [t, right] at (149, 134) (majraise) {\tRedreg{Other:}};
-    \node [t, right] at (majraise.east) {\hspace{-1.5mm}\redreg{\majraisetext}};
+    \node [t, right, xshift=-1.5mm] at (majraise.east) {\redreg{\majraisetext}};
     \rguideline{158}{202}{132.5}
     \node [t, right] at (149, 130) {\tRedreg{Drury: 2\,\bc\hspace{4mm}2\,\rd\hspace{4mm}In Comp}};
     \rcheckbox{dru2c} at (163, 130) {};
