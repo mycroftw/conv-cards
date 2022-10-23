@@ -291,7 +291,7 @@
     \rcheckbox{fo1c} at (127, 197) (fo1c) {};
     \node [t, left, xshift=1mm] at (fo1c.west) {\tRegtext{Forcing Open: }\tRedbold{1\,\c\ }};
     \checkbox{fo2c} at (135, 197) (fo2c) {};
-    \node [t, left,xshift=0.5mm] at (fo2c.west) {\tBoldtext{2\,\c\ }};
+    \node [t, left, xshift=0.5mm] at (fo2c.west) {\tBoldtext{2\,\c\ }};
     \node [t, right] at (145, 197) (foother) {\redreg{\foothertext}};
     \node [t, left, xshift=1mm] at (foother.west) {\tRedreg{Other:}};
     \rguideline{145}{160}{195.5}
@@ -310,17 +310,24 @@
 % 1C opening
 
     \node [t, right] at (104, 183.5) {\bigtext{1\c\ }};
-    \node [t, right] at (111, 184.3) {\tRegtext{Min Length: 5}\hspace{4mm}\tRegtext{4}\hspace{4mm}\tRegtext{3}\hspace{4mm}
-                                 \tBluereg{NF 2}\hspace{4mm}\tBluereg{(4432 only}\hspace{4mm}\tBluereg{) NF 1}\hspace{4mm}
-                                 \tBluereg{NF 0}\hspace{7mm}\tRedreg{Art F}};
-    \checkbox{club5} at (129.5, 184.3) {};
-    \checkbox{club4} at (135, 184.3) {};
-    \checkbox{club3} at (140, 184.3) {};
-    \bcheckbox{cl2nf} at (150, 184.3) {};
-    \bcheckbox{c4432} at (166, 184.3) {};
-    \bcheckbox{cl1nf} at (176, 184.3) {};
-    \bcheckbox{cl0nf} at (186.5, 184.3) {};
-    \rcheckbox{clcon} at (199, 184.3) {};
+    \node [t, right] at (111,184.3) {\tRegtext{Min Length:}};
+    \node [t, left] at (129.5, 184.3) (club5) {\tRegtext{5\,}};
+    \checkbox{club5} at (club5.east) {};
+    \node [t, left] at (135, 184.3) (club4) {\tRegtext{4\,}};
+    \checkbox{club4} at (club4.east) {};
+    \node [t, left] at (140, 184.3) (club3) {\tRegtext{3\,}};
+    \checkbox{club3} at (club3.east) {};
+    \node [t, left] at (150, 184.3) (cl2nf) {\tBluereg{NF 2\,}};
+    \bcheckbox{cl2nf} at (cl2nf.east) {};
+    \node [t, left] at (166, 184.3) (c4432) {\tBluereg{(4432 only\,}};
+    \bcheckbox{c4432} at (c4432.east) (c4432box) {};
+    \node [t, right, xshift=-1.2mm] at (c4432box.east) {\tBluereg{)}};
+    \node [t, left] at (176, 184.3) (cl1nf) {\tBluereg{NF 1\,}};
+    \bcheckbox{cl1nf} at (cl1nf.east) {};
+    \node [t, left] at (186.5, 184.3) (cl0nf) {\tBluereg{NF 0\,}};
+    \bcheckbox{cl0nf} at (cl0nf.east) {};
+    \node [t, left] at (199, 184.3) (clcon) {\tRedreg{Art F\,}};
+    \rcheckbox{clcon} at (clcon.east) {};
 
     \node [t, right] at (119.5, 181) {\regtext{\cldescribe}};
     \guideline{120}{202}{179.5}
@@ -348,25 +355,25 @@
     \node [t, xshift=2mm] at (clresptwont.east) {\regtext{\mintwonhightext}};
     \guideline{122}{127}{164.5}
 
-    \node [t, right] at (170, 174) {\tRegtext{Raises}};
+    \node [t, right] at (160, 174) {\tRegtext{Raises}};
     \node [t, right] at (149, 171) {\tRegtext{Single:}};
-    \node [t, right] at (170.2, 171) (clsrn) {\tRegtext{NF\,}\hspace{1.3mm}};
-    \node [t, right] at (182, 171) (clsri) {\tRedreg{Inv+}\hspace{2.3mm}};
-    \node [t, right] at (191.5, 171) (clsrf) {\tRedreg{GF\,}};
+    \node [t, left] at (178, 171) (clsrn) {\tRegtext{NF\,}\hspace{1.3mm}};
+    \node [t, left] at (189, 171) (clsri) {\tRedreg{Inv+}\hspace{2.3mm}};
+    \node [t, left] at (198, 171) (clsrf) {\tRedreg{GF\,}};
     \checkbox{clsrn} at (clsrn.east) {};
     \rcheckbox{clsri} at (clsri.east) {};
     \rcheckbox{clsrf} at (clsrf.east) {};
     \node [t, right] at (149, 168.5) {\tRegtext{Jump:}};
-    \node [t, right] at (170, 168.5) (cljrw) {\tRedreg{Wk\,}};
-    \node [t, right] at (180, 168.5) (cljrm) {\tRedreg{Mixed\,}};
-    \node [t, right] at (192, 168.5) (cljri) {\tRegtext{Inv\,}};
+    \node [t, left] at (178, 168.5) (cljrw) {\tRedreg{Wk\,}};
+    \node [t, left] at (189, 168.5) (cljrm) {\tRedreg{Mixed\,}};
+    \node [t, left] at (198, 168.5) (cljri) {\tRegtext{Inv\,}};
     \rcheckbox{cljrw} at (cljrw.east) {};
     \rcheckbox{cljrm} at (cljrm.east) {};
     \checkbox{cljri} at (cljri.east) {};
     \node [t, right] at (153, 166) {\tRegtext{After Overcall:}};
-    \node [t, right] at (170, 166) (clocw) {\tRegtext{Wk\,}};
-    \node [t, right] at (180, 166) (clocm) {\tRegtext{Mixed\,}};
-    \node [t, right] at (192, 166) (cloci) {\tRegtext{Inv\,}};
+    \node [t, left] at (178, 166) (clocw) {\tRegtext{Wk\,}};
+    \node [t, left] at (189, 166) (clocm) {\tRegtext{Mixed\,}};
+    \node [t, left] at (198, 166) (cloci) {\tRegtext{Inv\,}};
     \checkbox{clocw} at (clocw.east) {};
     \checkbox{clocm} at (clocm.east) {};
     \checkbox{cloci} at (cloci.east) {};
@@ -374,17 +381,23 @@
 % 1D opening
 
     \node [t, right] at (104, 160.5) {\bigtext{1\rd\ }};
-    \node [t, right] at (111, 161.8) {\tRegtext{Min Length: 5}\hspace{4mm}\tRegtext{4}\hspace{4mm}\tRegtext{3}\hspace{4mm}
-                                 \tRegtext{Unbal}\hspace{10mm}\tBluereg{NF 2}\hspace{4mm}\tBluereg{NF 1}\hspace{4mm}
-                                 \tBluereg{NF 0}\hspace{7mm}\tRedreg{Art F}};
-    \checkbox{diam5} at (129.5, 161.8) (diam5box) {};
-    \checkbox{diam4} at (135, 161.8) (diam4box) {};
-    \checkbox{diam3} at (140, 161.8) (diam3box) {};
-    \checkbox{dubal} at (151, 161.8) (dubalbox) {};
-    \bcheckbox{di2nf} at (166.5, 161.8) (di2nfbox) {};
-    \bcheckbox{di1nf} at (176, 161.8) (di1nfbox) {};
-    \bcheckbox{di0nf} at (186, 161.8) (di0nfbox) {};
-    \rcheckbox{dicon} at (199, 161.8) {};
+    \node [t, right] at (111,161.8) {\tRegtext{Min Length:}};
+    \node [t, left] at (129.5, 161.8) (diam5) {\tRegtext{5\,}};
+    \checkbox{diam5} at (diam5.east) {};
+    \node [t, left] at (135, 161.8) (diam4) {\tRegtext{4\,}};
+    \checkbox{diam4} at (diam4.east) {};
+    \node [t, left] at (140, 161.8) (diam3) {\tRegtext{3\,}};
+    \checkbox{diam3} at (diam3.east) {};
+    \node [t, left] at (151, 161.8) (dubal) {\tRegtext{Unbal\,}};
+    \checkbox{dubal} at (dubal.east) {};
+    \node [t, left] at (164.5, 161.8) (di2nf) {\tBluereg{NF 2\,}};
+    \bcheckbox{di2nf} at (di2nf.east) {};
+    \node [t, left] at (176, 161.8) (di1nf) {\tBluereg{NF 1\,}};
+    \bcheckbox{di1nf} at (di1nf.east) {};
+    \node [t, left] at (186.5, 161.8) (di0nf) {\tBluereg{NF 0\,}};
+    \bcheckbox{di0nf} at (di0nf.east) {};
+    \node [t, left] at (199, 161.8) (dicon) {\tRedreg{Art F\,}};
+    \rcheckbox{dicon} at (dicon.east) {};
 
     \node [t, right] at (119.5, 158.5) {\regtext{\didescribe}};
     \guideline{120}{202}{157}
@@ -409,23 +422,23 @@
 
     \node [t, right] at (160, 151) {\tRegtext{Raises}};
     \node [t, right] at (149, 148) {\tRegtext{Single:}};
-    \node [t, right] at (170.2, 148) (disrn) {\tRegtext{NF\,}\hspace{1.2mm}};
-    \node [t, right] at (182, 148) (disri) {\tRedreg{Inv+\,}};
-    \node [t, right] at (191.75, 148) (disrf) {\tRedreg{GF\,}};
+    \node [t, left] at (178, 148) (disrn) {\tRegtext{NF\,}\hspace{1.2mm}};
+    \node [t, left] at (189, 148) (disri) {\tRedreg{Inv+\,}};
+    \node [t, left] at (198, 148) (disrf) {\tRedreg{GF\,}};
     \checkbox{disrn} at (disrn.east) {};
     \rcheckbox{disri} at (disri.east) {};
     \rcheckbox{disrf} at (disrf.east) {};
     \node [t, right] at (149, 145.5) {\tRegtext{Jump:}};
-    \node [t, right] at (170, 145.5) (dijrw) {\tRedreg{Wk\,}};
-    \node [t, right] at (180, 145.5) (dijrm) {\tRedreg{Mixed\,}};
-    \node [t, right] at (192, 145.5) (dijri) {\tRegtext{Inv\,}};
+    \node [t, left] at (178, 145.5) (dijrw) {\tRedreg{Wk\,}};
+    \node [t, left] at (189, 145.5) (dijrm) {\tRedreg{Mixed\,}};
+    \node [t, left] at (198, 145.5) (dijri) {\tRegtext{Inv\,}};
     \rcheckbox{dijrw} at (dijrw.east) {};
     \rcheckbox{dijrm} at (dijrm.east) {};
     \checkbox{dijri} at (dijri.east) {};
     \node [t, right] at (153, 143) {\tRegtext{After Overcall:}};
-    \node [t, right] at (170, 143) (diocw) {\tRegtext{Wk\,}};
-    \node [t, right] at (180, 143) (diocm) {\tRegtext{Mixed\,}};
-    \node [t, right] at (192, 143) (dioci) {\tRegtext{Inv\,}};
+    \node [t, left] at (178, 143) (diocw) {\tRegtext{Wk\,}};
+    \node [t, left] at (189, 143) (diocm) {\tRegtext{Mixed\,}};
+    \node [t, left] at (198, 143) (dioci) {\tRegtext{Inv\,}};
     \checkbox{diocw} at (diocw.east) {};
     \checkbox{diocm} at (diocm.east) {};
     \checkbox{dioci} at (dioci.east) {};
@@ -433,19 +446,23 @@
 % Major Openings
     \node [t, right] at (104, 137.5) {\bigtext{1\rh/\s\ }};
 
-    \node [t, right] at (107, 133) (h12length4) {\tRegtext{1\textsuperscript{st}/2\textsuperscript{nd} Length: 4\,}};
+    \node [t, right] at (107, 133) {\tRegtext{1\textsuperscript{st}/2\textsuperscript{nd} Length:}};
+    \node [t, right] at (124, 133) (h12length4) {\tRegtext{4\,}};
     \checkbox{h12l4} at (h12length4.east) (h12l4) {};
     \node [t, right] at (h12l4.east) (h12length5) {\tRegtext{5\,}};
     \checkbox{h12l5} at (h12length5.east) {};
-    \node [t, right] at (107, 130) (h34length4) {\tRegtext{3\textsuperscript{rd}/4\textsuperscript{th} Length: 4\,}};
+    \node [t, right] at (107, 130) {\tRegtext{3\textsuperscript{rd}/4\textsuperscript{th} Length:}};
+    \node [t, right] at (124, 130) (h34length4) {\tRegtext{4\,}};
     \checkbox{h34l4} at (h34length4.east) (h34l4) {};
     \node [t, right] at (h34l4.east) (h34length5) {\tRegtext{5\,}};
     \checkbox{h34l5} at (h34length5.east) {};
 
-    \node [t, right] at (107, 127) {\tBluereg{1\,NT: F\,}\hspace{4mm}\tBluereg{Semi-F}\hspace{4mm}\tBluereg{Bypass\,\bs}};
-    \bcheckbox{ntfor} at (119, 127) {};
-    \bcheckbox{ntsem} at (131, 127) {};
-    \bcheckbox{ntbps} at (145, 127) {};
+    \node [t, right] at (107, 127) (1m1ntf) {\tBluereg{1\,NT: F\,}};
+    \bcheckbox{ntfor} at (1m1ntf.east) (ntforbox) {};
+    \node [t, right] at (ntforbox.east) (1m1ntsf) {\tBluereg{Semi-F\,}};
+    \bcheckbox{ntsem} at (1m1ntsf.east) (ntsembox) {};
+    \node [t, right] at (ntsembox.east) (1m1ntbypass) {\tBluereg{Bypass\,\bs\,}};
+    \bcheckbox{ntbps} at (1m1ntbypass.east) {};
 
     \node [t, right] at (104, 121) (majother){\tRedreg{Other:}};
     \node [t, right, xshift=-1.5mm] at (majother.east) {\redreg{\majothertexttop}};
@@ -453,34 +470,43 @@
     \node [t, right] at (104, 117) {\redreg{\majothertextbottom}};
     \rguideline{105}{202}{115.5}
 
-    \node [t, right] at (149, 138.3) {\tRedreg{Art Raises: 2NT}\hspace{4mm}\tRedreg{3NT}\hspace{4mm}\tRedreg{Splinter}};
-    \rcheckbox{ra2nt} at (170, 138.3) {};
-    \rcheckbox{ra3nt} at (178, 138.3) {};
-    \rcheckbox{raspl} at (191, 138.3) {};
+    \node [t, right] at (149, 138.3) (1mra2nt) {\tRedreg{Art Raises: 2NT\,}};
+    \rcheckbox{ra2nt} at (1mra2nt.east) (ra2ntbox) {};
+    \node [t, right] at (ra2ntbox.east) (1mra3nt) {\tRedreg{3NT\,}};
+    \rcheckbox{ra3nt} at (1mra3nt.east) (ra3ntbox) {};
+    \node [t, right] at (ra3ntbox.east) (1mraspl) {\tRedreg{Splinter\,}};
+    \rcheckbox{raspl} at (1mraspl.east) {};
     \node [t, right] at (149, 134) (majraise) {\tRedreg{Other:}};
     \node [t, right, xshift=-1.5mm] at (majraise.east) {\redreg{\majraisetext}};
     \rguideline{158}{202}{132.5}
-    \node [t, right] at (149, 130) {\tRedreg{Drury: 2\,\bc\hspace{4mm}2\,\rd\hspace{4mm}In Comp}};
-    \rcheckbox{dru2c} at (163, 130) {};
-    \rcheckbox{dru2d} at (170.5, 130) {};
-    \rcheckbox{drcmp} at (183.5, 130) (drurycmp) {};
-    \node [t, right] at (drurycmp.east) {\redreg{\majdrurytext}};
-    \rguideline{185.5}{202}{128.5}
+
+    \node [t, right] at (149, 130) (drury2c) {\tRedreg{Drury: 2\,\bc\,}};
+    \rcheckbox{dru2c} at (drury2c.east) (dru2cbox) {};
+    \node [t,right] at (dru2cbox.east) (drury2d) {\tRedreg{2\,\rd\,}};
+    \rcheckbox{dru2d} at (drury2d.east) (dru2dbox) {};
+    \node [t, right] at (dru2dbox.east) (drurycmp) {\tRedreg{In Comp\,}};
+    \rcheckbox{drcmp} at (drurycmp.east) (drcmpbox) {};
+    \node [t, right] at (drcmpbox.east) {\redreg{\majdrurytext}};
+    \rguideline{187}{202}{128.5}
 
     \node [t, right] at (149, 125.5) {\tRegtext{Jump Raise:}};
-    \node [t, right] at (172, 125.5) {\tRedreg{Wk}\hspace{4mm}\tRedreg{Mixed}\hspace{4mm}\tRegtext{Inv}};
-    \rcheckbox{dblrw} at (179, 125.5) {};
-    \rcheckbox{dblrm} at (189.5, 125.5) {};
-    \checkbox{dblri} at (197, 125.5) {};
-    \node [t, right] at (155, 122) {\tRegtext{After Overcall:}};
-    \node [t, right] at (172, 122) {\tRegtext{Wk}\hspace{4mm}\tRegtext{Mixed}\hspace{4mm}\tRegtext{Inv}};
-    \checkbox{ocdrw} at (179, 122) {};
-    \checkbox{ocdrm} at (189.5, 122) {};
-    \checkbox{ocdri} at (197, 122) {};
+    \node [t, left] at (178, 125.5) (dblrw) {\tRedreg{Wk\,}};
+    \node [t, left] at (189, 125.5) (dblrm) {\tRedreg{Mixed\,}};
+    \node [t, left] at (198, 125.5) (dblri) {\tRegtext{Inv\,}};
+    \rcheckbox{dblrw} at (dblrw.east) {};
+    \rcheckbox{dblrm} at (dblrm.east) {};
+    \checkbox{dblri} at (dblri.east) {};
+    \node [t, right] at (153, 122) {\tRegtext{After Overcall:}};
+    \node [t, left] at (178, 122) (ocdrw) {\tRegtext{Wk\,}};
+    \node [t, left] at (189, 122) (ocdrm) {\tRegtext{Mixed\,}};
+    \node [t, left] at (198, 122) (ocdri) {\tRegtext{Inv\,}};
+    \checkbox{ocdrw} at (ocdrw.east) {};
+    \checkbox{ocdrm} at (ocdrm.east) {};
+    \checkbox{ocdri} at (ocdri.east) {};
 
 %1 NT opening:
     \node [t, right] at (104, 110.5) {\bigblue{1NT}};
-    \node [t, right] at (120.5, 111.3) {\tBluereg{to}};
+    \node [t, right] at (120.5, 111.3) (1ntfirstrange) {\tBluereg{to}};
     \node [t] at (118, 111.3) {\bluebold{\ntlowtext}};
     \bguideline{115.5}{121}{109.8}
     \node [t] at (126.5, 111.3) {\bluebold{\nthightext}};
@@ -488,14 +514,15 @@
 
     % We can use the area past the first range for explanation...
     \ifthenelse{\NOT \boolean{1ntv} \AND \equal{\altntlowtext}{} \AND \equal{\altnthightext}{}}{
-        \node [t, right] at (130, 111.3) {\tBluereg{Style:}};
-        \node [t, right] at (138, 111.3) {\bluereg{\altntresponse}};
+        \node [t, right] at (130, 111.3) (1ntstyle){\tBluereg{Style:\,}};
+        \node [t, right] at (1ntstyle.east) {\bluereg{\altntresponse}};
         \bguideline{138}{202}{109.8}
     }{ % unless there is a second range.
-        \node [t, right] at (128, 111.3) (ntseatvul){\tBluereg{(If: }};
-        \node [t, left] at (148, 111.3) {\bluereg{\ntseatvul\,)}};
+        \node [t, right] at (145, 110.5) (1nt2ndrange) {\bigblue{1NT}};
+        \node [t, right] at (128, 111.3) (ntseatvul){\tBluereg{(If:}};
+        \node [t, right, xshift=-2mm] at (ntseatvul.east) {\bluereg{\ntseatvul}};
         \bguideline{132}{145}{109.8}
-        \node [t, right] at (145, 110.5) {\bigblue{1NT}};
+        \node [t, right] at (144, 111.3) {\bluereg{)}};
         \node [t, right] at (159.5, 111.3) {\tBluereg{to}};
         \node [t] at (158, 111.3) {\bluebold{\altntlowtext}};
         \bguideline{156}{160.5}{109.8}
@@ -508,50 +535,63 @@
     }
 
 % 1NT box, left column
-    \node [t, right] at (104, 107) (nt5cm) {\tRegtext{5-Card Major\ }};
+    \node [t, right] at (104, 107) (nt5cm) {\tRegtext{5-Card Major\,}};
     \checkbox{nt5cm} at (nt5cm.east) {};
-    \node [t, right] at (123, 107) (syson){\tRegtext{Sys on vs}};
+    \node [t, right] at (123, 107) (syson) {\tRegtext{Sys on vs}};
     \node [t] at (143, 107) {\regtext{\sysontext}};
     \guideline{136}{150}{105.5}
 
-    \node [t, right] at (104, 103) {\tRegtext{2\,\c: Stayman}\hspace{4mm}\tRegtext{Puppet}\hspace{4mm}\tRedreg{Other}};
-    \checkbox{staym} at (122, 103) {};
-    \checkbox{puppe} at (133.5, 103) {};
-    \rcheckbox{2coth} at (144, 103) {};
+    \node [t, right] at (104, 103) (1nt2csty) {\tRegtext{2\,\c: Stayman\,}};
+    \checkbox{staym} at (1nt2csty.east) (staym) {};
+    \node [t, right] at (staym.east) (1nt2cpuppet) {\tRegtext{Puppet\,}};
+    \checkbox{puppe} at (1nt2cpuppet.east) (puppe) {};
+    \node [t, right] at (puppe.east) (1nt2cother) {\tRedreg{Other\,}};
+    \rcheckbox{2coth} at (1nt2cother.east) {};
 
-    \node [t, right] at (104, 99) (1nt2d) {\tRegtext{2\,\rd: Nat}\hspace{4mm}\tBluereg{Tfr}\hspace{4mm}\tRedreg{Other}};
-    \checkbox{nat2d} at (116, 99) {};
-    \bcheckbox{jac2d} at (123, 99) {};
-    \node [t, right] at (1nt2d.east) {\hspace{-1.5mm}\redreg{\ntditext}};
+    \node [t, right] at (104, 99) {\tRegtext{2\,\rd: Nat\,}};
+    \node [t] at (119.5, 99) (1nt2d) {\tBluereg{\,Tfr\,}};
+    \checkbox{nat2d} at (1nt2d.west) {};
+    \bcheckbox{jac2d} at (1nt2d.east) (1nt2dtxf) {};
+    \node [t, right] at (1nt2dtxf.east) (1nt2dother) {\tRedreg{Other}};
+    \node [t, right, xshift=-1.5mm] at (1nt2dother.east) {\redreg{\ntditext}};
     \rguideline{132}{150}{97.5}
 
-    \node [t, right] at (104, 95) (1nt2h) {\tRegtext{2\,\rh: Nat}\hspace{4mm}\tBluereg{Tfr}\hspace{4mm}\tRedreg{Other}};
-    \checkbox{nat2h} at (116, 95) {};
-    \bcheckbox{jac2h} at (123, 95) {};
-    \node [t, right] at (1nt2h.east) {\hspace{-1.5mm}\redreg{\nthetext}};
+    \node [t, right] at (104, 95) {\tRegtext{2\,\rh: Nat\,}};
+    \node [t] at (119.5, 95) (1nt2h) {\tBluereg{\,Tfr\,}};
+    \checkbox{nat2h} at (1nt2h.west) {};
+    \bcheckbox{jac2h} at (1nt2h.east) (1nt2htxf) {};
+    \node [t, right] at (1nt2htxf.east) (1nt2hother) {\tRedreg{Other}};
+    \node [t, right, xshift=-1.5mm] at (1nt2hother.east) {\redreg{\nthetext}};
     \rguideline{132}{150}{93.5}
 
-    \node [t, right] at (104, 91) (1nt2s) {\tRegtext{2\,\s: Nat}\hspace{4mm}\tBluereg{Tfr}\hspace{4mm}\tRedreg{Other}};
-    \checkbox{nat2s} at (116, 91) {};
-    \bcheckbox{trf2s} at (123, 91) {};
-    \node [t, right] at (1nt2s.east) {\hspace{-1.5mm}\redreg{\ntsptext}};
+    \node [t, right] at (104, 91) {\tRegtext{2\,\bs: Nat\,}};
+    \node [t] at (119.5, 91) (1nt2s) {\tBluereg{\,Tfr\,}};
+    \checkbox{nat2s} at (1nt2s.west) {};
+    \bcheckbox{trf2s} at (1nt2s.east) (1nt2stxf) {};
+    \node [t, right] at (1nt2stxf.east) (1nt2sother) {\tRedreg{Other}};
+    \node [t, right, xshift=-1.5mm] at (1nt2sother.east) {\redreg{\ntsptext}};
     \rguideline{132}{150}{89.5}
 
-    \node [t, right] at (103, 87) (1nt2nt) {\tRegtext{2NT: Nat}\hspace{4mm}\tBluereg{Tfr}\hspace{4mm}\tRedreg{Other}};
-    \checkbox{nat2n} at (116, 87) {};
-    \bcheckbox{trf2n} at (123, 87) {};
-    \node [t, right] at (1nt2nt.east) {\hspace{-1.8mm}\redreg{\ntnttext}};
+    \node [t, right] at (103, 87) {\tRegtext{2NT: Nat}};
+    \node [t] at (119.5, 87) (1nt2nt) {\tBluereg{\,Tfr\,}};
+    \checkbox{nat2n} at (1nt2nt.west) {};
+    \bcheckbox{trf2n} at (1nt2nt.east) (1nt2nttxf) {};
+    \node [t, right] at (1nt2nttxf.east) (1nt2ntother) {\tRedreg{Other}};
+    \node [t, right, xshift=-1.5mm] at (1nt2ntother.east) {\redreg{\ntnttext}};
     \rguideline{132}{150}{85.5}
 
-    \node [t, right] at (104, 83) {\tRedreg{Smolen}\hspace{4mm}\tBluereg{Tfr: 4\,\bc}\hspace{4mm}\tBluereg{4\,\rd}\hspace{4mm}\tBluereg{4\,\rh}};
-    \rcheckbox{smole} at (116, 83) {};
-    \bcheckbox{tex4c} at (127.7, 83) {};
-    \bcheckbox{tex4d} at (134.7, 83) {};
-    \bcheckbox{tex4h} at (141.7, 83) {};
+    \node [t, right] at (104, 83) {\tRedreg{Smolen}};
+    \node [t] at (121.5, 83) (1nttxf4c) {\tBluereg{\,Tfr 4\,\bc\,}};
+    \rcheckbox{smole} at (1nttxf4c.west) {};
+    \bcheckbox{tex4c} at (1nttxf4c.east) (tex4cbox) {};
+    \node [t, right] at (tex4cbox.east) (1nttxf4d){\tBluereg{4\,\rd\,}};
+    \bcheckbox{tex4d} at (1nttxf4d.east) (tex4dbox) {};
+    \node [t, right] at (tex4dbox.east) (1nttxf4h) {\tBluereg{4\,\rh\,}};
+    \bcheckbox{tex4h} at (1nttxf4h.east) {};
 
     \node [t, right] at (104, 79) (ntnegx) {\tRegtext{Dbl: Neg\,}};
-    \checkbox{ntneg} at (117, 79) {};
-    \node [t, right] at (119, 79) {\regtext{\ntnegtext}};
+    \checkbox{ntneg} at (ntnegx.east) (ntnegbox) {};
+    \node [t, right] at (ntnegbox.east) {\regtext{\ntnegtext}};
     \guideline{119.5}{134}{77.5}
     \node [t, right] at (134, 79) (ntpenx) {\tRegtext{Pen\,}};
     \checkbox{ntpen} at (ntpenx.east) {};
@@ -564,16 +604,16 @@
     \rguideline{187}{202}{77.5}
 
 %1NT box, right column
-    \node [t, right] at (150, 106) {\tRegtext{3\,\c\ }};
+    \node [t, right] at (150, 106) {\tRegtext{3\,\bc\ }};
     \node [t, right] at (155, 106) {\regtext{\ntcjumptext}};
     \guideline{155}{202}{104.5}
-    \node [t, right] at (150, 102) {\tRegtext{3\,\d\ }};
+    \node [t, right] at (150, 102) {\tRegtext{3\,\rd\ }};
     \node [t, right] at (155, 102) {\regtext{\ntdjumptext}};
     \guideline{155}{202}{100.5}
-    \node [t, right] at (150, 98) {\tRegtext{3\,\h\ }};
+    \node [t, right] at (150, 98) {\tRegtext{3\,\rh\ }};
     \node [t, right] at (155, 98) {\regtext{\nthjumptext}};
     \guideline{155}{202}{96.5}
-    \node [t, right] at (150, 94) {\tRegtext{3\,\s\ }};
+    \node [t, right] at (150, 94) {\tRegtext{3\,\bs\ }};
     \node [t, right] at (155, 94) {\regtext{\ntsjumptext}};
     \guideline{155}{202}{92.5}
     \node [t, right] at (150, 90) (ntother) {\tRedreg{Other:}};
@@ -590,17 +630,20 @@
     \node [t] at (128, 73.3) {\boldtext{\twonhightext}};
     \guideline{125}{131}{71.8}
     \node [t, right] at (130, 73.3) (pup2n) {\tRegtext{Puppet\,}};
-    \checkbox{pup2n} at (pup2n.east) {};
-    \node [t, right] at (142, 73.3) (2n3s) {\tRedreg{3\,\bs:\ }\redreg{\twonsptext}};
+    \checkbox{pup2n} at (pup2n.east) (pup2nbox) {};
+    \node [t, right] at (pup2nbox.east) (2n3s) {\tRedreg{3\,\bs:\ }\redreg{\twonsptext}};
     \rguideline{148}{202}{71.8}
     \node [t, right] at (104, 68.5) (con2n) {\tRedreg{Conv\,}};
     \rcheckbox{con2n} at (con2n.east) (con2nbox) {};
     \node [t, right] at (con2nbox.east) {\redreg{\convnttext}};
     \rguideline{115}{130}{67}
-    \node [t, right] at (130, 68.3) (2nother) {\tBluereg{Tfr: 3 Lvl}\hspace{4mm}\tBluereg{4 Lvl}\hspace{6mm}\tRegtext{Neg Dbl}\hspace{4mm}\tRedreg{Other: }\redreg{\twonothertext}};
-    \bcheckbox{jac2n} at (143, 68.5) {};
-    \bcheckbox{tex2n} at (152, 68.5) {};
-    \checkbox{neg2n} at (167, 68.5) {};
+    \node [t, right] at (130, 68.3) (jac2n) {\tBluereg{Tfr: 3 Lvl\,}};
+    \bcheckbox{jac2n} at (jac2n.east) (jac2nbox) {};
+    \node [t, right] at (jac2nbox.east) (tex2n) {\tBluereg{4 Lvl\,}};
+    \bcheckbox{tex2n} at (tex2n.east) (tex2nbox) {};
+    \node [t, right] at (tex2nbox.east) (neg2n) {\tRegtext{Neg Dbl\,}};
+    \checkbox{neg2n} at (neg2n.east) (neg2nbox) {};
+    \node [t, right] at (neg2nbox.east) {\tRedreg{Other: }\redreg{\twonothertext}};
     \rguideline{176}{202}{67}
 
     \node [t, right] at (104, 62) {\bigtext{3NT}};
@@ -609,9 +652,10 @@
     \guideline{115.5}{121}{61.3}
     \node [t] at (128, 62.8) {\boldtext{\threenhightext}};
     \guideline{125}{131}{61.3}
-    \node [t, right] at (130, 62.8) {\tRedreg{One Suit: }\hspace{4mm}\redreg{\threenonesuittext}};
-    \rcheckbox{gam3n} at (144, 62.8) {};
-    \rguideline{146}{202}{61.3}
+    \rcheckbox{gam3n} at (144.5, 62.8) (gam3nbox) {};
+    \node [t, left] at (gam3nbox.west) {\tRedreg{One Suit:}};
+    \node [t, right] at (gam3nbox.east) {\redreg{\threenonesuittext}};
+    \rguideline{146.5}{202}{61.3}
 
 %2C Opening
     \node [t, right] at (104, 56.5) {\bigtext{2\c}};
@@ -622,20 +666,24 @@
     \guideline{122.5}{128}{56}
     \node [t, right] at (129, 57.5) {\regtext{\twocldescribe}};
     \guideline{130}{167}{56}
-    \node [t, right] at (104, 50) (conv2c) {\tRegtext{Very Str}\hspace{4mm}\tRedreg{Str}\hspace{4mm}\tRedreg{Nat}\hspace{4mm}\tRedreg{Conv}};
-    \checkbox{vs2cl} at (116.3, 50) {};
-    \rcheckbox{st2cl} at (123, 50) {};
-    \rcheckbox{na2cl} at (130.5, 50) {};
-    \rcheckbox{ot2cl} at (conv2c.east) {};
-    \node [t, right] at (142, 50) {\redreg{\twoclconvtext}};
-    \rguideline{142}{160}{48.5}
+    \node [t, right] at (104, 50) (artvs2c) {\tRegtext{Very Str\,}};
+    \checkbox{vs2cl} at (artvs2c.east) (vs2clbox) {};
+    \node [t, right, xshift=-0.5mm] at (vs2clbox.east) (artst2c) {\tRedreg{Str\,}};
+    \rcheckbox{st2cl} at (artst2c.east) (st2clbox) {};
+    \node [t, right, xshift=-0.5mm] at (st2clbox.east) (nat2c) {\tRedreg{Nat\,}};
+    \rcheckbox{na2cl} at (nat2c.east) (na2clbox) {};
+    \node [t, right, xshift=-0.5mm] at (na2clbox.east) (conv2c) {\tRedreg{Conv\,}};
+    \rcheckbox{ot2cl} at (conv2c.east) (ot2clbox) {};
+    \node [t, right] at (ot2clbox.east) {\redreg{\twoclconvtext}};
+    \rguideline{142.5}{160}{48.5}
 
     \node [t, right] at (170, 57.5) (neg2d) {\tRegtext{2\,\rd\ Resp: Neg\,}};
-    \checkbox{neg2d} at (neg2d.east) {};
-    \node [t, right] at (190, 57.5) (wai2d) {\tRegtext{Waiting\,}};
+    \checkbox{neg2d} at (neg2d.east) (neg2dbox) {};
+    \node [t, right] at (neg2dbox.east) (wai2d) {\tRegtext{Waiting\,}};
     \checkbox{wai2d} at (wai2d.east) {};
-    \node [t, right] at (160, 54) {\tRedreg{Steps}\hspace{4mm}\redreg{\twoclstepstext}};
-    \rcheckbox{steps} at (169.5, 54) {};
+    \rcheckbox{steps} at (170, 54) (2cstepsbox) {};
+    \node [t, left] at (2cstepsbox.west) {\tRedreg{Steps}};
+    \node [t, right] at (2cstepsbox.east) {\redreg{\twoclstepstext}};
     \rguideline{172}{190}{52.5}
     \node [t, right] at (189.5, 54) (neg2h) {\tRedreg{2\,\rh\ Neg\,}};
     \rcheckbox{neg2h} at (neg2h.east) {};
