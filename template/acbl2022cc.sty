@@ -452,7 +452,7 @@
     \bguideline{124.5}{129}{109.8}
 
     % We can use the area past the first range for explanation...
-    \ifthenelse{\equal{\altntlowtext}{}}{
+    \ifthenelse{\NOT \boolean{1ntv} \AND \equal{\altntlowtext}{} \AND \equal{\altnthightext}{}}{
         \node [t, right] at (130, 111.3) {\tBluereg{Style:}};
         \node [t, right] at (138, 111.3) {\bluereg{\altntresponse}};
         \bguideline{138}{202}{109.8}
