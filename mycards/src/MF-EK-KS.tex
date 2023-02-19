@@ -84,8 +84,8 @@
 %\setboolean{1nts}{true} % 1NT strength
 \setboolean{1ntw}{true}
 %\setboolean{1ntv}{true}
-\newcommand{\bidspreptop}{1NT--2\c\ Keri\hspace{5mm}Upside Down Suit Preference} % Bids that Require Preparation
-\newcommand{\bidsprepbottom}{1NT Overcall takeout, 1 suit-X 15+ ``any''\hspace{9mm}Notes [\#] on back for detail} % Bids that Require Prep line 2
+\newcommand{\bidspreptop}{1NT--2\c\ Keri,\hspace{2mm}Upside Down Suit Preference} % Bids that Require Preparation
+\newcommand{\bidsprepbottom}{1NT O/call takeout, 1 suit-X 15+ ``any''.\hspace{2mm}Notes [\#] on back for detail} % Bids that Require Prep line 2
 
 % 1 Club
 %\setboolean{club5}{true} %1C length
@@ -180,7 +180,7 @@
 %\setboolean{ntasr}{true} %Same responses for alt NT range?
 % This next line is "differences between ranges" if a second range defined,
 % or a space for "style" if only one range.
-\newcommand{\altntresponse}{could have singleton A or K in a minor, could be 6m322~\boldtext{[\ref{itm:1nt}]}}
+\newcommand{\altntresponse}{could have stiff A/K in a minor, could be 6m322~\boldtext{[\ref{itm:1nt}]}}
 
 % 1NT: First column
 %\setboolean{nt5cm}{true}
@@ -190,7 +190,7 @@
 \setboolean{2coth}{true}
 %\setboolean{nat2d}{true}
 \setboolean{jac2d}{true}
-\newcommand{\ntditext}{very rare 4\,\rh~\boldtext{[\ref{itm:1ntother}]}} %Other meaning for 1NT-2\d
+\newcommand{\ntditext}{v. rare 4\,\rh~\boldtext{[\ref{itm:1ntother}]}} %Other meaning for 1NT-2\d
 %\setboolean{nat2h}{true}
 \setboolean{jac2h}{true}
 \newcommand{\nthetext}{} %Other meaning for 1NT-2\h
@@ -207,7 +207,7 @@
 \newcommand{\nthjumptext}{\s\ \redreg{splinter}}
 \newcommand{\ntsjumptext}{\c\ \redreg{splinter}} %1NT-3S
 \newcommand{\ntothertexttop}{2\,\bc\ forces 2\,\rd, to play or INV~\boldtext{[\ref{itm:1nt2c}]}} %Other conventions over 1NT
-\newcommand{\ntothertextbottom}{\regtext{Over 1NT--X,} 2\,\bc\ scramble, \regtext{all else to play}~\boldtext{[\ref{itm:1ntx}]}} % second "Other Conventions"
+\newcommand{\ntothertextbottom}{\textcolor{black}{1NT--X:} 2\,\bc\ scramble, \textcolor{black}{else to play}~\boldtext{[\ref{itm:1ntx}]}} % second "Other Conventions"
 
 % 1NT: Bottom
 %\setboolean{smole}{true}
@@ -277,7 +277,7 @@
 %\setboolean{st2he}{true}
 %\setboolean{2s2he}{true}
 \newcommand{\twohntresp}{Ogust}
-\newcommand{\twohresponse}{..ParkingLot XX}
+\newcommand{\twohresponse}{Parking XX}
 
 % 2 Spades
 \newcommand{\twoslowtext}{6}
@@ -289,11 +289,11 @@
 %\setboolean{st2sp}{true}
 %\setboolean{2s2sp}{true}
 \newcommand{\twosntresp}{Ogust}
-\newcommand{\twosresponse}{}
+\newcommand{\twosresponse}{[\ref{itm:2xdoubled}]}
 
 %Bottom of card
 \newcommand{\jshifttext}{Fit (Limit-ish, 9+ in two suits)~\boldtext{[\ref{itm:fjs}]}} % jump shift responses
-\newcommand{\vsstrongart}{Mathé/Str 1\,m} % "vs str/VS openings" - MDF to fix
+\newcommand{\vsstrongart}{Mathé/1m} % "vs str/VS openings" - MDF to fix
 %\setboolean{nmf1w}{true} %1-way new minor
 %\setboolean{nmf2w}{true} %2-way new minor
 \setboolean{xyz2w}{true} %XYZ
@@ -314,7 +314,7 @@
 \setboolean{suppx}{true} %Support
 \newcommand{\suppxthru}{2x (-1NT)}
 \setboolean{supxx}{true} %Support redouble
-\newcommand{\toxstyletext}{\redreg{15+ ``any'' (xx+ if min.)~\boldtext{[\ref{itm:pd}]}}}
+\newcommand{\toxstyletext}{\redreg{15+``any''(xx+ if min.)~\boldtext{[\ref{itm:pd}]}}}
 \newcommand{\doubleothertext}{see 1NT for takeout ``double''} %Other special doubles
 
 % NT overcalls
@@ -325,7 +325,7 @@
 \newcommand{\balhightext}{14}
 \setboolean{sysba}{true}
 \setboolean{dntco}{true} %conventional NT O/c
-\newcommand{\directconvtext}{1NT takeout, 3+ in unbid suits~\boldtext{[\ref{itm:1ntoc}]}}
+\newcommand{\directconvtext}{1NT t/o, 3+ in unbids~\boldtext{[\ref{itm:1ntoc}]}}
 \setboolean{unu2l}{true} %Unusual: 2 lowers
 \newcommand{\ntothertext}{} %conventional overcalls (sandwich etc)
 
@@ -382,7 +382,7 @@
 %\setboolean{qqmio}{true}
 %\setboolean{qnmio}{true}
 %\setboolean{qnmao}{true}
-\newcommand{\cuebiddescribe}{Mathé vs Str, std vs multi-1m} % other cuebid comments
+\newcommand{\cuebiddescribe}{Mathé/Str, std/multi-1m} % other cuebid comments
 
 % vs. takeout double
 %\setboolean{nsf2l}{true} % New suit forcing at 2 level?
@@ -406,10 +406,10 @@
 \newcommand{\toxothertext}{} %Line at bottom of Opps TOX section
 
 % Opening preempts
-\newcommand{\threelevelstyletop}{Aggressive (esp NV)}
-\newcommand{\threelevelstylebottom}{but 3m 1\textsuperscript{st}/2\textsuperscript{nd} ``happy to play 3NT''~\boldtext{[\ref{itm:3m}]}}
+\newcommand{\threelevelstyletop}{Agg. (esp NV)}
+\newcommand{\threelevelstylebottom}{3m 1\textsuperscript{st}/2\textsuperscript{nd} ``happy to hear 3NT''~\boldtext{[\ref{itm:3m}]}}
 \newcommand{\threelevelresp}{NSF}
-\newcommand{\fourlevelstyle}{4m Solid M, or 1-loser+A or K}
+\newcommand{\fourlevelstyle}{4m 0- or 1-loser M+A/K}
 \newcommand{\fourlevelresp}{gap asks which}
 \setboolean{namya}{true}
 \newcommand{\fourlevelother}{}
@@ -502,7 +502,7 @@
 \newcommand{\suitafterfirst}{}
 \newcommand{\AKx}{12}
 \setboolean{suakv}{true} % AK leads vary/suits?
-\newcommand{\suitAKxvaries}{A Attitude, K Kount}
+\newcommand{\suitAKxvaries}{A Att., K Kount}
 \newcommand{\KQx}{}
 \newcommand{\QJx}{}
 \newcommand{\JTx}{}
@@ -529,7 +529,7 @@
 \newcommand{\ntafterfirst}{}
 \newcommand{\AKxx}{12}
 \setboolean{ntakv}{true}
-\newcommand{\ntAKxvaries}{K Kount/unblock}
+\newcommand{\ntAKxvaries}{K Kount/unbl.}
 \newcommand{\KQJx}{}
 \newcommand{\ntKQTN}{}
 \newcommand{\QJTx}{}
@@ -662,7 +662,7 @@
                 \item [2\,NT] Ogust.
                       3\,m/M shows bad/good hand, low/high of pair shows bad/good suit.
                       ``Good Suit'' is not specifically defined, it is relative to the worst suit we would open at this seat/vul.
-                \item [After X:]
+                \item \label{itm:2xdoubled}[After X:]
                 \begin{description}
                     \item [All Bids Are Raises.]
                     If not partner's suit, it is asking for a lead of the bid suit should opener be on lead.

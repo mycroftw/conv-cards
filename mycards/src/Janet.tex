@@ -47,7 +47,7 @@
 % You WILL get errors if you delete any \newcommand statements!
 % If you lead the default card, you may use \newcommand{cardcombination}{}.
 
-\newcommand{\names}{Janet Galbraith -- Michael Farebrother}
+\newcommand{\names}{\hspace{-2mm}Janet Galbraith -- Michael Farebrother} % names just that bit too long
 \newcommand{\playernumber}{R996850/Q550794}
 \setboolean{visib}{true}  % show guidelines
 % Select Exactly One of the following three lines for "user input serif?"
@@ -56,6 +56,12 @@
 \ifthenelse{\boolean{visib}}{}{\setboolean{serif}{true}}
 %\setboolean{serif}{true}
 %\setboolean{serif}{false}
+
+% it is sometimes very hard to read the small text on printed page.
+% Uncomment one of these commands if you want to override the default
+% (bigger if serif, normal size if not)
+%\renewcommand{\usertextsize}{\footnotesize}  % larger answer size
+%\renewcommand{\usertextsize}{\scriptsize}    % smaller answer size
 
 % General approach:
 \newcommand{\generalapproach}{Calgary 2/1 with Eastern Feel}
