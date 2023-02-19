@@ -50,8 +50,7 @@
 
 %Inline user text
 \newcommand{\usertext}{\ifthenelse{\boolean{serif}}{\textrm}{\textsf}}
-%\newcommand{\usertextsize}{\ifthenelse{\boolean{serif}}{\footnotesize}{\scriptsize}}  % bigger if serif
-\newcommand{\usertextsize}{\scriptsize}  % TODO: temp fix to old behaviour.
+\newcommand{\usertextsize}{\ifthenelse{\boolean{serif}}{\footnotesize}{\scriptsize}}  % bigger if serif
 \newcommand{\regtext}[1]{\usertextsize \usertext{\textls[-70]{#1}}}
 \newcommand{\redreg}[1]{\usertextsize \usertext{\textls[-70]{\textcolor{red}{#1}}}}
 \newcommand{\bluereg}[1]{\usertextsize \usertext{\textls[-70]{\textcolor{blue}{#1}}}}
