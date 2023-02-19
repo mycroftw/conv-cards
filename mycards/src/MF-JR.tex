@@ -56,11 +56,18 @@
 %     as the pre-printed text.  Pick exactly one of the three lines for true,
 %     false, or "serif if no guidelines, sans if guidelines" (the default).
 %
-\setboolean{visib}{false}  % show guidelines
+\setboolean{visib}{false}  % show guidelines under entered text
 
+% user text style: regular or serif. Default is "regular if guidelines, serif if not".
 \ifthenelse{\boolean{visib}}{}{\setboolean{serif}{true}}
 %\setboolean{serif}{true}
 %\setboolean{serif}{false}
+
+% it is sometimes very hard to read the small text on printed page.
+% Uncomment one of these commands if you want to override the default
+% (bigger if serif, normal size if not)
+\renewcommand{\usertextsize}{\footnotesize}  % larger answer size
+%\renewcommand{\usertextsize}{\scriptsize}    % smaller answer size
 
 % And now the card itself. Right side first, top to bottom, then left side.
 \newcommand{\names}{Michael Farebrother --- Jimmy Reynolds}
@@ -307,7 +314,7 @@
 \newcommand{\suppxthru}{2x, -1NT}
 \setboolean{supxx}{true} % Support redouble
 \newcommand{\toxstyletext}{}
-\newcommand{\doubleothertext}{2 level freq. T/O, 3 level freq. DSI} % Other special doubles
+\newcommand{\doubleothertext}{2lvl freq. T/O, 3 lvl freq. DSI} % Other special doubles
 
 % NT overcalls
 \newcommand{\directlowtext}{15\,+} % range
@@ -401,7 +408,7 @@
 \newcommand{\threelevelstyletop}{}
 \newcommand{\threelevelstylebottom}{Aggressive, esp. majors}
 \newcommand{\threelevelresp}{}
-\newcommand{\fourlevelstyle}{4m broken suit, 4M aggressive}
+\newcommand{\fourlevelstyle}{4m broken, 4M aggr.}
 \newcommand{\fourlevelresp}{}
 %\setboolean{namya}{true}
 \newcommand{\fourlevelother}{}
@@ -421,7 +428,7 @@
 \setboolean{gednt}{true} % Gerber
 \setboolean{geseq}{true} % NT Seq G
 %\setboolean{genon}{true} % non-seq G
-\newcommand{\gerbertext}{first and last NT only}
+\newcommand{\gerbertext}{first/last NT only}
 %\setboolean{black}{true} % Blackwood
 %\setboolean{b0314}{true} % RKC
 \setboolean{b1430}{true} % 1430
