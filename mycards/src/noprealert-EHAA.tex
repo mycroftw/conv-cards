@@ -62,6 +62,12 @@
 %\setboolean{serif}{true}
 %\setboolean{serif}{false}
 
+% it is sometimes very hard to read the small text on printed page.
+% Uncomment one of these commands if you want to override the default
+% (bigger if serif, normal size if not)
+%\renewcommand{\usertextsize}{\footnotesize}  % larger answer size
+%\renewcommand{\usertextsize}{\scriptsize}    % smaller answer size
+
 % And now the card itself. Right side first, top to bottom, then left side.
 \newcommand{\names}{}
 \newcommand{\playernumber}{}
@@ -447,12 +453,22 @@
 \newcommand{\trumpsignaltext}{}
 
 % Signals
+% Two alternatives here:
+%    1. uncomment the setboolean to check the box that is "primary signal", as the card suggests.
+%    2. Do not uncomment any checkbox, but rank the entries by putting a single
+%       character in each box with the {*rank} commands.
 %\setboolean{deatt}{true} % Primary signal to declarer's lead - attitude
 %\setboolean{decou}{true} % count
 %\setboolean{desui}{true} % suit preference
+\newcommand{\deattrank}{}
+\newcommand{\decourank}{}
+\newcommand{\desuirank}{}
 %\setboolean{pratt}{true} % Primary signal to partner's lead - attitude
 %\setboolean{prcou}{true} % count
 %\setboolean{prsui}{true} % suit preference
+\newcommand{\prattrank}{}
+\newcommand{\prcourank}{}
+\newcommand{\prsuirank}{}
 \newcommand{\signalexcepttext}{}
 \newcommand{\signaltexttop}{}
 \newcommand{\signaltextbottom}{}
