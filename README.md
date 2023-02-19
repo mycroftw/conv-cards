@@ -20,10 +20,12 @@ I have added a few little tweaks and cleanups, and I think this is much easier t
 1. Install the `acbl2022cc.sty` in your local texmf and rebuild your library.
 2. Copy the template file into your cards library and rename.
 3. **Very carefully** read the top comments.  It is very easy to break this - it's LaTeX, after all
-4. You have two major decisions to make (but of course you can change it at any time with two characters!):
+4. You have three major decisions to make (but of course you can change it at any time with two characters!):
    - Do you want the lines under user-fillable text boxes to be printed?  I find having them there makes the card look very busy.
    - You can have entered text in the same font as the card itself, or in a serif font.  I find without the user text lines it can get a bit confusing, 
      so the default is "with guidelines on, use the same font, with them hidden, use serif."
+   - The card is a bit crowded and the text (especially the serif text) is a bit small.  So you can force bigger text for your entries if you don't mind 
+     a little less space.
 5. With a copy of the card to hand, fill out the template - right side first, top to bottom, and then left side:
    - Enter text in the relevant `\newcommand`s (do not delete any!);
    - uncomment the `\setboolean`s for the checkboxes you want checked, and
