@@ -13,6 +13,7 @@
 %the card is 8'' wide, so the margins are very narrow to fit on letter size paper:
 \usepackage{acbl2022cc}
 \usepackage[left=0mm,right=5mm,top=20mm]{geometry}
+\usepackage{enumitem}
 \begin{document}
 
 %There is a boolean to turn on or off every checkbox on the card.
@@ -47,16 +48,31 @@
 %You WILL get errors if you delete any \newcommand statements!
 %If you lead the default card, you may use \newcommand{cardcombination}{}.
 
-\newcommand{\names}{Michael Farebrother -- Ellen Kuiper\namefix{}}  % use \namefix{} for  here
-\newcommand{\playernumber}{Q550794/O007899}
+% The following two booleans determine the formatting of the card.
+%     If visib is true, the guidelines under the user text are printed.
+%     Comment this out to remove them (looks cleaner, but may seem odd)
+%
+%     If serif is true, then user text is in a serif font, to differentiate
+%     if from pre-printed card text (this is especially useful when
+%     guidelines are off).  If false, user text is the same sans-serif font
+%     as the pre-printed text.  Pick exactly one of the three lines for true,
+%     false, or "serif if no guidelines, sans if guidelines" (the default).
+%
+\setboolean{visib}{false}  % show guidelines
 
-%\setboolean{visib}{true}  % show guidelines
-% Select Exactly One of the following three lines for "user input serif?"
-% top is "serif only if no guidelines" (otherwise output can be a bit confusing)
-% but you can force yes or no with the next lines.
 \ifthenelse{\boolean{visib}}{}{\setboolean{serif}{true}}
 %\setboolean{serif}{true}
 %\setboolean{serif}{false}
+
+% it is sometimes very hard to read the small text on printed page.
+% Uncomment one of these commands if you want to override the default
+% (bigger if serif, normal size if not)
+%\renewcommand{\usertextsize}{\footnotesize}  % larger answer size
+%\renewcommand{\usertextsize}{\scriptsize}    % smaller answer size
+
+% And now the card itself. Right side first, top to bottom, then left side.
+\newcommand{\names}{Michael Farebrother -- Ellen Kuiper}
+\newcommand{\playernumber}{Q550794/O007899}
 
 %General approach:
 \newcommand{\generalapproach}{Weak NT, Keri/NT}
@@ -69,7 +85,7 @@
 \setboolean{1ntw}{true}
 %\setboolean{1ntv}{true}
 \newcommand{\bidspreptop}{1NT--2\c\ Keri\hspace{5mm}Upside Down Suit Preference} % Bids that Require Preparation
-\newcommand{\bidsprepbottom}{1NT Overcall takeout, 1 suit-X 15+ "any"\hspace{9mm}Notes [\#] on back for detail} % Bids that Require Prep line 2
+\newcommand{\bidsprepbottom}{1NT Overcall takeout, 1 suit-X 15+ ``any''\hspace{9mm}Notes [\#] on back for detail} % Bids that Require Prep line 2
 
 % 1 Club
 %\setboolean{club5}{true} %1C length
@@ -164,7 +180,7 @@
 %\setboolean{ntasr}{true} %Same responses for alt NT range?
 % This next line is "differences between ranges" if a second range defined,
 % or a space for "style" if only one range.
-\newcommand{\altntresponse}{could have singleton A or K in a minor, could be 6m322}
+\newcommand{\altntresponse}{could have singleton A or K in a minor, could be 6m322~\boldtext{[\ref{itm:1nt}]}}
 
 % 1NT: First column
 %\setboolean{nt5cm}{true}
@@ -174,24 +190,24 @@
 \setboolean{2coth}{true}
 %\setboolean{nat2d}{true}
 \setboolean{jac2d}{true}
-\newcommand{\ntditext}{very rare 4\,\rh\,\boldtext{[1.3]}} %Other meaning for 1NT-2\d
+\newcommand{\ntditext}{very rare 4\,\rh~\boldtext{[\ref{itm:1ntother}]}} %Other meaning for 1NT-2\d
 %\setboolean{nat2h}{true}
 \setboolean{jac2h}{true}
 \newcommand{\nthetext}{} %Other meaning for 1NT-2\h
 %\setboolean{nat2s}{true}
 %\setboolean{trf2s}{true}
-\newcommand{\ntsptext}{range ask \boldtext{[1.3]}} %1NT-2S
+\newcommand{\ntsptext}{range ask~\boldtext{[\ref{itm:1ntother}]}} %1NT-2S
 %\setboolean{nat2n}{true}
 \setboolean{trf2n}{true}
 \newcommand{\ntnttext}{\regtext{clubs}} %1NT-2NT
 
 % 1NT: second column
-\newcommand{\ntcjumptext}{\rd\ \redreg{splinter\ \boldtext{[1.3]}}} %1NT-3C
+\newcommand{\ntcjumptext}{\rd\ \redreg{splinter~\boldtext{[\ref{itm:1ntother}]}}} %1NT-3C
 \newcommand{\ntdjumptext}{\rh\ \redreg{splinter}}
 \newcommand{\nthjumptext}{\s\ \redreg{splinter}}
 \newcommand{\ntsjumptext}{\c\ \redreg{splinter}} %1NT-3S
-\newcommand{\ntothertexttop}{2\,\bc\ forces 2\,\rd, to play or INV \boldtext{[1.1]}} %Other conventions over 1NT
-\newcommand{\ntothertextbottom}{\regtext{Over 1NT--X,} 2\,\bc\ scramble, \regtext{all else to play} \boldtext{[1.4]}} % second "Other Conventions"
+\newcommand{\ntothertexttop}{2\,\bc\ forces 2\,\rd, to play or INV~\boldtext{[\ref{itm:1nt2c}]}} %Other conventions over 1NT
+\newcommand{\ntothertextbottom}{\regtext{Over 1NT--X,} 2\,\bc\ scramble, \regtext{all else to play}~\boldtext{[\ref{itm:1ntx}]}} % second "Other Conventions"
 
 % 1NT: Bottom
 %\setboolean{smole}{true}
@@ -242,7 +258,7 @@
 % 2 Diamonds
 \newcommand{\twodlowtext}{6} %2D point range
 \newcommand{\twodhightext}{11}
-\newcommand{\twoddescribe}{Anything goes style \boldtext{[6]}}
+\newcommand{\twoddescribe}{Anything goes style~\boldtext{[\ref{itm:2x}]}}
 %\setboolean{dnsnf}{true} %new suit NF
 \setboolean{wk2di}{true} %2D weak
 %\setboolean{in2di}{true}
@@ -276,7 +292,7 @@
 \newcommand{\twosresponse}{}
 
 %Bottom of card
-\newcommand{\jshifttext}{Fit (Limit-ish, 9+ in two suits) \boldtext{[4]}} % jump shift responses
+\newcommand{\jshifttext}{Fit (Limit-ish, 9+ in two suits)~\boldtext{[\ref{itm:fjs}]}} % jump shift responses
 \newcommand{\vsstrongart}{Mathé/Str 1\,m} % "vs str/VS openings" - MDF to fix
 %\setboolean{nmf1w}{true} %1-way new minor
 %\setboolean{nmf2w}{true} %2-way new minor
@@ -298,8 +314,8 @@
 \setboolean{suppx}{true} %Support
 \newcommand{\suppxthru}{2x (-1NT)}
 \setboolean{supxx}{true} %Support redouble
-\newcommand{\toxstyletext}{\redreg{15+ "any" (xx+ if min.) \boldtext{[3.1]}}}
-\newcommand{\doubleothertext}{see 1NT for takeout "double"} %Other special doubles
+\newcommand{\toxstyletext}{\redreg{15+ ``any'' (xx+ if min.)~\boldtext{[\ref{itm:pd}]}}}
+\newcommand{\doubleothertext}{see 1NT for takeout ``double''} %Other special doubles
 
 % NT overcalls
 \newcommand{\directlowtext}{\redreg{(6)\,8}} %range
@@ -309,7 +325,7 @@
 \newcommand{\balhightext}{14}
 \setboolean{sysba}{true}
 \setboolean{dntco}{true} %conventional NT O/c
-\newcommand{\directconvtext}{1NT takeout, 3+ in unbid suits \boldtext{[3.2]}}
+\newcommand{\directconvtext}{1NT takeout, 3+ in unbid suits~\boldtext{[\ref{itm:1ntoc}]}}
 \setboolean{unu2l}{true} %Unusual: 2 lowers
 \newcommand{\ntothertext}{} %conventional overcalls (sandwich etc)
 
@@ -391,7 +407,7 @@
 
 % Opening preempts
 \newcommand{\threelevelstyletop}{Aggressive (esp NV)}
-\newcommand{\threelevelstylebottom}{but 3m 1\textsuperscript{st}/2\textsuperscript{nd} "happy to play 3NT" \boldtext{[6]}}
+\newcommand{\threelevelstylebottom}{but 3m 1\textsuperscript{st}/2\textsuperscript{nd} ``happy to play 3NT''~\boldtext{[\ref{itm:3m}]}}
 \newcommand{\threelevelresp}{NSF}
 \newcommand{\fourlevelstyle}{4m Solid M, or 1-loser+A or K}
 \newcommand{\fourlevelresp}{gap asks which}
@@ -435,7 +451,7 @@
 %\setboolean{smisu}{true} %Smith echo - suit
 \setboolean{smint}{true} %Smith - NT
 \setboolean{smirv}{true} %reverse Smith
-\newcommand{\othercardingtext}{\boldtext{Upside Down Suit Pref. \boldtext{[2]}}}
+\newcommand{\othercardingtext}{\boldtext{Upside Down Suit Pref.~\boldtext{[\ref{itm:carding}]}}}
 \newcommand{\trumpsignaltext}{(UD)SP}
 
 % Signals
@@ -541,4 +557,127 @@
 %
 }%end of \additionaltikz
 \drawconventioncard
+
+\twocolumn[\centerline{\large\textbf{Notes for Michael Farebrother --- Ellen Kuiper: K/S system: \today{}}}]
+
+\begin{scriptsize}
+    \begin{enumerate}
+        \item \label{itm:1nt}1 NT is 12--14 all seats, all vulnerabilities.
+         We upgrade special 11s (Michael more than Ellen).
+        \begin{enumerate}[label*=\arabic*,nosep]
+            \item \label{itm:1nt2c}We do \textbf{not} play Stayman over 1 NT.  2\,\bc\ is Keri: a puppet to 2\,\rd.
+            This is forced; there is no other systemic response to 2\,\bc.
+            Responder's rebids:
+            \begin{description}
+                \item [Pass] Weak with Diamonds
+                \item [2\,\rh] INV with 4 \textbf{or 5} hearts (but see 1 NT--2\,\rd below)
+                \item [2\,\bs] INV with 4 \textbf{or 5} spades
+                \item [2 NT] GF Puppet Stayman.
+                 Specialized responses.
+                \item [3 m] INV with 6+ of the minor
+                \item [3 M] GF, 5+ \textbf{diamonds} and 5 of the major
+                \item [3 NT] Mild \textbf{diamond} slam try.
+                 Usually 5332 or 6322.
+            \end{description}
+            \item We do \textbf{not} play Gerber.
+            Over 1 NT and 2 NT, 4 m transfers to corresponding major, 4 M is to play.
+            \item \label{itm:1ntother}Other special responses over 1NT:
+            \begin{description}
+                \item [1 NT--2\,\rd] hearts, but very rarely 4: if responder rebids 2\,\bs,
+                      they are INV with both majors: 5\,\bs--5\,\rh, 5\,\bs--4\,\rh\ or 4\,\bs--4\,\rh, but not 4\,\bs--5\,\rh.
+                \item [1 NT--2\,\bs] Range ask.
+                2 NT is minimum, 3\,\bc\ is maximum.
+                Responder's suit rebid is RKC (3NT: xx, then 4\,\bc: ``don't care, Keycard.'')
+                \item [1 NT--3 suit] GF, 3-suited, short in \textbf{the next suit up}.
+                 Bidding the short suit shows no wasted values and max, 3NT promises good stoppers.
+                \item [1 NT--4 NT] 0123 Blackwood.
+                 \textbf{Not} quantitative.
+            \end{description}
+            \item \label{itm:1ntx}Over interference:
+            \begin{itemize}
+                \item Over double (all seats, all meanings), our runout is ``2\,\bc\ Scramble'':
+                \begin{itemize}
+                    \item Keri and Transfers are off.
+                    Almost all calls, including Pass and XX, are natural and to play.
+                    XX sets a force through 2\,\rd.
+                    \item The exception is 2\,\bc, which is ``Natural'', but 1+.
+                     This call is to play undoubled.
+                      If doubled:
+                    \begin{itemize}
+                        \item Opener will pass with 3+ clubs, or bid her lowest 4-card suit.
+                        \item Responder will pass with 4+ clubs, or bid her lowest 4-card suit.
+                        \item Runs are also to play unless doubled, or if a 7 card fit is found.
+                        Further bidding as above.
+                    \end{itemize}
+                \end{itemize}
+                \item Over 2\,\bc\ overcalls (again, no matter what they mean), systems on, X is Keri.
+                \item Over 2\,\rd\ or higher, Lebensohl, double of shown suit is Negative.
+                \item When dealing with a forcing ``X or Y'' interference, we may choose to bid directly or allow you to clarify and Lebensohl over that.
+            \end{itemize}
+        \end{enumerate}
+        \item \label{itm:fjs}We play Fit Jump Shifts (9+ cards in bid suit and partner's, about limitish values) even by unpassed hand without competition.
+        \item \label{itm:michaels}In situations where we show two known or one known and one unknown suit, 2 NT is strong and asking, and cheapest unknown suit is pass/correct.
+            This applies to:
+            \begin{itemize}[nosep]
+                \item Woolsey overcalls of 1 NT
+                \item Michaels cuebids
+            \end{itemize}
+        \newpage
+        \item We play Power Doubles and 1NT Overcall for takeout:
+        \begin{enumerate}[label*=\arabic*,nosep]
+            \item \label{itm:pd}(1 suit)--X shows ``any'' 15+, but because we will pass for penalty with much weaker trumps than ``normal'', with a singleton, it's about 17, and with a void, about 19.
+            \begin{itemize}
+                \item It frequently shows a strong NT, with or without stoppers.
+                \item Next suit up (exc.\ 1\,\bs--X) is an artificial negative, 0--bad 4 any.
+                \item Non-jump bids are natural and about good 4--bad 8.
+                \item 1 NT is good 4--7 basically balanced, and implies, but does not promise, a stopper.
+                \item Cuebid is good 8+, GF
+                \item Jump bids are good suits.
+            \end{itemize}
+            \item \label{itm:1ntoc}(1 suit)--1 NT is takeout, usually 8--14 HCP, guaranteeing 3+cards in all unbid suits.
+            \begin{itemize}
+                \item With perfect shape, especially NV in 2nd, could be on 6 (Open chart only).
+                \item With a singleton (16) or void (18) in bid suit, we may overcall 1NT with more than 14 HCP\@.
+                \item We are fairly aggressive with this call, and can do it with 5 card suits; but with 4333, we will be on the top of the range.
+                \item Pass is rare, but possible.
+                \item New suits are natural and to play.
+                \item Cuebid is Stayman-esque, and could be the start of a INV+ sequence.
+                \item Jump bids are preemptive [Exception: INV at unfavourable].
+                \item If 1 NT is doubled, new suits are to play (usually 5+), XX shows 4 cards in the highest unbid suit, and pass is any other (\textbf{not} to play).
+            \end{itemize}
+        \end{enumerate}
+        \item \label{itm:preempt}Preempts:
+        \begin{enumerate}[label*=\arabic*,nosep]
+            \item Our preempt style is more aggressive than most, heavily dependent on vulnerability and seat:
+            \begin{itemize}[nosep]
+                \item \label{itm:2x}NV first seat weak twos could be Jxxxxx.
+                      Second seat vulnerable, the minimum is probably KJ9xxx.
+                \item \label{itm:3m}Similar arguments apply to 3- and 4-major bids, and 3NT (4 level minor preempt, \textbf{not} gambling).
+                \item However, 3\,\bc/\rd\ in first and second seat are ``happy to put dummy down in 3NT'', and 4\,\bc/\rd\ is Namyats (solid 8 and nothing, or 1-Loser 8 with an outside A or K).
+                \item We are similarly aggressive with jump overcalls and preemptive raises.
+            \end{itemize}
+            \item \label{itm:wk2resp2}Weak 2 responses:
+            \begin{description}[nosep]
+                \item [RONF] Raises are our only Non-Forcing bids, and we are aggressive and Law-abiding with them.
+                \item [2\,NT] Ogust.
+                      3\,m/M shows bad/good hand, low/high of pair shows bad/good suit.
+                      ``Good Suit'' is not specifically defined, it is relative to the worst suit we would open at this seat/vul.
+                \item [After X:]
+                \begin{description}
+                    \item [All Bids Are Raises.]
+                    If not partner's suit, it is asking for a lead of the bid suit should opener be on lead.
+                    \item [XX] says ``my suit is better than your suit'' and is a puppet bid.
+                    Opener bids the next suit up, and responder places the contract.
+                \end{description}
+            \end{description}
+        \end{enumerate}
+        \item \label{itm:carding}Carding:
+        \begin{itemize}[nosep]
+            \item Leads: standard 4\textsuperscript{th} best, but A for Attitude, K for Kount throughout.
+            \item Signals: We play Upside Down Attitude, Count \textbf{and Suit Preference}.
+            Suit preference is the default secondary signal, and we play Trump Suit Preference.
+            \item Against NT, we play Reverse Smith Echo (if attitude is not known to opening leader's suit, signal to trick 2 is (upside down) attitude in leader's suit, not a signal about declarer's suit).
+        \end{itemize}
+    \end{enumerate}
+\end{scriptsize}
 \end{document}
