@@ -41,17 +41,19 @@
 \newcommand{\bigtext}[1]{\large {\textsf{\textbf{#1}}}}
 \newcommand{\bigblue}[1]{\large {\textsf{\textbf{\textcolor{blue}{#1}}}}} % 1NT
 %Headings for each block of the card
-\newcommand{\headtext}[1]{\scriptsize {\textsf{\textbf{\textls[10]{#1}}}}}
+\newcommand{\headtext}[1]{\small {\textsf{\textbf{\textls[10]{#1}}}}}
 
 %Inline template (non-user) text
-\newcommand{\tRegtext}[1]{\scriptsize \textsf{\textls[-70]{#1}}}
-\newcommand{\tRedreg}[1]{\scriptsize \textsf{\textls[-70]{\textcolor{red}{#1}}}}
-\newcommand{\tBluereg}[1]{\scriptsize \textsf{\textls[-70]{\textcolor{blue}{#1}}}}
-\newcommand{\tBlackreg}[1]{\scriptsize \textsf{\textls[-70]{\textcolor{black}{#1}}}}
-\newcommand{\tBoldtext}[1]{\scriptsize \textsf{\textbf{\textls[-70]{#1}}}}
-\newcommand{\tRedbold}[1]{\scriptsize \textsf{\textbf{\textls[-70]{\textcolor{red}{#1}}}}}
-\newcommand{\tBluebold}[1]{\scriptsize \textsf{\textbf{\textls[-70]{\textcolor{blue}{#1}}}}}
-\newcommand{\tBlackbold}[1]{\scriptsize \textsf{\textbf{\textls[-70]{\textcolor{black}{#1}}}}}
+\newcommand{\tRegtext}[1]{\footnotesize \textsf{\textls[-70]{#1}}}
+\newcommand{\tRedreg}[1]{\footnotesize \textsf{\textls[-70]{\textcolor{red}{#1}}}}
+\newcommand{\tBluereg}[1]{\footnotesize \textsf{\textls[-70]{\textcolor{blue}{#1}}}}
+\newcommand{\tBlackreg}[1]{\footnotesize \textsf{\textls[-70]{\textcolor{black}{#1}}}}
+\newcommand{\tBoldtext}[1]{\footnotesize \textsf{\textbf{\textls[-70]{#1}}}}
+\newcommand{\tRedbold}[1]{\footnotesize \textsf{\textbf{\textls[-70]{\textcolor{red}{#1}}}}}
+\newcommand{\tBluebold}[1]{\footnotesize \textsf{\textbf{\textls[-70]{\textcolor{blue}{#1}}}}}
+\newcommand{\tBlackbold}[1]{\footnotesize \textsf{\textbf{\textls[-70]{\textcolor{black}{#1}}}}}
+\newcommand{\tColortext}[2]{\footnotesize \textsf{\textls[-70]{\textcolor{#2}{#1}}}}
+\newcommand{\tColorbold}[2]{\footnotesize \textsf{\textbf{\textls[-70]{\textcolor{#2}{#1}}}}}
 
 %Inline user text
 \newcommand{\usertext}{\ifthenelse{\boolean{serif}}{\textrm}{\textsf}}
@@ -66,6 +68,8 @@
 \newcommand{\redbold}[1]{\usertextsize \usertext{\textbf{\textls[-70]{\textcolor{red}{#1}}}}}
 \newcommand{\bluebold}[1]{\usertextsize \usertext{\textbf{\textls[-70]{\textcolor{blue}{#1}}}}}
 \newcommand{\blackbold}[1]{\usertextsize \usertext{\textbf{\textls[-70]{\textcolor{black}{#1}}}}}
+\newcommand{\colortext}[2]{\usertextsize \usertext{\textls[-70]{\textcolor{#2}{#1}}}}
+\newcommand{\colorbold}[2]{\usertextsize \usertext{\textbf{\textls[-70]{\textcolor{#2}{#1}}}}}
 
 %Bigger text for names/general approach etc - not used on the boilerplate
 \newcommand{\bigboldtext}[1]{\footnotesize \textsf{\textbf{#1}}}
@@ -75,6 +79,22 @@
 \newcommand{\checkbox}[1]{\ifthenelse{\boolean{#1}}{\node [cbox]}{\node [box]}}
 \newcommand{\rcheckbox}[1]{\ifthenelse{\boolean{#1}}{\node [crbox]}{\node [rbox]}}
 \newcommand{\bcheckbox}[1]{\ifthenelse{\boolean{#1}}{\node [cbbox]}{\node [bbox]}}
+
+\newcommand{\ltrcheckbox}[4]{ % boolean, label, position, color
+	\ifthenelse{\boolean{#1}}
+		{\tikzset{#1/.style = {box, draw=#4, fill=#4}}}
+		{\tikzset{#1/.style = {box, draw=#4}}}
+	\node[t, right] at (#3) (#1label) {\tColortext{#2}{#4}};
+	\node[#1] at (#1label.east) (#1) {}
+}
+
+\newcommand{\rtlcheckbox}[4]{ % boolean, label, position, color
+	\ifthenelse{\boolean{#1}}
+		{\tikzset{#1/.style = {box, draw=#4, fill=#4}}}
+		{\tikzset{#1/.style = {box, draw=#4}}}
+	\node[#1] at (#3) (#1) {};
+	\node[t, left] at (#1.west) (#1label) {\tColortext{#2}{#4}}
+}
 
 %If you want an X or checkmark instead of a filled box, you need to edit the
 %style commands at \begin{tikzpicture} below.
@@ -112,7 +132,8 @@
 
 %Listed below in order from top to bottom, front then back, of the card.
 %Generally every item has a 5-letter abbreviated name.
-\newboolean{visib}\newboolean{serif}\newboolean{fo1c}\newboolean{fo2c}
+\newboolean{visib}\newboolean{serif}
+\newboolean{fo1c}\newboolean{fo2c}\newboolean{footh}
 \newboolean{1nts}\newboolean{1ntw}\newboolean{1ntv}
 % 1C - 19
 \newboolean{club5}\newboolean{club4}\newboolean{club3}\newboolean{cl2nf}
@@ -258,33 +279,43 @@
     \node [left] at (203, 212) {\tBoldtext{\textls[-20]{\playernumber}}};
 
 % Overview:
+% set private booleans based on strings being defined or not.
+    \ifthenelse{\equal{\foothertext}{}}
+        {\setboolean{footh}{false}}
+        {\setboolean{footh}{true}}
+
     \node [t, right] at (104, 205.5) {\headtext{General Approach}};
     \node [t] at (160, 206) {\bigboldtext{\generalapproach}};
     \guideline{132}{202}{204}
-    \node [t, right] at (104, 201) (mhbo) {\tRegtext{Min Expected HCP when Balanced: Opening}};
-    \node [t] at (162, 201) {\regtext{\minHCPopen}};
-    \guideline{156}{168}{199.5}
-    \node [t, right] at (168, 201) (mhbr) {\tRegtext{Responding}};
+    \node [t, right] at (104, 201) (mhbo) {\tRegtext{\textit{Min Expected HCP when Balanced:}\ \ Opening}};
+    \node [t] at (153, 201) {\regtext{\minHCPopen}};
+    \guideline{138}{168}{199.5}
+    \node [t, right] at (173, 201) (mhbr) {\tRegtext{Responding}};
     \node [t] at (191, 201) {\regtext{\minHCPresp}};
     \guideline{184}{202}{199.5}
 
-    \rcheckbox{fo1c} at (127, 197) (fo1c) {};
-    \node [t, left, xshift=1mm] at (fo1c.west) {\tRegtext{Forcing Open: }\tRedbold{1\,\c\ }};
-    \checkbox{fo2c} at (135, 197) (fo2c) {};
-    \node [t, left, xshift=0.5mm] at (fo2c.west) {\tBoldtext{2\,\c\ }};
-    \node [t, right] at (145, 197) (foother) {\redreg{\foothertext}};
-    \node [t, left, xshift=1mm] at (foother.west) {\tRedreg{Other:}};
-    \rguideline{145}{160}{195.5}
-    \checkbox{1nts} at (179,197) (1nts) {};
-    \node [t, left, xshift=1mm] at (1nts.west) {\tRegtext{1NT Open: Str\,}};
-    \node [t, right, xshift=0mm] at (1nts.east) (1ntw) {\tRegtext{Wk\,}};
-    \checkbox{1ntw} at (1ntw.east) (1ntwbox) {};
-    \node [t, right] at (1ntwbox) (1ntv) {\tRegtext{ Variable\,}};
-    \checkbox{1ntv} at (1ntv.east) {};
+    \node [t, right] at (104,197) (fohdr) {\tRegtext{Forcing Opening:}};
+    \ltrcheckbox{fo1c}{1\bc}{fohdr.east}{red}{};
+    \ltrcheckbox{fo2c}{2\bc}{fo1c.east}{black}{};
+    \ltrcheckbox{footh}{Other}{fo2c.east}{red}{};
+    \node [t, right] at (footh.east) {\redreg{\foothertext}};
+    \rguideline{132.5}{169}{195.5}
+%    \checkbox{1ntv} at (201, 197) (1ntvbox) {};
+%    \node [t, left] at (1ntvbox.west) (1ntv) {\tRegtext{\ Variable}};
+%    \checkbox{1ntw} at (1ntv.west) (1ntwbox) {};
+%    \node [t, left] at (1ntwbox.west) (1ntw) {\tRegtext{\ Weak}};
+%    \checkbox{1nts} at (1ntw.west) (1ntsbox) {};
+%    \node [t, left] at (1ntsbox.west) (1nts) {\tRegtext{Strong}};
+    \rtlcheckbox{1ntv}{Variable}{201, 197}{black};
+    \rtlcheckbox{1ntw}{Weak}{1ntvlabel.west}{black};
+    \rtlcheckbox{1nts}{Strong}{1ntwlabel.west}{black};
+    \node [t, left] at (1ntslabel.west) (1nthead) {\tRegtext{1NT Opening:}};
 
-    \node[t, right] at (104, 193) (btmrp) {\tRegtext{Bids That May Require Preparation:\ }\boldtext{\bidspreptop}};
-    \guideline{144}{202}{191.5}
-    \node[t, right] at (110, 189) {\boldtext{\bidsprepbottom}};
+    \node[t, right] at (104, 193) (btmrp) {\tRegtext{Bids That May\ }};
+    \node[t, right] at (119, 193) {\boldtext{\bidspreptop}};
+    \guideline{119}{202}{191.5}
+    \node[t, right] at (104, 189) {\tRegtext{Require Preparation:}};
+    \node[t, right] at (119, 189) {\boldtext{\bidsprepbottom}};
 
 % 1C opening
 
@@ -319,7 +350,7 @@
     \node [t, right] at (104, 173) (clrespdi) {\tRegtext{1\,\rd\,}};
     \node [t, right] at (clrespdi.east) {\regtext{\clrespdi}};
     \guideline{110}{128}{171.5}
-    \node [t, right] at (130, 173) (bypas) {\tRegtext{Bypass 5+\,}};
+    \node [t, right] at (130, 173) (bypas) {\tRegtext{Bypass 5+\rd\,}};
     \checkbox{bypas} at (bypas.east) {};
     \node [t, right] at (104, 169.5) {\tRegtext{1\,NT\,}};
     \node [t, right] at (117, 169.5) (clresponent) {\tRegtext{ to }};
@@ -360,23 +391,32 @@
 % 1D opening
 
     \node [t, right] at (104, 160.5) {\bigtext{1\rd\ }};
-    \node [t, right] at (111,161.8) {\tRegtext{Min Length:}};
-    \node [t, left] at (129.5, 161.8) (diam5) {\tRegtext{5\,}};
-    \checkbox{diam5} at (diam5.east) {};
-    \node [t, left] at (135, 161.8) (diam4) {\tRegtext{4\,}};
-    \checkbox{diam4} at (diam4.east) {};
-    \node [t, left] at (140, 161.8) (diam3) {\tRegtext{3\,}};
-    \checkbox{diam3} at (diam3.east) {};
-    \node [t, left] at (151, 161.8) (dubal) {\tRegtext{Unbal\,}};
-    \checkbox{dubal} at (dubal.east) {};
-    \node [t, left] at (164.5, 161.8) (di2nf) {\tBluereg{NF 2\,}};
-    \bcheckbox{di2nf} at (di2nf.east) {};
-    \node [t, left] at (176, 161.8) (di1nf) {\tBluereg{NF 1\,}};
-    \bcheckbox{di1nf} at (di1nf.east) {};
-    \node [t, left] at (186.5, 161.8) (di0nf) {\tBluereg{NF 0\,}};
-    \bcheckbox{di0nf} at (di0nf.east) {};
-    \node [t, left] at (199, 161.8) (dicon) {\tRedreg{Art F\,}};
-    \rcheckbox{dicon} at (dicon.east) {};
+    \node [t, right] at (111,161.8) (1dmin) {\tRegtext{Min Length:}};
+%    \ltrcheckbox{diam5}{5}{1dmin.east}{black};
+    \ltrcheckbox{diam5}{5}{129.5, 161.8}{black};
+    \ltrcheckbox{diam4}{4}{diam5.east}{black};
+    \ltrcheckbox{diam3}{3}{diam4.east}{black};
+    \ltrcheckbox{dubal}{Unbal}{diam3.east}{black};
+    \ltrcheckbox{di2nf}{NF 2}{dubal.east}{blue};
+    \ltrcheckbox{di1nf}{NF 1}{di2nf.east}{blue};
+    \ltrcheckbox{di0nf}{NF 0}{di1nf.east}{blue};
+    \ltrcheckbox{dicon}{Art F}{di0nf.east}{red};
+%    \node [t, left] at (129.5, 161.8) (diam5) {\tRegtext{5\,}};
+%    \checkbox{diam5} at (diam5.east) {};
+%    \node [t, left] at (135, 161.8) (diam4) {\tRegtext{4\,}};
+%    \checkbox{diam4} at (diam4.east) {};
+%    \node [t, left] at (140, 161.8) (diam3) {\tRegtext{3\,}};
+%    \checkbox{diam3} at (diam3.east) {};
+%    \node [t, left] at (151, 161.8) (dubal) {\tRegtext{Unbal\,}};
+%    \checkbox{dubal} at (dubal.east) {};
+%    \node [t, left] at (164.5, 161.8) (di2nf) {\tBluereg{NF 2\,}};
+%    \bcheckbox{di2nf} at (di2nf.east) {};
+%    \node [t, left] at (176, 161.8) (di1nf) {\tBluereg{NF 1\,}};
+%    \bcheckbox{di1nf} at (di1nf.east) {};
+%    \node [t, left] at (186.5, 161.8) (di0nf) {\tBluereg{NF 0\,}};
+%    \bcheckbox{di0nf} at (di0nf.east) {};
+%    \node [t, left] at (199, 161.8) (dicon) {\tRedreg{Art F\,}};
+%    \rcheckbox{dicon} at (dicon.east) {};
 
     \node [t, right] at (119.5, 158.5) {\regtext{\didescribe}};
     \guideline{120}{202}{157}
@@ -497,24 +537,24 @@
         {\setboolean{2noth}{false}}
         {\setboolean{2noth}{true}}
 
-    \node [t, right] at (104, 110.5) {\bigblue{1NT}};
-    \node [t, right] at (120.5, 111.3) (1ntfirstrange) {\tBluereg{to}};
-    \node [t] at (118, 111.3) {\bluebold{\ntlowtext}};
-    \bguideline{115.5}{121}{109.8}
-    \node [t] at (126.5, 111.3) {\bluebold{\nthightext}};
-    \bguideline{124.5}{129}{109.8}
+    \node [t, right] at (103.5, 110.5) {\bigblue{1NT}};
+    \node [t, right] at (115, 111.3) (1ntfirstrange) {\tBluereg{to}};
+    \node [t] at (112, 111.3) {\bluebold{\ntlowtext}};
+    \bguideline{109.5}{115}{109.8}
+    \node [t] at (120, 111.3) {\bluebold{\nthightext}};
+    \bguideline{118}{123.5}{109.8}
 
     % We can use the area past the first range for explanation...
     \ifthenelse{\NOT \boolean{1ntv} \AND \equal{\altntlowtext}{} \AND \equal{\altnthightext}{}}{
         \node [t, right] at (130, 111.3) (1ntstyle){\tBluereg{Style:\ }\bluereg{\altntresponse}};
         \bguideline{138}{202}{109.8}
     }{ % unless there is a second range.
-        \node [t, right] at (145, 110.5) (1nt2ndrange) {\bigblue{1NT}};
-        \node [t, right] at (128, 111.3) (ntseatvul){\tBluereg{(If:}};
+        \node [t, right] at (149.5, 110.5) (1nt2ndrange) {\bigblue{1NT}};
+        \node [t, right] at (123.5, 111.3) (ntseatvul){\tBluereg{(If:}};
         \node [t, right, xshift=-2mm] at (ntseatvul.east) {\bluereg{\ntseatvul}};
-        \bguideline{132}{145}{109.8}
-        \node [t, right] at (144, 111.3) {\bluereg{)}};
-        \node [t, right] at (159.5, 111.3) {\tBluereg{to}};
+        \bguideline{126}{148.5}{109.8}
+        \node [t, right] at (148.5, 111.3) {\bluereg{)}};
+        \node [t, right] at (160.5, 111.3) {\tBluereg{to}};
         \node [t] at (158, 111.3) {\bluebold{\altntlowtext}};
         \bguideline{156}{160.5}{109.8}
         \node [t] at (165.5, 111.3) {\bluebold{\altnthightext}};
@@ -528,9 +568,9 @@
 % 1NT box, left column
     \node [t, right] at (104, 107) (nt5cm) {\tRegtext{5-Card Major\,}};
     \checkbox{nt5cm} at (nt5cm.east) {};
-    \node [t, right] at (123, 107) (syson) {\tRegtext{Sys on vs}};
-    \node [t] at (143, 107) {\regtext{\sysontext}};
-    \guideline{136}{150}{105.5}
+    \node [t, right] at (115, 107) (syson) {\tRegtext{System on vs:}};
+    \node [t] at (133, 107) {\regtext{\sysontext}};
+    \guideline{126}{140}{105.5}
 
     \node [t, right] at (105, 103) (1nt2csty) {\tRegtext{2\,\c: Stayman\,}};
     \checkbox{staym} at (1nt2csty.east) (staym) {};
@@ -538,46 +578,46 @@
     \checkbox{puppe} at (1nt2cpuppet.east) (puppe) {};
     \node [t, right] at (puppe.east) (1nt2cother) {\tRedreg{Other\,}};
     \rcheckbox{2coth} at (1nt2cother.east) (1nt2cothcheck) {};
-    \rguideline{127}{150}{101.5}
+    \rguideline{130}{150}{101.5}
 
     \node [t, right] at (105, 99) {\tRegtext{2\,\rd: Nat\,}};
-    \node [t] at (112.5, 99) (1nt2d) {\tBluereg{\,Tfr\,}};
+    \node [t] at (114, 99) (1nt2d) {\tBluereg{\,Tfr\,}};
     \checkbox{nat2d} at (1nt2d.west) {};
     \bcheckbox{jac2d} at (1nt2d.east) (1nt2dtxf) {};
     \node [t, right] at (1nt2dtxf.east) (1nt2dother) {\tRedreg{Other\,}};
     \rcheckbox{2doth} at (1nt2dother.east) (1nt2dothcheck) {};
     \node [t, right] at (1nt2dothcheck.east) (1nt2dothtext) {\redreg{\ntditext}};
-    \rguideline{120.5}{150}{97.5}
+    \rguideline{123}{150}{97.5}
 
     \node [t, right] at (105, 95) {\tRegtext{2\,\rh: Nat\,}};
-    \node [t] at (112.5, 95) (1nt2h) {\tBluereg{\,Tfr\,}};
+    \node [t] at (114, 95) (1nt2h) {\tBluereg{\,Tfr\,}};
     \checkbox{nat2h} at (1nt2h.west) {};
     \bcheckbox{jac2h} at (1nt2h.east) (1nt2htxf) {};
     \node [t, right] at (1nt2htxf.east) (1nt2hother) {\tRedreg{Other\,}};
     \rcheckbox{2hoth} at (1nt2hother.east) (1nt2hothcheck) {};
     \node [t, right] at (1nt2hothcheck.east) (1nt2hothtext) {\redreg{\nthetext}};
-    \rguideline{120.5}{150}{93.5}
+    \rguideline{123}{150}{93.5}
 
     \node [t, right] at (105, 91) {\tRegtext{2\,\bs: Nat\,}};
-    \node [t] at (112.5, 91) (1nt2s) {\tBluereg{\,Tfr\,}};
+    \node [t] at (114, 91) (1nt2s) {\tBluereg{\,Tfr\,}};
     \checkbox{nat2s} at (1nt2s.west) {};
     \bcheckbox{trf2s} at (1nt2s.east) (1nt2stxf) {};
     \node [t, right] at (1nt2stxf.east) (1nt2sother) {\tRedreg{Other\,}};
     \rcheckbox{2soth} at (1nt2sother.east) (1nt2sothcheck) {};
     \node [t, right] at (1nt2sothcheck.east) (1nt2sothtext) {\redreg{\ntsptext}};
-    \rguideline{120.5}{150}{89.5}
+    \rguideline{123}{150}{89.5}
 
     \node [t, right] at (104.25, 87) {\tRegtext{2NT: Nat}};
-    \node [t] at (112.5, 87) (1nt2nt) {\tBluereg{\,Tfr\,}};
+    \node [t] at (114, 87) (1nt2nt) {\tBluereg{\,Tfr\,}};
     \checkbox{nat2n} at (1nt2nt.west) {};
     \bcheckbox{trf2n} at (1nt2nt.east) (1nt2nttxf) {};
     \node [t, right] at (1nt2nttxf.east) (1nt2ntother) {\tRedreg{Other\ }};
     \rcheckbox{2noth} at (1nt2ntother.east) (1nt2nothcheck) {};
     \node [t, right] at (1nt2nothcheck.east) (1nt2nothtext) {\redreg{\ntnttext}};
-    \rguideline{120.5}{150}{85.5}
+    \rguideline{123}{150}{85.5}
 
     \node [t, right] at (105, 83) {\tRedreg{Smolen}};
-    \node [t] at (113.5, 83) (1nttxf4c) {\tBluereg{\,Tfr: 4\,\bc\,}};
+    \node [t] at (115.5, 83) (1nttxf4c) {\tBluereg{\,Tfr: 4\,\bc\,}};
     \rcheckbox{smole} at (1nttxf4c.west) {};
     \bcheckbox{tex4c} at (1nttxf4c.east) (tex4cbox) {};
     \node [t, right] at (tex4cbox.east) (1nttxf4d){\tBluereg{4\,\rd\,}};
@@ -588,7 +628,7 @@
     \node [t, right] at (105, 79) (ntnegx) {\tRegtext{Dbl: Neg\,}};
     \checkbox{ntneg} at (ntnegx.east) (ntnegbox) {};
     \node [t, right] at (ntnegbox.east) {\regtext{\ntnegtext}};
-    \guideline{119.5}{134}{77.5}
+    \guideline{114}{134}{77.5}
     \node [t, right] at (134, 79) (ntpenx) {\tRegtext{Pen\,}};
     \checkbox{ntpen} at (ntpenx.east) {};
     \node [t, right] at (145, 79) (ntotherx) {\tRedreg{Other:\ }\redreg{\ntxothertext}};
@@ -622,7 +662,7 @@
     \node [t, right] at (130, 73.3) (pup2n) {\tRegtext{Puppet\,}};
     \checkbox{pup2n} at (pup2n.east) (pup2nbox) {};
     \node [t, right] at (pup2nbox.east) (2n3s) {\tRedreg{3\,\bs:\ }\redreg{\twonsptext}};
-    \rguideline{148}{202}{71.8}
+    \rguideline{140}{202}{71.8}
     \node [t, right] at (104, 68.5) (con2n) {\tRedreg{Conv\,}};
     \rcheckbox{con2n} at (con2n.east) (con2nbox) {};
     \node [t, right] at (con2nbox.east) {\redreg{\convnttext}};
@@ -634,7 +674,7 @@
     \node [t, right] at (tex2nbox.east) (neg2n) {\tRegtext{Neg Dbl\,}};
     \checkbox{neg2n} at (neg2n.east) (neg2nbox) {};
     \node [t, right] at (neg2nbox.east) {\tRedreg{Other: }\redreg{\twonothertext}};
-    \rguideline{176}{202}{67}
+    \rguideline{146}{202}{67}
 
     \node [t, right] at (104, 62) {\bigtext{3NT}};
     \node [t, right] at (121, 62.8) {\tRegtext{to}};
@@ -771,8 +811,8 @@
     \guideline{105}{202}{5.5}
     \node [t, right] at (104, 3) {\regtext{\footnotesbottom}};
     \guideline{105}{202}{1.5}
-    \node [right] at (105,-2) {\scriptsize \textsf{\currfilename: \printfdate{ISOext}.} Front of Convention Card};
-    \node [right] at (160,-2) {\tRegtext{\textls[10]{Made with \LaTeX\ and acbl2022cc (github.com/mycroftw/conv-cards)}}};
+    \node [right] at (105,-2) {\scriptsize \textsf{\currfilename: \printfdate{ISOext}. Front of Convention Card}};
+    \node [right] at (160,-2) {\scriptsize \textsf{Made with \LaTeX\ and acbl2022cc (github.com/mycroftw/conv-cards)}};
     \end{tikzpicture}%
     \newpage
     \begin{tikzpicture}[xscale=0.2,yscale=0.125,
@@ -1289,8 +1329,8 @@
     \node [t, right] at (55, 3) {\regtext{\ntexceptbottom}};
 	\guideline{55}{100}{1.5}
 
-    \node [right] at (3,-2) {\scriptsize \textsf{\currfilename: \printfdate{ISOext}.} Back of Convention Card};
-    \node [right] at (58,-2) {\tRegtext{\textls[10]{Made with \LaTeX\ and acbl2022cc (github.com/mycroftw/conv-cards)}}};
+    \node [right] at (3,-2) {\scriptsize \textsf{\currfilename: \printfdate{ISOext}. Back of Convention Card}};
+    \node [right] at (58,-2) {\scriptsize \textsf{Made with \LaTeX\ and acbl2022cc (github.com/mycroftw/conv-cards)}};
     \additionaltikz %optional extra user-defined fields
     \end{tikzpicture}%
 }%end of \drawconventioncard
