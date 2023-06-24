@@ -29,7 +29,16 @@
 \RequirePackage{substr}
 \RequirePackage{relsize}
 \RequirePackage{listofitems}
+\RequirePackage{lmodern}
 \ProvidesPackage{acbl2022cc_2pages}
+
+\makeatletter
+
+\newcommand{\IfNoValueOrEmptyTF}[3] {
+    \IfNoValueTF{#1}{#2}{\def\@tempa{#1}\ifx\@tempa\@empty#2\else#3\fi}
+}
+
+\makeatother
 
 %Suit symbols:
 \newcommand{\h}{\ensuremath{\varheartsuit}}
@@ -127,19 +136,14 @@
 \newcommand\rangeIndex{1}
 \newcommand\textIndex{0}
 
-\NewDocumentCommand{\flattenedString}{m}{
-    \def\flatString{}
-    \foreachitem\style\in\styles{
-       \ifthenelse{\equal{\style}{}}
-           {}
-           {\edef\flatString{\flatString\style\stylecnt\stylessep[\stylecnt]}}
-   }
-   \flatString
-}
+\newcommand\letterspace{0}
 
-\NewDocumentCommand{\textField}{mmmmmm}{
+\NewDocumentCommand{\textField}{mmmmmmo}{
     % name, position, direction, category,
-    % content, style
+    % content, style, textls
+    \IfNoValueOrEmptyTF{#7}
+       {\renewcommand\letterspace{-70}}
+       {\renewcommand\letterspace{#7}}
     \setboolean{guide}{true}
     \IfSubStringInString{Label}{#4}
         {\setboolean{guide}{false}}
@@ -153,7 +157,9 @@
     \foreachitem\style\in\styles{
         \tikzset{#1/.append style/.expanded={\style}}
     }
-    \node[#1] at (#2) (#1) {#5};
+    \IfSubStringInString{Label}{#4}
+        {\node[#1] at (#2) (#1) {\textls[\letterspace]{#5}};}
+        {\node[#1] at (#2) (#1) {\usertext{\textls[\letterspace]{#5}}};}
     \path
         (#1.base west) -- (#1.south west)
                     coordinate[pos=0.5] (mid-base-sw)
@@ -166,9 +172,11 @@
 
 \NewDocumentCommand{\ltrblock}{mmmmmmm}{
     % mandatory: name, position, elements, category,
-    % mandatory: labelParameter: labelContent@labelStyle
+    % mandatory: labelParameter: labelContent@labelStyle@
+    %                            (optional)labelLetterspace
     % mandatory: rangeParameter: rangeLowContent@rangeHighContent@rangeStyle
-    % mandatory: textParameter: textContent@textStyle
+    % mandatory: textParameter: textContent@textStyle@
+    %                           (optional)textLetterspace
 
     \renewcommand\position{#2}
     \bitsetSetBin{elements}{#3}
@@ -176,17 +184,19 @@
         \bitsetQuery{elements}{\labelIndex}
             {
                 \setsepchar{@}
-    	        \readlist*\labelParameter{#5@}
+    	        \readlist*\labelParameter{#5@@}
                 \itemtomacro\labelParameter[1]\labelContent
                 \itemtomacro\labelParameter[2]\labelStyle
+                \itemtomacro\labelParameter[3]\labelLetterspace
                 \textField{#1_label}{\position}{right}{#4Label}
-                        {\labelContent}{ label, \labelStyle}
+                            {\labelContent}{ label, \labelStyle}
+                            {\labelLetterspace}
                 \renewcommand\position{#1_label.east}
             }
             { \node[] at (\position) (#1_label) {}; }
         \bitsetQuery{elements}{\checkboxIndex}
             {
-                \tikzset{#1_checkbox/.append style = {checkBox=#4}}
+                \tikzset{#1_checkbox/.style = {checkBox=#4, xshift=3}}
                 \ifthenelse{\boolean{#1}}
                     {\tikzset{#1_checkbox/.append style = {filled=#4}}}
                     {}
@@ -239,7 +249,7 @@
             { \node[] at (\position) (#1_text) {}; }
         \bitsetQuery{elements}{\checkboxIndex}
             {
-                \tikzset{#1_checkbox/.append style = {checkBox=#4}}
+                \tikzset{#1_checkbox/.style = {checkBox=#4, xshift=-3}}
                 \ifthenelse{\boolean{#1}}
                     {\tikzset{#1_checkbox/.append style = {filled=#4}}}
                     {}
@@ -250,11 +260,13 @@
         \bitsetQuery{elements}{\labelIndex}
             {
                 \setsepchar{@}
-    	        \readlist*\labelParameter{#5@}
+    	        \readlist*\labelParameter{#5@@}
                 \itemtomacro\labelParameter[1]\labelContent
                 \itemtomacro\labelParameter[2]\labelStyle
+                \itemtomacro\labelParameter[3]\labelLetterspace
                 \textField{#1_label}{\position}{left}{#4Label}
-                        {\labelContent}{label, \labelStyle}
+                            {\labelContent}{ label, \labelStyle}
+                            {\labelLetterspace}
                 \renewcommand\position{#1_label.west}
             }
             { \node[] at (\position) (#1_label) {}; }
@@ -383,18 +395,18 @@
 % Move style definitions here, outside the page(s)
 \tikzset{
     block/.style={rectangle, ultra thin},
-        alert/.style={ultra thin },
-        announce/.style={ultra thin },
-        regular/.style={ultra thin },
-        alertRect/.style={draw=red},
-        announceRect/.style={draw=blue},
-        regularRect/.style={draw=black},
-        alertFilled/.style={fill=red},
-        announceFilled/.style={fill=blue},
-        regularFilled/.style={fill=black},
-        alertTextField/.style={text=red},
-        announceTextField/.style={text=blue},
-        regularTextField/.style={text=black},
+    alert/.style={ultra thin },
+    announce/.style={ultra thin },
+    regular/.style={ultra thin },
+    alertRect/.style={draw=red},
+    announceRect/.style={draw=blue},
+    regularRect/.style={draw=black},
+    alertFilled/.style={fill=red},
+    announceFilled/.style={fill=blue},
+    regularFilled/.style={fill=black},
+    alertTextField/.style={text=red},
+    announceTextField/.style={text=blue},
+    regularTextField/.style={text=black},
     checkBox/.style={draw=#1},
     filled/.style={fill=#1},
     textField/.style={text=#1},
@@ -403,8 +415,11 @@
     bidHeader/.style={font=\bfseries\relsize{2}},
     relsize/.style={font=\relsize{#1}},
     bold/.style={font=\bfseries},
+    italics/.style={font=\itshape},
+    boldItalics/.style={font=\bfseries\itshape},
     italicsRelsize/.style={font=\itshape\relsize{#1}},
     label/.style={font=\relsize{-1}},
+    italicsLabel/.style={font=\itshape\relsize{-1}},
         t/.style={text depth=.1\baselineskip,
                   text height=.5\baselineskip},
         header/.style={right, rectangle, rotate=90, white, inner sep=3pt},
@@ -483,16 +498,14 @@
         {\setboolean{footh}{true}}
 
     \ltrblock{genapproachlabel}{104, 205.5}{1000}{regular}
-        {General Approach@bold}
+        {General Approach@bold@1000}
         {}{}
     \rtlblock{genapproach}{203, 205.5}{0001}{regular}
         {}{}
         {\generalapproach @text width=440, centered, bold}
     \ltrblock{mhb}{104, 201}{1000}{regular}
-        {Min Expected HCP when Balanced:}
+        {Min Expected HCP when Balanced:@italicsLabel}
         {}{}
-%        {Min Expected HCP when Balanced:@italicsRelsize=-1}
-%        {}{}
     \ltrblock{mhbo}{mhb.east}{1001}{regular}
         {Opening}
         {}
@@ -537,35 +550,56 @@
     \rtlblock{btmrp2}{203, 189}{0001}{regularNoGuideline}
         {}{}
         {\bidsprepbottom @text width=465, bold}
-%    \node[t, right] at (104, 193) (btmrp) {\tRegtext{Bids That May\ }};
-%    \node[t, right] at (119, 193) {\boldtext{\bidspreptop}};
-%    \guideline{119}{202}{191.5}
-%    \node[t, right] at (104, 189) {\tRegtext{Require Preparation:}};
-%    \node[t, right] at (119, 189) {\boldtext{\bidsprepbottom}};
 
 % 1C opening
 
     \ltrblock{1chdr}{104,183.5}{0001}{regularNoGuideline}
         {}{}
         {1\bc @bidHeader}
-    \node [t, right] at (111,184.3) (1cmin) {\tRegtext{Min Length:}};
-    \ltrcheckbox{club5}{5}{1cmin.east}{black}{};
-    \ltrcheckbox{club4}{4}{club5.east}{black}{};
-    \ltrcheckbox{club3}{3}{club4.east}{black}{};
-    \ltrcheckbox{cl2nf}{NF 2}{club3.east}{blue}{};
-    \node [t, right, xshift=-1.2mm] at (cl2nf.east) {\tBluereg{(}};
-    \ltrcheckbox{c4432}{4432 only}{cl2nf.east}{blue}{};
-    \node [t, right, xshift=-1.2mm] at (c4432.east) {\tBluereg{)}};
-    \ltrcheckbox{cl1nf}{NF 1}{c4432.east}{blue}{};
-    \ltrcheckbox{cl0nf}{NF 0}{cl1nf.east}{blue}{};
-    \ltrcheckbox{clcon}{Art F}{cl0nf.east}{red}{};
+    \ltrblock{1cmin}{111,184.8}{1000}{regularNoGuideline}
+        {Min Length:}
+        {}{}
+    \ltrblock{club5}{1cmin.east}{1100}{regular}
+        {5}
+        {}{}
+    \ltrblock{club4}{club5.east}{1100}{regular}
+        {4}
+        {}{}
+    \ltrblock{club3}{club4.east}{1100}{regular}
+        {3}
+        {}{}
+    \ltrblock{cl2nf}{club3.east}{1100}{announce}
+        {2}
+        {}{}
+    \ltrblock{c4432}{cl2nf.east}{1100}{announce}
+        {4432 only}
+        {}{}
+    \node [t, right, announceTextField] at (c4432.west) {(};
+    \node [t, right, announceTextField, xshift=-4.2mm] at (c4432.east) {)};
+    \ltrblock{cl1nf}{c4432.east}{1100}{announce}
+        {NF 1}
+        {}{}
+    \ltrblock{cl0nf}{cl1nf.east}{1100}{announce}
+        {NF 0}
+        {}{}
+    \ltrblock{clcon}{cl0nf.east}{1100}{alert}
+        {Art F}
+        {}{}
 
-    \node [t, right] at (119.5, 181) {\regtext{\cldescribe}};
-    \guideline{120}{202}{179.5}
-    \node [t, right] at (119.5, 177) (clubresp){\regtext{\clresponses}};
-    \node [t, left] at (clubresp.west) {\tRegtext{Resp:}};
-    \guideline{120}{180}{175.5}
-    \ltrcheckbox{ctxfr}{Transfer Responses}{180, 177}{blue}{};
+    \rtlblock{cldesc}{203, 181}{0001}{regular}
+        {}{}
+        {\cldescribe @text width=465}
+    \ltrblock{clubresp}{114.5, 177}{1001}{regular}
+        {Resp:}
+        {}
+        {\clresponses @text width=330}
+    \ltrblock{ctxfr}{clubresp.east}{1100}{announce}
+        {Transfer Responses}
+        {}{}
+%    \node [t, right] at (119.5, 177) (clubresp){\regtext{\clresponses}};
+%    \node [t, left] at (clubresp.west) {\tRegtext{Resp:}};
+%    \guideline{120}{180}{175.5}
+%    \ltrcheckbox{ctxfr}{Transfer Responses}{180, 177}{blue}{};
 
     \node [t, right] at (104, 173) (clrespdi) {\tRegtext{1\,\rd\,}};
     \node [t, right] at (clrespdi.east) {\regtext{\clrespdi}};
