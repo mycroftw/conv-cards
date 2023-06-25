@@ -23,7 +23,7 @@
 \RequirePackage{xcolor} %red, blue and black
 \RequirePackage{currfile} %get filename
 \RequirePackage{texdate} %get date, formatted
-\initcurrdate % texdate defaults to year-01-01, this changes that to today
+\initcurrdate % texdate default date is curryear-01-01, this changes that to today
 \RequirePackage[left=0mm,right=5mm,top=5mm]{geometry}
 \RequirePackage{bitset}
 \RequirePackage{substr}
@@ -32,13 +32,11 @@
 \RequirePackage{lmodern}
 \ProvidesPackage{acbl2022cc_2pages}
 
-\makeatletter
-
 \newcommand{\IfNoValueOrEmptyTF}[3] {
-    \IfNoValueTF{#1}{#2}{\def\@tempa{#1}\ifx\@tempa\@empty#2\else#3\fi}
+    \IfNoValueTF{#1}
+        {#2}
+        {\ifthenelse{\equal{#1}{}}{#2}{#3}}
 }
-
-\makeatother
 
 %Suit symbols:
 \newcommand{\h}{\ensuremath{\varheartsuit}}
@@ -136,14 +134,12 @@
 \newcommand\rangeIndex{1}
 \newcommand\textIndex{0}
 
-\newcommand\letterspace{0}
+\newcommand\letterspace{}
+\newcommand\fitstyle{}
 
-\NewDocumentCommand{\textField}{mmmmmmo}{
+\NewDocumentCommand{\textField}{mmmmmmO{}}{
     % name, position, direction, category,
     % content, style, textls
-    \IfNoValueOrEmptyTF{#7}
-       {\renewcommand\letterspace{-70}}
-       {\renewcommand\letterspace{#7}}
     \setboolean{guide}{true}
     \IfSubStringInString{Label}{#4}
         {\setboolean{guide}{false}}
@@ -158,8 +154,18 @@
         \tikzset{#1/.append style/.expanded={\style}}
     }
     \IfSubStringInString{Label}{#4}
-        {\node[#1] at (#2) (#1) {\textls[\letterspace]{#5}};}
-        {\node[#1] at (#2) (#1) {\usertext{\textls[\letterspace]{#5}}};}
+        {
+            \ifthenelse{\equal{#7}{}}
+                {\renewcommand\letterspace{-50}}
+                {\renewcommand\letterspace{#7}}
+            \node[#1] at (#2) (#1) {\textls[\letterspace]{#5}};
+        }
+        {
+            \ifthenelse{\equal{#7}{}}
+                {\renewcommand\letterspace{-30}}
+                {\renewcommand\letterspace{#7}}
+            \node[#1] at (#2) (#1) {\usertext{\textls[\letterspace]{#5}}};
+        }
     \path
         (#1.base west) -- (#1.south west)
                     coordinate[pos=0.5] (mid-base-sw)
@@ -170,13 +176,14 @@
         {}
 }
 
-\NewDocumentCommand{\ltrblock}{mmmmmmm}{
+\NewDocumentCommand{\ltrblock}{mmmmmmmo}{
     % mandatory: name, position, elements, category,
     % mandatory: labelParameter: labelContent@labelStyle@
     %                            (optional)labelLetterspace
     % mandatory: rangeParameter: rangeLowContent@rangeHighContent@rangeStyle
     % mandatory: textParameter: textContent@textStyle@
     %                           (optional)textLetterspace
+    % optional:  fitstyle
 
     \renewcommand\position{#2}
     \bitsetSetBin{elements}{#3}
@@ -190,7 +197,7 @@
                 \itemtomacro\labelParameter[3]\labelLetterspace
                 \textField{#1_label}{\position}{right}{#4Label}
                             {\labelContent}{ label, \labelStyle}
-                            {\labelLetterspace}
+                            [\labelLetterspace]
                 \renewcommand\position{#1_label.east}
             }
             { \node[] at (\position) (#1_label) {}; }
@@ -216,34 +223,49 @@
         \bitsetQuery{elements}{\textIndex}
             {
                 \setsepchar{@}
-    	        \readlist*\textParameter{#7@}
+                \readlist*\textParameter{#7@@}
                 \itemtomacro\textParameter[1]\textContent
                 \itemtomacro\textParameter[2]\textStyle
+                \itemtomacro\textParameter[3]\textLetterspace
                 \textField{#1_text}{\position}{right}{#4}
                         {\textContent}{\textStyle}
+                        [\textLetterspace]
                 \renewcommand\position{#1_text.east}
             }
             { \node[] at (\position) (#1_text) {}; }
+        \IfNoValueOrEmptyTF{#8}
+            {}
+            {
+                \setsepchar{,}
+                \readlist*\styles{#8,}
+                \foreachitem\style\in\styles{
+                    \tikzset{#1/.append style/.expanded={\style}}
+                }
+            }
         \node[block, fit=(#1_label)(#1_checkbox)(#1_text) ] (#1) {};
     }
 }
 
-\NewDocumentCommand{\rtlblock}{mmmmmmm}{
+\NewDocumentCommand{\rtlblock}{mmmmmmmo}{
     % mandatory: name, position, elements, category,
     % mandatory: labelParameter: labelContent@labelStyle
     % mandatory: rangeParameter: rangeLowContent@rangeHighContent@rangeStyle
     % mandatory: textContent@textStyle
+    % optional:  fitstyle
+
     \renewcommand\position{#2}
     \bitsetSetBin{elements}{#3}
     \bitsetIsEmpty{elements}{\node[] at (\position) (#1) {}; }{
         \bitsetQuery{elements}{\textIndex}
             {
                 \setsepchar{@}
-    	        \readlist*\textParameter{#7@}
+                \readlist*\textParameter{#7@@}
                 \itemtomacro\textParameter[1]\textContent
                 \itemtomacro\textParameter[2]\textStyle
+                \itemtomacro\textParameter[3]\textLetterspace
                 \textField{#1_text}{\position}{left}{#4}
                         {\textContent}{\textStyle}
+                        [\textLetterspace]
                 \renewcommand\position{#1_text.west}
             }
             { \node[] at (\position) (#1_text) {}; }
@@ -266,10 +288,19 @@
                 \itemtomacro\labelParameter[3]\labelLetterspace
                 \textField{#1_label}{\position}{left}{#4Label}
                             {\labelContent}{ label, \labelStyle}
-                            {\labelLetterspace}
+                            [\labelLetterspace]
                 \renewcommand\position{#1_label.west}
             }
             { \node[] at (\position) (#1_label) {}; }
+        \IfNoValueOrEmptyTF{#8}
+            {}
+            {
+                \setsepchar{,}
+                \readlist*\styles{#8,}
+                \foreachitem\style\in\styles{
+                    \tikzset{#1/.append style/.expanded={\style}}
+                }
+            }
         \node[block, fit=(#1_label)(#1_checkbox)(#1_text) ] (#1) {};
     }
 }
@@ -420,6 +451,7 @@
     italicsRelsize/.style={font=\itshape\relsize{#1}},
     label/.style={font=\relsize{-1}},
     italicsLabel/.style={font=\itshape\relsize{-1}},
+    innerSepHalfCm/.style={inner sep=0.5cm},
         t/.style={text depth=.1\baselineskip,
                   text height=.5\baselineskip},
         header/.style={right, rectangle, rotate=90, white, inner sep=3pt},
@@ -498,7 +530,7 @@
         {\setboolean{footh}{true}}
 
     \ltrblock{genapproachlabel}{104, 205.5}{1000}{regular}
-        {General Approach@bold@1000}
+        {General Approach@bold}
         {}{}
     \rtlblock{genapproach}{203, 205.5}{0001}{regular}
         {}{}
@@ -596,14 +628,15 @@
     \ltrblock{ctxfr}{clubresp.east}{1100}{announce}
         {Transfer Responses}
         {}{}
-%    \node [t, right] at (119.5, 177) (clubresp){\regtext{\clresponses}};
-%    \node [t, left] at (clubresp.west) {\tRegtext{Resp:}};
-%    \guideline{120}{180}{175.5}
-%    \ltrcheckbox{ctxfr}{Transfer Responses}{180, 177}{blue}{};
 
-    \node [t, right] at (104, 173) (clrespdi) {\tRegtext{1\,\rd\,}};
-    \node [t, right] at (clrespdi.east) {\regtext{\clrespdi}};
-    \guideline{110}{128}{171.5}
+    \ltrblock{c1respdi}{104, 173}{1001}{regular}
+        {1\,\rd\,}
+        {}
+        {\clrespdi @text width=144}
+        [ innerSepHalfCm ]
+%    \node [t, right] at (104, 173) (clrespdi) {\tRegtext{1\,\rd\,}};
+%    \node [t, right] at (clrespdi.east) {\regtext{\clrespdi}};
+%    \guideline{110}{128}{171.5}
     \ltrcheckbox{bypas}{Bypass 5+\rd}{130, 173}{black}{};
     \node [t, right] at (104, 169.5) {\tRegtext{1\,NT\,}};
     \node [t, right] at (117, 169.5) (clresponent) {\tRegtext{ to }};
