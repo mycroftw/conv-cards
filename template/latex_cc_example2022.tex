@@ -11,8 +11,7 @@
 
 \documentclass[12pt]{article}
 % the card is 8'' wide, so the margins are very narrow to fit on letter size paper:
-\usepackage{acbl2022cc_2pages}
-\usepackage[left=0mm,right=5mm,top=20mm]{geometry}
+\usepackage{acbl2022cc}
 \begin{document}
 
 % There is a boolean to turn on or off every checkbox on the card.
@@ -65,6 +64,7 @@
 % (bigger if serif, normal size if not)
 %\renewcommand{\usertextsize}{\footnotesize}  % larger answer size
 %\renewcommand{\usertextsize}{\scriptsize}    % smaller answer size
+\renewcommand{\usertextsize}{\small}    % even larger answer size
 
 % And now the card itself. Right side first, top to bottom, then left side.
 \newcommand{\names}{The Duck -- Anony Mouse}
