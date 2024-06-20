@@ -1,4 +1,4 @@
-# Fix convention cards to add the signal ranking commands.
+"""Fix convention cards to add scriptsize override options."""
 
 from argparse import ArgumentParser
 from pathlib import Path
