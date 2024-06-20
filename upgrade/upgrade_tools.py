@@ -12,6 +12,8 @@ def template_files(directory: Path = Path.cwd()) -> Iterator[Path]:
     """Returns each template in turn.  Convenience function."""
 
     templates = []
+    if not directory.exists():
+        print(f"{directory.name} could not be found, ignoring.")
     if directory.is_file():
         if ".tex" in directory.suffixes:
             templates.append(directory)
@@ -355,7 +357,7 @@ class StandardUpgrader(Upgrader):
 
         def _safe_run_function(
             fn: Callable[[List], int], text_: list, expected: int
-        ) -> None:
+        ) -> int:
             """Run a function, report/quit on failure to do everything asked."""
             count = fn(text_)
             if count != expected:
@@ -366,16 +368,26 @@ class StandardUpgrader(Upgrader):
                 print(warning)
                 if fail_on_miss:
                     raise FoundInTemplateError(warning)
+            return count
 
+        ops_performed = 0
         for template in template_files(templates):
             print(f"Updating {template.name}")
             text = read_template(template)
             self.check_template(text)
 
-            _safe_run_function(self.add_lines, text, len(self.add_instructions))
-            _safe_run_function(self.remove_lines, text, len(self.delete_instructions))
-            _safe_run_function(self.replace_lines, text, len(self.replace_instructions))
-            _safe_run_function(
+            ops_performed += _safe_run_function(
+                self.add_lines, text, len(self.add_instructions)
+            )
+            ops_performed += _safe_run_function(
+                self.remove_lines, text, len(self.delete_instructions)
+            )
+            ops_performed += _safe_run_function(
+                self.replace_lines, text, len(self.replace_instructions)
+            )
+            ops_performed += _safe_run_function(
                 self.rewrite_text, text, len(self.replace_text_instructions)
             )
             write_template(template, text)
+
+        return ops_performed
