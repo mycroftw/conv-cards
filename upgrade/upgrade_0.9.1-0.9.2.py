@@ -16,8 +16,7 @@ TEXT_TO_ADD = (  # lines to add
 % Uncomment one of these commands if you want to override the default
 % (bigger if serif, normal size if not)
 %\\renewcommand{\\usertextsize}{\\footnotesize}  % larger answer size
-%\\renewcommand{\\usertextsize}{\\scriptsize}    % smaller answer size
-""",
+%\\renewcommand{\\usertextsize}{\\scriptsize}    % smaller answer size""",
     ),
 )
 
