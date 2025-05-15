@@ -47,6 +47,8 @@
 \newcommand{\tBoldtext}[1]{\scriptsize \textsf{\textbf{\textls[-70]{#1}}}}
 \newcommand{\tRedbold}[1]{\scriptsize \textsf{\textbf{\textls[-70]{\textcolor{red}{#1}}}}}
 \newcommand{\tBluebold}[1]{\scriptsize \textsf{\textbf{\textls[-70]{\textcolor{blue}{#1}}}}}
+\newcommand{\tColortext}[2]{\scriptsize \textsf{\textls[-70]{\textcolor{#2}{#1}}}}
+\newcommand{\tColorbold}[2]{\scriptsize \textsf{\textbf{\textls[-70]{\textcolor{#2}{#1}}}}}
 
 %Inline user text
 \newcommand{\usertext}{\ifthenelse{\boolean{serif}}{\textrm}{\textsf}}
@@ -58,6 +60,8 @@
 \newcommand{\regbold}[1]{\boldtext}  % alias to match \redbold and \bluebold because I get it wrong
 \newcommand{\redbold}[1]{\usertextsize \usertext{\textbf{\textls[-70]{\textcolor{red}{#1}}}}}
 \newcommand{\bluebold}[1]{\usertextsize \usertext{\textbf{\textls[-70]{\textcolor{blue}{#1}}}}}
+\newcommand{\colortext}[2]{\usertextsize \usertext{\textls[-70]{\textcolor{#2}{#1}}}}
+\newcommand{\colorbold}[2]{\usertextsize \usertext{\textbf{\textls[-70]{\textcolor{#2}{#1}}}}}
 
 %Bigger text for names/general approach etc - not used on the boilerplate
 \newcommand{\bigboldtext}[1]{\footnotesize \textsf{\textbf{#1}}}
@@ -67,6 +71,22 @@
 \newcommand{\checkbox}[1]{\ifthenelse{\boolean{#1}}{\node [cbox]}{\node [box]}}
 \newcommand{\rcheckbox}[1]{\ifthenelse{\boolean{#1}}{\node [crbox]}{\node [rbox]}}
 \newcommand{\bcheckbox}[1]{\ifthenelse{\boolean{#1}}{\node [cbbox]}{\node [bbox]}}
+
+\newcommand{\ltrcheckbox}[4]{ % boolean, label, position, color
+    \ifthenelse{\boolean{#1}}
+        {\tikzset{#1/.style = {box, draw=#4, fill=#4}}}
+        {\tikzset{#1/.style = {box, draw=#4}}}
+    \node[t, right] at (#3) (#1label) {\tColortext{#2}{#4}};
+    \node[#1] at (#1label.east) (#1) {}
+}
+
+\newcommand{\rtlcheckbox}[4]{ % boolean, label, position, color
+    \ifthenelse{\boolean{#1}}
+        {\tikzset{#1/.style = {box, draw=#4, fill=#4}}}
+        {\tikzset{#1/.style = {box, draw=#4}}}
+    \node[#1] at (#3) (#1) {};
+    \node[t, left] at (#1.west) (#1label) {\tColortext{#2}{#4}}
+}
 
 %If you want an X or checkmark instead of a filled box, you need to edit the
 %style commands at \begin{tikzpicture} below.
