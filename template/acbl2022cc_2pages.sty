@@ -102,7 +102,9 @@
 
 \newboolean{guide}
 
-\NewDocumentCommand{\ltrcheckbox}{mmmmm}{ % boolean, label, position, color, style
+\NewDocumentCommand{\labeledCheckbox}{mmmmmD<>{right}}{
+   % mandatory: boolean value, label, position, color, style
+   % optional: direction: left/right, default left
     \tikzset{#1/.style = {box, draw=#4}}
     \ifthenelse{\boolean{#1}}
         {\tikzset{#1/.append style = {fill=#4}}}
@@ -110,25 +112,26 @@
     \IfValueTF{#5}
         {\tikzset{#1/.append style = {#5}}}
         {}
-    \node[t, right] at (#3) (#1_label) {\tColortext{#2}{#4}};
-    \node[#1] at (#1_label.east) (#1_box) {};
+    \IfStrEqCase{#6}{
+        {right}
+            {
+                \node[t, #6] at (#3) (#1_label) {\tColortext{#2}{#4}};
+                \node[#1] at (#1_label.east) (#1_box) {};
+            }
+        {left}
+            {
+                \node[#1] at (#3) (#1_box) {};
+                \node[t, #6] at (#1_box.west) (#1_label) {\tColortext{#2}{#4}};
+            }
+    }[{Error}]
     \node[block, fit=(#1_label)(#1_box)] (#1) {}
 }
 
-\NewDocumentCommand{\rtlcheckbox}{mmmmm}{ % boolean, label, position, color, style
-    \tikzset{#1/.style = {box, draw=#4}}
-    \ifthenelse{\boolean{#1}}
-        {\tikzset{#1/.append style = {fill=#4}}}
-        {}
-    \IfValueTF{#5}
-        {\tikzset{#1/.append style = {#5}}}
-        {}
-    \node[#1] at (#3) (#1_box) {};
-    \node[t, left] at (#1_box.west) (#1_label) {\tColortext{#2}{#4}};
-    \node[block, fit=(#1_label)(#1_box)] (#1) {}
-}
-
+\newcommand\name{}
 \newcommand\position{}
+\newcommand\direction{}
+\newcommand\rosewind{}
+\newcommand\category{}
 \newcommand\labelIndex{3}
 \newcommand\checkboxIndex{2}
 \newcommand\rangeIndex{1}
@@ -176,8 +179,8 @@
         {}
 }
 
-\NewDocumentCommand{\ltrblock}{mmmmmmmo}{
-    % mandatory: name, position, elements, category,
+\NewDocumentCommand{\block}{mmmmmmmmo}{
+    % mandatory: name, position, direction, elements, category,
     % mandatory: labelParameter: labelContent@labelStyle@
     %                            (optional)labelLetterspace
     % mandatory: rangeParameter: rangeLowContent@rangeHighContent@rangeStyle
@@ -185,118 +188,115 @@
     %                           (optional)textLetterspace
     % optional:  fitstyle
 
+    \renewcommand\name{#1}
     \renewcommand\position{#2}
-    \bitsetSetBin{elements}{#3}
-    \bitsetIsEmpty{elements}{\node[] at (\position) (#1) {}; }{
+    \renewcommand\direction{#3}
+    \bitsetSetBin{elements}{#4}
+    \bitsetIsEmpty{elements}{}{
         \bitsetQuery{elements}{\labelIndex}
             {
                 \setsepchar{@}
-    	        \readlist*\labelParameter{#5@@}
+                \readlist*\labelParameter{#6@@}
                 \itemtomacro\labelParameter[1]\labelContent
                 \itemtomacro\labelParameter[2]\labelStyle
                 \itemtomacro\labelParameter[3]\labelLetterspace
-                \textField{#1_label}{\position}{right}{#4Label}
-                            {\labelContent}{ label, \labelStyle}
-                            [\labelLetterspace]
-                \renewcommand\position{#1_label.east}
             }
-            { \node[] at (\position) (#1_label) {}; }
+            {}
         \bitsetQuery{elements}{\checkboxIndex}
             {
-                \tikzset{#1_checkbox/.style = {checkBox=#4, xshift=3}}
+                \tikzset{#1_checkbox/.style = {checkBox=#5, xshift=3}}
                 \ifthenelse{\boolean{#1}}
-                    {\tikzset{#1_checkbox/.append style = {filled=#4}}}
+                    {\tikzset{#1_checkbox/.append style = {filled=#5}}}
                     {}
-                \node[#1_checkbox] at (\position) (#1_checkbox) {};
-                \renewcommand\position{#1_checkbox.east}
             }
-            { \node[] at (\position) (#1_checkbox) {}; }
+            {}
         \bitsetQuery{elements}{\rangeIndex}
             {
                 \setsepchar{@}
-    	        \readlist*\rangeParameter{#6@}
+                \readlist*\rangeParameter{#7@}
                 \renewcommand\rangeLowContent\rangeParameter[1]
                 \renewcommand\rangeHighContent\rangeParameter[2]
                 \renewcommand\rangeStyle\rangeParameter[3]
             }
-            { \node[] at (\position) (#1_range) {}; }
+            {}
         \bitsetQuery{elements}{\textIndex}
             {
                 \setsepchar{@}
-                \readlist*\textParameter{#7@@}
+                \readlist*\textParameter{#8@@}
                 \itemtomacro\textParameter[1]\textContent
                 \itemtomacro\textParameter[2]\textStyle
                 \itemtomacro\textParameter[3]\textLetterspace
-                \textField{#1_text}{\position}{right}{#4}
-                        {\textContent}{\textStyle}
-                        [\textLetterspace]
-                \renewcommand\position{#1_text.east}
             }
-            { \node[] at (\position) (#1_text) {}; }
-        \IfNoValueOrEmptyTF{#8}
             {}
-            {
-                \setsepchar{,}
-                \readlist*\styles{#8,}
-                \foreachitem\style\in\styles{
-                    \tikzset{#1/.append style/.expanded={\style}}
-                }
-            }
-        \node[block, fit=(#1_label)(#1_checkbox)(#1_text) ] (#1) {};
     }
-}
-
-\NewDocumentCommand{\rtlblock}{mmmmmmmo}{
-    % mandatory: name, position, elements, category,
-    % mandatory: labelParameter: labelContent@labelStyle
-    % mandatory: rangeParameter: rangeLowContent@rangeHighContent@rangeStyle
-    % mandatory: textContent@textStyle
-    % optional:  fitstyle
-
-    \renewcommand\position{#2}
-    \bitsetSetBin{elements}{#3}
     \bitsetIsEmpty{elements}{\node[] at (\position) (#1) {}; }{
-        \bitsetQuery{elements}{\textIndex}
-            {
-                \setsepchar{@}
-                \readlist*\textParameter{#7@@}
-                \itemtomacro\textParameter[1]\textContent
-                \itemtomacro\textParameter[2]\textStyle
-                \itemtomacro\textParameter[3]\textLetterspace
-                \textField{#1_text}{\position}{left}{#4}
-                        {\textContent}{\textStyle}
-                        [\textLetterspace]
-                \renewcommand\position{#1_text.west}
-            }
-            { \node[] at (\position) (#1_text) {}; }
-        \bitsetQuery{elements}{\checkboxIndex}
-            {
-                \tikzset{#1_checkbox/.style = {checkBox=#4, xshift=-3}}
-                \ifthenelse{\boolean{#1}}
-                    {\tikzset{#1_checkbox/.append style = {filled=#4}}}
-                    {}
-                \node[#1_checkbox] at (\position) (#1_checkbox) {};
-                \renewcommand\position{#1_checkbox.west}
-            }
-            { \node[] at (\position) (#1_checkbox) {}; }
-        \bitsetQuery{elements}{\labelIndex}
-            {
-                \setsepchar{@}
-    	        \readlist*\labelParameter{#5@@}
-                \itemtomacro\labelParameter[1]\labelContent
-                \itemtomacro\labelParameter[2]\labelStyle
-                \itemtomacro\labelParameter[3]\labelLetterspace
-                \textField{#1_label}{\position}{left}{#4Label}
-                            {\labelContent}{ label, \labelStyle}
-                            [\labelLetterspace]
-                \renewcommand\position{#1_label.west}
-            }
-            { \node[] at (\position) (#1_label) {}; }
-        \IfNoValueOrEmptyTF{#8}
+        \IfStrEqCase{\direction}{
+            {right}
+                {
+                    \renewcommand\rosewind{east}
+                    \bitsetQuery{elements}{\labelIndex}
+                        {
+                            \textField{#1_label}{\position}{\direction}{#5Label}
+                                    {\labelContent}{ label, \labelStyle}
+                                    [\labelLetterspace]
+                            \renewcommand\position{#1_label.\rosewind}
+                        }
+                        { \node[] at (\position) (#1_label) {}; }
+                    \bitsetQuery{elements}{\checkboxIndex}
+                        {
+                            \node[#1_checkbox] at (\position) (#1_checkbox) {};
+                            \renewcommand\position{#1_checkbox.\rosewind}
+                        }
+                        { \node[] at (\position) (#1_checkbox) {}; }
+                    \bitsetQuery{elements}{\rangeIndex}
+                        {
+                        }
+                        { \node[] at (\position) (#1_range) {}; }
+                    \bitsetQuery{elements}{\textIndex}
+                        {
+                            \textField{#1_text}{\position}{\direction}{#5}
+                                    {\textContent}{\textStyle}
+                                    [\textLetterspace]
+                            \renewcommand\position{#1_text.\rosewind}
+                        }
+                        { \node[] at (\position) (#1_text) {}; }
+                }
+            {left}
+                {
+                    \renewcommand\rosewind{west}
+                    \bitsetQuery{elements}{\textIndex}
+                        {
+                            \textField{#1_text}{\position}{\direction}{#5}
+                                    {\textContent}{\textStyle}
+                                    [\textLetterspace]
+                            \renewcommand\position{#1_text.\rosewind}
+                        }
+                        { \node[] at (\position) (#1_text) {}; }
+                    \bitsetQuery{elements}{\rangeIndex}
+                        {
+                        }
+                        { \node[] at (\position) (#1_range) {}; }
+                    \bitsetQuery{elements}{\checkboxIndex}
+                        {
+                            \node[#1_checkbox] at (\position) (#1_checkbox) {};
+                            \renewcommand\position{#1_checkbox.\rosewind}
+                        }
+                        { \node[] at (\position) (#1_checkbox) {}; }
+                    \bitsetQuery{elements}{\labelIndex}
+                        {
+                            \textField{#1_label}{\position}{\direction}{#5Label}
+                                    {\labelContent}{ label, \labelStyle}
+                                    [\labelLetterspace]
+                            \renewcommand\position{#1_label.\rosewind}
+                        }
+                        { \node[] at (\position) (#1_label) {}; }
+                }
+        }[{Error}]
+        \IfNoValueOrEmptyTF{#9}
             {}
             {
                 \setsepchar{,}
-                \readlist*\styles{#8,}
+                \readlist*\styles{#9,}
                 \foreachitem\style\in\styles{
                     \tikzset{#1/.append style/.expanded={\style}}
                 }
@@ -451,7 +451,7 @@
     italicsRelsize/.style={font=\itshape\relsize{#1}},
     label/.style={font=\relsize{-1}},
     italicsLabel/.style={font=\itshape\relsize{-1}},
-    innerSepHalfCm/.style={inner sep=0.5cm},
+    innerSep1c1d/.style={inner sep=0.5cm},
         t/.style={text depth=.1\baselineskip,
                   text height=.5\baselineskip},
         header/.style={right, rectangle, rotate=90, white, inner sep=3pt},
@@ -515,11 +515,11 @@
     }
 
 % Names:
-    \ltrblock{names}{101,212}{1001}{regularNoGuideline}
+    \block{names}{101,212}{right}{1001}{regularNoGuideline}
          {Names:@big,bold}
          {}
          {\names @big,bold}
-    \rtlblock{playernumber}{203, 212}{0001}{regularNoGuideline}
+    \block{playernumber}{203, 212}{left}{0001}{regularNoGuideline}
          {}{}
          {\playernumber @big,bold}
 
@@ -529,115 +529,116 @@
         {\setboolean{footh}{false}}
         {\setboolean{footh}{true}}
 
-    \ltrblock{genapproachlabel}{104, 205.5}{1000}{regular}
+    \block{genapproachlabel}{104, 205.5}{right}{1000}{regular}
         {General Approach@bold}
         {}{}
-    \rtlblock{genapproach}{203, 205.5}{0001}{regular}
+    \block{genapproach}{203, 205.5}{left}{0001}{regular}
         {}{}
         {\generalapproach @text width=440, centered, bold}
-    \ltrblock{mhb}{104, 201}{1000}{regular}
+    \block{mhb}{104, 201}{right}{1000}{regular}
         {Min Expected HCP when Balanced:@italicsLabel}
         {}{}
-    \ltrblock{mhbo}{mhb.east}{1001}{regular}
+    \block{mhbo}{mhb.east}{right}{1001}{regular}
         {Opening}
         {}
         {\minHCPopen @text width=190}
-    \rtlblock{mhbr}{203, 201}{1001}{regular}
+    \block{mhbr}{203, 201}{left}{1001}{regular}
         {Responding}
         {}
         {\minHCPresp @text width=70, centered}
 
-    \ltrblock{fohdr}{104,197}{1000}{regular}
+    \block{fohdr}{104,197}{right}{1000}{regular}
         {Forcing Opening:}
         {}{}
-    \ltrblock{fo1c}{fohdr.east}{1100}{alert}
+    \block{fo1c}{fohdr.east}{right}{1100}{alert}
         {1\bc}
         {}{}
-    \ltrblock{fo2c}{fo1c.east}{1100}{regular}
+    \block{fo2c}{fo1c.east}{right}{1100}{regular}
         {2\bc}
         {}{}
-    \ltrblock{footh}{fo2c.east}{1101}{alert}
+    \block{footh}{fo2c.east}{right}{1101}{alert}
         {Other}
         {}
         {\foothertext @text width=150}
-    \rtlblock{1ntv}{201, 197}{1100}{regular}
+    \block{1ntv}{201, 197}{left}{1100}{regular}
         {Variable}
         {}{}
-    \rtlblock{1ntw}{1ntv.west}{1100}{regular}
+    \block{1ntw}{1ntv.west}{left}{1100}{regular}
         {Weak}
         {}{}
-    \rtlblock{1nts}{1ntw.west}{1100}{regular}
+    \block{1nts}{1ntw.west}{left}{1100}{regular}
         {Strong}
         {}{}
-    \rtlblock{1nthead}{1nts.west}{1000}{regular}
+    \block{1nthead}{1nts.west}{left}{1000}{regular}
         {1NT Opening:}
         {}{}
 
-    \ltrblock{btmrp}{104,193}{1000}{regular}
+    \block{btmrp}{104,193}{right}{1000}{regular}
         {Bids That May\\Require Preparation: @text width=110}
         {}{}
-    \rtlblock{btmrp1}{203, 193}{0001}{regular}
+    \block{btmrp1}{203, 193}{left}{0001}{regular}
         {}{}
         {\bidspreptop @text width=465, bold}
-    \rtlblock{btmrp2}{203, 189}{0001}{regularNoGuideline}
+    \block{btmrp2}{203, 189}{left}{0001}{regularNoGuideline}
         {}{}
         {\bidsprepbottom @text width=465, bold}
 
 % 1C opening
 
-    \ltrblock{1chdr}{104,183.5}{0001}{regularNoGuideline}
+    \block{1chdr}{104,183.5}{right}{0001}{regularNoGuideline}
         {}{}
         {1\bc @bidHeader}
-    \ltrblock{1cmin}{111,184.8}{1000}{regularNoGuideline}
+    \block{1cmin}{111,184.8}{right}{1000}{regularNoGuideline}
         {Min Length:}
         {}{}
-    \ltrblock{club5}{1cmin.east}{1100}{regular}
+    \block{club5}{1cmin.east}{right}{1100}{regular}
         {5}
         {}{}
-    \ltrblock{club4}{club5.east}{1100}{regular}
+    \block{club4}{club5.east}{right}{1100}{regular}
         {4}
         {}{}
-    \ltrblock{club3}{club4.east}{1100}{regular}
+    \block{club3}{club4.east}{right}{1100}{regular}
         {3}
         {}{}
-    \ltrblock{cl2nf}{club3.east}{1100}{announce}
+    \block{cl2nf}{club3.east}{right}{1100}{announce}
         {2}
         {}{}
-    \ltrblock{c4432}{cl2nf.east}{1100}{announce}
+    \block{c4432}{cl2nf.east}{right}{1100}{announce}
         {4432 only}
         {}{}
     \node [t, right, announceTextField] at (c4432.west) {(};
     \node [t, right, announceTextField, xshift=-4.2mm] at (c4432.east) {)};
-    \ltrblock{cl1nf}{c4432.east}{1100}{announce}
+    \block{cl1nf}{c4432.east}{right}{1100}{announce}
         {NF 1}
         {}{}
-    \ltrblock{cl0nf}{cl1nf.east}{1100}{announce}
+    \block{cl0nf}{cl1nf.east}{right}{1100}{announce}
         {NF 0}
         {}{}
-    \ltrblock{clcon}{cl0nf.east}{1100}{alert}
+    \block{clcon}{cl0nf.east}{right}{1100}{alert}
         {Art F}
         {}{}
 
-    \rtlblock{cldesc}{203, 181}{0001}{regular}
+    \block{cldesc}{203, 181}{left}{0001}{regular}
         {}{}
         {\cldescribe @text width=465}
-    \ltrblock{clubresp}{114.5, 177}{1001}{regular}
+    \block{clubresp}{114.5, 177}{right}{1001}{regular}
         {Resp:}
         {}
         {\clresponses @text width=330}
-    \ltrblock{ctxfr}{clubresp.east}{1100}{announce}
+    \block{ctxfr}{clubresp.east}{right}{1100}{announce}
         {Transfer Responses}
         {}{}
-
-    \ltrblock{c1respdi}{104, 173}{1001}{regular}
+    \block{c1respdi}{104, 173}{right}{1001}{regular}
         {1\,\rd\,}
         {}
         {\clrespdi @text width=144}
-        [ innerSepHalfCm ]
+        [ innerSep1c1d ]
 %    \node [t, right] at (104, 173) (clrespdi) {\tRegtext{1\,\rd\,}};
 %    \node [t, right] at (clrespdi.east) {\regtext{\clrespdi}};
 %    \guideline{110}{128}{171.5}
-    \ltrcheckbox{bypas}{Bypass 5+\rd}{130, 173}{black}{};
+    \block{bypas}{c1respdi.east}{right}{1100}{regular}
+        {Bypass 5+\rd\,}
+        {}{}
     \node [t, right] at (104, 169.5) {\tRegtext{1\,NT\,}};
     \node [t, right] at (117, 169.5) (clresponent) {\tRegtext{ to }};
     \node [t, xshift=-2mm] at (clresponent.west) {\regtext{\minonenlowtext}};
@@ -676,24 +677,24 @@
 
 % 1D opening
 
-    \ltrblock{1dhdr}{104,160.5}{0001}{regularNoGuideline}
+    \block{1dhdr}{104,160.5}{right}{0001}{regularNoGuideline}
         {}{}{1\rd @bidHeader}
     \node [t, right] at (111,161.8) (1dmin) {\tRegtext{Min Length:}};
-    \ltrcheckbox{diam5}{5}{1dmin.east}{black}{};
-    \ltrcheckbox{diam4}{4}{diam5.east}{black}{};
-    \ltrcheckbox{diam3}{3}{diam4.east}{black}{};
-    \ltrcheckbox{dubal}{Unbal}{diam3.east}{black}{};
-    \ltrcheckbox{di2nf}{NF 2}{dubal.east}{blue}{};
-    \ltrcheckbox{di1nf}{NF 1}{di2nf.east}{blue}{};
-    \ltrcheckbox{di0nf}{NF 0}{di1nf.east}{blue}{};
-    \ltrcheckbox{dicon}{Art F}{di0nf.east}{red}{};
+    \labeledCheckbox{diam5}{5}{1dmin.east}{black}{};
+    \labeledCheckbox{diam4}{4}{diam5.east}{black}{};
+    \labeledCheckbox{diam3}{3}{diam4.east}{black}{};
+    \labeledCheckbox{dubal}{Unbal}{diam3.east}{black}{};
+    \labeledCheckbox{di2nf}{NF 2}{dubal.east}{blue}{};
+    \labeledCheckbox{di1nf}{NF 1}{di2nf.east}{blue}{};
+    \labeledCheckbox{di0nf}{NF 0}{di1nf.east}{blue}{};
+    \labeledCheckbox{dicon}{Art F}{di0nf.east}{red}{};
 
     \node [t, right] at (119.5, 158.5) {\regtext{\didescribe}};
     \guideline{120}{202}{157}
     \node [t, right] at (119.5, 155) (diamresp) {\regtext{\diresponses}};
     \node [t, left] at (diamresp.west) {\tRegtext{Resp: }};
     \guideline{120}{178}{153.5}
-    \ltrcheckbox{dascl}{Same as over 1\bc}{177, 155}{black}{};
+    \labeledCheckbox{dascl}{Same as over 1\bc}{177, 155}{black}{};
 
     \node [t, right] at (104, 146.5) {\tRegtext{1\,NT\,}};
     \node [t, right] at (117, 146.5) (diam1nt){\tRegtext{ to }};
@@ -732,19 +733,19 @@
     \checkbox{dioci} at (dioci.east) {};
 
 % Major Openings
-    \ltrblock{1mhdr}{104,137.5}{0001}{regularNoGuideline}
+    \block{1mhdr}{104,137.5}{right}{0001}{regularNoGuideline}
         {}{}{1\rh/\bs @bidHeader}
     \node [t, right] at (107, 133) (1maj12) {\tRegtext{1\textsuperscript{st}/2\textsuperscript{nd} Length:}};
-    \ltrcheckbox{h12l4}{4}{1maj12.east}{black}{};
-    \ltrcheckbox{h12l5}{5}{h12l4.east}{black}{};
+    \labeledCheckbox{h12l4}{4}{1maj12.east}{black}{};
+    \labeledCheckbox{h12l5}{5}{h12l4.east}{black}{};
     \node [t, right] at (107, 130) (1maj34) {\tRegtext{3\textsuperscript{rd}/4\textsuperscript{th} Length:}};
-    \ltrcheckbox{h34l4}{4}{1maj34.east}{black}{};
-    \ltrcheckbox{h34l5}{5}{h34l4.east}{black}{};
+    \labeledCheckbox{h34l4}{4}{1maj34.east}{black}{};
+    \labeledCheckbox{h34l5}{5}{h34l4.east}{black}{};
 
     \node [t, right] at (107, 127) (1m1ntf) {\tBluereg{1\,NT:}};
-    \ltrcheckbox{ntfor}{F}{1m1ntf.east}{blue}{};
-    \ltrcheckbox{ntsem}{Semi-F}{ntfor.east}{blue}{};
-    \ltrcheckbox{ntbps}{Bypass\,\bs}{ntsem.east}{blue}{};
+    \labeledCheckbox{ntfor}{F}{1m1ntf.east}{blue}{};
+    \labeledCheckbox{ntsem}{Semi-F}{ntfor.east}{blue}{};
+    \labeledCheckbox{ntbps}{Bypass\,\bs}{ntsem.east}{blue}{};
 
     \node [t, right] at (104, 121) (majother){\tRedreg{Other:\ }\redreg{\majothertexttop}};
     \rguideline{113}{147}{119.5}
@@ -752,16 +753,16 @@
     \rguideline{105}{202}{115.5}
 
     \node [t, right] at (149, 138.3) (1majartra) {\tRedreg{Art Raises:}};
-    \ltrcheckbox{ra2nt}{2NT}{1majartra.east}{red}{};
-    \ltrcheckbox{ra3nt}{3NT}{ra2nt.east}{red}{};
-    \ltrcheckbox{raspl}{Splinter}{ra3nt.east}{red}{};
+    \labeledCheckbox{ra2nt}{2NT}{1majartra.east}{red}{};
+    \labeledCheckbox{ra3nt}{3NT}{ra2nt.east}{red}{};
+    \labeledCheckbox{raspl}{Splinter}{ra3nt.east}{red}{};
 
     \rguideline{158}{202}{132.5}
 
     \node [t, right] at (149, 130) (drury2c) {\tRedreg{Drury:}};
-    \ltrcheckbox{dru2c}{2\bc}{drury2c.east}{red}{};
-    \ltrcheckbox{dru2d}{2\rd}{dru2c.east}{red}{};
-    \ltrcheckbox{drcmp}{In Comp.}{dru2d.east}{red}{};
+    \labeledCheckbox{dru2c}{2\bc}{drury2c.east}{red}{};
+    \labeledCheckbox{dru2d}{2\rd}{dru2c.east}{red}{};
+    \labeledCheckbox{drcmp}{In Comp.}{dru2d.east}{red}{};
 
     \rguideline{187}{202}{128.5}
 
@@ -796,7 +797,7 @@
         {\setboolean{2noth}{false}}
         {\setboolean{2noth}{true}}
 
-    \ltrblock{1nhdr}{104,110}{0001}{regularNoGuideline}
+    \block{1nhdr}{104,110}{right}{0001}{regularNoGuideline}
         {}{}{1NT@bidHeader, text=blue}
     \node [t, right] at (117, 111.3) (1ntfirstrange) {\tBluereg{to}};
     \node [t] at (114, 111.3) {\bluebold{\ntlowtext}};
@@ -819,56 +820,57 @@
         \bguideline{156}{160.5}{109.8}
         \node [t] at (165.5, 111.3) {\bluebold{\altnthightext}};
         \bguideline{163.5}{168}{109.8}
-        \rtlcheckbox{ntasr}{Same Response?}{184.5, 111.3}{black}{};
+%        \rtlcheckbox{ntasr}{Same Response?}{184.5, 111.3}{black}{};
+        \labeledCheckbox{ntasr}{Same Response?}{184.5, 111.3}{black}{}<left>;
         \node [t, right, xshift=-0.5mm] at (ntasr.east) {\regtext{\altntresponse}};
         \guideline{186}{202}{109.8}
     }
 
 % 1NT box, left column
-    \ltrcheckbox{nt5cm}{5-Card Major}{104, 107}{black}{};
+    \labeledCheckbox{nt5cm}{5-Card Major}{104, 107}{black}{};
     \node [t, right] at (115, 107) (syson) {\tRegtext{System on vs:}};
     \node [t] at (133, 107) {\regtext{\sysontext}};
     \guideline{126}{140}{105.5}
 
     \node [t, right] at (105, 103) (1nt2c) {\tRegtext{2\,\c:}};
-    \ltrcheckbox{staym}{Stayman}{1nt2c.east}{black}{};
-    \ltrcheckbox{puppe}{Puppet}{staym.east}{black}{};
-    \ltrcheckbox{2coth}{Other}{puppe.east}{red}{};
+    \labeledCheckbox{staym}{Stayman}{1nt2c.east}{black}{};
+    \labeledCheckbox{puppe}{Puppet}{staym.east}{black}{};
+    \labeledCheckbox{2coth}{Other}{puppe.east}{red}{};
     \rguideline{130}{150}{101.5}
 
     \node [t, right] at (105, 99) (1nt2d) {\tRegtext{2\,\rd:}};
-    \ltrcheckbox{nat2d}{Nat}{1nt2d.east}{black}{};
-    \ltrcheckbox{jac2d}{Trf}{nat2d.east}{blue}{};
-    \ltrcheckbox{2doth}{Other}{jac2d.east}{red}{};
+    \labeledCheckbox{nat2d}{Nat}{1nt2d.east}{black}{};
+    \labeledCheckbox{jac2d}{Trf}{nat2d.east}{blue}{};
+    \labeledCheckbox{2doth}{Other}{jac2d.east}{red}{};
     \node [t, right] at (2doth.east) (1nt2dothtext) {\redreg{\ntditext}};
     \rguideline{123}{150}{97.5}
 
     \node [t, right] at (105, 95) (1nt2h) {\tRegtext{2\,\rh:}};
-    \ltrcheckbox{nat2h}{Nat}{1nt2h.east}{black}{};
-    \ltrcheckbox{jac2h}{Trf}{nat2h.east}{blue}{};
-    \ltrcheckbox{2hoth}{Other}{jac2h.east}{red}{};
+    \labeledCheckbox{nat2h}{Nat}{1nt2h.east}{black}{};
+    \labeledCheckbox{jac2h}{Trf}{nat2h.east}{blue}{};
+    \labeledCheckbox{2hoth}{Other}{jac2h.east}{red}{};
     \node [t, right] at (2hoth.east) (1nt2hothtext) {\redreg{\nthetext}};
     \rguideline{123}{150}{93.5}
 
     \node [t, right] at (105, 91) (1nt2s) {\tRegtext{2\,\bs:}};
-    \ltrcheckbox{nat2s}{Nat}{1nt2s.east}{black}{};
-    \ltrcheckbox{trf2s}{Trf}{nat2s.east}{blue}{};
-    \ltrcheckbox{2soth}{Other}{trf2s.east}{red}{};
+    \labeledCheckbox{nat2s}{Nat}{1nt2s.east}{black}{};
+    \labeledCheckbox{trf2s}{Trf}{nat2s.east}{blue}{};
+    \labeledCheckbox{2soth}{Other}{trf2s.east}{red}{};
     \node [t, right] at (2soth.east) (1nt2sothtext) {\redreg{\ntsptext}};
     \rguideline{123}{150}{89.5}
 
     \node [t, right] at (104, 87) (1nt2nt) {\tRegtext{2\,NT:}};
-    \ltrcheckbox{nat2n}{Nat}{1nt2nt.east}{black}{};
-    \ltrcheckbox{trf2n}{Trf}{nat2n.east}{blue}{};
-    \ltrcheckbox{2noth}{Other}{trf2n.east}{red}{};
+    \labeledCheckbox{nat2n}{Nat}{1nt2nt.east}{black}{};
+    \labeledCheckbox{trf2n}{Trf}{nat2n.east}{blue}{};
+    \labeledCheckbox{2noth}{Other}{trf2n.east}{red}{};
     \node [t, right] at (2noth.east) (1nt2nothtext) {\redreg{\ntnttext}};
     \rguideline{123}{150}{85.5}
 
-    \ltrcheckbox{smole}{Smolen}{105,83}{red}{};
-    \node [t] at (smole.east) (1nttxf4l) {\tBluereg{Tfr:}};
-    \ltrcheckbox{tex4c}{4\,\bc}{1nttxf4l.east}{blue}{};
-    \ltrcheckbox{tex4d}{4\,\rd}{tex4c.east}{blue}{};
-    \ltrcheckbox{tex4h}{4\,\rh}{tex4d.east}{blue}{};
+    \labeledCheckbox{smole}{Smolen}{105,83}{red}{};
+    \node [t] at (115,83) (1nttxf4l) {\tBluereg{Tfr:}};
+    \labeledCheckbox{tex4c}{4\,\bc}{1nttxf4l.east}{blue}{};
+    \labeledCheckbox{tex4d}{4\,\rd}{tex4c.east}{blue}{};
+    \labeledCheckbox{tex4h}{4\,\rh}{tex4d.east}{blue}{};
 
     \node [t, right] at (105, 79) (ntnegx) {\tRegtext{Dbl: Neg\,}};
     \checkbox{ntneg} at (ntnegx.east) (ntnegbox) {};
@@ -898,7 +900,7 @@
     \rguideline{151}{202}{84.5}
 
 %2NT/3NT Openings
-    \ltrblock{2nhdr}{104,72.5}{0001}{regularNoGuideline}
+    \block{2nhdr}{104,72.5}{right}{0001}{regularNoGuideline}
         {}{}{2NT@bidHeader}
     \node [t, right] at (121, 73.3) {\tRegtext{to}};
     \node [t] at (118, 73.3) {\boldtext{\twonlowtext}};
@@ -922,7 +924,7 @@
     \node [t, right] at (neg2nbox.east) {\tRedreg{Other:\ }\redreg{\twonothertext}};
     \rguideline{152}{202}{67}
 
-    \ltrblock{3nhdr}{104,62}{0001}{regularNoGuideline}
+    \block{3nhdr}{104,62}{right}{0001}{regularNoGuideline}
         {}{}{3NT@bidHeader}
     \node [t, right] at (121, 62.8) {\tRegtext{to}};
     \node [t] at (118, 62.8) {\boldtext{\threenlowtext}};
@@ -935,7 +937,7 @@
     \rguideline{145}{202}{61.3}
 
 %2C Opening
-    \ltrblock{2chdr}{104,56}{0001}{regularNoGuideline}
+    \block{2chdr}{104,56}{right}{0001}{regularNoGuideline}
         {}{}{2\bc @bidHeader}
     \node [t] at (115, 57.5) {\boldtext{\twoclowtext}};
     \guideline{112.5}{118}{56}
@@ -944,10 +946,10 @@
     \guideline{122.5}{128}{56}
     \node [t, right] at (129, 57.5) {\regtext{\twocldescribe}};
     \guideline{130}{167}{56}
-    \ltrcheckbox{vs2cl}{Very Strong}{104, 50}{black}{};
-    \ltrcheckbox{st2cl}{Strong}{vs2cl.east}{black}{};
-    \ltrcheckbox{na2cl}{Nat}{st2cl.east}{red}{};
-    \ltrcheckbox{ot2cl}{Conv}{na2cl.east}{red}{};
+    \labeledCheckbox{vs2cl}{Very Strong}{104, 50}{black}{};
+    \labeledCheckbox{st2cl}{Strong}{vs2cl.east}{black}{};
+    \labeledCheckbox{na2cl}{Nat}{st2cl.east}{red}{};
+    \labeledCheckbox{ot2cl}{Conv}{na2cl.east}{red}{};
     \rguideline{134}{154}{48.5}
 
     \node [t, right] at (168, 57.5) (neg2d) {\tRegtext{2\,\rd\ Resp: Neg\,}};
@@ -964,7 +966,7 @@
     \rguideline{160}{202}{48.5}
 
 %2D Opening
-    \ltrblock{2dhdr}{104,44.5}{0001}{regularNoGuideline}
+    \block{2dhdr}{104,44.5}{right}{0001}{regularNoGuideline}
         {}{}{2\rd @bidHeader}
     \node [t] at (115, 45.5) {\boldtext{\twodlowtext}};
     \guideline{112.5}{118}{44}
@@ -981,15 +983,15 @@
     \rcheckbox{st2di} (st2dibox) at (st2di.east) {};
     \node [t, right] at (st2dibox.east) (co2di) {\tRedreg{Conv\,}};
     \rcheckbox{co2di} at (co2di.east) {};
-    \node [t, right] at (137, 40.5) {\tRegtext{Rebids over 2NT: }\regtext{\twodntresp}};
-    \guideline{158}{177}{39}
+    \node [t, right] at (127, 40.5) {\tRegtext{Rebids over 2NT: }\regtext{\twodntresp}};
+    \guideline{139}{177}{39}
     \node [t, right] at (177, 45.5) (dnsnf) {\tRedreg{New Suit NF\,}};
     \rcheckbox{dnsnf} at (dnsnf.east) {};
     \node [t, right] at (177, 40.5) {\tRedreg{Other: }\redreg{\twodresponse}};
     \rguideline{186}{202}{39}
 
 %2H Opening
-    \ltrblock{2hhdr}{104,34.5}{0001}{regularNoGuideline}
+    \block{2hhdr}{104,34.5}{right}{0001}{regularNoGuideline}
         {}{}{2\rh @bidHeader}
     \node [t] at (115, 35.5) {\boldtext{\twohlowtext}};
     \guideline{112.5}{118}{34}
@@ -1006,15 +1008,15 @@
     \rcheckbox{st2he} (st2hebox) at (st2he.east) {};
     \node [t, right, xshift=-0.5mm] at (st2hebox.east) (2s2he) {\tRedreg{2-Suits\,}};
     \rcheckbox{2s2he} at (2s2he.east) {};
-    \node [t, right] at (137, 30.5) {\tRegtext{Rebids over 2NT: }\regtext{\twohntresp}};
-    \guideline{158}{177}{29}
+    \node [t, right] at (127, 30.5) {\tRegtext{Rebids over 2NT: }\regtext{\twohntresp}};
+    \guideline{139}{177}{29}
     \node [t, right] at (177, 35.5) (hnsnf) {\tRedreg{New Suit NF\,}};
     \rcheckbox{hnsnf} at (hnsnf.east) {};
     \node [t, right] at (177, 30.5) {\tRedreg{Other: }\redreg{\twohresponse}};
     \rguideline{186}{202}{29}
 
 %2S Opening
-    \ltrblock{2shdr}{104,24.5}{0001}{regularNoGuideline}
+    \block{2shdr}{104,24.5}{right}{0001}{regularNoGuideline}
         {}{}{2\bs @bidHeader}
     \node [t] at (115, 25.5) {\boldtext{\twoslowtext}};
     \guideline{112.5}{118}{24}
@@ -1031,8 +1033,8 @@
     \rcheckbox{st2sp} (st2spbox) at (st2sp.east) {};
     \node [t, right, xshift=-0.5mm] at (st2spbox.east) (2s2sp) {\tRedreg{2-Suits\,}};
     \rcheckbox{2s2sp} at (2s2sp.east) {};
-    \node [t, right] at (137, 20.5) {\tRegtext{Rebids over 2NT: }\regtext{\twosntresp}};
-    \guideline{158}{178}{19}
+    \node [t, right] at (127, 20.5) {\tRegtext{Rebids over 2NT: }\regtext{\twosntresp}};
+    \guideline{139}{177}{19}
     \node [t, right] at (177, 25.5) (snsnf) {\tRedreg{New Suit NF\,}};
     \rcheckbox{snsnf} at (snsnf.east) {};
     \node [t, right] at (177, 20.5) {\tRedreg{Other: }\redreg{\twosresponse}};
