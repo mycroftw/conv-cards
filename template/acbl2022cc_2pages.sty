@@ -1100,24 +1100,28 @@
         {Other:}{}{\twosresponse}
 
 %Bottom of card
-    \node [t, right] at (104, 15) (jshiftresp) {\tRegtext{Jump Shift Resp:\ }\regtext{\jshifttext}};
-    \guideline{125}{202}{13.5}
-    \node [t, right] at (104, 11) (vsstrongart) {\tRedreg{Vs (Very)Str Open:\ }\redreg{\vsstrongart}};
-    \rguideline{126}{142}{9.5}
-    \node [t, left] at (150, 11) (nmf1w) {\tRedreg{NMF\,}};
-    \rcheckbox{nmf1w} (nmf1wbox) at (nmf1w.east) {};
-    \node [t, right, xshift=-0.5mm] at (nmf1wbox.east) (nmf2w) {\tRedreg{2Way NMF\,}};
-    \rcheckbox{nmf2w} (nmf2wbox) at (nmf2w.east) {};
-    \node [t, right, xshift=-0.5mm] at (nmf2wbox.east) (xyz2w) {\tRedreg{XYZ\,}};
-    \rcheckbox{xyz2w} (xyz2wbox) at (xyz2w.east) {};
-    \node [t, right, xshift=-0.5mm] at (xyz2wbox.east) (fsfrd) {\tRedreg{4\textsuperscript{th}SF 1Rnd\,}};
-    \rcheckbox{fsfrd} (fsfrdbox) at (fsfrd.east) {};
-    \node [t, right, xshift=-0.5mm] at (fsfrdbox.east) (fsfgf) {\tRedreg{GF\,}};
-    \rcheckbox{fsfgf} at (fsfgf.east) {};
-    \node [t, right] at (104, 7) {\regtext{\footnotestop}};
-    \guideline{105}{202}{5.5}
-    \node [t, right] at (104, 3) {\regtext{\footnotesbottom}};
-    \guideline{105}{202}{1.5}
+    \block{jshiftresp}{104,15}{right}{1001}{regular}
+        {Jump Shift Resp:}{}{\jshifttext}
+    \block{vsstrongart}{104,11}{right}{1001}{alert}
+        {Vs (Very)Str Open:}{}{\vsstrongart}
+    \block{fsfgf}{201,11}{left}{1100}{alert}
+        {GF}{}{}
+    \block{fsfrd}{fsfgf.west}{left}{1100}{alert}
+        {1Round}{}{}
+    \block{fsflabel}{fsfrd.west}{left}{1001}{alert}
+        {4\textsuperscript{th}SF:@xshift=16}{}{}
+    \block{nmf2w}{fsflabel.west}{left}{1100}{alert}
+        {2Way}{}{}
+    \block{nmf1w}{nmf2w.west}{left}{1100}{alert}
+        {1Way}{}{}
+    \block{nmflabel}{nmf1w.west}{left}{1001}{alert}
+        {NMF:@xshift=16}{}{}
+
+    \block{footnotestop}{104,7}{right}{0001}{regular}
+        {}{}{\footnotestop}
+    \block{footnotesbottom}{104,3}{right}{0001}{regularNoGuide}
+        {}{}{\footnotesbottom}
+
     \node [right] at (105,-2) {\scriptsize \textsf{\currfilename: \printfdate{ISOext}. Front of Convention Card}};
     \node [right] at (160,-2) {\scriptsize \textsf{Made with \LaTeX\ and acbl2022cc (github.com/mycroftw/conv-cards)}};
     \end{tikzpicture}%
