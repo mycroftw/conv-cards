@@ -97,6 +97,9 @@
 %define boolean to use in functions
 \newboolean{guide} %Label, NoGuide will turn it off
 
+%define \concat
+\newcommand\concat[2]{#1#2}
+
 %define commands to use/redefine in functions
 \newcommand\name{}
 \newcommand\position{}
@@ -215,6 +218,7 @@
 
     \setboolean{guide}{true}
     \StrSubstitute{#4}{NoGuide}{}[\category]
+    \StrSubstitute{\category}{Label}{}[\category]
     \IfSubStringInString{Label}{#4}
         {\setboolean{guide}{false}}
         {}
@@ -286,6 +290,8 @@
 
     \renewcommand\position{#2}
     \bitsetSetBin{elements}{#4}
+    \StrSubstitute{#5}{NoGuide}{}[\category]
+    \StrSubstitute{\category}{Label}{}[\category]
     \bitsetIsEmpty{elements}{}{
         \bitsetQuery{elements}{\labelIndex}
             {
@@ -298,9 +304,9 @@
             {}
         \bitsetQuery{elements}{\checkboxIndex}
             {
-                \tikzset{#1_checkbox/.style = {checkBox=#5}}
+                \tikzset{#1_checkbox/.style = {checkBox=\category}}
                 \ifthenelse{\boolean{#1}}
-                    {\tikzset{#1_checkbox/.append style = {filled=#5}}}
+                    {\tikzset{#1_checkbox/.append style = {filled=\category}}}
                     {}
             }
             {}
@@ -333,7 +339,7 @@
                     \renewcommand\rosewind{east}
                     \bitsetQuery{elements}{\labelIndex}
                         {
-                            \textField{#1_label}{\position}{#3}{#5Label}
+                            \textField{#1_label}{\position}{#3}{\concat{\category}{Label}}
                                     {\labelContent}{ label, \labelStyle}
                                     [\labelLetterspace]
                             \renewcommand\position{#1_label.\rosewind}
@@ -348,15 +354,16 @@
                         { \node[] at (\position) (#1_checkbox) {}; }
                     \bitsetQuery{elements}{\rangeIndex}
                         {
-                            \textField{#1_range_lo}{\position}{#3}{#5}
+                            \textField{#1_range_lo}{\position}{#3}{\category}
                                     {\rangeContentLow}{\rangeContentStyle}
                                     [\rangeLetterspace]
                             \renewcommand\position{#1_range_lo.\rosewind}
-                            \textField{#1_range_connector}{\position}{#3}{#5NoGuide}
+                            \textField{#1_range_connector}{\position}{#3}{\concat{\category}{NoGuide}}
+%                            \textField{#1_range_connector}{\position}{#3}{\category}
                                     {\rangeConnector}{\rangeConnectorStyle}
                                     [\rangeLetterspace]
                             \renewcommand\position{#1_range_connector.\rosewind}
-                            \textField{#1_range_hi}{\position}{#3}{#5}
+                            \textField{#1_range_hi}{\position}{#3}{\category}
                                     {\rangeContentHigh}{\rangeContentStyle}
                                     [\rangeLetterspace]
                             \renewcommand\position{#1_range_hi.\rosewind}
@@ -365,7 +372,7 @@
                         { \node[] at (\position) (#1_range) {}; }
                     \bitsetQuery{elements}{\textIndex}
                         {
-                            \textField{#1_text}{\position}{#3}{#5}
+                            \textField{#1_text}{\position}{#3}{\category}
                                     {\textContent}{\textStyle}
                                     [\textLetterspace]
                             \renewcommand\position{#1_text.\rosewind}
@@ -377,7 +384,7 @@
                     \renewcommand\rosewind{west}
                     \bitsetQuery{elements}{\textIndex}
                         {
-                            \textField{#1_text}{\position}{#3}{#5}
+                            \textField{#1_text}{\position}{#3}{\category}
                                     {\textContent}{\textStyle}
                                     [\textLetterspace]
                             \renewcommand\position{#1_text.\rosewind}
@@ -385,15 +392,16 @@
                         { \node[] at (\position) (#1_text) {}; }
                     \bitsetQuery{elements}{\rangeIndex}
                         {
-                            \textField{#1_range_hi}{\position}{#3}{#5}
+                            \textField{#1_range_hi}{\position}{#3}{\category}
                                     {\rangeContentHigh}{\rangeContentStyle}
                                     [\rangeLetterspace]
                             \renewcommand\position{#1_range_hi.\rosewind}
-                            \textField{#1_range_connector}{\position}{#3}{#5NoGuide}
+%                            \textField{#1_range_connector}{\position}{#3}{\concat{\category}{NoGuide}}
+                            \textField{#1_range_connector}{\position}{#3}{\category}
                                     {\rangeConnector}{\rangeConnectorStyle}
                                     [\rangeLetterspace]
                             \renewcommand\position{#1_range_connector.\rosewind}
-                            \textField{#1_range_lo}{\position}{#3}{#5}
+                            \textField{#1_range_lo}{\position}{#3}{\category}
                                     {\rangeContentLow}{\rangeContentStyle}
                                     [\rangeLetterspace]
                             \renewcommand\position{#1_range_lo.\rosewind}
@@ -409,7 +417,7 @@
                         { \node[] at (\position) (#1_checkbox) {}; }
                     \bitsetQuery{elements}{\labelIndex}
                         {
-                            \textField{#1_label}{\position}{#3}{#5Label}
+                            \textField{#1_label}{\position}{#3}{\concat{\category}{Label}}
                                     {\labelContent}{ label, \labelStyle}
                                     [\labelLetterspace]
                             \renewcommand\position{#1_label.\rosewind}
