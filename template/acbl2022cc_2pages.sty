@@ -298,7 +298,7 @@
             {}
         \bitsetQuery{elements}{\checkboxIndex}
             {
-                \tikzset{#1_checkbox/.style = {checkBox=#5, xshift=3}}
+                \tikzset{#1_checkbox/.style = {checkBox=#5}}
                 \ifthenelse{\boolean{#1}}
                     {\tikzset{#1_checkbox/.append style = {filled=#5}}}
                     {}
@@ -341,6 +341,7 @@
                         { \node[] at (\position) (#1_label) {}; }
                     \bitsetQuery{elements}{\checkboxIndex}
                         {
+                            \tikzset{#1_checkbox/.append style = {xshift=2}}
                             \node[#1_checkbox] at (\position) (#1_checkbox) {};
                             \renewcommand\position{#1_checkbox.\rosewind}
                         }
@@ -401,6 +402,7 @@
                         { \node[] at (\position) (#1_range) {}; }
                     \bitsetQuery{elements}{\checkboxIndex}
                         {
+                            \tikzset{#1_checkbox/.append style = {xshift=-2}}
                             \node[#1_checkbox] at (\position) (#1_checkbox) {};
                             \renewcommand\position{#1_checkbox.\rosewind}
                         }
