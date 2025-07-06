@@ -94,7 +94,7 @@
 \colorlet{announceLabel}{blue}
 \colorlet{regularLabel}{black}
 
-%define boolean to use in functions
+%define booleans to use in functions
 \newboolean{guide} %Label, NoGuide will turn it off
 
 %define \concat
@@ -113,6 +113,7 @@
 \newcommand\textIndex{0}
 \newcommand\letterspace{}
 \newcommand\fitstyle{}
+\newcommand\marknoguide{}
 
 %Style definitions
 \tikzset{
@@ -292,6 +293,9 @@
     \bitsetSetBin{elements}{#4}
     \StrSubstitute{#5}{NoGuide}{}[\category]
     \StrSubstitute{\category}{Label}{}[\category]
+    \IfSubStringInString{NoGuide}{#5}
+        {\renewcommand\marknoguide{NoGuide}}
+        {\renewcommand\marknoguide{}}
     \bitsetIsEmpty{elements}{}{
         \bitsetQuery{elements}{\labelIndex}
             {
@@ -354,16 +358,18 @@
                         { \node[] at (\position) (#1_checkbox) {}; }
                     \bitsetQuery{elements}{\rangeIndex}
                         {
-                            \textField{#1_range_lo}{\position}{#3}{\category}
+                            \textField{#1_range_lo}{\position}{#3}
+                                    {\concat{\category}{\marknoguide}}
                                     {\rangeContentLow}{\rangeContentStyle}
                                     [\rangeLetterspace]
                             \renewcommand\position{#1_range_lo.\rosewind}
-                            \textField{#1_range_connector}{\position}{#3}{\concat{\category}{NoGuide}}
-%                            \textField{#1_range_connector}{\position}{#3}{\category}
+                            \textField{#1_range_connector}{\position}{#3}
+                                    {\concat{\category}{NoGuide}}
                                     {\rangeConnector}{\rangeConnectorStyle}
                                     [\rangeLetterspace]
                             \renewcommand\position{#1_range_connector.\rosewind}
-                            \textField{#1_range_hi}{\position}{#3}{\category}
+                            \textField{#1_range_hi}{\position}{#3}
+                                    {\concat{\category}{\marknoguide}}
                                     {\rangeContentHigh}{\rangeContentStyle}
                                     [\rangeLetterspace]
                             \renewcommand\position{#1_range_hi.\rosewind}
@@ -372,7 +378,8 @@
                         { \node[] at (\position) (#1_range) {}; }
                     \bitsetQuery{elements}{\textIndex}
                         {
-                            \textField{#1_text}{\position}{#3}{\category}
+                            \textField{#1_text}{\position}{#3}
+                                    {\concat{\category}{\marknoguide}}
                                     {\textContent}{\textStyle}
                                     [\textLetterspace]
                             \renewcommand\position{#1_text.\rosewind}
@@ -384,7 +391,8 @@
                     \renewcommand\rosewind{west}
                     \bitsetQuery{elements}{\textIndex}
                         {
-                            \textField{#1_text}{\position}{#3}{\category}
+                            \textField{#1_text}{\position}{#3}
+                                    {\concat{\category}{\marknoguide}}
                                     {\textContent}{\textStyle}
                                     [\textLetterspace]
                             \renewcommand\position{#1_text.\rosewind}
@@ -392,16 +400,18 @@
                         { \node[] at (\position) (#1_text) {}; }
                     \bitsetQuery{elements}{\rangeIndex}
                         {
-                            \textField{#1_range_hi}{\position}{#3}{\category}
+                            \textField{#1_range_hi}{\position}{#3}
+                                    {\concat{\category}{\marknoguide}}
                                     {\rangeContentHigh}{\rangeContentStyle}
                                     [\rangeLetterspace]
                             \renewcommand\position{#1_range_hi.\rosewind}
-%                            \textField{#1_range_connector}{\position}{#3}{\concat{\category}{NoGuide}}
-                            \textField{#1_range_connector}{\position}{#3}{\category}
+                            \textField{#1_range_connector}{\position}{#3}
+                                    {\concat{\category}{NoGuide}}
                                     {\rangeConnector}{\rangeConnectorStyle}
                                     [\rangeLetterspace]
                             \renewcommand\position{#1_range_connector.\rosewind}
-                            \textField{#1_range_lo}{\position}{#3}{\category}
+                            \textField{#1_range_lo}{\position}{#3}
+                                    {\concat{\category}{\marknoguide}}
                                     {\rangeContentLow}{\rangeContentStyle}
                                     [\rangeLetterspace]
                             \renewcommand\position{#1_range_lo.\rosewind}
