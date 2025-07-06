@@ -885,7 +885,7 @@
     }{ % unless there is a second range.
             \block{1ntrange1conds}{1ntrange1.east}{right}{0001}{announce}
                 {}{}{If:\,\ntseatvul}
-            \block{1nhd2}{152.5,110.5}{right}{1010}{announce}
+            \block{1nhd2}{155,110.5}{right}{1010}{announce}
                 {1NT@bidHeader}{\altntlowtext@\altnthightext@to}{}
             \block{ntasr}{1nhd2.east}{right}{1101}{regular}
                 {Same resp?}{}{\altntresponse}
@@ -908,47 +908,39 @@
 
     \block{1nt2d}{104,99}{right}{1000}{regular}
         {2\rd:}{}{}
-    \block{2doth}{123,99}{left}{1100}{alert}
-        {Other}{}{}
-    \block{jac2d}{2doth.west}{left}{1100}{announce}
-        {Tfr}{}{}
-    \block{nat2d}{jac2d.west}{left}{1100}{regular}
+    \block{nat2d}{108,99}{right}{1100}{regular}
         {Nat}{}{}
-    \block{2dothtext}{2doth.east}{right}{0001}{alert}
-        {}{}{\ntditext}
+    \block{jac2d}{nat2d.east}{right}{1100}{announce}
+        {Tfr@xshift=-10}{}{}
+    \block{2doth}{jac2d.east}{right}{1101}{alert}
+        {Other@xshift=-10}{}{\ntditext@xshift=5, text width=160}
 
     \block{1nt2h}{104,95}{right}{1000}{regular}
         {2\rh:}{}{}
-    \block{2hoth}{123,95}{left}{1100}{alert}
-        {Other}{}{}
-    \block{jac2h}{2hoth.west}{left}{1100}{announce}
-        {Tfr}{}{}
-    \block{nat2h}{jac2h.west}{left}{1100}{regular}
+    \block{nat2h}{108,95}{right}{1100}{regular}
         {Nat}{}{}
-    \block{2hothtext}{2hoth.east}{right}{0001}{alert}
-        {}{}{\nthetext}
+    \block{jac2h}{nat2h.east}{right}{1100}{announce}
+        {Tfr@xshift=-10}{}{}
+    \block{2hoth}{jac2h.east}{right}{1101}{alert}
+        {Other@xshift=-10}{}{\nthetext@xshift=5, text width=160}
 
     \block{1nt2s}{104,91}{right}{1000}{regular}
         {2\bs:}{}{}
-    \block{2soth}{123,91}{left}{1100}{alert}
-        {Other}{}{}
-    \block{trf2s}{2soth.west}{left}{1100}{announce}
-        {Tfr}{}{}
-    \block{nat2s}{trf2s.west}{left}{1100}{regular}
+    \block{nat2s}{108,91}{right}{1100}{regular}
         {Nat}{}{}
-    \block{2sothtext}{2soth.east}{right}{0001}{alert}
-        {}{}{\ntsptext@text width=140}
+    \block{trf2s}{nat2s.east}{right}{1100}{announce}
+        {Tfr@xshift=-10}{}{}
+    \block{2soth}{trf2s.east}{right}{1101}{alert}
+        {Other@xshift=-10}{}{\ntsptext@xshift=5, text width=160}
 
     \block{1nt2n}{104,87}{right}{1000}{regular}
         {2NT:}{}{}
-    \block{2noth}{123,87}{left}{1100}{alert}
-        {Other}{}{}
-    \block{jac2n}{2noth.west}{left}{1100}{announce}
-        {Tfr}{}{}
-    \block{nat2n}{jac2n.west}{left}{1100}{regular}
+    \block{nat2n}{108,87}{right}{1100}{regular}
         {Nat}{}{}
-    \block{2nothtext}{2noth.east}{right}{0001}{alert}
-        {}{}{\ntnttext@text width=140}
+    \block{trf2n}{nat2n.east}{right}{1100}{announce}
+        {Tfr@xshift=-10}{}{}
+    \block{2soth}{trf2n.east}{right}{1101}{alert}
+        {Other@xshift=-10}{}{\ntnttext@xshift=5, text width=160}
 
     \block{smole}{104,83}{right}{1100}{alert}
         {Smolen}{}{}
@@ -974,19 +966,19 @@
 
 %1NT box, right column
 
-    \block{1nt3c}{152.5,106}{right}{1001}{alert}
+    \block{1nt3c}{155,106}{right}{1001}{alert}
         {3\,\bc@regularTextField}{}{\ntcjumptext}
-    \block{1nt3d}{152.5,102}{right}{1001}{alert}
+    \block{1nt3d}{155,102}{right}{1001}{alert}
         {3\,\rd@regularTextField}{}{\ntdjumptext}
-    \block{1nt3h}{152.5,98}{right}{1001}{alert}
+    \block{1nt3h}{155,98}{right}{1001}{alert}
         {3\,\rh@regularTextField}{}{\nthjumptext}
-    \block{1nt3s}{152.5,94}{right}{1001}{alert}
+    \block{1nt3s}{155,94}{right}{1001}{alert}
         {3\,\bs@regularTextField}{}{\ntsjumptext}
-    \block{1ntother}{152.5,90}{right}{1000}{alert}
+    \block{1ntother}{155,90}{right}{1000}{alert}
         {Other:}{}{}
     \block{1ntothertop}{1ntother.east}{right}{0001}{alert}
         {}{}{\ntothertexttop}
-    \block{1ntotherbottom}{152.5,86}{right}{0001}{alert}
+    \block{1ntotherbottom}{155,86}{right}{0001}{alert}
         {}{}{\ntothertextbottom}
 
 %2NT/3NT Openings
