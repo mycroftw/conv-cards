@@ -114,6 +114,7 @@
 \newcommand\letterspace{}
 \newcommand\fitstyle{}
 \newcommand\marknoguide{}
+\newcommand\checkboxContent{}
 
 %Style definitions
 \tikzset{
@@ -130,7 +131,8 @@
     alertTextField/.style={text=red},
     announceTextField/.style={text=blue},
     regularTextField/.style={text=black},
-    checkBox/.style={draw=#1},
+    checkBox/.style={rectangle,draw=#1,inner sep=3pt},
+    textBox/.style={rectangle,draw=#1,inner sep=1pt,font=\relsize{-3}},
     filled/.style={fill=#1},
     textField/.style={text=#1},
     centered/.style={align=center},
@@ -297,6 +299,11 @@
         {\renewcommand\marknoguide{NoGuide}}
         {\renewcommand\marknoguide{}}
     \bitsetIsEmpty{elements}{}{
+            \setsepchar{@}
+            \readlist*\textParameter{#8@@}
+            \itemtomacro\textParameter[1]\textContent
+            \itemtomacro\textParameter[2]\textStyle
+            \itemtomacro\textParameter[3]\textLetterspace
         \bitsetQuery{elements}{\labelIndex}
             {
                 \setsepchar{@}
@@ -308,10 +315,28 @@
             {}
         \bitsetQuery{elements}{\checkboxIndex}
             {
-                \tikzset{#1_checkbox/.style = {checkBox=\category}}
-                \ifthenelse{\boolean{#1}}
-                    {\tikzset{#1_checkbox/.append style = {filled=\category}}}
-                    {}
+                \bitsetQuery{elements}{\textIndex}
+                    {
+                        \tikzset{#1_checkbox/.style = {checkBox=\category}}
+                        \ifthenelse{\boolean{#1}}
+                            {\tikzset{#1_checkbox/.append style = {filled=\category}}}
+                            {}
+                        \renewcommand\checkboxContent{}
+                    }
+                    {
+                        \ifthenelse{\equal{\textContent}{}}
+                            {
+                                \tikzset{#1_checkbox/.style = {checkBox=\category}}
+                                \ifthenelse{\boolean{#1}}
+                                    {\tikzset{#1_checkbox/.append style = {filled=\category}}}
+                                    {}
+                                \renewcommand\checkboxContent{}
+                            }
+                            {
+                                \tikzset{#1_checkbox/.style = {textBox=\category}}
+                                \renewcommand\checkboxContent{\textContent}
+                            }
+                    }
             }
             {}
         \bitsetQuery{elements}{\rangeIndex}
@@ -324,15 +349,6 @@
                 \itemtomacro\rangeParameter[4]\rangeContentStyle
                 \itemtomacro\rangeParameter[5]\rangeConnectorStyle
                 \itemtomacro\rangeParameter[6]\rangeLetterspace
-            }
-            {}
-        \bitsetQuery{elements}{\textIndex}
-            {
-                \setsepchar{@}
-                \readlist*\textParameter{#8@@}
-                \itemtomacro\textParameter[1]\textContent
-                \itemtomacro\textParameter[2]\textStyle
-                \itemtomacro\textParameter[3]\textLetterspace
             }
             {}
     }
@@ -352,7 +368,7 @@
                     \bitsetQuery{elements}{\checkboxIndex}
                         {
                             \tikzset{#1_checkbox/.append style = {xshift=2}}
-                            \node[#1_checkbox] at (\position) (#1_checkbox) {};
+                            \node[#1_checkbox] at (\position) (#1_checkbox) {\checkboxContent};
                             \renewcommand\position{#1_checkbox.\rosewind}
                         }
                         { \node[] at (\position) (#1_checkbox) {}; }
@@ -421,7 +437,7 @@
                     \bitsetQuery{elements}{\checkboxIndex}
                         {
                             \tikzset{#1_checkbox/.append style = {xshift=-2}}
-                            \node[#1_checkbox] at (\position) (#1_checkbox) {};
+                            \node[#1_checkbox] at (\position) (#1_checkbox) {\checkboxContent};
                             \renewcommand\position{#1_checkbox.\rosewind}
                         }
                         { \node[] at (\position) (#1_checkbox) {}; }
@@ -1105,9 +1121,9 @@
     \block{vsstrongart}{104,11}{right}{1001}{alert}
         {Vs (Very)Str Open:}{}{\vsstrongart}
     \block{fsfgf}{201,11}{left}{1100}{alert}
-        {GF}{}{}
+        {GF@}{}{\fsfgf}
     \block{fsfrd}{fsfgf.west}{left}{1100}{alert}
-        {1Round}{}{}
+        {1Round}{}{\fsfrd}
     \block{fsflabel}{fsfrd.west}{left}{1001}{alert}
         {4\textsuperscript{th}SF:@xshift=16}{}{}
     \block{nmf2w}{fsflabel.west}{left}{1100}{alert}
