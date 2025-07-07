@@ -374,20 +374,39 @@
                         { \node[] at (\position) (#1_checkbox) {}; }
                     \bitsetQuery{elements}{\rangeIndex}
                         {
-                            \textField{#1_range_lo}{\position}{#3}
-                                    {\concat{\category}{\marknoguide}}
-                                    {\rangeContentLow}{\rangeContentStyle}
-                                    [\rangeLetterspace]
+                            \ifthenelse{\equal{\rangeContentLow}{}}
+                                {
+                                    \node[] at (\position) (#1_range_lo) {};
+                                }
+                                {
+                                    \textField{#1_range_lo}{\position}{#3}
+                                            {\concat{\category}{\marknoguide}}
+                                            {\rangeContentLow}{\rangeContentStyle}
+                                            [\rangeLetterspace]
+                                }
                             \renewcommand\position{#1_range_lo.\rosewind}
-                            \textField{#1_range_connector}{\position}{#3}
-                                    {\concat{\category}{NoGuide}}
-                                    {\rangeConnector}{\rangeConnectorStyle}
-                                    [\rangeLetterspace]
+                            \ifthenelse{\equal{\rangeContentLow}{}
+                                            \OR \equal{\rangeContentHigh}{}}
+                                {
+                                    \node[] at (\position) (#1_range_connector) {};
+                                }
+                                {
+                                    \textField{#1_range_connector}{\position}{#3}
+                                            {\concat{\category}{NoGuide}}
+                                            {\rangeConnector}{\rangeConnectorStyle}
+                                            [\rangeLetterspace]
+                                }
                             \renewcommand\position{#1_range_connector.\rosewind}
-                            \textField{#1_range_hi}{\position}{#3}
-                                    {\concat{\category}{\marknoguide}}
-                                    {\rangeContentHigh}{\rangeContentStyle}
-                                    [\rangeLetterspace]
+                            \ifthenelse{\equal{\rangeContentHigh}{}}
+                                {
+                                    \node[] at (\position) (#1_range_hi) {};
+                                }
+                                {
+                                    \textField{#1_range_hi}{\position}{#3}
+                                            {\concat{\category}{\marknoguide}}
+                                            {\rangeContentHigh}{\rangeContentStyle}
+                                            [\rangeLetterspace]
+                                }
                             \renewcommand\position{#1_range_hi.\rosewind}
                             \node[block, fit=(#1_range_lo)(#1_range_connector)(#1_range_hi)] (#1_range) {};
                         }
@@ -416,20 +435,39 @@
                         { \node[] at (\position) (#1_text) {}; }
                     \bitsetQuery{elements}{\rangeIndex}
                         {
-                            \textField{#1_range_hi}{\position}{#3}
-                                    {\concat{\category}{\marknoguide}}
-                                    {\rangeContentHigh}{\rangeContentStyle}
-                                    [\rangeLetterspace]
+                            \ifthenelse{\equal{\rangeContentHigh}{}}
+                                {
+                                    \node[] at (\position) (#1_range_hi) {};
+                                }
+                                {
+                                    \textField{#1_range_hi}{\position}{#3}
+                                            {\concat{\category}{\marknoguide}}
+                                            {\rangeContentHigh}{\rangeContentStyle}
+                                            [\rangeLetterspace]
+                                }
                             \renewcommand\position{#1_range_hi.\rosewind}
-                            \textField{#1_range_connector}{\position}{#3}
-                                    {\concat{\category}{NoGuide}}
-                                    {\rangeConnector}{\rangeConnectorStyle}
-                                    [\rangeLetterspace]
+                            \ifthenelse{\equal{\rangeContentLow}{}
+                                            \OR \equal{\rangeContentHigh}{}}
+                                {
+                                    \node[] at (\position) (#1_range_connector) {};
+                                }
+                                {
+                                    \textField{#1_range_connector}{\position}{#3}
+                                            {\concat{\category}{NoGuide}}
+                                            {\rangeConnector}{\rangeConnectorStyle}
+                                            [\rangeLetterspace]
+                                }
                             \renewcommand\position{#1_range_connector.\rosewind}
-                            \textField{#1_range_lo}{\position}{#3}
-                                    {\concat{\category}{\marknoguide}}
-                                    {\rangeContentLow}{\rangeContentStyle}
-                                    [\rangeLetterspace]
+                            \ifthenelse{\equal{\rangeContentLow}{}}
+                                {
+                                    \node[] at (\position) (#1_range_lo) {};
+                                }
+                                {
+                                    \textField{#1_range_lo}{\position}{#3}
+                                            {\concat{\category}{\marknoguide}}
+                                            {\rangeContentLow}{\rangeContentStyle}
+                                            [\rangeLetterspace]
+                                }
                             \renewcommand\position{#1_range_lo.\rosewind}
                             \node[block, fit=(#1_range_lo)(#1_range_connector)(#1_range_hi)] (#1_range) {};
                         }
