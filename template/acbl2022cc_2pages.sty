@@ -113,7 +113,7 @@
 \newcommand\textIndex{0}
 \newcommand\letterspace{}
 \newcommand\fitstyle{}
-\newcommand\marknoguide{}
+\newcommand\categoryAttr{}
 \newcommand\checkboxContent{}
 
 %Style definitions
@@ -296,8 +296,11 @@
     \StrSubstitute{#5}{NoGuide}{}[\category]
     \StrSubstitute{\category}{Label}{}[\category]
     \IfSubStringInString{NoGuide}{#5}
-        {\renewcommand\marknoguide{NoGuide}}
-        {\renewcommand\marknoguide{}}
+        {\renewcommand\categoryAttr{NoGuide}}
+        {\renewcommand\categoryAttr{}}
+    \IfSubStringInString{Label}{#5}
+        {\renewcommand\categoryAttr{Label}}
+        {\renewcommand\categoryAttr{}}
     \bitsetIsEmpty{elements}{}{
             \setsepchar{@}
             \readlist*\textParameter{#8@@}
@@ -380,7 +383,7 @@
                                 }
                                 {
                                     \textField{#1_range_lo}{\position}{#3}
-                                            {\concat{\category}{\marknoguide}}
+                                            {\concat{\category}{\categoryAttr}}
                                             {\rangeContentLow}{\rangeContentStyle}
                                             [\rangeLetterspace]
                                 }
@@ -403,7 +406,7 @@
                                 }
                                 {
                                     \textField{#1_range_hi}{\position}{#3}
-                                            {\concat{\category}{\marknoguide}}
+                                            {\concat{\category}{\categoryAttr}}
                                             {\rangeContentHigh}{\rangeContentStyle}
                                             [\rangeLetterspace]
                                 }
@@ -414,7 +417,7 @@
                     \bitsetQuery{elements}{\textIndex}
                         {
                             \textField{#1_text}{\position}{#3}
-                                    {\concat{\category}{\marknoguide}}
+                                    {\concat{\category}{\categoryAttr}}
                                     {\textContent}{\textStyle}
                                     [\textLetterspace]
                             \renewcommand\position{#1_text.\rosewind}
@@ -427,7 +430,7 @@
                     \bitsetQuery{elements}{\textIndex}
                         {
                             \textField{#1_text}{\position}{#3}
-                                    {\concat{\category}{\marknoguide}}
+                                    {\concat{\category}{\categoryAttr}}
                                     {\textContent}{\textStyle}
                                     [\textLetterspace]
                             \renewcommand\position{#1_text.\rosewind}
@@ -441,7 +444,7 @@
                                 }
                                 {
                                     \textField{#1_range_hi}{\position}{#3}
-                                            {\concat{\category}{\marknoguide}}
+                                            {\concat{\category}{\categoryAttr}}
                                             {\rangeContentHigh}{\rangeContentStyle}
                                             [\rangeLetterspace]
                                 }
@@ -464,7 +467,7 @@
                                 }
                                 {
                                     \textField{#1_range_lo}{\position}{#3}
-                                            {\concat{\category}{\marknoguide}}
+                                            {\concat{\category}{\categoryAttr}}
                                             {\rangeContentLow}{\rangeContentStyle}
                                             [\rangeLetterspace]
                                 }
