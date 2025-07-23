@@ -302,14 +302,14 @@
         {\renewcommand\categoryAttr{}}
     \bitsetIsEmpty{elements}{}{
             \setsepchar{@}
-            \readlist*\textParameter{#8@@}
+            \readlist\textParameter{#8@@}
             \itemtomacro\textParameter[1]\textContent
             \itemtomacro\textParameter[2]\textStyle
             \itemtomacro\textParameter[3]\textLetterspace
         \bitsetQuery{elements}{\labelIndex}
             {
                 \setsepchar{@}
-                \readlist*\labelParameter{#6@@}
+                \readlist\labelParameter{#6@@}
                 \itemtomacro\labelParameter[1]\labelContent
                 \itemtomacro\labelParameter[2]\labelStyle
                 \itemtomacro\labelParameter[3]\labelLetterspace
@@ -344,7 +344,7 @@
         \bitsetQuery{elements}{\rangeIndex}
             {
                 \setsepchar{@}
-                \readlist*\rangeParameter{#7@@@@@}
+                \readlist\rangeParameter{#7@@@@@}
                 \itemtomacro\rangeParameter[1]\rangeContentLow
                 \itemtomacro\rangeParameter[2]\rangeContentHigh
                 \itemtomacro\rangeParameter[3]\rangeConnector
