@@ -218,6 +218,7 @@
     % All *Style parameters are comma-separated lists
 
     \setboolean{guide}{true}
+    \renewcommand\content{#5}
     \StrSubstitute{#4}{NoGuide}{}[\category]
     \StrSubstitute{\category}{Label}{}[\category]
     \IfSubStringInString{Label}{#4}
@@ -237,7 +238,7 @@
             \ifthenelse{\equal{#7}{}}
                 {\renewcommand\letterspace{-50}}
                 {\renewcommand\letterspace{#7}}
-            \node[#1] at (#2) (#1) {\textls[\letterspace]{#5}};
+            \node[#1] at (#2) (#1) {\textls[\letterspace]{\content}};
         }
         {
             \ifthenelse{\equal{#7}{}}
@@ -245,7 +246,7 @@
                 {\renewcommand\letterspace{#7}}
             \node[#1] at (#2) (#1)
                 {
-                    \adjustbox{max width=\linewidth}{\usertext #5}
+                    \adjustbox{max width=\linewidth}{\content}
                 };
         }
     \ifthenelse{\boolean{visib} \AND \boolean{guide}}
