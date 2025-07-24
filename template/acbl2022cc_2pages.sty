@@ -1529,28 +1529,32 @@
             {Other:}{}{\opothertext}
 
 %Slam conventions
-    \node [t, right] at (3, 101) (gednt) {\tRegtext{4\,\c\ Gerber: Directly over NT\,}};
-    \checkbox{gednt} at (gednt.east) (gedntbox) {};
-    \node [t, right] at (gedntbox.east) (geseq) {\tRegtext{Over NT Seq\,}};
-    \checkbox{geseq} at (geseq.east) (geseqbox) {};
-    \node [t, right] at (geseqbox.east) (genon) {\tRegtext{Non-NT Seq\,}};
-    \checkbox{genon} at (genon.east) (genonbox) {};
-    \node [t, right] at (genonbox.east) {\regtext{\gerbertext}};
-	\guideline{77}{100}{99.5}
-    \node [t, right] at (3, 97) (black) {\tRegtext{4NT: 0123\,}};
-    \checkbox{black} at (black.east) (blackbox) {};
-    \node [t, right] at (blackbox.east) (b0314) {\tRegtext{0314\,}};
-    \checkbox{b0314} at (b0314.east) (b0314box) {};
-    \node [t, right] at (b0314box.east) (b1430) {\tRegtext{1430\,}};
-    \checkbox{b1430} at (b1430.east) (b1430box) {};
-    \node [t, right] at (b1430box.east) {\regtext{\blackwoodtext}};
-	\guideline{40}{100}{95.5}
-    \node [t, right] at (3, 93) {\tRegtext{Control Bids: }\regtext{\controlcuetext}};
-	\guideline{19}{100}{91.5}
-    \node [t, right] at (3, 89) {\tRegtext{Vs. Interference: }\regtext{\slaminterftext}};
-	\guideline{23}{100}{87.5}
-    \node [t, right] at (3, 85) {\tRegtext{Other: }\regtext{\slamothertext}};
-	\guideline{12}{100}{83.5}
+    \block{gedntlabel}{3,101}{right}{1000}{regular}
+        {4\bc\ Gerber:}{}{}
+    \block{gednt}{gedntlabel.east}{right}{1100}{regular}
+        {Directly over NT}{}{}
+    \block{geseq}{gednt.east}{right}{1100}{regular}
+        {Over NT Seq}{}{}
+    \block{genon}{geseq.east}{right}{1100}{regular}
+        {Non-NT Seq}{}{}
+    \block{getext}{genon.east}{right}{0001}{regular}
+        {}{}{\gerbertext}
+    \block{bwlabel}{3,97}{right}{1000}{regular}
+        {4NT:}{}{}
+    \block{black}{bwlabel.east}{right}{1100}{regular}
+        {Blackwood}{}{}
+    \block{b0314}{black.east}{right}{1100}{regular}
+        {RKC 0314}{}{}
+    \block{b1430}{b0314.east}{right}{1100}{regular}
+        {RKC 1430}{}{}
+    \block{bwother}{b1430.east}{right}{0001}{regular}
+        {}{}{\blackwoodtext}
+    \block{controlbids}{3,93}{right}{1001}{regular}
+        {Control Bids}{}{\controlcuetext}
+    \block{slaminterference}{3,89}{right}{1001}{regular}
+        {Vs. Interference:}{}{\slaminterftext}
+    \block{slamother}{3,85}{right}{1001}{regular}
+        {Other:}{}{\slamothertext}
 
 %Carding
     \node [t] at (7, 80) {\tRegtext{Suits}};
