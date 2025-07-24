@@ -1397,34 +1397,45 @@
         {Other:}{}{\othernt}
 
 %Direct cuebid
-    \node [t, right] at (10, 152) {\tRegtext{Vs:}};
-    \node [t] at (21, 154) {\tRegtext{Art}};
-    \node [t] at (21, 150) {\tRegtext{\c\,\rd}};
-    \node [t] at (28, 154) {\tRegtext{Quasi}};
-    \node [t] at (28, 150) {\tRegtext{\c\,\rd}};
-    \node [t] at (35, 154) {\tRegtext{Nat}};
-    \node [t] at (35, 150) {\tRegtext{\c\,\rd}};
-    \node [t] at (45, 154) {\tRegtext{Nat}};
-    \node [t] at (45, 150) {\tRegtext{\rh\,\s}};
+    \block{cuebidlabel}{10,152}{right}{1000}{regular}
+        {Vs:}{}{}
+    \block{cuebidart}{20,154}{right}{1000}{regular}
+        {Art}{}{}
+    \block{cuebidartsuits}{20,150}{right}{1000}{regular}
+        {\bc\,\rd}{}{}
+    \block{cuebidquasi}{28,154}{right}{1000}{regular}
+        {Quasi}{}{}
+    \block{cuebidquasisuits}{28,150}{right}{1000}{regular}
+        {\bc\,\rd}{}{}
+    \block{cuebidnatmin}{36,154}{right}{1000}{regular}
+        {Nat}{}{}
+    \block{cuebidnatminsuits}{36,150}{right}{1000}{regular}
+        {\bc\,\rd}{}{}
+    \block{cuebidnatmaj}{44,154}{right}{1000}{regular}
+        {Nat}{}{}
+    \block{cuebidnatmajsuits}{44,150}{right}{1000}{regular}
+        {\rh\,\bs}{}{}
+    \block{cuebidmichaels}{3,145}{right}{1000}{regular}
+        {Michaels}{}{}
+    \block{cuebidnatural}{3,141}{right}{1000}{regular}
+        {Natural}{}{}
+    \block{cuebidother}{3,137}{right}{1000}{regular}
+        {Other}{}{}
+    \block{cuebiddesc}{3,131.5}{right}{1001}{alert}
+        {Describe:}{}{\cuebiddescribe}
 
-    \node [t, right] at (3, 145) {\tRegtext{Michaels}};
-    \node [t, right] at (3, 141) {\tRegtext{Natural}};
-    \node [t, right] at (3, 137) {\tRegtext{Other}};
-    \node [t, right] at (3, 131.5) {\tRedreg{Describe:\ }\redreg{\cuebiddescribe}};
-	\rguideline{15}{49}{130}
-
-    \checkbox{qamim} at (21, 145) {};
-    \checkbox{qamin} at (21, 141) {};
-    \checkbox{qamio} at (21, 137) {};
-    \checkbox{qqmim} at (28, 145) {};
-    \checkbox{qqmin} at (28, 141) {};
-    \checkbox{qqmio} at (28, 137) {};
-    \checkbox{qnmim} at (35, 145) {};
-    \rcheckbox{qnmin} at (35, 141) {};
-    \rcheckbox{qnmio} at (35, 137) {};
-    \checkbox{qnmam} at (45, 145) {};
-    \rcheckbox{qnman} at (45, 141) {};
-    \rcheckbox{qnmao} at (45, 137) {};
+    \block{qamim}{21,145}{right}{0100}{regular}{}{}{}
+    \block{qamin}{21,141}{right}{0100}{regular}{}{}{}
+    \block{qamin}{21,137}{right}{0100}{regular}{}{}{}
+    \block{qqmim}{30,145}{right}{0100}{regular}{}{}{}
+    \block{qqmin}{30,141}{right}{0100}{regular}{}{}{}
+    \block{qqmin}{30,137}{right}{0100}{regular}{}{}{}
+    \block{qnmim}{37,145}{right}{0100}{regular}{}{}{}
+    \block{qnmin}{37,141}{right}{0100}{alert}{}{}{}
+    \block{qnmin}{37,137}{right}{0100}{alert}{}{}{}
+    \block{qnmam}{46,145}{right}{0100}{regular}{}{}{}
+    \block{qnman}{46,141}{right}{0100}{alert}{}{}{}
+    \block{qnman}{46,137}{right}{0100}{alert}{}{}{}
 
 %Over Opp's takeout double:
     \node [t, right] at (53, 155) (nsf2l) {\tRegtext{New Suit F:\ \ 2 Lvl\,}};
