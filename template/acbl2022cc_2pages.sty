@@ -116,6 +116,7 @@
 \newcommand\letterspace{}
 \newcommand\categoryAttr{}
 \newcommand\checkboxContent{}
+\newcommand\vsntwidth{}
 
 %Style definitions
 \tikzset{
@@ -1337,63 +1338,63 @@
         {Other:}{}{\overcallothertext}
 
 %Defense vs. NT:
+    % define fields width for one or two sets of defenses
+    \ifthenelse{\equal{\secondcondition}{}}
+        { \renewcommand\vsntwidth{190} }
+        { \renewcommand\vsntwidth{90} }
+
     % first set
-    \node [t, right] at (53.5, 189) {\tBoldtext{Vs:}};
-    \node [t, right] at (53, 185) {\tRegtext{Dbl\ }};
-    \node [t, right] at (53, 181) {\tRegtext{2\,\c\ }};
-    \node [t, right] at (53, 177) {\tRegtext{2\,\rd\ }};
-    \node [t, right] at (53, 173) {\tRegtext{2\,\rh\ }};
-    \node [t, right] at (53, 169) {\tRegtext{2\,\s\ }};
-    \node [t, right] at (52.5, 165) {\tRegtext{2NT\ }};
-    \node [t] at (68, 189) {\boldtext{\firstcondition}};
-	\guideline{59}{76}{187.5}
-    \node [t, right] at (58, 185) {\regtext{\firstvsdbl}};
-	\guideline{59}{76}{183.5}
-    \node [t, right] at (58, 181) {\regtext{\firstvstwocl}};
-	\guideline{59}{76}{179.5}
-    \node [t, right] at (58, 177) {\regtext{\firstvstwodi}};
-	\guideline{59}{76}{175.5}
-    \node [t, right] at (58, 173) {\regtext{\firstvstwohe}};
-	\guideline{59}{76}{171.5}
-    \node [t, right] at (58, 169) {\regtext{\firstvstwosp}};
-	\guideline{59}{76}{167.5}
-    \node [t, right] at (58, 165) {\regtext{\firstvstwont}};
-	\guideline{59}{76}{163.5}
+    \block{vsnt}{53,189}{right}{1001}{regular}
+        {Vs:@bold,text width=20}{}
+        {\firstcondition@bold,text width=\vsntwidth}
+    \block{vsntdbl}{53,185}{right}{1001}{regular}
+        {Dbl@text width=20}{}
+        {\firstvsdbl@text width=\vsntwidth}
+    \block{vsnt2c}{53,181}{right}{1001}{regular}
+        {2\bc@text width=20}{}
+        {\firstvstwocl@text width=\vsntwidth}
+    \block{vsnt2d}{53,177}{right}{1001}{regular}
+        {2\rd@text width=20}{}
+        {\firstvstwodi@text width=\vsntwidth}
+    \block{vsnt2h}{53,173}{right}{1001}{regular}
+        {2\rh@text width=20}{}
+        {\firstvstwohe@text width=\vsntwidth}
+    \block{vsnt2s}{53,169}{right}{1001}{regular}
+        {2\bs@text width=20}{}
+        {\firstvstwosp@text width=\vsntwidth}
+    \block{vsnt2n}{53,165}{right}{1001}{regular}
+        {2NT@text width=20}{}
+        {\firstvstwont@text width=\vsntwidth}
 
-    % second set if exists, else remove headers and extend guidelines
-    \ifthenelse{\equal{\secondcondition}{}}{
-        \guideline{76}{100}{183.5}
-        \guideline{76}{100}{179.5}
-        \guideline{76}{100}{175.5}
-        \guideline{76}{100}{171.5}
-        \guideline{76}{100}{167.5}
-        \guideline{76}{100}{163.5}
-    }{
-        \node [t, right] at (76.5, 189) {\tBoldtext{Vs:}};
-        \node [t, right] at (76, 185) {\tRegtext{Dbl\ }};
-        \node [t, right] at (76, 181) {\tRegtext{2\,\c\ }};
-        \node [t, right] at (76, 177) {\tRegtext{2\,\rd\ }};
-        \node [t, right] at (76, 173) {\tRegtext{2\,\rh\ }};
-        \node [t, right] at (76, 169) {\tRegtext{2\,\s\ }};
-        \node [t, right] at (75.5, 165) {\tRegtext{2NT\ }};
-        \node [t] at (91, 189) {\boldtext{\secondcondition}};
-    	\guideline{83}{100}{187.5}
-        \node [t, right] at (82, 185) {\regtext{\secondvsdbl}};
-    	\guideline{83}{100}{183.5}
-        \node [t, right] at (82, 181) {\regtext{\secondvstwocl}};
-    	\guideline{83}{100}{179.5}
-        \node [t, right] at (82, 177) {\regtext{\secondvstwodi}};
-        \guideline{83}{100}{175.5}
-        \node [t, right] at (82, 173) {\regtext{\secondvstwohe}};
-        \guideline{83}{100}{171.5}
-        \node [t, right] at (82, 169) {\regtext{\secondvstwosp}};
-        \guideline{83}{100}{167.5}
-        \node [t, right] at (82, 165) {\regtext{\secondvstwont}};
-        \guideline{83}{100}{163.5}
-    }
+    % second set if exists
+    \ifthenelse{\equal{\secondcondition}{}}
+        {}
+        {
+            \block{vsntalt}{76,189}{right}{1001}{regular}
+                {Vs:@bold,text width=20}{}
+                {\secondcondition@bold,text width=\vsntwidth}
+            \block{vsntaltdbl}{76,185}{right}{1001}{regular}
+                {Dbl@text width=20}{}
+                {\secondvsdbl@text width=\vsntwidth}
+            \block{vsntalt2c}{76,181}{right}{1001}{regular}
+                {2\bc@text width=20}{}
+                {\secondvstwocl@text width=\vsntwidth}
+            \block{vsntalt2d}{76,177}{right}{1001}{regular}
+                {2\rd@text width=20}{}
+                {\secondvstwodi@text width=\vsntwidth}
+            \block{vsntalt2h}{76,173}{right}{1001}{regular}
+                {2\rh@text width=20}{}
+                {\secondvstwohe@text width=\vsntwidth}
+            \block{vsntalt2s}{76,169}{right}{1001}{regular}
+                {2\bs@text width=20}{}
+                {\secondvstwosp@text width=\vsntwidth}
+            \block{vsntalt2n}{76,165}{right}{1001}{regular}
+                {2NT@text width=20}{}
+                {\secondvstwont@text width=\vsntwidth}
+        }
 
-    \node [t, right] at (52.5, 160) (othernt) {\tRedreg{Other:\ }\redreg{\othernt}};
-	\rguideline{61}{100}{158.5}
+    \block{othernt}{53,160}{right}{1001}{alert}
+        {Other:}{}{\othernt}
 
 %Direct cuebid
     \node [t, right] at (10, 152) {\tRegtext{Vs:}};
