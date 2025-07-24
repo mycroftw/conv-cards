@@ -1287,52 +1287,54 @@
         {Other:}{}{\ntothertext}
 
 % Overcalls
-    \node [t, right] at (3, 190) {\tRegtext{1-Lvl}};
-    \node [t] at (13, 190) {\boldtext{\oclowtext}};
-    \guideline{10.5}{15.5}{188.5}
-    \node [t] at (17, 190) {\tRegtext{to}};
-    \node [t] at (22, 190) {\boldtext{\ochightext}};
-    \guideline{19}{25}{188.5}
-    \node [t, right] at (27, 190) (oc4cd) {\tRegtext{Often 4 Cards\,}};
-    \checkbox{oc4cd} at (oc4cd.east) {};
-    \node [t, right] at (3, 186) {\tRegtext{2-Lvl}};
-    \node [t] at (13, 186) {\boldtext{\twooclowtext}};
-    \guideline{10.5}{15.5}{184.5}
-    \node [t] at (17, 186) {\tRegtext{to}};
-    \node [t] at (22, 186) {\boldtext{\twoochightext}};
-    \guideline{19}{25}{184.5}
-    \node [t, right] at (3, 182) (jowea) {\tRegtext{Jump Overcalls: Wk\,}};
-    \checkbox{jowea} at (jowea.east) (joweabox) {};
-    \node [t, right] at (joweabox.east) (joint) {\tRedreg{Int\,}};
-    \rcheckbox{joint} at (joint.east) (jointbox) {};
-    \node [t, right] at (jointbox.east) (jostr) {\tRedreg{Str\,}};
-    \rcheckbox{jostr} at (jostr.east) {};
-    \node [t, right] at (3, 178) (convjoc) {\tRedreg{Conv\,}};
-    \rcheckbox{jocon} at (convjoc.east) (joconbox) {};
-    \node [t, right] at (joconbox.east) {\redreg{\jumpovercalltext}};
-    \rguideline{14}{49}{176.5}
+    \block{o1lvl}{3,190}{right}{1010}{regular}
+        {1-Lvl}{\oclowtext@\ochightext@@bold}{}
+    \block{oc4cd}{o1lvl.east}{right}{1100}{regular}
+        {Often 4 cards}{}{}
 
-    \node [t, right] at (3, 174.5) {\tRegtext{Responses}};
-    \node [t, right] at (3, 171) (nsf) {\tRegtext{New suit: F\,}};
-    \checkbox{nsfor} at (nsf.east) (nsfbox){};
-    \node [t, right, xshift=-0.5mm] at (nsfbox.east) (nsnfc) {\tRegtext{NFConst\,}};
-    \checkbox{nsnfc} at (nsnfc.east) (nsnfcbox) {};
-    \node [t, right] at (nsnfcbox.east) (nsnon) {\tRegtext{NF\,}};
-    \checkbox{nsnon} at (nsnon.east) (nsnonbox) {};
-    \node [t, right] at (nsnonbox.east) (nstrf) {\tBluereg{Trf\,}};
-    \bcheckbox{onstf} at (nstrf.east) {};
-    \node [t, right] at (3, 167) (jrwea) {\tRegtext{Jump raise: Wk\,}};
-    \checkbox{jrwea} at (jrwea.east) (jrweabox) {};
-    \node [t, right] at (jrweabox.east) (jrmix) {\tRegtext{Mixed\,}};
-    \checkbox{jrmix} at (jrmix.east) (jrmixbox) {};
-    \node [t, right] at (jrmixbox.east) (jrinv) {\tRegtext{Inv\,}};
-    \checkbox{jrinv} at (jrinv.east) {};
-    \node [t, right] at (3, 163) {\tRegtext{Cuebids:\ }\regtext{\overcallcuetext}};
-    \guideline{14.5}{34}{161.5}
-    \node [t, right] at (35, 162.8) (occus) {\tRegtext{Support\,}};
-    \checkbox{occus} at (occus.east) {};
-    \node [t, right] at (3, 159.5) {\tRedreg{Other:\ }\redreg{\overcallothertext}};
-    \rguideline{12.5}{49}{158}
+    \block{o2lvl}{3,186}{right}{1010}{regular}
+        {2-Lvl}{\twooclowtext@\twoochightext@@bold}{}
+
+    \block{jumpoclabel}{3,182}{right}{1000}{regular}
+        {Jump Overcalls:}{}{}
+    \block{jowea}{jumpoclabel.east}{right}{1100}{regular}
+        {Wk}{}{}
+    \block{joint}{jowea.east}{right}{1100}{alert}
+        {Int}{}{}
+    \block{jostr}{joint.east}{right}{1100}{alert}
+        {Str}{}{}
+    \block{jocon}{3,178}{right}{1101}{alert}
+        {Conv}{}{\jumpovercalltext}
+
+    \block{ocresplabel}{3,174.5}{right}{1000}{regular}
+        {Responses}{}{}
+
+    \block{ocnslabel}{3,171.25}{right}{1000}{regular}
+        {New Suit:}{}{}
+    \block{nsfor}{ocnslabel.east}{right}{1100}{regular}
+        {F}{}{}
+    \block{nsnfc}{nsfor.east}{right}{1100}{regular}
+        {NFConst}{}{}
+    \block{nsnon}{nsnfc.east}{right}{1100}{regular}
+        {NF}{}{}
+    \block{onstf}{nsnon.east}{right}{1100}{announce}
+        {Trf}{}{}
+
+    \block{ocjrlabel}{3,168}{right}{1000}{regular}
+        {Jump Raise:}{}{}
+    \block{jrwea}{ocjrlabel.east}{right}{1100}{regular}
+        {Wk}{}{}
+    \block{jrmix}{jrwea.east}{right}{1100}{regular}
+        {Mixed}{}{}
+    \block{jrinv}{jrmix.east}{right}{1100}{regular}
+        {Inv}{}{}
+
+    \block{occuebids}{3,163}{right}{1001}{regular}
+        {Cuebids:}{}{\overcallcuetext}
+    \block{occus}{occuebids.east}{right}{1100}{regular}
+        {Support}{}{}
+    \block{ocother}{3,159.5}{right}{1001}{alert}
+        {Other:}{}{\overcallothertext}
 
 %Defense vs. NT:
     % first set
