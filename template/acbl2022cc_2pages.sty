@@ -1233,34 +1233,31 @@
 }
 %Back of card: Left to right, top to bottom
 %Doubles
-    \node [t, right] at (3, 212) (negax) {\tRegtext{Negative\,}};
-    \checkbox{negax} at (negax.east) (negaxbox) {};
-    \node [t, right] at (negaxbox.east) (negaxthru) {\tRegtext{Thru}};
-    \node [t] at (30, 212) {\boldtext{\negaxthru}};
-    \guideline{24}{35}{210.5}
-    \node [t, right] at (36, 212) (penax) {\tRedreg{Penalty\,}};
-    \rcheckbox{penax} at (penax.east) {};
+    \block{negax}{3,212}{right}{1100}{regular}
+        {Negative@text width=42}{}{}
+    \block{negaxthru}{negax.east}{right}{1001}{regular}
+        {Thru}{}{\negaxthru}
+    \block{penax}{49,212}{left}{1100}{alert}
+        {Penalty}{}{}
 
-    \node [t, right] at (3, 208) (respx) {\tRegtext{Responsive\,}};
-    \checkbox{respx} at (respx.east) (respxbox) {};
-    \node [t, right] at (respxbox.east) {\tRegtext{Thru}};
-    \node [t] at (31, 208) {\boldtext{\respxthru}};
-    \guideline{27}{35}{206.5}
-    \node [t, right] at (34.5, 208) (maxix) {\tRegtext{Maximal\,}};
-    \checkbox{maxix} at (maxix.east) {};
+    \block{respx}{3,208}{right}{1100}{regular}
+        {Responsive@text width=42}{}{}
+    \block{respxthru}{respx.east}{right}{1001}{regular}
+        {Thru}{}{\respxthru}
+    \block{maxix}{49,208}{left}{1100}{regular}
+        {Maximal}{}{}
 
-    \node [t, right] at (3, 204) (suppx) {\tRegtext{Support\,}};
-    \checkbox{suppx} at (suppx.east) (suppxbox) {};
-    \node [t, right] at (suppxbox.east) {\tRegtext{Thru}};
-    \node [t] at (29, 204) {\boldtext{\suppxthru}};
-    \guideline{23}{35}{202.5}
-    \node [t, right] at (35, 204) (supxx) {\tRegtext{Rdbl\,}};
-    \checkbox{supxx} at (supxx.east) {};
+    \block{suppx}{3,204}{right}{1100}{regular}
+        {Support@text width=42}{}{}
+    \block{suppxthru}{suppx.east}{right}{1001}{regular}
+        {Thru}{}{\suppxthru}
+    \block{supxx}{49,204}{left}{1100}{regular}
+        {Rdbl}{}{}
 
-    \node [t, right] at (3, 200) (toxstyle) {\tRegtext{T/O Style:\ }\regtext{\toxstyletext}};
-    \guideline{15.5}{49}{198.5}
-    \node [t, right] at (3, 196) {\tRedreg{Other:\ }\redreg{\doubleothertext}};
-    \rguideline{12}{49}{194.5}
+    \block{toxstyle}{3,200}{right}{1001}{regular}
+        {T/O Style:}{}{\toxstyletext}
+    \block{doubleother}{3,196}{right}{1001}{alert}
+        {Other:}{}{\doubleothertext}
 
 %NT overcalls
     \node [t, right] at (53, 212) {\tRegtext{Direct 1NT}};
