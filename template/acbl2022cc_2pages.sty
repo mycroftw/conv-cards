@@ -1512,23 +1512,21 @@
         {Other:}{}{\fourlevelother}
 
 %Vs. Opening Preempts
-    \node [t, right] at (53, 127) {\tRegtext{2NT Overcall:\ }\regtext{\optwontoc}};
-	\guideline{70}{100}{125.5}
-    \node [t, right] at (53, 122.5) {\tRegtext{T/O Dbl Thru}};
-    \node [t] at (77, 122.5) {\boldtext{\opdtothru}};
-	\guideline{70}{84}{121}
-    \node [t, right] at (85, 122.5) (oppen) {\tRedreg{Penalty\,}};
-    \rcheckbox{oppen} at (oppen.east) {};
-    \node [t, right] at (53, 118) (opleb) {\tRedreg{2NT Lebensohl Resp\,}};
-    \rcheckbox{opleb} at (opleb.east) (oplebbox) {};
-    \node [t, right] at (oplebbox.east) {\redreg{\oplebtext}};
-	\rguideline{82}{100}{116.5}
-    \node [t, right] at (53, 113.5) (opcue) {\tRegtext{Cuebid:\ }\regtext{\opcuebid}};
-	\guideline{63}{100}{112}
-    \node [t, right] at (53, 109.5) (opjumpoc) {\tRegtext{Jump Overcalls:\ }\regtext{\opjumpoc}};
-	\guideline{72}{100}{108}
-    \node [t, right] at (53, 105.5) (opother) {\tRedreg{Other:\ }\redreg{\opothertext}};
-	\rguideline{62}{100}{104}
+    \block{optwontoc}{53,127}{right}{1001}{regular}
+            {2NT Overcall:}{}{\optwontoc}
+    \block{opdtothru}{53,122.5}{right}{1001}{regular}
+            {T/O Dbl Thru}{}{\opdtothru@bold}
+    \block{oppen}{100,122.5}{left}{1100}{alert}
+        {Penalty}{}{}
+
+    \block{opleb}{53,118}{right}{1101}{alert}
+            {2NT Lebensohl Resp}{}{\oplebtext@xshift=2}
+    \block{opcue}{53,113.5}{right}{1001}{regular}
+            {Cuebid:}{}{\opcuebid}
+    \block{opjumpoc}{53,109.5}{right}{1001}{regular}
+            {Jump Overcalls:}{}{\opjumpoc}
+    \block{opother}{53,105.5}{right}{1001}{alert}
+            {Other:}{}{\opothertext}
 
 %Slam conventions
     \node [t, right] at (3, 101) (gednt) {\tRegtext{4\,\c\ Gerber: Directly over NT\,}};
