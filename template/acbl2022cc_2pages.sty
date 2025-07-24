@@ -1495,21 +1495,21 @@
         {Other:}{}{\toothertext}
 
 %Preempts
-    \node [t, right] at (3, 126.5) (threeprestyle) {\tRegtext{3-Lvl Style (Seat/Vul):\ }\regtext{\threelevelstyletop}};
-	\guideline{27.5}{49}{125}
-    \node [t, right] at (3, 122.5) {\regtext{\threelevelstylebottom}};
-	\guideline{5}{49}{121}
-    \node [t, right] at (3, 118.5) (threeprerest) {\tRegtext{Resp:\ }\regtext{\threelevelresp}};
-	\guideline{11}{49}{117}
+    \block{threeprestyle}{3,126.5}{right}{1001}{regular}
+        {3-Lvl Style (Seat/Vul):}{}{\threelevelstyletop}
+    \block{threeprestylecont}{3,122.5}{right}{0001}{regular}
+        {}{}{\threelevelstylebottom}
+    \block{threepreresp}{3,118.5}{right}{1001}{regular}
+        {Resp:}{}{\threelevelresp@text width=225}
 
-    \node [t, right] at (3, 113.5) (fourprestyle) {\tRegtext{4-Lvl Style:\ }\regtext{\fourlevelstyle}};
-	\guideline{17}{49}{112}
-    \node [t, right] at (3, 109.5) (fourpreresp) {\tRegtext{Resp:\ }\regtext{\fourlevelresp}};
-	\guideline{11}{49}{108}
-    \node [t, right] at (3, 105.5) (namya) {\tBluereg{4\,\bc /4\,\rd\ Tfr\,}};
-    \bcheckbox{namya} at (namya.east) (namyabox) {};
-    \node [t, right] at (namyabox.east) {\tRedreg{Other:\ }\redreg{\fourlevelother}};
-	\rguideline{26}{49}{104}
+    \block{fourprestyle}{3,113.5}{right}{1001}{regular}
+            {4-Lvl Style:}{}{\fourlevelstyle}
+    \block{fourpreresp}{3,109.5}{right}{1001}{regular}
+            {Resp:}{}{\fourlevelresp}
+    \block{namya}{3,105.5}{right}{1100}{announce}
+        {4\bc/4\rd\ Tfr}{}{}
+    \block{fourpreother}{namya.east}{right}{1001}{alert}
+        {Other:}{}{\fourlevelother}
 
 %Vs. Opening Preempts
     \node [t, right] at (53, 127) {\tRegtext{2NT Overcall:\ }\regtext{\optwontoc}};
