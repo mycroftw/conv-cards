@@ -230,7 +230,7 @@
     \IfSubStringInString{NoGuide}{#4}
         {\setboolean{guide}{false}}
         {}
-    \tikzset{#1/.style = {t, #3, textField=\category}}
+    \tikzset{#1/.append style = {t, #3, textField=\category}}
     \setsepchar{,}
     \readlist*\styles{#6,}
     \foreachitem\style\in\styles{
@@ -322,7 +322,7 @@
             {
                 \bitsetQuery{elements}{\textIndex}
                     {
-                        \tikzset{#1_checkbox/.style = {checkBox=\category}}
+                        \tikzset{#1_checkbox/.append style = {checkBox=\category}}
                         \ifthenelse{\boolean{#1}}
                             {\tikzset{#1_checkbox/.append style = {filled=\category}}}
                             {}
@@ -331,14 +331,14 @@
                     {
                         \ifthenelse{\equal{\textContent}{}}
                             {
-                                \tikzset{#1_checkbox/.style = {checkBox=\category}}
+                                \tikzset{#1_checkbox/.append style = {checkBox=\category}}
                                 \ifthenelse{\boolean{#1}}
                                     {\tikzset{#1_checkbox/.append style = {filled=\category}}}
                                     {}
                                 \renewcommand\checkboxContent{}
                             }
                             {
-                                \tikzset{#1_checkbox/.style = {textBox=\category}}
+                                \tikzset{#1_checkbox/.append style = {textBox=\category}}
                                 \renewcommand\checkboxContent{\textContent}
                             }
                     }
