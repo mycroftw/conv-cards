@@ -71,17 +71,17 @@
 %Inline user text
 \newcommand{\usertext}{\ifthenelse{\boolean{serif}}{\textrm}{\textsf}}
 \newcommand{\usertextsize}{\small}
-\newcommand{\regtext}[1]{\usertextsize \usertext{\textls[-70]{#1}}}
-\newcommand{\redreg}[1]{\usertextsize \usertext{\textls[-70]{\textcolor{red}{#1}}}}
-\newcommand{\bluereg}[1]{\usertextsize \usertext{\textls[-70]{\textcolor{blue}{#1}}}}
-\newcommand{\blackreg}[1]{\usertextsize \usertext{\textls[-70]{\textcolor{black}{#1}}}}
-\newcommand{\boldtext}[1]{\usertextsize \usertext{\textbf{\textls[-70]{#1}}}}
+\newcommand{\regtext}[1]{\usertext{\textls[-70]{#1}}}
+\newcommand{\redreg}[1]{\usertext{\textls[-70]{\textcolor{red}{#1}}}}
+\newcommand{\bluereg}[1]{\usertext{\textls[-70]{\textcolor{blue}{#1}}}}
+\newcommand{\blackreg}[1]{\usertext{\textls[-70]{\textcolor{black}{#1}}}}
+\newcommand{\boldtext}[1]{\usertext{\textbf{\textls[-70]{#1}}}}
 \newcommand{\regbold}[1]{\boldtext}  % alias to match \redbold and \bluebold because I get it wrong
-\newcommand{\redbold}[1]{\usertextsize \usertext{\textbf{\textls[-70]{\textcolor{red}{#1}}}}}
-\newcommand{\bluebold}[1]{\usertextsize \usertext{\textbf{\textls[-70]{\textcolor{blue}{#1}}}}}
-\newcommand{\blackbold}[1]{\usertextsize \usertext{\textbf{\textls[-70]{\textcolor{black}{#1}}}}}
-\newcommand{\colortext}[2]{\usertextsize \usertext{\textls[-70]{\textcolor{#2}{#1}}}}
-\newcommand{\colorbold}[2]{\usertextsize \usertext{\textbf{\textls[-70]{\textcolor{#2}{#1}}}}}
+\newcommand{\redbold}[1]{\usertext{\textbf{\textls[-70]{\textcolor{red}{#1}}}}}
+\newcommand{\bluebold}[1]{\usertext{\textbf{\textls[-70]{\textcolor{blue}{#1}}}}}
+\newcommand{\blackbold}[1]{\usertext{\textbf{\textls[-70]{\textcolor{black}{#1}}}}}
+\newcommand{\colortext}[2]{\usertext{\textls[-70]{\textcolor{#2}{#1}}}}
+\newcommand{\colorbold}[2]{\usertext{\textbf{\textls[-70]{\textcolor{#2}{#1}}}}}
 
 %Bigger text for names/general approach etc - not used on the boilerplate
 \newcommand{\bigboldtext}[1]{\footnotesize \textsf{\textbf{#1}}}
@@ -622,6 +622,7 @@
     \usetikzlibrary{scopes}%
     \usetikzlibrary{calc}%needed to position stuff in strings
     \usetikzlibrary{fit}%
+    \begin{small}
     \begin{tikzpicture}[xscale=0.2,yscale=0.125,
     ]
     % draw a box around everything
@@ -1735,4 +1736,5 @@
     \node [right] at (58,-2) {\scriptsize \textsf{Made with \LaTeX\ and acbl2022cc (github.com/mycroftw/conv-cards)}};
     \additionaltikz %optional extra user-defined fields
     \end{tikzpicture}%
+    \end{small}%
 }%end of \drawconventioncard
