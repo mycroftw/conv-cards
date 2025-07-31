@@ -264,7 +264,7 @@
             \gettikzxy{(mid-base-sw)}{\xsw}{\ysw}
             \gettikzxy{(mid-base-se)}{\xse}{\ysw}
             \pgfmathqparse{\xse - \xsw}
-            \ifdim \pgfmathresult pt > 50pt
+            \ifdim \pgfmathresult pt > 40pt% empty string: 38.4954
                 \draw[\category, thin] (mid-base-sw) -- (mid-base-se);
             \fi
         }
