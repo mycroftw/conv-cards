@@ -149,7 +149,9 @@
     italicsLabel/.style={font=\itshape\relsize{-1}},
     t/.style={text depth=.1\baselineskip,
               text height=.5\baselineskip},
-    header/.style={right, rectangle, rotate=90, white, inner sep=3pt},
+    vertHeader/.style={right,rectangle,rotate=90,inner sep=5pt,white,font=\bfseries},
+    blackHeader/.style={vertHeader,fill=black},
+    grayHeader/.style={vertHeader,fill=gray},
     box/.style={rectangle,draw=black,inner sep=3pt},
     cbox/.style={rectangle,draw=black,fill=black,inner sep=3pt},
     rbox/.style={rectangle,draw=red,inner sep=3pt},
@@ -630,29 +632,29 @@
         % Front Side
         \draw (101, 209) -- (101, 215);
         \draw (104, 209) -- +(99, 0);
-        \draw [fill=black] (101, 187) rectangle (104, 209);
-        \node [header] at (102.5, 191) {\tBoldtext{OVERVIEW}};
+        \node [blackHeader,text width=68] at (102.5, 187) (headerOverview)
+            {\adjustbox{max width=\linewidth, center}{OVERVIEW}};
         \draw (104, 187) -- +(99, 0);
-        \draw [fill=gray] (101, 141) rectangle (104, 187);
-        \node [header] at (102.5, 157) {\tBoldtext{MINORS}};
+        \node [grayHeader,text width=154] at (102.5, 141) (headerMinors)
+            {\adjustbox{max width=\linewidth,center}{MINORS}};
         \draw (104, 164) -- +(99, 0); % 1C
         \draw (104, 141) -- +(99, 0); % 1D
-        \draw [fill=black] (101, 114) rectangle (104, 141);
-        \node [header] at (102.5, 120) {\tBoldtext{MAJORS}};
+        \node [blackHeader,text width=86] at (102.5, 114) (headerMajors)
+            {\adjustbox{max width=\linewidth, center}{MAJORS}};
         \draw (104, 114) -- +(99, 0);
-        \draw [fill=gray] (101, 60) rectangle (104, 114);
-        \node [header] at (102.5, 78) {\tBoldtext{NOTRUMP}};
+        \node [grayHeader,text width=182] at (102.5, 60) (headerNoTrump)
+            {\adjustbox{max width=\linewidth,center}{NOTRUMP}};
         \draw (104, 76) -- +(99, 0); % 1NT
         \draw (104, 66) -- +(99, 0); % 2NT
         \draw (104, 60) -- +(99, 0); % 3NT
-        \draw [fill=black] (101, 18) rectangle (104, 60);
-        \node [header] at (102.5, 35) {\tBoldtext{2 LEVEL}};
+        \node [blackHeader,text width=140] at (102.5, 18) (headerTwoLevel)
+            {\adjustbox{max width=\linewidth, center}{2 LEVEL}};
         \draw (104, 48) -- +(99, 0); % 2C
         \draw (104, 38) -- +(99, 0); % 2D
         \draw (104, 28) -- +(99, 0); % 2H
         \draw (104, 18) -- +(99, 0); % 2S
-        \draw [fill=gray] (101, 0) rectangle (104, 18);
-        \node [header] at (102.5, 3) {\tBoldtext{OTHER}};
+        \node [grayHeader,text width=54] at (102.5, 0) (headerOther)
+            {\adjustbox{max width=\linewidth,center}{OTHER}};
     }
 
 % Names:
@@ -1198,39 +1200,39 @@
     %\draw [help lines] (0, 0) grid [step = 10] (101, 215);
     {
     % Back side
-    \draw [fill=black] (0, 193) rectangle (3, 215);
-    \node [header] at (1.5, 197) {\tBoldtext{DOUBLES}};
-    \draw [fill=black] (50, 193) rectangle (53, 215);
-    \node [header] at (51.5, 193) {\tBoldtext{NT OVERCALLS}};
+    \node [blackHeader,text width=68] at (1.5, 193) (headerDoubles)
+        {\adjustbox{max width=\linewidth, center}{DOUBLES}};
+    \node [blackHeader,text width=68] at (51.5, 193) (headerNTOvercalls)
+        {\adjustbox{max width=\linewidth,center}{NT OVERCALLS}};
     \draw (3, 193) -- +(98, 0);
-    \draw [fill=gray] (0, 157) rectangle (3, 193);
-    \node [header] at (1.5, 165) {\tBoldtext{OVERCALLS}};
-    \draw [fill=gray] (50, 157) rectangle (53, 193);
-    \node [header] at (51.5, 163) {\tBoldtext{vs NT OPENING}};
+    \node [grayHeader,text width=118] at (1.5, 157) (headerOvercalls)
+        {\adjustbox{max width=\linewidth,center}{OVERCALLS}};
+    \node [grayHeader,text width=118,relsize=-1] at (51.5, 157) (headerVsNTOpening)
+        {\adjustbox{max width=\linewidth,center}{vs NT OPENING}};
     \draw (3, 157) -- +(98, 0);
-    \draw [fill=black] (0, 129) rectangle (3, 157);
-    \node [header] at (1.5, 131) {\tBoldtext{DIRECT CUEBIDS}};
-    \draw [fill=black] (50, 129) rectangle (53, 157);
-    \node [header] at (51.5, 131) {\tBoldtext{vs TAKEOUT DBL}};
+    \node [blackHeader,text width=90] at (1.5, 129) (headerDirectCuebids)
+        {\adjustbox{max width=\linewidth,center}{DIRECT CUEBIDS}};
+    \node [blackHeader,text width=90] at (51.5, 129) (headerVsTakeoutDbl)
+        {\adjustbox{max width=\linewidth,center}{vs TAKEOUT DBL}};
     \draw (3, 129) -- +(98, 0);
-    \draw [fill=gray] (0, 103) rectangle (3, 129);
-    \node [header] at (1.5, 108) {\tBoldtext{PREEMPTS}};
+    \node [grayHeader,text width=83] at (1.5, 103) (headerPreempts)
+        {\adjustbox{max width=\linewidth,center}{PREEMPTS}};
     \draw (3, 116) -- +(47, 0); % divider between 3 and 4 level PRE
-    \draw [fill=gray] (50, 103) rectangle (53, 129);
-    \node [header] at (51.5, 106) {\tBoldtext{vs PREEMPTS}};
+    \node [grayHeader,text width=83] at (51.5, 103) (headerVsPreempts)
+        {\adjustbox{max width=\linewidth,center}{vs PREEMPTS}};
     \draw (3, 103) -- +(98, 0);
-    \draw [fill=black] (0, 82) rectangle (3, 103);
-    \node [header] at (1.5, 87) {\tBoldtext{SLAMS}};
+    \node [blackHeader,text width=65] at (1.5, 82) (headerSlams)
+        {\adjustbox{max width=\linewidth,center}{SLAMS}};
     \draw (3, 82) -- +(98, 0);
-    \draw [fill=gray] (0, 47) rectangle (3, 82);
-    \node [header] at (1.5, 57) {\tBoldtext{CARDING}};
-    \draw [fill=gray] (50, 47) rectangle (53, 82);
-    \node [header] at (51.5, 57) {\tBoldtext{SIGNALS}};
+    \node [grayHeader,text width=115] at (1.5, 47) (headerCarding)
+        {\adjustbox{max width=\linewidth,center}{CARDING}};
+    \node [grayHeader,text width=115] at (51.5, 47) (headerSignals)
+        {\adjustbox{max width=\linewidth,center}{SIGNALS}};
     \draw (3, 47) -- +(98, 0);
-    \draw [fill=black] (0, 0) rectangle (3, 47);
-    \node [header] at (1.5, 12) {\tBoldtext{LEADS vs SUITS}};
-    \draw [fill=black] (50, 0) rectangle (53, 47);
-    \node [header] at (51.5, 15) {\tBoldtext{LEADS vs NT}};
+    \node [blackHeader,text width=157] at (1.5, 0) (headerLeadsVsSuits)
+        {\adjustbox{max width=\linewidth,center}{LEADS vs SUITS}};
+    \node [blackHeader,text width=157] at (51.5, 0) (headerLeadsVsNT)
+        {\adjustbox{max width=\linewidth,center}{LEADS vs NT}};
 }
 %Back of card: Left to right, top to bottom
 %Doubles
