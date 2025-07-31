@@ -299,12 +299,13 @@
     \bitsetSetBin{elements}{#4}
     \StrSubstitute{#5}{NoGuide}{}[\category]
     \StrSubstitute{\category}{Label}{}[\category]
+    \renewcommand\categoryAttr{}
     \IfSubStringInString{NoGuide}{#5}
         {\renewcommand\categoryAttr{NoGuide}}
-        {\renewcommand\categoryAttr{}}
+        {}
     \IfSubStringInString{Label}{#5}
         {\renewcommand\categoryAttr{Label}}
-        {\renewcommand\categoryAttr{}}
+        {}
     \bitsetIsEmpty{elements}{}{
             \setsepchar{@}
             \readlist\textParameter{#8@@}
