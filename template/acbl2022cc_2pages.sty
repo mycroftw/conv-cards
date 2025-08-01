@@ -381,8 +381,9 @@
                         { \node[] at (\position) (#1_label) {}; }
                     \bitsetQuery{elements}{\checkboxIndex}
                         {
-                            \tikzset{#1_checkbox/.append style = {xshift=2}}
-                            \node[#1_checkbox] at (\position) (#1_checkbox) {\checkboxContent};
+                            \node[#1_checkbox]
+                                at ($(\position)+(0.25*\bitsetGet{elements}{\labelIndex},0)$)
+                                (#1_checkbox) {\checkboxContent};
                             \renewcommand\position{#1_checkbox.\rosewind}
                         }
                         { \node[] at (\position) (#1_checkbox) {}; }
@@ -428,7 +429,11 @@
                         { \node[] at (\position) (#1_range) {}; }
                     \bitsetQuery{elements}{\textIndex}
                         {
-                            \textField{#1_text}{\position}{#3}
+                            \coordinate (P) at
+                                ($(\position)+
+                                    (0.25*\bitsetGet{elements}{\checkboxIndex}+
+                                        0.4*\bitsetGet{elements}{\rangeIndex},0)$);
+                            \textField{#1_text}{P}{#3}
                                     {\concat{\category}{\categoryAttr}}
                                     {\textContent}{\textStyle}
                                     [\textLetterspace]
@@ -490,7 +495,6 @@
                         { \node[] at (\position) (#1_range) {}; }
                     \bitsetQuery{elements}{\checkboxIndex}
                         {
-                            \tikzset{#1_checkbox/.append style = {xshift=-2}}
                             \node[#1_checkbox] at (\position) (#1_checkbox) {\checkboxContent};
                             \renewcommand\position{#1_checkbox.\rosewind}
                         }
@@ -1078,7 +1082,7 @@
 %2C Opening
     \block{2crange}{104,56}{right}{1011}{regular}
         {2\bc@bidHeader}{\twoclowtext@\twochightext}
-        {\twocldescribe@xshift=2}
+        {\twocldescribe}
 
     \block{wai2d}{201,57.5}{left}{1100}{regular}
         {Waiting}{}{}
@@ -1281,7 +1285,7 @@
         {Systems on}{}{}
 
     \block{dntco}{53,204}{right}{1101}{alert}
-        {Conv}{}{\directconvtext@xshift=2}
+        {Conv}{}{\directconvtext}
 
     \block{unu2llabel}{53,199.5}{right}{1000}{regular}
         {Jump to 2NT:}{}{}
@@ -1468,7 +1472,7 @@
     \block{xximp}{xxlabel.east}{right}{1100}{regular}
         {10+}{}{}
     \block{xxcon}{xximp.east}{right}{1101}{alert}
-        {Conv}{}{\xxtext@xshift=2}
+        {Conv}{}{\xxtext}
 
     \block{2ntolabel}{53,143}{right}{1000}{regular}
         {2NT Over:@text width=44}{}{}
@@ -1523,7 +1527,7 @@
         {Penalty}{}{}
 
     \block{opleb}{53,118}{right}{1101}{alert}
-            {2NT Lebensohl Resp}{}{\oplebtext@xshift=2}
+            {2NT Lebensohl Resp}{}{\oplebtext}
     \block{opcue}{53,113.5}{right}{1001}{regular}
             {Cuebid:}{}{\opcuebid}
     \block{opjumpoc}{53,109.5}{right}{1001}{regular}
@@ -1669,7 +1673,7 @@
 
     \showlead{A,K,x,(+)}{}{}{\AKx}{5}{19}
     \block{suakv}{17,19}{right}{1101}{regular}
-        {Varies}{}{\suitAKxvaries@xshift=2}
+        {Varies}{}{\suitAKxvaries}
 
     \showlead{K,Q,x}{1}{}{\KQx}{5}{15}
     \showlead{Q,J,x}{1}{}{\QJx}{16}{15}
@@ -1716,7 +1720,7 @@
 
     \showlead{A,K,x,x,(+)}{}{}{\AKxx}{55}{19}
     \block{ntakv}{70,19}{right}{1101}{regular}
-        {Varies}{}{\ntAKxvaries@xshift=2}
+        {Varies}{}{\ntAKxvaries}
 
     \showlead{K,Q,J,x}{1}{}{\KQJx}{55}{15}
     \showlead{K,Q,T,9}{2}{}{\ntKQTN}{66}{15}
