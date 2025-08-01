@@ -452,8 +452,8 @@
                         {
                             \coordinate (P) at
                                 ($(\position)+
-                                    (0.25*\bitsetGet{elements}{\checkboxIndex}+
-                                        0.4*\bitsetGet{elements}{\rangeIndex},0)$);
+                                    (0.3*\bitsetGet{elements}{\checkboxIndex}+
+                                        0.6*\bitsetGet{elements}{\rangeIndex},0)$);
                             \textField{#1_text}{P}{#3}
                                     {\concat{\category}{\categoryAttr}}
                                     {\textContent}{\textStyle}
@@ -1132,10 +1132,9 @@
         {Other:}{}{\twoclresponse}
 
 %2D Opening
-    \block{2drange}{104,44.5}{right}{1010}{regular}
-        {2\rd@bidHeader}{\twodlowtext@\twodhightext}{}
-    \block{2ddesc}{2drange.east}{right}{0001}{regular}
-        {}{}{\twoddescribe}
+    \block{2drange}{104,44.5}{right}{1011}{regular}
+        {2\rd@bidHeader}{\twodlowtext@\twodhightext}
+        {\twoddescribe}
     \block{dnsnf}{201,44.5}{left}{1100}{alert}
         {New Suit NF}{}{}
 
@@ -1153,10 +1152,9 @@
         {Other:}{}{\twodresponse}
 
 %2H Opening
-    \block{2hrange}{104,34.5}{right}{1010}{regular}
-        {2\rh@bidHeader}{\twohlowtext@\twohhightext}{}
-    \block{2hdesc}{2hrange.east}{right}{0001}{regular}
-        {}{}{\twohdescribe}
+    \block{2hrange}{104,34.5}{right}{1011}{regular}
+        {2\rh@bidHeader}{\twohlowtext@\twohhightext}
+        {\twohdescribe}
     \block{hnsnf}{201,34.5}{left}{1100}{alert}
         {New Suit NF}{}{}
 
@@ -1174,10 +1172,9 @@
         {Other:}{}{\twohresponse}
 
 %2S Opening
-    \block{2srange}{104,24.5}{right}{1010}{regular}
-        {2\bs@bidHeader}{\twoslowtext@\twoshightext}{}
-    \block{2sdesc}{2srange.east}{right}{0001}{regular}
-        {}{}{\twosdescribe}
+    \block{2srange}{104,24.5}{right}{1011}{regular}
+        {2\bs@bidHeader}{\twoslowtext@\twoshightext}
+        {\twosdescribe}
     \block{snsnf}{201,24.5}{left}{1100}{alert}
         {New Suit NF}{}{}
 
