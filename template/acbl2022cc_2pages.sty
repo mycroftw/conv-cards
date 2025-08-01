@@ -159,6 +159,26 @@
     cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt},
 }
 
+\tikzset{
+    1nt2c_label/.style={text width=10},
+    1nt2d_label/.style={text width=10},
+    1nt2h_label/.style={text width=10},
+    1nt2s_label/.style={text width=10},
+    1nt2n_label/.style={text width=10},
+    nat2d/.style={inner sep=-2},
+    jac2d/.style={inner sep=-2},
+    nat2h/.style={inner sep=-2},
+    jac2h/.style={inner sep=-2},
+    nat2s/.style={inner sep=-2},
+    trf2s/.style={inner sep=-2},
+    nat2n/.style={inner sep=-2},
+    trf2n/.style={inner sep=-2},
+    2doth/.style={inner sep=-2,text width=160},
+    2hoth/.style={inner sep=-2,text width=160},
+    2soth/.style={inner sep=-2,text width=160},
+    2noth/.style={inner sep=-2,text width=160},
+}
+
 %Commands to provide filled vs. empty checkboxes
 %according to whether a boolean is set or cleared:
 \newcommand{\checkbox}[1]{\ifthenelse{\boolean{#1}}{\node [cbox]}{\node [box]}}
@@ -973,7 +993,7 @@
         {Sys on vs:}{}{\sysontext}
 
     \block{1nt2c}{104,103}{right}{1000}{regular}
-        {2\bc:}{}{}
+        {2\,\bc:}{}{}
     \block{staym}{1nt2c.east}{right}{1100}{regular}
         {Stayman}{}{}
     \block{puppe}{staym.east}{right}{1100}{regular}
@@ -982,40 +1002,40 @@
         {Other}{}{}
 
     \block{1nt2d}{104,99}{right}{1000}{regular}
-        {2\rd:}{}{}
-    \block{nat2d}{108,99}{right}{1100}{regular}
+        {2\,\rd:}{}{}
+    \block{nat2d}{1nt2d.east}{right}{1100}{regular}
         {Nat}{}{}
     \block{jac2d}{nat2d.east}{right}{1100}{announce}
-        {Tfr@xshift=-10}{}{}
+        {Tfr}{}{}
     \block{2doth}{jac2d.east}{right}{1101}{alert}
-        {Other@xshift=-10}{}{\ntditext@xshift=5, text width=160}
+        {Other}{}{\ntditext}
 
     \block{1nt2h}{104,95}{right}{1000}{regular}
-        {2\rh:}{}{}
-    \block{nat2h}{108,95}{right}{1100}{regular}
+        {2\,\rh:}{}{}
+    \block{nat2h}{1nt2h.east}{right}{1100}{regular}
         {Nat}{}{}
     \block{jac2h}{nat2h.east}{right}{1100}{announce}
-        {Tfr@xshift=-10}{}{}
+        {Tfr}{}{}
     \block{2hoth}{jac2h.east}{right}{1101}{alert}
-        {Other@xshift=-10}{}{\nthetext@xshift=5, text width=160}
+        {Other}{}{\nthetext}
 
     \block{1nt2s}{104,91}{right}{1000}{regular}
-        {2\bs:}{}{}
-    \block{nat2s}{108,91}{right}{1100}{regular}
+        {2\,\bs:}{}{}
+    \block{nat2s}{1nt2s.east}{right}{1100}{regular}
         {Nat}{}{}
     \block{trf2s}{nat2s.east}{right}{1100}{announce}
-        {Tfr@xshift=-10}{}{}
+        {Tfr}{}{}
     \block{2soth}{trf2s.east}{right}{1101}{alert}
-        {Other@xshift=-10}{}{\ntsptext@xshift=5, text width=160}
+        {Other}{}{\ntsptext}
 
     \block{1nt2n}{104,87}{right}{1000}{regular}
         {2NT:}{}{}
-    \block{nat2n}{108,87}{right}{1100}{regular}
+    \block{nat2n}{1nt2n.east}{right}{1100}{regular}
         {Nat}{}{}
     \block{trf2n}{nat2n.east}{right}{1100}{announce}
-        {Tfr@xshift=-10}{}{}
-    \block{2soth}{trf2n.east}{right}{1101}{alert}
-        {Other@xshift=-10}{}{\ntnttext@xshift=5, text width=160}
+        {Tfr}{}{}
+    \block{2noth}{trf2n.east}{right}{1101}{alert}
+        {Other}{}{\ntnttext}
 
     \block{smole}{104,83}{right}{1100}{alert}
         {Smolen}{}{}
