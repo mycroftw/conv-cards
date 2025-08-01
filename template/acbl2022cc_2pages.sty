@@ -1662,6 +1662,9 @@
         {}{}{\signaltexttop}
 
 %Leads vs suits
+    \ifthenelse{\equal{\suitAKxvaries}{}}
+        {\setboolean{suakv}{false}}
+        {\setboolean{suakv}{true}}
 
     \block{suitlenleadlabel}{3,44}{right}{1000}{regular}
         {Length Leads:}{}{}
@@ -1709,6 +1712,9 @@
         {}{}{\suitexceptbottom}
 
 %Leads vs NT
+    \ifthenelse{\equal{\ntAKxvaries}{}}
+        {\setboolean{ntakv}{false}}
+        {\setboolean{ntakv}{true}}
 
     \block{ntlenleadlabel}{53,44}{right}{1000}{regular}
         {Length Leads:}{}{}
