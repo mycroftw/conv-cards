@@ -424,7 +424,8 @@
                                             [\rangeLetterspace]
                                 }
                             \renewcommand\position{#1_range_hi.\rosewind}
-                            \node[fit=(#1_range_lo)(#1_range_connector)(#1_range_hi)] (#1_range) {};
+                            \tikzset{#1_range/.append style={}}
+                            \node[#1_range, fit=(#1_range_lo)(#1_range_connector)(#1_range_hi)] (#1_range) {};
                         }
                         { \node[] at (\position) (#1_range) {}; }
                     \bitsetQuery{elements}{\textIndex}
@@ -490,7 +491,8 @@
                                             [\rangeLetterspace]
                                 }
                             \renewcommand\position{#1_range_lo.\rosewind}
-                            \node[fit=(#1_range_lo)(#1_range_connector)(#1_range_hi)] (#1_range) {};
+                            \tikzset{#1_range/.append style={}}
+                            \node[#1_range, fit=(#1_range_lo)(#1_range_connector)(#1_range_hi)] (#1_range) {};
                         }
                         { \node[] at (\position) (#1_range) {}; }
                     \bitsetQuery{elements}{\checkboxIndex}
@@ -509,6 +511,7 @@
                         { \node[] at (\position) (#1_label) {}; }
                 }
         }[{Error}]
+        \tikzset{#1/.append style={}}
         \IfNoValueOrEmptyTF{#9}
             {}
             {
@@ -518,7 +521,7 @@
                     \tikzset{#1/.append style/.expanded={\style}}
                 }
             }
-        \node[fit=(#1_label)(#1_checkbox)(#1_range)(#1_text) ] (#1) {};
+        \node[#1, fit=(#1_label)(#1_checkbox)(#1_range)(#1_text) ] (#1) {};
     }
 }
 
