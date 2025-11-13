@@ -6,13 +6,13 @@
 %           alert rules
 %v2.0 - 1 April 2022 - Michael Farebrother - complete rewrite for 2022 card.
 %v2.1 - 18 February 2022 - Michael Farebrother - rewrite to anchor boxes and text to the label nodes.
-
-
+%
+%
 %Fill out the fields in latex_cc_template.tex to create your own ACBL Convention Card in LaTeX
-
+%
 %This package contains all of the TikZ formatting to draw the card.
 %It deliberately DOESNT hide anything with @-commands to make it easy to edit yourself.
-
+%
 \RequirePackage{tikz} %graphics tools. Also install ``ms'' package.
 \RequirePackage{txfonts} %provides \varheartsuit and \vardiamondsuit
 \RequirePackage{microtype} % allows us to stretch/shrink fonts to match
@@ -30,16 +30,17 @@
 \RequirePackage{lmodern}
 \RequirePackage[utf8]{inputenc}
 \RequirePackage{adjustbox}
-\RequirePackage[left=0mm,right=5mm,top=5mm]{geometry}
+\RequirePackage{scalefnt}
+\RequirePackage[left=0mm,right=2mm,top=2mm, bottom=2mm]{geometry}
 \ProvidesPackage{acbl2022cc_2pages}
-
+%
 %Package initialization:
-
+%
 \makeatother %use @ as separator in \command1@\command2...
-
+%
 %texdate
 \initcurrdate %texdate default date is curryear-01-01, this changes that to today
-
+%
 %Suit symbols:
 \newcommand{\h}{\ensuremath{\varheartsuit}}
 \newcommand{\rh}{\ensuremath{\textcolor{red}\varheartsuit}}
@@ -55,7 +56,7 @@
 \newcommand{\bigblue}[1]{\large {\textsf{\textbf{\textcolor{blue}{#1}}}}} % 1NT
 %Headings for each block of the card
 \newcommand{\headtext}[1]{\small {\textsf{\textbf{\textls[10]{#1}}}}}
-
+%
 %Inline template (non-user) text
 \newcommand{\tRegtext}[1]{\footnotesize \textsf{\textls[-70]{#1}}}
 \newcommand{\tRedreg}[1]{\footnotesize \textsf{\textls[-70]{\textcolor{red}{#1}}}}
@@ -67,7 +68,7 @@
 \newcommand{\tBlackbold}[1]{\footnotesize \textsf{\textbf{\textls[-70]{\textcolor{black}{#1}}}}}
 \newcommand{\tColortext}[2]{\footnotesize \textsf{\textls[-70]{\textcolor{#2}{#1}}}}
 \newcommand{\tColorbold}[2]{\footnotesize \textsf{\textbf{\textls[-70]{\textcolor{#2}{#1}}}}}
-
+%
 %Inline user text
 \newcommand{\usertext}{\ifthenelse{\boolean{serif}}{\textrm}{\textsf}}
 \newcommand{\usertextsize}{\small}
@@ -82,42 +83,55 @@
 \newcommand{\blackbold}[1]{\usertext{\textbf{\textls[-70]{\textcolor{black}{#1}}}}}
 \newcommand{\colortext}[2]{\usertext{\textls[-70]{\textcolor{#2}{#1}}}}
 \newcommand{\colorbold}[2]{\usertext{\textbf{\textls[-70]{\textcolor{#2}{#1}}}}}
-
+%
 %Bigger text for names/general approach etc - not used on the boilerplate
 \newcommand{\bigboldtext}[1]{\footnotesize \textsf{\textbf{#1}}}
-
+%
 %Colors used for different categories
 \colorlet{alert}{red}
 \colorlet{announce}{blue}
 \colorlet{regular}{black}
-\colorlet{alertLabel}{red}
-\colorlet{announceLabel}{blue}
-\colorlet{regularLabel}{black}
-
-\newcommand\rangeConnectorDefault{to}
-\newcommand\rangeConnectorToUse{}
-
+%\colorlet{alertLabel}{red}
+%\colorlet{announceLabel}{blue}
+%\colorlet{regularLabel}{black}
+%
+\newcommand\labelContent{}
+\newcommand\textContent{}
+\newcommand\rangeConnector{to}
+%
 %define booleans to use in functions
 \newboolean{guide} %Label, NoGuide will turn it off
-
+%
 %define \concat
 \newcommand\concat[2]{#1#2}
-
+%
 %define commands to use/redefine in functions
 \newcommand\name{}
 \newcommand\position{}
 \newcommand\direction{}
 \newcommand\content{}
 \newcommand\rosewind{}
+\newcommand\aligned{}
 \newcommand\labelIndex{3}
 \newcommand\checkboxIndex{2}
 \newcommand\rangeIndex{1}
 \newcommand\textIndex{0}
 \newcommand\letterspace{}
 \newcommand\categoryAttr{}
+\newcommand\labelCategory{}
 \newcommand\checkboxContent{}
 \newcommand\vsntwidth{}
-
+\newcommand\emptyStringLength{}
+%
+% handler to use \typeout instead of \show (based on code of '.show code' handler)
+\pgfkeys{
+  /handlers/.typeout code/.code={%
+    \pgfkeysgetvalue{\pgfkeyscurrentpath/.@cmd}{\pgfkeysshower}%
+    \typeout{--- \pgfkeyscurrentpath\space---}%
+    \typeout{\meaning\pgfkeysshower}%
+  }
+}
+%
 %Style definitions
 \tikzset{
     alert/.style={ultra thin},
@@ -138,19 +152,19 @@
     textField/.style={text=#1},
     centered/.style={align=center},
     big/.style={font=\relsize{2}},
-    bidHeader/.style={font=\bfseries\relsize{2}},
     relsize/.style={font=\relsize{#1}},
-    bold/.style={font=\bfseries},
-    italics/.style={font=\itshape},
-    boldItalics/.style={font=\bfseries\itshape},
-    italicsRelsize/.style={font=\itshape\relsize{#1}},
-    label/.style={font=\relsize{-1}},
-    italicsLabel/.style={font=\itshape\relsize{-1}},
+    bold/.style={font=\bfseries\relsize{#1}},
+    boldItalics/.style={font=\bfseries\itshape\relsize{#1}},
+    italics/.style={font=\itshape\relsize{#1}},
+    label/.append style={relsize=-1},
     t/.style={text depth=.1\baselineskip,
               text height=.5\baselineskip},
-    vertHeader/.style={right,rectangle,rotate=90,inner sep=5pt,white,font=\bfseries},
     blackHeader/.style={vertHeader,fill=black},
     grayHeader/.style={vertHeader,fill=gray},
+    blockFit/.style={},
+    blockFitGoingRight/.style={},
+    blockFitGoingLeft/.style={},
+    rangeFit/.style={},
     box/.style={rectangle,draw=black,inner sep=3pt},
     cbox/.style={rectangle,draw=black,fill=black,inner sep=3pt},
     rbox/.style={rectangle,draw=red,inner sep=3pt},
@@ -158,13 +172,13 @@
     bbox/.style={rectangle,draw=blue,inner sep=3pt},
     cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt},
 }
-
+%
 \tikzset{
-    1nt2c_label/.style={text width=10},
-    1nt2d_label/.style={text width=10},
-    1nt2h_label/.style={text width=10},
-    1nt2s_label/.style={text width=10},
-    1nt2n_label/.style={text width=10},
+    1nt2cLabel/.style={text width=10},
+    1nt2dLabel/.style={text width=10},
+    1nt2hLabel/.style={text width=10},
+    1nt2sLabel/.style={text width=10},
+    1nt2nLabel/.style={text width=10},
     nat2d/.style={inner sep=-2},
     jac2d/.style={inner sep=-2},
     nat2h/.style={inner sep=-2},
@@ -178,37 +192,37 @@
     2soth/.style={inner sep=-2,text width=160},
     2noth/.style={inner sep=-2,text width=160},
 }
-
+%
 %Commands to provide filled vs. empty checkboxes
 %according to whether a boolean is set or cleared:
 \newcommand{\checkbox}[1]{\ifthenelse{\boolean{#1}}{\node [cbox]}{\node [box]}}
 \newcommand{\rcheckbox}[1]{\ifthenelse{\boolean{#1}}{\node [crbox]}{\node [rbox]}}
 \newcommand{\bcheckbox}[1]{\ifthenelse{\boolean{#1}}{\node [cbbox]}{\node [bbox]}}
-
+%
 %If you want an X or checkmark instead of a filled box, you need to edit the
 %style commands at the Style definitions (\tikzset) above (*box ones)
-
+%
 %Draw one row of the opening lead section at once. 6 arguments:
 %\showlead{cardstodisplay}{boldcards}{redcards}{circledcards}{startingx}{startingy}
 %e.g. \showlead{x,x}{1}{2}{\suitxx}{1}{60} for doubletons vs. suit contracts
-
+%
 \newcommand{\showlead}[6]{\foreach \card [count=\i] in {#1} {%
-    \IfSubStr{#4}{\i}{\node at ($(#5 ,#6) + 2.5*(\i,0) $)[rectangle,draw=black,inner sep=1pt]}{\node at ($(#5 ,#6) + 2.5*(\i,0) $) }
+    \IfSubStr{#4}{\i}{\node at ($(#5 ,#6) + 2.5*(\i,0) $)[rectangle,draw=black,inner sep=1pt]}{\node at ($(#5 ,#6) + 2.5*(\i,0) $) } (test)
     {
-        \scriptsize{\textsf{%
+        \relsize{-1}{\textsf{%
             \IfSubStr{#2}{\i}{\bfseries}{}%
             \IfSubStr{#3}{\i}{\textcolor{red}{\card\xfix}}{\card\xfix}%
         }}}; %
 }%foreach
 }
-
-
+%
+%
 % Guide lines: triggered by a "visib" boolean set in the file, draw the "write here" lines.  Or not.
 % Parameters: Xleft, Xright, Y (all guidelines are horizontal).
 \newcommand{\guideline}[3]{\ifthenelse{\boolean{visib}}{\draw [thin, black] (#1, #3) -- (#2, #3);}{}}
 \newcommand{\rguideline}[3]{\ifthenelse{\boolean{visib}}{\draw [thin, red] (#1, #3) -- (#2, #3);}{}}
 \newcommand{\bguideline}[3]{\ifthenelse{\boolean{visib}}{\draw [thin, blue] (#1, #3) -- (#2, #3);}{}}
-
+%
 %Two formatting commands, since TikZ places text blocks by their centers not
 %their baselines: if you use p, y, or g, your text will look ``pushed upward'';
 %if you use only lowercase letters, your text will look ``too high''.
@@ -216,13 +230,13 @@
 \newcommand{\pfix}{\rule{0pt}{2.6mm}} %A way to re-center user text with p,y,g
 \newcommand{\xfix}{\rule{0pt}{2.0mm}} %re-center text with no capital letters
 \newcommand{\namefix}{\rule{0pt}{3.4mm}} %re-center BigBold text with p,y,g
-
+%
 \newcommand{\IfNoValueOrEmptyTF}[3] {
     \IfNoValueTF{#1}
         {#2}
         {\ifthenelse{\equal{#1}{}}{#2}{#3}}
 }
-
+%
 \makeatletter
 \newcommand{\gettikzxy}[3]{%
   \tikz@scan@one@point\pgfutil@firstofone#1\relax
@@ -230,21 +244,20 @@
   \edef#3{\the\pgf@y}%
 }
 \makeatother
-
-\NewDocumentCommand{\textField}{mmmmmmO{}}{
+%
+\NewDocumentCommand{\textField}{mmmmm}{
     % #1: name
     % #2: position
     % #3: direction
     % #4: category
     % #5: content
-    % #6: style
-    % #7: (optional) letterspace
-    % All *Style parameters are comma-separated lists
-
+%
     \setboolean{guide}{true}
     \renewcommand\content{#5}
     \StrSubstitute{#4}{NoGuide}{}[\category]
+    \StrSubstitute{\category}{IgnoreStyle}{}[\category]
     \StrSubstitute{\category}{Label}{}[\category]
+    \StrSubstitute{\category}{Centered}{}[\category]
     \IfSubStringInString{Label}{#4}
         {\setboolean{guide}{false}}
         {}
@@ -252,22 +265,21 @@
         {\setboolean{guide}{false}}
         {}
     \tikzset{#1/.append style = {t, #3, textField=\category}}
-    \setsepchar{,}
-    \readlist*\styles{#6,}
-    \foreachitem\style\in\styles{
-        \tikzset{#1/.append style/.expanded={\style}}
-    }
     \IfSubStringInString{Label}{#4}
         {
-            \ifthenelse{\equal{#7}{}}
-                {\renewcommand\letterspace{-50}}
-                {\renewcommand\letterspace{#7}}
-            \node[#1] at (#2) (#1) {\textls[\letterspace]{\content}};
+        \IfSubStringInString{IgnoreStyle}{#4}
+            {
+                \tikzset{#1/.append style = {}}
+            }
+            {
+                \tikzset{#1/.append style = {label}}
+            }
+            \node[#1] at (#2) (#1)
+                {
+                    \textls[-50]{\content}
+                };
         }
         {
-            \ifthenelse{\equal{#7}{}}
-                {\renewcommand\letterspace{-30}}
-                {\renewcommand\letterspace{#7}}
             \node[#1] at (#2) (#1)
                 {
                     \adjustbox{max width=\linewidth}{\content}
@@ -283,40 +295,31 @@
             \gettikzxy{(mid-base-sw)}{\xsw}{\ysw}
             \gettikzxy{(mid-base-se)}{\xse}{\ysw}
             \pgfmathqparse{\xse - \xsw}
-            \ifdim \pgfmathresult pt > 40pt% empty string: 38.4954
+            \ifdim \pgfmathresult pt > \emptyStringLength
                 \draw[\category, thin] (mid-base-sw) -- (mid-base-se);
             \fi
         }
         {}
 }
-
-\NewDocumentCommand{\block}{mmmmmmmmo}{
+%
+\NewDocumentCommand{\block}{mmmmmmmm}{
     % #1: name
     % #2: position
     % #3: direction
     % #4: elements (bitset)
     % #5: category
-    % #6: labelParameter
-    %         labelContent@
-    %         labelStyle@
-    %         (optional) labelLetterspace
+    % #6: labelContent
     % #7: rangeParameter
     %         rangeContentLow@
-    %         rangeContentHigh@
-    %         rangeConnector@
-    %         rangeContentStyle@
-    %         rangeConnectorStyle@
-    %         (optional) rangeLetterspace
-    % #8: textParameter
-    %         textContent@
-    %         textStyle@
-    %         (optional) textLetterspace
-    % #9: (optional) Style
-    % All *Style parameters are comma-separated lists
-
+    %         (optional) rangeContentHigh
+    % #8: textContent
+%
     \renewcommand\position{#2}
+    \renewcommand\labelContent{#6}
+    \renewcommand\textContent{#8}
     \bitsetSetBin{elements}{#4}
     \StrSubstitute{#5}{NoGuide}{}[\category]
+    \StrSubstitute{\category}{IgnoreStyle}{}[\category]
     \StrSubstitute{\category}{Label}{}[\category]
     \renewcommand\categoryAttr{}
     \IfSubStringInString{NoGuide}{#5}
@@ -325,42 +328,51 @@
     \IfSubStringInString{Label}{#5}
         {\renewcommand\categoryAttr{Label}}
         {}
+    \IfSubStringInString{IgnoreStyle}{#5}
+        {
+            \renewcommand\categoryAttr{IgnoreStyle}
+        }
+        {}
     \bitsetIsEmpty{elements}{}{
-            \setsepchar{@}
-            \readlist\textParameter{#8@@}
-            \itemtomacro\textParameter[1]\textContent
-            \itemtomacro\textParameter[2]\textStyle
-            \itemtomacro\textParameter[3]\textLetterspace
         \bitsetQuery{elements}{\labelIndex}
             {
-                \setsepchar{@}
-                \readlist\labelParameter{#6@@}
-                \itemtomacro\labelParameter[1]\labelContent
-                \itemtomacro\labelParameter[2]\labelStyle
-                \itemtomacro\labelParameter[3]\labelLetterspace
+                \IfSubStringInString{Centered}{#5}
+                   {
+                      \renewcommand\aligned{centered}
+                   }
+                   {
+                      \renewcommand\aligned{#3}
+                   }
+                \IfSubStringInString{IgnoreStyle}{#5}
+                   {
+                      \renewcommand\labelCategory{LabelIgnoreStyle}
+                   }
+                   {
+                      \renewcommand\labelCategory{Label}
+                   }
             }
             {}
         \bitsetQuery{elements}{\checkboxIndex}
             {
                 \bitsetQuery{elements}{\textIndex}
                     {
-                        \tikzset{#1_checkbox/.append style = {checkBox=\category}}
+                        \tikzset{#1Checkbox/.append style = {checkBox=\category}}
                         \ifthenelse{\boolean{#1}}
-                            {\tikzset{#1_checkbox/.append style = {filled=\category}}}
+                            {\tikzset{#1Checkbox/.append style = {filled=\category}}}
                             {}
                         \renewcommand\checkboxContent{}
                     }
                     {
                         \ifthenelse{\equal{\textContent}{}}
                             {
-                                \tikzset{#1_checkbox/.append style = {checkBox=\category}}
+                                \tikzset{#1Checkbox/.append style = {checkBox=\category}}
                                 \ifthenelse{\boolean{#1}}
-                                    {\tikzset{#1_checkbox/.append style = {filled=\category}}}
+                                    {\tikzset{#1Checkbox/.append style = {filled=\category}}}
                                     {}
                                 \renewcommand\checkboxContent{}
                             }
                             {
-                                \tikzset{#1_checkbox/.append style = {textBox=\category}}
+                                \tikzset{#1Checkbox/.append style = {textBox=\category}}
                                 \renewcommand\checkboxContent{\textContent}
                             }
                     }
@@ -369,20 +381,9 @@
         \bitsetQuery{elements}{\rangeIndex}
             {
                 \setsepchar{@}
-                \readlist\rangeParameter{#7@@@@@}
+                \readlist\rangeParameter{#7@@@}
                 \itemtomacro\rangeParameter[1]\rangeContentLow
                 \itemtomacro\rangeParameter[2]\rangeContentHigh
-                \itemtomacro\rangeParameter[3]\rangeConnector
-                \itemtomacro\rangeParameter[4]\rangeContentStyle
-                \itemtomacro\rangeParameter[5]\rangeConnectorStyle
-                \itemtomacro\rangeParameter[6]\rangeLetterspace
-                \ifthenelse{\equal{\rangeConnector}{}}
-                    {
-                        \renewcommand\rangeConnectorToUse{\rangeConnectorDefault}
-                    }
-                    {
-                        \renewcommand\rangeConnectorToUse{\rangeConnector}
-                    }
             }
             {}
     }
@@ -393,162 +394,155 @@
                     \renewcommand\rosewind{east}
                     \bitsetQuery{elements}{\labelIndex}
                         {
-                            \textField{#1_label}{\position}{#3}{\concat{\category}{Label}}
-                                    {\labelContent}{ label, \labelStyle}
-                                    [\labelLetterspace]
-                            \renewcommand\position{#1_label.\rosewind}
+                            \textField{#1Label}{\position}{\aligned}
+                                    {\concat{\category}{\labelCategory}}
+                                    {\labelContent}
+                            \renewcommand\position{#1Label.\rosewind}
                         }
-                        { \node[] at (\position) (#1_label) {}; }
+                        { \node[] at (\position) (#1Label) {}; }
                     \bitsetQuery{elements}{\checkboxIndex}
                         {
-                            \node[#1_checkbox]
+                            \node[#1Checkbox]
                                 at ($(\position)+(0.25*\bitsetGet{elements}{\labelIndex},0)$)
-                                (#1_checkbox) {\checkboxContent};
-                            \renewcommand\position{#1_checkbox.\rosewind}
+                                (#1Checkbox) {\checkboxContent};
+                            \renewcommand\position{#1Checkbox.\rosewind}
                         }
-                        { \node[] at (\position) (#1_checkbox) {}; }
+                        { \node[] at (\position) (#1Checkbox) {}; }
                     \bitsetQuery{elements}{\rangeIndex}
                         {
                             \ifthenelse{\equal{\rangeContentLow}{}}
                                 {
-                                    \node[] at (\position) (#1_range_lo) {};
+                                    \node[] at (\position) (#1RangeLo) {};
                                 }
                                 {
-                                    \textField{#1_range_lo}{\position}{#3}
+                                    \textField{#1RangeLo}{\position}{#3}
                                             {\concat{\category}{\categoryAttr}}
-                                            {\rangeContentLow}{\rangeContentStyle}
-                                            [\rangeLetterspace]
+                                            {\rangeContentLow}
                                 }
-                            \renewcommand\position{#1_range_lo.\rosewind}
+                            \renewcommand\position{#1RangeLo.\rosewind}
                             \ifthenelse{\equal{\rangeContentLow}{}
                                             \OR \equal{\rangeContentHigh}{}}
                                 {
-                                    \node[] at (\position) (#1_range_connector) {};
+                                    \node[] at (\position) (#1RangeConnector) {};
                                 }
                                 {
-                                    \textField{#1_range_connector}{\position}{#3}
+                                    \textField{#1RangeConnector}{\position}{#3}
                                             {\concat{\category}{NoGuide}}
-                                            {\rangeConnectorToUse}
-                                            {\rangeConnectorStyle}
-                                            [\rangeLetterspace]
+                                            {\rangeConnector}
                                 }
-                            \renewcommand\position{#1_range_connector.\rosewind}
+                            \renewcommand\position{#1RangeConnector.\rosewind}
                             \ifthenelse{\equal{\rangeContentHigh}{}}
                                 {
-                                    \node[] at (\position) (#1_range_hi) {};
+                                    \node[] at (\position) (#1RangeHi) {};
                                 }
                                 {
-                                    \textField{#1_range_hi}{\position}{#3}
+                                    \textField{#1RangeHi}{\position}{#3}
                                             {\concat{\category}{\categoryAttr}}
-                                            {\rangeContentHigh}{\rangeContentStyle}
-                                            [\rangeLetterspace]
+                                            {\rangeContentHigh}
                                 }
-                            \renewcommand\position{#1_range_hi.\rosewind}
-                            \tikzset{#1_range/.append style={}}
-                            \node[#1_range, fit=(#1_range_lo)(#1_range_connector)(#1_range_hi)] (#1_range) {};
+                            \renewcommand\position{#1RangeHi.\rosewind}
+                            \tikzset{#1Range/.append style={}}
+                            \node[rangeFit, #1Range, fit=(#1RangeLo)(#1RangeConnector)(#1RangeHi)] (#1Range) {};
                         }
-                        { \node[] at (\position) (#1_range) {}; }
+                        { \node[] at (\position) (#1Range) {}; }
                     \bitsetQuery{elements}{\textIndex}
                         {
                             \coordinate (P) at
                                 ($(\position)+
                                     (0.3*\bitsetGet{elements}{\checkboxIndex}+
                                         0.6*\bitsetGet{elements}{\rangeIndex},0)$);
-                            \textField{#1_text}{P}{#3}
+                            \textField{#1Text}{P}{#3}
                                     {\concat{\category}{\categoryAttr}}
-                                    {\textContent}{\textStyle}
-                                    [\textLetterspace]
-                            \renewcommand\position{#1_text.\rosewind}
+                                    {\textContent}
+                            \renewcommand\position{#1Text.\rosewind}
                         }
-                        { \node[] at (\position) (#1_text) {}; }
+                        { \node[] at (\position) (#1Text) {}; }
                 }
             {left}
                 {
                     \renewcommand\rosewind{west}
                     \bitsetQuery{elements}{\textIndex}
                         {
-                            \textField{#1_text}{\position}{#3}
+                            \textField{#1Text}{\position}{#3}
                                     {\concat{\category}{\categoryAttr}}
-                                    {\textContent}{\textStyle}
-                                    [\textLetterspace]
-                            \renewcommand\position{#1_text.\rosewind}
+                                    {\textContent}
+                            \renewcommand\position{#1Text.\rosewind}
                         }
-                        { \node[] at (\position) (#1_text) {}; }
+                        { \node[] at (\position) (#1Text) {}; }
                     \bitsetQuery{elements}{\rangeIndex}
                         {
                             \ifthenelse{\equal{\rangeContentHigh}{}}
                                 {
-                                    \node[] at (\position) (#1_range_hi) {};
+                                    \node[] at (\position) (#1RangeHi) {};
                                 }
                                 {
-                                    \textField{#1_range_hi}{\position}{#3}
+                                    \textField{#1RangeHi}{\position}{#3}
                                             {\concat{\category}{\categoryAttr}}
-                                            {\rangeContentHigh}{\rangeContentStyle}
-                                            [\rangeLetterspace]
+                                            {\rangeContentHigh}
                                 }
-                            \renewcommand\position{#1_range_hi.\rosewind}
+                            \renewcommand\position{#1RangeHi.\rosewind}
                             \ifthenelse{\equal{\rangeContentLow}{}
                                             \OR \equal{\rangeContentHigh}{}}
                                 {
-                                    \node[] at (\position) (#1_range_connector) {};
+                                    \node[] at (\position) (#1RangeConnector) {};
                                 }
                                 {
-                                    \textField{#1_range_connector}{\position}{#3}
+                                    \textField{#1RangeConnector}{\position}{#3}
                                             {\concat{\category}{NoGuide}}
-                                            {\rangeConnectorToUse}
-                                            {\rangeConnectorStyle}
-                                            [\rangeLetterspace]
+                                            {\rangeConnector}
                                 }
-                            \renewcommand\position{#1_range_connector.\rosewind}
+                            \renewcommand\position{#1RangeConnector.\rosewind}
                             \ifthenelse{\equal{\rangeContentLow}{}}
                                 {
-                                    \node[] at (\position) (#1_range_lo) {};
+                                    \node[] at (\position) (#1RangeLo) {};
                                 }
                                 {
-                                    \textField{#1_range_lo}{\position}{#3}
+                                    \textField{#1RangeLo}{\position}{#3}
                                             {\concat{\category}{\categoryAttr}}
-                                            {\rangeContentLow}{\rangeContentStyle}
-                                            [\rangeLetterspace]
+                                            {\rangeContentLow}
                                 }
-                            \renewcommand\position{#1_range_lo.\rosewind}
-                            \tikzset{#1_range/.append style={}}
-                            \node[#1_range, fit=(#1_range_lo)(#1_range_connector)(#1_range_hi)] (#1_range) {};
+                            \renewcommand\position{#1RangeLo.\rosewind}
+                            \tikzset{#1Range/.append style={}}
+                            \node[rangeFit, #1Range, fit=(#1RangeLo)(#1RangeConnector)(#1RangeHi)] (#1Range) {};
                         }
-                        { \node[] at (\position) (#1_range) {}; }
+                        { \node[] at (\position) (#1Range) {}; }
                     \bitsetQuery{elements}{\checkboxIndex}
                         {
-                            \node[#1_checkbox] at (\position) (#1_checkbox) {\checkboxContent};
-                            \renewcommand\position{#1_checkbox.\rosewind}
+                            \node[#1Checkbox] at (\position) (#1Checkbox) {\checkboxContent};
+                            \renewcommand\position{#1Checkbox.\rosewind}
                         }
-                        { \node[] at (\position) (#1_checkbox) {}; }
+                        { \node[] at (\position) (#1Checkbox) {}; }
                     \bitsetQuery{elements}{\labelIndex}
                         {
-                            \textField{#1_label}{\position}{#3}{\concat{\category}{Label}}
-                                    {\labelContent}{ label, \labelStyle}
-                                    [\labelLetterspace]
-                            \renewcommand\position{#1_label.\rosewind}
+                            \textField{#1Label}{\position}{\aligned}
+                                    {\concat{\category}{\labelCategory}}
+                                    {\labelContent}
+                            \renewcommand\position{#1Label.\rosewind}
                         }
-                        { \node[] at (\position) (#1_label) {}; }
+                        { \node[] at (\position) (#1Label) {}; }
                 }
         }[{Error}]
         \tikzset{#1/.append style={}}
-        \IfNoValueOrEmptyTF{#9}
-            {}
-            {
-                \setsepchar{,}
-                \readlist*\styles{#9,}
-                \foreachitem\style\in\styles{
-                    \tikzset{#1/.append style/.expanded={\style}}
+        \IfStrEqCase{#3}{
+            {right}
+                {
+                    \node[blockFit, blockFitGoingRight, #1,
+                        fit=(#1Label)(#1Checkbox)(#1Range)(#1Text) ]
+                        (#1) {};
                 }
-            }
-        \node[#1, fit=(#1_label)(#1_checkbox)(#1_range)(#1_text) ] (#1) {};
+            {left}
+                {
+                    \node[blockFit, blockFitGoingLeft, #1,
+                        fit=(#1Label)(#1Checkbox)(#1Range)(#1Text) ]
+                        (#1) {};
+                }
+        }[{Error}]
     }
 }
-
-
+%
 %We have to initialize a million booleans (OK, only 212), for the state of every
 %checkbox on the convention card:
-
+%
 %Listed below in order from top to bottom, front then back, of the card.
 %Generally every item has a 5-letter abbreviated name.
 \newboolean{visib}\newboolean{serif}
@@ -632,10 +626,10 @@
 \newboolean{suakv}
 \newboolean{nt4th}\newboolean{nt3rd}\newboolean{nt3lo}\newboolean{ntatt}\newboolean{nt2xx}
 \newboolean{ntakv}
-
+%
 % And, finally, we define the convention card itself,
 % inside one huuuuuge command called \drawconventioncard:
-
+%
 % All coordinates of items inside here are given in millimeters
 % from the bottom left corner of the card.
 % The "t" style is "text" user text or preformatted text.  Using this style
@@ -648,114 +642,377 @@
     \def\maketitle{\svmaketitle\thispagestyle{empty}}
     \usetikzlibrary{scopes}%
     \usetikzlibrary{calc}%needed to position stuff in strings
+    \usetikzlibrary{positioning}%
     \usetikzlibrary{fit}%
+%
+    \tikzset{
+        vertHeader/.append style={right,rectangle,rotate=90,white,centered,font=\bfseries},
+        namesLabel/.append style={big,bold},
+        namesText/.append style={big,bold},
+        genapproachLabel/.append style={bold},
+        genapproachText/.append style={centered,bold},
+        mhbLabel/.append style={italics=-1},
+        btmrp1Text/.append style={bold},
+        btmrp2Text/.append style={bold},
+        1chdrLabel/.append style={bidHeader},
+        c4432Text/.append style={label,xshift=-3},
+        clrespLabel/.append style={italics=1},
+        1dhdrLabel/.append style={bidHeader},
+        1majhdrLabel/.append style={bidHeader},
+        1ntrange1Label/.append style={bidHeader},
+        1nhd2Label/.append style={bidHeader},
+        tex4cLabel/.append style={regularTextField},
+        tex4dLabel/.append style={regularTextField},
+        tex4hLabel/.append style={regularTextField},
+        1nt3cLabel/.append style={regularTextField},
+        1nt3dLabel/.append style={regularTextField},
+        1nt3hLabel/.append style={regularTextField},
+        1nt3sLabel/.append style={regularTextField},
+        2ntrangeLabel/.append style={bidHeader},
+        3ntrangeLabel/.append style={bidHeader},
+        2crangeLabel/.append style={bidHeader},
+        2drangeLabel/.append style={bidHeader},
+        2hrangeLabel/.append style={bidHeader},
+        2srangeLabel/.append style={bidHeader},
+%        fsflabelLabel/.append style={xshift=16},
+%        nmflabelLabel/.append style={xshift=16},
+        dir1ntRangeLo/.append style={bold},
+        dir1ntRangeHi/.append style={bold},
+        bal1ntRangeLo/.append style={bold},
+        bal1ntRangeHi/.append style={bold},
+        o1lvlRangeLo/.append style={bold},
+        o1lvlRangeHi/.append style={bold},
+        o2lvlRangeLo/.append style={bold},
+        o2lvlRangeHi/.append style={bold},
+        minrangeRangeLo/.append style={bold},
+        minrangeRangeHi/.append style={bold},
+        majrangeRangeLo/.append style={bold},
+        majrangeRangeHi/.append style={bold},
+        vsntLabel/.append style={bold,vsntlabelWidth},
+        vsntText/.append style={bold,vsnttextWidth},
+        vsntdblLabel/.append style={vsntlabelWidth},
+        vsntdblText/.append style={vsnttextWidth},
+        vsnt2cLabel/.append style={vsntlabelWidth},
+        vsnt2cText/.append style={vsnttextWidth},
+        vsnt2dLabel/.append style={vsntlabelWidth},
+        vsnt2dText/.append style={vsnttextWidth},
+        vsnt2hLabel/.append style={vsntlabelWidth},
+        vsnt2hText/.append style={vsnttextWidth},
+        vsnt2sLabel/.append style={vsntlabelWidth},
+        vsnt2sText/.append style={vsnttextWidth},
+        vsnt2nLabel/.append style={vsntlabelWidth},
+        vsnt2nText/.append style={vsnttextWidth},
+        vsntaltLabel/.append style={bold,vsntlabelWidth},
+        vsntaltText/.append style={bold,vsnttextWidth},
+        vsntaltdblLabel/.append style={vsntlabelWidth},
+        vsntaltdblText/.append style={vsnttextWidth},
+        vsntalt2cLabel/.append style={vsntlabelWidth},
+        vsntalt2cText/.append style={vsnttextWidth},
+        vsntalt2dLabel/.append style={vsntlabelWidth},
+        vsntalt2dText/.append style={vsnttextWidth},
+        vsntalt2hLabel/.append style={vsntlabelWidth},
+        vsntalt2hText/.append style={vsnttextWidth},
+        vsntalt2sLabel/.append style={vsntlabelWidth},
+        vsntalt2sText/.append style={vsnttextWidth},
+        vsntalt2nLabel/.append style={vsntlabelWidth},
+        vsntalt2nText/.append style={vsnttextWidth},
+        cuebidlabelLabel/.append style={centered},
+        cuebidartLabel/.append style={centered},
+        cuebidquasiLabel/.append style={centered},
+        cuebidnatminLabel/.append style={centered},
+        cuebidnatmajLabel/.append style={centered},
+        cuebidartsuitsLabel/.append style={cuebidartLabel},
+        cuebidquasisuitsLabel/.append style={cuebidquasiLabel},
+        cuebidnatminsuitsLabel/.append style={cuebidnatminLabel},
+        cuebidnatmajsuitsLabel/.append style={cuebidnatmajLabel},
+        2ntolabelLabel/.append style={2ntolabelWidth},
+        2ntominLabel/.append style={centered,2ntolabelWidth},
+        2ntomajLabel/.append style={centered,2ntolabelWidth},
+        2ntonat/.append style={2ntonatWidth}
+        2ntoraise/.append style={2ntoraiseWidth}
+        opdtothru/.append style={bold},
+        attlabelLabel/.append style={centered},
+        cntlabelLabel/.append style={centered},
+        splabelLabel/.append style={centered},
+        suakvText/.append style={text width=60},
+        ntakvText/.append style={text width=60},
+        footnotefrontdateLabel/.append style={t,right,label},
+        footnotefronttextLabel/.append style={t,right,label},
+        footnotefrontmadeLabel/.append style={t,left,label},
+        footnotebackdateLabel/.append style={t,right,label},
+        footnotebacktextLabel/.append style={t,right,label},
+        footnotebackmadeLabel/.append style={t,left,label},
+    }
+%
+%
+\ifthenelse{\equal{\ccNumPages}{2}}
+    {
+        \renewcommand\emptyStringLength{40pt}% empty string: 38.4954
+        \ifthenelse{\equal{\secondcondition}{}}
+            { \renewcommand\vsntwidth{190} }
+            { \renewcommand\vsntwidth{90} }
+        \tikzset{
+            every picture/.append style={xscale=0.2,yscale=0.125},
+            vertHeader/.append style={inner sep=5pt},
+            frontHeader/.append style={},
+            headerOverview/.append style={text width=68},
+            headerMinors/.append style={text width=154},
+            headerMajors/.append style={text width=86},
+            headerNoTrump/.append style={text width=182},
+            headerTwoLevel/.append style={text width=140},
+            headerOther/.append style={text width=54},
+            headerDoubles/.append style={text width=68},
+            headerNTOvercalls/.append style={text width=68},
+            headerOvercalls/.append style={text width=118},
+            headerVsNTOpening/.append style={text width=118,relsize=-1},
+            headerDirectCuebids/.append style={text width=90},
+            headerVsTakeoutDbl/.append style={text width=90},
+            headerPreempts/.append style={text width=83},
+            headerVsPreempts/.append style={text width=83},
+            headerSlams/.append style={text width=65},
+            headerCarding/.append style={text width=115},
+            headerSignals/.append style={text width=115},
+            headerLeadsVsSuits/.append style={text width=157},
+            headerLeadsVsNT/.append style={text width=157},
+            bidHeader/.append style={bold=2},
+            genapproachText/.append style={text width=455},
+            mhboText/.append style={text width=185},
+            mhbrText/.append style={text width=105},
+            foothText/.append style={text width=150},
+            cldescText/.append style={text width=465},
+            clrespText/.append style={text width=330},
+            clrespdiText/.append style={text width=144},
+            didescText/.append style={text width=465},
+            direspText/.append style={text width=330},
+            btmrp1Label/.append style={text width=78},
+            btmrp1Text/.append style={text width=470},
+            negaxLabel/.append style={text width=42},
+            respxLabel/.append style={text width=42},
+            suppxLabel/.append style={text width=42},
+            dir1ntLabel/.append style={text width=55},
+            bal1ntLabel/.append style={text width=55},
+            vsntlabelWidth/.append style={text width=20},
+            vsnttextWidth/.append style={text width=\vsntwidth},
+            cuebidlabelLabel/.append style={text width=100},
+            cuebidartLabel/.append style={text width=20},
+            cuebidquasiLabel/.append style={text width=20},
+            cuebidnatminLabel/.append style={text width=20},
+            cuebidnatmajLabel/.append style={text width=20},
+            2ntolabelWidth/.append style={text width=44},
+            2ntonatWidth/.append style={text width=20},
+            2ntoraiseWidth/.append style={text width=25},
+            threeprerespText/.append style={text width=225},
+            attlabelLabel/.append style={text width=80},
+            cntlabelLabel/.append style={text width=80},
+            splabelLabel/.append style={text width=80},
+        }
+    }
+    {
+        \renewcommand\emptyStringLength{63pt}% empty string: 62.16904
+        \ifthenelse{\equal{\secondcondition}{}}
+            { \renewcommand\vsntwidth{90} }
+            { \renewcommand\vsntwidth{40} }
+        \tikzset{
+            every picture/.append style={remember picture, overlay, yshift=-750, xscale=0.1, yscale=0.125},
+            vertHeader/.append style={inner sep=1pt},
+            frontHeader/.append style={yshift=-2},
+            headerOverview/.append style={text width=76},
+            headerMinors/.append style={text width=162},
+            headerMajors/.append style={text width=94},
+            headerNoTrump/.append style={text width=190},
+            headerTwoLevel/.append style={text width=148},
+            headerOther/.append style={text width=62},
+            headerDoubles/.append style={text width=76},
+            headerNTOvercalls/.append style={text width=76},
+            headerOvercalls/.append style={text width=126},
+            headerVsNTOpening/.append style={text width=126},
+            headerDirectCuebids/.append style={text width=98},
+            headerVsTakeoutDbl/.append style={text width=98},
+            headerPreempts/.append style={text width=91},
+            headerVsPreempts/.append style={text width=91},
+            headerSlams/.append style={text width=73},
+            headerCarding/.append style={text width=123},
+            headerSignals/.append style={text width=123},
+            headerLeadsVsSuits/.append style={text width=165},
+            headerLeadsVsNT/.append style={text width=165},
+            bidHeader/.style={bold=2},
+            blockFitGoingRight/.append style={inner sep=-3},
+            namesText/.append style={text width=170},
+            genapproachText/.append style={yshift=6,text width=195},
+            mhbLabel/.append style={yshift=10},
+            mhboLabel/.append style={yshift=-10,xshift=-105},
+            mhboText/.append style={text width=140},
+            mhbrText/.append style={text width=55},
+            foothText/.append style={text width=148},
+            cldescText/.append style={text width=250},
+            clrespText/.append style={text width=165},
+            clrespdiText/.append style={text width=72},
+            didescText/.append style={text width=250},
+            direspText/.append style={text width=165},
+            btmrp1Label/.append style={text width=69},
+            btmrp1Text/.append style={text width=200},
+            btmrp2Text/.append style={text width=250},
+            negaxLabel/.append style={text width=36},
+            penaxCheckbox/.append style={xshift=-2},
+            respxLabel/.append style={text width=36},
+            maxixCheckbox/.append style={xshift=-2},
+            suppxLabel/.append style={text width=36},
+            supxxCheckbox/.append style={xshift=-2},
+            dir1ntLabel/.append style={text width=37},
+            bal1ntLabel/.append style={text width=37},
+            dntcoText/.append style={text width=100},
+            vsntlabelWidth/.append style={text width=12},
+            vsnttextWidth/.append style={text width=\vsntwidth},
+            cuebidlabelLabel/.append style={text width=40},
+            cuebidartLabel/.append style={text width=15},
+            cuebidquasiLabel/.append style={text width=15},
+            cuebidnatminLabel/.append style={text width=15},
+            cuebidnatmajLabel/.append style={text width=15},
+            ocotherText/.append style={text width=100},
+            xxlabel/.append style={inner sep=-7},
+            xxconText/.append style={text width=60},
+            2ntolabelLabel/.append style={yshift=4},
+            2ntolabelWidth/.append style={text width=10},
+            2ntonatLabel/.append style={text width=8,yshift=-4},
+            2ntoraiseLabel/.append style={text width=12},
+            2ntorangeLabel/.append style={text width=80,centered},
+            threeprerespText/.append style={text width=105},
+            oppenCheckbox/.append style={xshift=-2},
+            signalslabelLabel/.append style={text width=80},
+            attlabelLabel/.append style={text width=80},
+            cntlabelLabel/.append style={text width=80},
+            splabelLabel/.append style={text width=80},
+            cardotherText/.append style={text width=75},
+            suitlenleadlabelLabel/.append style={text width=20,yshift=4},
+            su4thLabel/.append style={yshift=-4},
+            ntlenleadlabelLabel/.append style={text width=20,yshift=4},
+            nt4thLabel/.append style={yshift=-4},
+            footnotefrontdateLabel/.append style={text width=1, opacity=0},
+            footnotefronttextLabel/.append style={text width=1, opacity=0},
+            footnotebacktextLabel/.append style={text width=1, opacity=0},
+            footnotebackmadeLabel/.append style={text width=1, opacity=0},
+        }
+        \ifthenelse{\equal{\xtwontminormax}{}}
+            {
+                \tikzset{
+                    minrangeRangeLo/.append style={text width=80,centered},
+                }
+            }
+            {}
+        \ifthenelse{\equal{\xtwontmajormax}{}}
+            {
+                \tikzset{
+                    majrangeRangeLo/.append style={text width=80,centered},
+                }
+            }
+            {}
+    }
+%
     \begin{small}
-    \begin{tikzpicture}[xscale=0.2,yscale=0.125,
-    ]
+    \ifthenelse{\equal{\ccNumPages}{2}}
+        {}
+        {
+            \scalefont{0.65}
+            \renewcommand\RSsmallest{4pt}
+        }
+    \begin{tikzpicture}[]
     % draw a box around everything
-    \draw (101, 0) -- (101, 215) -- (203, 215) -- (203, 0) -- cycle;
+    %\draw (101, 0) -- (101, 215) -- (203, 215) -- (203, 0) -- cycle;
+    \ifthenelse{\equal{\ccNumPages}{2}}
+        {
+            \draw (101, 0) -- (101, 215);
+        }
+        {}
+    \draw (101, 215) -- (203, 215);
+    \draw (203, 215) -- (203, 0);
+    \draw (203, 0) -- (101, 0);
+%
     %\draw [help lines] (101, 0) grid [step = 5] (203, 215);
     % dividers on convention card:
         {
         % Front Side
-        \draw (101, 209) -- (101, 215);
+        \ifthenelse{\equal{\ccNumPages}{2}}
+            {
+                \draw (101, 209) -- (101, 215);
+            }
+            {}
         \draw (104, 209) -- +(99, 0);
-        \node [blackHeader,text width=68] at (102.5, 187) (headerOverview)
-            {\adjustbox{max width=\linewidth, center}{OVERVIEW}};
+        \node [blackHeader,frontHeader,headerOverview] at (102.5, 187) (headerOverview)
+            {\adjustbox{max width=\linewidth}{OVERVIEW}};
         \draw (104, 187) -- +(99, 0);
-        \node [grayHeader,text width=154] at (102.5, 141) (headerMinors)
-            {\adjustbox{max width=\linewidth,center}{MINORS}};
+        \node [grayHeader,frontHeader,headerMinors] at (102.5, 141) (headerMinors)
+            {\adjustbox{max width=\linewidth}{MINORS}};
         \draw (104, 164) -- +(99, 0); % 1C
         \draw (104, 141) -- +(99, 0); % 1D
-        \node [blackHeader,text width=86] at (102.5, 114) (headerMajors)
-            {\adjustbox{max width=\linewidth, center}{MAJORS}};
+        \node [blackHeader,frontHeader,headerMajors] at (102.5, 114) (headerMajors)
+            {\adjustbox{max width=\linewidth}{MAJORS}};
         \draw (104, 114) -- +(99, 0);
-        \node [grayHeader,text width=182] at (102.5, 60) (headerNoTrump)
-            {\adjustbox{max width=\linewidth,center}{NOTRUMP}};
+        \node [grayHeader,frontHeader,headerNoTrump] at (102.5, 60) (headerNoTrump)
+            {\adjustbox{max width=\linewidth}{NOTRUMP}};
         \draw (104, 76) -- +(99, 0); % 1NT
         \draw (104, 66) -- +(99, 0); % 2NT
         \draw (104, 60) -- +(99, 0); % 3NT
-        \node [blackHeader,text width=140] at (102.5, 18) (headerTwoLevel)
-            {\adjustbox{max width=\linewidth, center}{2 LEVEL}};
+        \node [blackHeader,frontHeader,headerTwoLevel] at (102.5, 18) (headerTwoLevel)
+            {\adjustbox{max width=\linewidth}{2 LEVEL}};
         \draw (104, 48) -- +(99, 0); % 2C
         \draw (104, 38) -- +(99, 0); % 2D
         \draw (104, 28) -- +(99, 0); % 2H
         \draw (104, 18) -- +(99, 0); % 2S
-        \node [grayHeader,text width=54] at (102.5, 0) (headerOther)
-            {\adjustbox{max width=\linewidth,center}{OTHER}};
+        \node [grayHeader,frontHeader,headerOther] at (102.5, 0) (headerOther)
+            {\adjustbox{max width=\linewidth}{OTHER}};
     }
-
+%
 % Names:
     \block{names}{101,212}{right}{1001}{regularNoGuide}
-         {Names:@big,bold}
-         {}
-         {\names@big,bold}
+         {Names:}{}{\names}
     \block{playernumber}{203, 212}{left}{0001}{regularNoGuide}
-         {}{}
-         {\playernumber@big,bold}
-
+         {}{}{\playernumber}
+%
 % Overview:
 % set private booleans based on strings being defined or not.
     \IfNoValueOrEmptyTF{\foothertext}
         {\setboolean{footh}{false}}
         {\setboolean{footh}{true}}
-
-    \block{genapproachlabel}{104, 205.5}{right}{1000}{regular}
-        {General Approach@bold}
-        {}{}
-    \block{genapproach}{203, 205.5}{left}{0001}{regular}
-        {}{}
-        {\generalapproach@text width=440, centered, bold}
-    \block{mhb}{104, 201}{right}{1000}{regular}
-        {Min Expected HCP when Balanced:@italicsLabel}
-        {}{}
+%
+    \block{genapproach}{203, 205.5}{left}{1001}{regularIgnoreStyle}
+        {General Approach}{}
+        {\generalapproach}
+    \block{mhb}{104, 201}{right}{1000}{regularIgnoreStyle}
+        {Min Expected HCP when Balanced:}{}{}
     \block{mhbo}{mhb.east}{right}{1001}{regular}
-        {Opening}
-        {}
-        {\minHCPopen@text width=185}
+        {Opening}{}{\minHCPopen}
     \block{mhbr}{203, 201}{left}{1001}{regular}
-        {Responding}
-        {}
-        {\minHCPresp@text width=105}
-
+        {Responding}{}{\minHCPresp}
+%
     \block{fohdr}{104,197}{right}{1000}{regular}
-        {Forcing Opening:}
-        {}{}
+        {Forcing Opening:}{}{}
     \block{fo1c}{fohdr.east}{right}{1100}{alert}
-        {1\bc}
-        {}{}
+        {1\,\bc}{}{}
     \block{fo2c}{fo1c.east}{right}{1100}{regular}
-        {2\bc}
-        {}{}
+        {2,\bc}{}{}
     \block{footh}{fo2c.east}{right}{1101}{alert}
-        {Other}
-        {}
-        {\foothertext@xshift=3, text width=150}
-    \block{1ntv}{201, 197}{left}{1100}{regular}
-        {Variable}
-        {}{}
+        {Other}{}{\foothertext}
+    \coordinate (1NTV) at ($(201,204) - 7*(0,\ccNumPages-1)$);
+    \block{1ntv}{1NTV}{left}{1100}{regular}
+        {Variable}{}{}
     \block{1ntw}{1ntv.west}{left}{1100}{regular}
-        {Weak}
-        {}{}
+        {Weak}{}{}
     \block{1nts}{1ntw.west}{left}{1100}{regular}
-        {Strong}
-        {}{}
+        {Strong}{}{}
     \block{1nthead}{1nts.west}{left}{1000}{regular}
-        {1NT Opening:}
-        {}{}
-
-    \block{btmrp1}{104,193}{right}{1001}{regular}
-        {Bids That May\\Require Preparation:@text width=110}
-        {}
-        {\bidspreptop@xshift=-28, text width=465, bold}
+        {1NT Opening:}{}{}
+%
+    \block{btmrp1}{203,193}{left}{1001}{regular}
+        {Bids That May\\Require Preparation:}
+        {}{\bidspreptop}
     \block{btmrp2}{203, 189}{left}{0001}{regularNoGuide}
         {}{}
-        {\bidsprepbottom@text width=465, bold}
-
+        {\bidsprepbottom}
+%
 % 1C opening
-
-    \block{1chdr}{104,183.5}{right}{1000}{regular}
-        {1\bc@bidHeader}{}{}
+%
+    \block{1chdr}{104,183.5}{right}{1000}{regularIgnoreStyle}
+        {1\,\bc}{}{}
     \block{1cmin}{111,184.8}{right}{1000}{regular}
         {Min Length:}{}{}
     \block{club5}{1cmin.east}{right}{1100}{regular}
@@ -767,32 +1024,29 @@
     \block{cl2nf}{club3.east}{right}{1100}{announce}
         {2}{}{}
     \block{c4432}{cl2nf.east}{right}{1101}{announceLabel}
-        {(4432 only}{}{)@label,xshift=-3}
+        {(4432 only}{}{)}
     \block{cl1nf}{c4432.east}{right}{1100}{announce}
         {NF 1}{}{}
     \block{cl0nf}{cl1nf.east}{right}{1100}{announce}
         {NF 0}{}{}
     \block{clcon}{cl0nf.east}{right}{1100}{alert}
         {Art F}{}{}
-
-    \block{cldesc}{203, 181}{left}{0001}{regular}
-        {}{}
-        {\cldescribe@text width=465}
-    \block{clubresp}{114.5, 177}{right}{1001}{regular}
-        {Resp:}{}
-        {\clresponses@text width=330}
-    \block{ctxfr}{clubresp.east}{right}{1100}{announce}
+%
+    \block{cldesc}{203,181}{left}{0001}{regular}
+        {}{}{\cldescribe}
+    \block{ctxfr}{201,177}{left}{1100}{announce}
         {Transfer Responses}{}{}
-    \block{c1respdi}{104, 173}{right}{1001}{regular}
-        {1\,\rd\,}{}
-        {\clrespdi@text width=144}
+    \block{clubresp}{ctxfr.west}{left}{1001}{regularIgnoreStyle}
+        {Resp:}{}{\clresponses}
+    \block{c1respdi}{104,173}{right}{1001}{regular}
+        {1\,\rd\,}{}{\clrespdi}
     \block{bypas}{c1respdi.east}{right}{1100}{regular}
         {Bypass 5+\rd\,}{}{}
     \block{cl1nt}{104,169.5}{right}{1010}{regular}
         {1NT}{\minonenlowtext@\minonenhightext}{}
     \block{cl2nt}{104,166}{right}{1010}{regular}
         {2NT}{\mintwonlowtext@\mintwonhightext}{}
-
+%
     \block{clraises}{160,174}{right}{1000}{regular}
         {Raises}{}{}
     \block{clraisesingle}{149,171}{right}{1000}{regular}
@@ -819,11 +1073,11 @@
         {Mixed}{}{}
     \block{cloci}{198,166}{left}{1100}{regular}
         {Inv}{}{}
-
+%
 % 1D opening
-
-    \block{1dhdr}{104,160.5}{right}{1000}{regular}
-        {1\rd@bidHeader}{}{}
+%
+    \block{1dhdr}{104,160.5}{right}{1000}{regularIgnoreStyle}
+        {1\,\rd}{}{}
     \block{1dmin}{111,161.8}{right}{1000}{regular}
         {Min Length:}{}{}
     \block{diam5}{1dmin.east}{right}{1100}{regular}
@@ -842,21 +1096,19 @@
         {NF 0}{}{}
     \block{dicon}{di0nf.east}{right}{1100}{alert}
         {Art F}{}{}
-
+%
     \block{didesc}{203, 158.5}{left}{0001}{regular}
-        {}{}
-        {\didescribe@text width=465}
-    \block{diamresp}{114.5, 155}{right}{1001}{regular}
-        {Resp:}{}
-        {\diresponses@text width=330}
-    \block{dascl}{diamresp.east}{right}{1100}{regular}
-        {Same as over 1\c\,}{}{}
-
+        {}{}{\didescribe}
+    \block{dascl}{201,155}{left}{1100}{regular}
+        {Same as over 1\,\c}{}{}
+    \block{diamresp}{dascl.west}{left}{1001}{regular}
+        {Resp:}{}{\diresponses}
+%
     \block{di1nt}{104,146.5}{right}{1010}{regular}
         {1NT}{\minonedionenlowtext@\minonedionenhightext}{}
     \block{di2nt}{104,143}{right}{1010}{regular}
         {2NT}{\minoneditwonlowtext@\minoneditwonhightext}{}
-
+%
     \block{diraises}{160,151}{right}{1000}{regular}
         {Raises}{}{}
     \block{diraisesingle}{149,148}{right}{1000}{regular}
@@ -883,10 +1135,10 @@
         {Mixed}{}{}
     \block{dioci}{198,143}{left}{1100}{regular}
         {Inv}{}{}
-
+%
 % Major Openings
-    \block{1dhdr}{104,137.5}{right}{1000}{regular}
-        {1\rh/\bs@bidHeader}{}{}
+    \block{1majhdr}{104,137.5}{right}{1000}{regularIgnoreStyle}
+        {1\,\rh/\bs}{}{}
     \block{1maj12len}{107,133}{right}{1000}{regular}
         {1\textsuperscript{st}/2\textsuperscript{nd} Length:}{}{}
     \block{h12l4}{1maj12len.east}{right}{1100}{regular}
@@ -899,7 +1151,7 @@
         {4}{}{}
     \block{h34l5}{h34l4.east}{right}{1100}{regular}
         {5}{}{}
-
+%
     \block{1m1ntf}{107,127}{right}{1000}{announce}
         {1\,NT:}{}{}
     \block{ntfor}{1m1ntf.east}{right}{1100}{regular}
@@ -908,12 +1160,12 @@
         {Semi-F}{}{}
     \block{ntbps}{ntsem.east}{right}{1100}{regular}
         {Bypass\,\bs}{}{}
-
+%
     \block{majothertop}{104,121}{right}{1001}{alert}
         {Other:}{}{\majothertexttop}
     \block{majotherbottom}{104,117}{right}{1001}{alert}
         {}{}{\majothertextbottom}
-
+%
     \block{1majraises}{149,138.3}{right}{1000}{alert}
         {Art Raises:}{}{}
     \block{ra2nt}{1majraises.east}{right}{1100}{alert}
@@ -924,7 +1176,7 @@
         {Splinter}{}{}
     \block{majraiseother}{149,134}{right}{1001}{alert}
         {Other:}{}{\majraisetext}
-
+%
     \block{drury}{149,130}{right}{1000}{alert}
         {Drury:}{}{}
     \block{dru2c}{drury.east}{right}{1100}{alert}
@@ -935,7 +1187,7 @@
         {In Comp}{}{}
     \block{droth}{drcmp.east}{right}{0001}{alert}
         {}{}{\majdrurytext}
-
+%
     \block{majraisejump}{149,125.5}{right}{1000}{regular}
         {Jump Raise:}{}{}
     \block{dblrw}{178,125.5}{left}{1100}{alert}
@@ -952,7 +1204,7 @@
         {Mixed}{}{}
     \block{ocdri}{198,122}{left}{1100}{regular}
         {Inv}{}{}
-
+%
 %1 NT opening:
  % set private booleans based on strings being empty or not.
     \setboolean{2coth}{false}
@@ -968,10 +1220,10 @@
     \ifthenelse{\equal{\ntnttext}{}}
         {\setboolean{2noth}{false}}
         {\setboolean{2noth}{true}}
-
-    \block{1ntrange1}{104,110.5}{right}{1010}{announce}
-        {1NT@bidHeader}{\ntlowtext@\nthightext}{}
-
+%
+    \block{1ntrange1}{104,110.5}{right}{1010}{announceIgnoreStyle}
+        {1NT}{\ntlowtext@\nthightext}{}
+%
     % We can use the area past the first range for explanation...
     \ifthenelse{\NOT \boolean{1ntv} \AND \equal{\altntlowtext}{} \AND \equal{\altnthightext}{}}
         {
@@ -980,18 +1232,18 @@
     }{ % unless there is a second range.
             \block{1ntrange1conds}{1ntrange1.east}{right}{0001}{announce}
                 {}{}{If:\,\ntseatvul}
-            \block{1nhd2}{155,110.5}{right}{1010}{announce}
-                {1NT@bidHeader}{\altntlowtext@\altnthightext}{}
+            \block{1nhd2}{160,110.5}{right}{1010}{announceIgnoreStyle}
+                {1NT}{\altntlowtext@\altnthightext}{}
             \block{ntasr}{1nhd2.east}{right}{1101}{regular}
                 {Same resp?}{}{\altntresponse}
     }
-
+%
 % 1NT box, left column
     \block{nt5cm}{104,107}{right}{1100}{regular}
         {5-Card Major}{}{}
     \block{syson}{nt5cm.east}{right}{1001}{regular}
         {Sys on vs:}{}{\sysontext}
-
+%
     \block{1nt2c}{104,103}{right}{1000}{regular}
         {2\,\bc:}{}{}
     \block{staym}{1nt2c.east}{right}{1100}{regular}
@@ -1000,7 +1252,7 @@
         {Puppet}{}{}
     \block{2coth}{puppe.east}{right}{1100}{alert}
         {Other}{}{}
-
+%
     \block{1nt2d}{104,99}{right}{1000}{regular}
         {2\,\rd:}{}{}
     \block{nat2d}{1nt2d.east}{right}{1100}{regular}
@@ -1009,7 +1261,7 @@
         {Tfr}{}{}
     \block{2doth}{jac2d.east}{right}{1101}{alert}
         {Other}{}{\ntditext}
-
+%
     \block{1nt2h}{104,95}{right}{1000}{regular}
         {2\,\rh:}{}{}
     \block{nat2h}{1nt2h.east}{right}{1100}{regular}
@@ -1018,7 +1270,7 @@
         {Tfr}{}{}
     \block{2hoth}{jac2h.east}{right}{1101}{alert}
         {Other}{}{\nthetext}
-
+%
     \block{1nt2s}{104,91}{right}{1000}{regular}
         {2\,\bs:}{}{}
     \block{nat2s}{1nt2s.east}{right}{1100}{regular}
@@ -1027,7 +1279,7 @@
         {Tfr}{}{}
     \block{2soth}{trf2s.east}{right}{1101}{alert}
         {Other}{}{\ntsptext}
-
+%
     \block{1nt2n}{104,87}{right}{1000}{regular}
         {2NT:}{}{}
     \block{nat2n}{1nt2n.east}{right}{1100}{regular}
@@ -1036,18 +1288,18 @@
         {Tfr}{}{}
     \block{2noth}{trf2n.east}{right}{1101}{alert}
         {Other}{}{\ntnttext}
-
+%
     \block{smole}{104,83}{right}{1100}{alert}
         {Smolen}{}{}
     \block{trf}{smole.east}{right}{1000}{announce}
         {Trf:}{}{}
     \block{tex4c}{trf.east}{right}{1100}{announce}
-        {4\,\bc@regularTextField}{}{}
+        {4\,\bc}{}{}
     \block{tex4d}{tex4c.east}{right}{1100}{announce}
-        {4\,\rd@regularTextField}{}{}
+        {4\,\rd}{}{}
     \block{tex4h}{tex4d.east}{right}{1100}{announce}
-        {4\,\rh@regularTextField}{}{}
-
+        {4\,\rh}{}{}
+%
     \block{ntdbl}{104,79}{right}{1000}{regular}
         {Dbl:}{}{}
     \block{ntneg}{ntdbl.east}{right}{1101}{regular}
@@ -1058,34 +1310,32 @@
         {Other:}{}{\ntxothertext}
     \block{ntneg}{170,79}{right}{1101}{alert}
         {Lebensohl}{}{\ntlebentext}
-
+%
 %1NT box, right column
-
-    \block{1nt3c}{155,106}{right}{1001}{alert}
-        {3\,\bc@regularTextField}{}{\ntcjumptext}
-    \block{1nt3d}{155,102}{right}{1001}{alert}
-        {3\,\rd@regularTextField}{}{\ntdjumptext}
-    \block{1nt3h}{155,98}{right}{1001}{alert}
-        {3\,\rh@regularTextField}{}{\nthjumptext}
-    \block{1nt3s}{155,94}{right}{1001}{alert}
-        {3\,\bs@regularTextField}{}{\ntsjumptext}
-    \block{1ntother}{155,90}{right}{1000}{alert}
-        {Other:}{}{}
-    \block{1ntothertop}{1ntother.east}{right}{0001}{alert}
-        {}{}{\ntothertexttop}
-    \block{1ntotherbottom}{155,86}{right}{0001}{alert}
+%
+    \block{1nt3c}{160,106}{right}{1001}{alert}
+        {3\,\bc}{}{\ntcjumptext}
+    \block{1nt3d}{160,102}{right}{1001}{alert}
+        {3\,\rd}{}{\ntdjumptext}
+    \block{1nt3h}{160,98}{right}{1001}{alert}
+        {3\,\rh}{}{\nthjumptext}
+    \block{1nt3s}{160,94}{right}{1001}{alert}
+        {3\,\bs}{}{\ntsjumptext}
+    \block{1ntother}{160,90}{right}{1001}{alert}
+        {Other:}{}{\ntothertexttop}
+    \block{1ntotherbottom}{160,86}{right}{0001}{alert}
         {}{}{\ntothertextbottom}
-
+%
 %2NT/3NT Openings
-    \block{2ntrange}{104,72.5}{right}{1010}{regular}
-        {2NT@bidHeader}{\twonlowtext@\twonhightext}{}
+    \block{2ntrange}{104,72.5}{right}{1010}{regularIgnoreStyle}
+        {2NT}{\twonlowtext@\twonhightext}{}
     \block{pup2n}{2ntrange.east}{right}{1100}{regular}
         {Puppet\,}{}{}
     \block{2n3s}{pup2n.east}{right}{1001}{alert}
         {3\,\bs:}{}{\twonsptext}
     \block{con2n}{104,68.5}{right}{1101}{alert}
         {Conv\,}{}{\convnttext}
-
+%
     \block{2ntrf}{130,68.5}{right}{1000}{announce}
         {Trf:}{}{}
     \block{jac2n}{2ntrf.east}{right}{1100}{announce}
@@ -1096,29 +1346,29 @@
         {Neg Dbl}{}{}
     \block{2nother}{neg2n.east}{right}{1001}{alert}
         {Other:}{}{\twonothertext}
-
-    \block{3ntrange}{104,62}{right}{1010}{regular}
-        {3NT@bidHeader}{\threenlowtext@\threenhightext}{}
+%
+    \block{3ntrange}{104,62}{right}{1010}{regularIgnoreStyle}
+        {3NT}{\threenlowtext@\threenhightext}{}
     \block{gam3n}{3ntrange.east}{right}{1101}{alert}
         {One suit:}{}{\threenonesuittext}
-
+%
 %2C Opening
-    \block{2crange}{104,56}{right}{1011}{regular}
-        {2\bc@bidHeader}{\twoclowtext@\twochightext}
+    \block{2crange}{104,56}{right}{1011}{regularIgnoreStyle}
+        {2\,\bc}{\twoclowtext@\twochightext}
         {\twocldescribe}
-
+%
     \block{wai2d}{201,57.5}{left}{1100}{regular}
         {Waiting}{}{}
     \block{neg2d}{wai2d.west}{left}{1100}{regular}
         {Neg}{}{}
     \block{2c2d}{neg2d.west}{left}{1000}{regular}
         {2\,\rd\ Resp:}{}{}
-
+%
     \block{neg2h}{201,54}{left}{1100}{alert}
         {2\,\rh\ Neg}{}{}
     \block{steps}{neg2h.west}{left}{1101}{alert}
         {Steps}{}{\twoclstepstext}
-
+%
     \block{vs2cl}{104,50}{right}{1100}{regular}
         {Very Str}{}{}
     \block{st2cl}{vs2cl.east}{right}{1100}{alert}
@@ -1127,17 +1377,17 @@
         {Nat}{}{}
     \block{ot2cl}{na2cl.east}{right}{1101}{alert}
         {Conv}{}{\twoclconvtext}
-
+%
     \block{2cother}{203,50}{left}{1001}{alert}
         {Other:}{}{\twoclresponse}
-
+%
 %2D Opening
-    \block{2drange}{104,44.5}{right}{1011}{regular}
-        {2\rd@bidHeader}{\twodlowtext@\twodhightext}
+    \block{2drange}{104,44.5}{right}{1011}{regularIgnoreStyle}
+        {2\,\rd}{\twodlowtext@\twodhightext}
         {\twoddescribe}
     \block{dnsnf}{201,44.5}{left}{1100}{alert}
         {New Suit NF}{}{}
-
+%
     \block{wk2di}{104,40.5}{right}{1100}{regular}
         {Wk}{}{}
     \block{in2di}{wk2di.east}{right}{1100}{alert}
@@ -1150,14 +1400,14 @@
         {Rebids over 2NT:}{}{\twodntresp}
     \block{dnsnf}{203,40.5}{left}{1001}{alert}
         {Other:}{}{\twodresponse}
-
+%
 %2H Opening
-    \block{2hrange}{104,34.5}{right}{1011}{regular}
-        {2\rh@bidHeader}{\twohlowtext@\twohhightext}
+    \block{2hrange}{104,34.5}{right}{1011}{regularIgnoreStyle}
+        {2\,\rh}{\twohlowtext@\twohhightext}
         {\twohdescribe}
     \block{hnsnf}{201,34.5}{left}{1100}{alert}
         {New Suit NF}{}{}
-
+%
     \block{wk2he}{104,30.5}{right}{1100}{regular}
         {Wk}{}{}
     \block{in2he}{wk2he.east}{right}{1100}{alert}
@@ -1170,14 +1420,14 @@
         {Rebids over 2NT:}{}{\twohntresp}
     \block{hnsnf}{203,30.5}{left}{1001}{alert}
         {Other:}{}{\twohresponse}
-
+%
 %2S Opening
-    \block{2srange}{104,24.5}{right}{1011}{regular}
-        {2\bs@bidHeader}{\twoslowtext@\twoshightext}
+    \block{2srange}{104,24.5}{right}{1011}{regularIgnoreStyle}
+        {2\,\bs}{\twoslowtext@\twoshightext}
         {\twosdescribe}
     \block{snsnf}{201,24.5}{left}{1100}{alert}
         {New Suit NF}{}{}
-
+%
     \block{wk2sp}{104,20.5}{right}{1100}{regular}
         {Wk}{}{}
     \block{in2sp}{wk2sp.east}{right}{1100}{alert}
@@ -1190,139 +1440,147 @@
         {Rebids over 2NT:}{}{\twosntresp}
     \block{hnsnf}{203,20.5}{left}{1001}{alert}
         {Other:}{}{\twosresponse}
-
+%
 %Bottom of card
     \block{jshiftresp}{104,15}{right}{1001}{regular}
         {Jump Shift Resp:}{}{\jshifttext}
     \block{vsstrongart}{104,11}{right}{1001}{alert}
         {Vs (Very)Str Open:}{}{\vsstrongart}
     \block{fsfgf}{201,11}{left}{1100}{alert}
-        {GF@}{}{\fsfgf}
+        {GF}{}{\fsfgf}
     \block{fsfrd}{fsfgf.west}{left}{1100}{alert}
         {1Round}{}{\fsfrd}
-    \block{fsflabel}{fsfrd.west}{left}{1001}{alert}
-        {4\textsuperscript{th}SF:@xshift=16}{}{}
+    \block{fsflabel}{fsfrd.west}{left}{1000}{alert}
+        {4\textsuperscript{th}SF:}{}{}
     \block{nmf2w}{fsflabel.west}{left}{1100}{alert}
         {2Way}{}{}
     \block{nmf1w}{nmf2w.west}{left}{1100}{alert}
         {1Way}{}{}
-    \block{nmflabel}{nmf1w.west}{left}{1001}{alert}
-        {NMF:@xshift=16}{}{}
-
+    \block{nmflabel}{nmf1w.west}{left}{1000}{alert}
+        {NMF:}{}{}
+%
     \block{footnotestop}{104,7}{right}{0001}{regular}
         {}{}{\footnotestop}
     \block{footnotesbottom}{104,3}{right}{0001}{regularNoGuide}
         {}{}{\footnotesbottom}
-
-    \node [right] at (105,-2) {\scriptsize \textsf{\currfilename: \printfdate{ISOext}. Front of Convention Card}};
-    \node [right] at (160,-2) {\scriptsize \textsf{Made with \LaTeX\ and acbl2022cc (github.com/mycroftw/conv-cards)}};
+%
+    \node [footnotefrontdateLabel] at (105,-2)
+        (footnotefrontdateLabel)
+        {\textsf{\currfilename: \printfdate{ISOext}}};
+    \node [footnotefronttextLabel] at (footnotefrontdateLabel.east)
+        (footnotefronttextLabel)
+        {\textsf{Front of Convention Card}};
+    \node [footnotefrontmadeLabel] at (203,-2)
+        (footnotefrontmadeLabel)
+        {\textsf{Made with \LaTeX\ and acbl2022cc (github.com/mycroftw/conv-cards)}};
     \end{tikzpicture}%
-    \newpage;
-    \begin{tikzpicture}[xscale=0.2,yscale=0.125,
-    ]
+    \ifthenelse{\equal{\ccNumPages}{2}}
+        { \newpage }
+        {}
+    \begin{tikzpicture}[]
     % draw a box around everything
     \draw (0, 0) -- (0, 215) -- (101, 215) -- (101, 0) -- cycle;
     %\draw [help lines] (0, 0) grid [step = 10] (101, 215);
     {
     % Back side
-    \node [blackHeader,text width=68] at (1.5, 193) (headerDoubles)
-        {\adjustbox{max width=\linewidth, center}{DOUBLES}};
-    \node [blackHeader,text width=68] at (51.5, 193) (headerNTOvercalls)
-        {\adjustbox{max width=\linewidth,center}{NT OVERCALLS}};
+    \node [blackHeader,headerDoubles] at (1.5, 193) (headerDoubles)
+        {\adjustbox{max width=\linewidth}{DOUBLES}};
+    \node [blackHeader,headerNTOvercalls] at (51.5, 193) (headerNTOvercalls)
+        {\adjustbox{max width=\linewidth}{NT OVERCALLS}};
     \draw (3, 193) -- +(98, 0);
-    \node [grayHeader,text width=118] at (1.5, 157) (headerOvercalls)
-        {\adjustbox{max width=\linewidth,center}{OVERCALLS}};
-    \node [grayHeader,text width=118,relsize=-1] at (51.5, 157) (headerVsNTOpening)
-        {\adjustbox{max width=\linewidth,center}{vs NT OPENING}};
+    \node [grayHeader,headerOvercalls] at (1.5, 157) (headerOvercalls)
+        {\adjustbox{max width=\linewidth}{OVERCALLS}};
+    \node [grayHeader,headerVsNTOpening] at (51.5, 157) (headerVsNTOpening)
+        {\adjustbox{max width=\linewidth}{vs NT OPENING}};
     \draw (3, 157) -- +(98, 0);
-    \node [blackHeader,text width=90] at (1.5, 129) (headerDirectCuebids)
-        {\adjustbox{max width=\linewidth,center}{DIRECT CUEBIDS}};
-    \node [blackHeader,text width=90] at (51.5, 129) (headerVsTakeoutDbl)
-        {\adjustbox{max width=\linewidth,center}{vs TAKEOUT DBL}};
+    \node [blackHeader,headerDirectCuebids] at (1.5, 129) (headerDirectCuebids)
+        {\adjustbox{max width=\linewidth}{DIRECT CUEBIDS}};
+    \node [blackHeader,headerVsTakeoutDbl] at (51.5, 129) (headerVsTakeoutDbl)
+        {\adjustbox{max width=\linewidth}{vs TAKEOUT DBL}};
     \draw (3, 129) -- +(98, 0);
-    \node [grayHeader,text width=83] at (1.5, 103) (headerPreempts)
-        {\adjustbox{max width=\linewidth,center}{PREEMPTS}};
+    \node [grayHeader,headerPreempts] at (1.5, 103) (headerPreempts)
+        {\adjustbox{max width=\linewidth}{PREEMPTS}};
     \draw (3, 116) -- +(47, 0); % divider between 3 and 4 level PRE
-    \node [grayHeader,text width=83] at (51.5, 103) (headerVsPreempts)
-        {\adjustbox{max width=\linewidth,center}{vs PREEMPTS}};
+    \node [grayHeader,headerVsPreempts] at (51.5, 103) (headerVsPreempts)
+        {\adjustbox{max width=\linewidth}{vs PREEMPTS}};
     \draw (3, 103) -- +(98, 0);
-    \node [blackHeader,text width=65] at (1.5, 82) (headerSlams)
-        {\adjustbox{max width=\linewidth,center}{SLAMS}};
+    \node [blackHeader,headerSlams] at (1.5, 82) (headerSlams)
+        {\adjustbox{max width=\linewidth}{SLAMS}};
     \draw (3, 82) -- +(98, 0);
-    \node [grayHeader,text width=115] at (1.5, 47) (headerCarding)
-        {\adjustbox{max width=\linewidth,center}{CARDING}};
-    \node [grayHeader,text width=115] at (51.5, 47) (headerSignals)
-        {\adjustbox{max width=\linewidth,center}{SIGNALS}};
+    \node [grayHeader,headerCarding] at (1.5, 47) (headerCarding)
+        {\adjustbox{max width=\linewidth}{CARDING}};
+    \node [grayHeader,headerSignals] at (51.5, 47) (headerSignals)
+        {\adjustbox{max width=\linewidth}{SIGNALS}};
     \draw (3, 47) -- +(98, 0);
-    \node [blackHeader,text width=157] at (1.5, 0) (headerLeadsVsSuits)
-        {\adjustbox{max width=\linewidth,center}{LEADS vs SUITS}};
-    \node [blackHeader,text width=157] at (51.5, 0) (headerLeadsVsNT)
-        {\adjustbox{max width=\linewidth,center}{LEADS vs NT}};
+    \node [blackHeader,headerLeadsVsSuits] at (1.5, 0) (headerLeadsVsSuits)
+        {\adjustbox{max width=\linewidth}{LEADS vs SUITS}};
+    \node [blackHeader,headerLeadsVsNT] at (51.5, 0) (headerLeadsVsNT)
+        {\adjustbox{max width=\linewidth}{LEADS vs NT}};
 }
 %Back of card: Left to right, top to bottom
 %Doubles
     \block{negax}{3,212}{right}{1100}{regular}
-        {Negative@text width=42}{}{}
+        {Negative}{}{}
     \block{negaxthru}{negax.east}{right}{1001}{regular}
         {Thru}{}{\negaxthru}
     \block{penax}{49,212}{left}{1100}{alert}
         {Penalty}{}{}
-
+%
     \block{respx}{3,208}{right}{1100}{regular}
-        {Responsive@text width=42}{}{}
+        {Responsive}{}{}
     \block{respxthru}{respx.east}{right}{1001}{regular}
         {Thru}{}{\respxthru}
     \block{maxix}{49,208}{left}{1100}{regular}
         {Maximal}{}{}
-
+%
     \block{suppx}{3,204}{right}{1100}{regular}
-        {Support@text width=42}{}{}
+        {Support}{}{}
     \block{suppxthru}{suppx.east}{right}{1001}{regular}
         {Thru}{}{\suppxthru}
     \block{supxx}{49,204}{left}{1100}{regular}
         {Rdbl}{}{}
-
+%
     \block{toxstyle}{3,200}{right}{1001}{regular}
         {T/O Style:}{}{\toxstyletext}
     \block{doubleother}{3,196}{right}{1001}{alert}
         {Other:}{}{\doubleothertext}
-
+%
 %NT overcalls
     \ifthenelse{\equal{\directconvtext}{}}
         {\setboolean{dntco}{false}}
         {\setboolean{dntco}{true}}
-
+%
     \block{dir1nt}{53,212}{right}{1010}{regular}
-        {Direct 1NT:@text width=55}
-        {\directlowtext@\directhightext@@bold}{}
+        {Direct\,1NT:}
+        {\directlowtext@\directhightext}{}
     \block{syson}{dir1nt.east}{right}{1100}{regular}
-        {Systems on}{}{}
-
+        {Systems\,on}{}{}
+%
     \block{bal1nt}{53,208}{right}{1010}{regular}
-        {Balance 1NT:@text width=55}
-        {\ballowtext@\balhightext@@bold}{}
+        {Balance\,1NT:}
+        {\ballowtext@\balhightext}{}
     \block{sysba}{bal1nt.east}{right}{1100}{regular}
-        {Systems on}{}{}
-
+        {Systems\,on}{}{}
+%
     \block{dntco}{53,204}{right}{1101}{alert}
         {Conv}{}{\directconvtext}
-
+%
     \block{unu2llabel}{53,199.5}{right}{1000}{regular}
         {Jump to 2NT:}{}{}
     \block{unu2l}{unu2llabel.east}{right}{1100}{regular}
         {2 Lowest Unbid}{}{}
     \block{ntother}{53,196}{right}{1001}{alert}
         {Other:}{}{\ntothertext}
-
+%
 % Overcalls
     \block{o1lvl}{3,190}{right}{1010}{regular}
-        {1-Lvl}{\oclowtext@\ochightext@@bold}{}
+        {1-Lvl}{\oclowtext@\ochightext}{}
     \block{oc4cd}{o1lvl.east}{right}{1100}{regular}
         {Often 4 cards}{}{}
-
+%
     \block{o2lvl}{3,186}{right}{1010}{regular}
-        {2-Lvl}{\twooclowtext@\twoochightext@@bold}{}
-
+        {2-Lvl}{\twooclowtext@\twoochightext}{}
+%
     \block{jumpoclabel}{3,182}{right}{1000}{regular}
         {Jump Overcalls:}{}{}
     \block{jowea}{jumpoclabel.east}{right}{1100}{regular}
@@ -1333,10 +1591,10 @@
         {Str}{}{}
     \block{jocon}{3,178}{right}{1101}{alert}
         {Conv}{}{\jumpovercalltext}
-
+%
     \block{ocresplabel}{3,174.5}{right}{1000}{regular}
         {Responses}{}{}
-
+%
     \block{ocnslabel}{3,171.25}{right}{1000}{regular}
         {New Suit:}{}{}
     \block{nsfor}{ocnslabel.east}{right}{1100}{regular}
@@ -1347,7 +1605,7 @@
         {NF}{}{}
     \block{onstf}{nsnon.east}{right}{1100}{announce}
         {Trf}{}{}
-
+%
     \block{ocjrlabel}{3,168}{right}{1000}{regular}
         {Jump Raise:}{}{}
     \block{jrwea}{ocjrlabel.east}{right}{1100}{regular}
@@ -1356,126 +1614,150 @@
         {Mixed}{}{}
     \block{jrinv}{jrmix.east}{right}{1100}{regular}
         {Inv}{}{}
-
+%
     \block{occuebids}{3,163}{right}{1001}{regular}
         {Cuebids:}{}{\overcallcuetext}
     \block{occus}{occuebids.east}{right}{1100}{regular}
         {Support}{}{}
     \block{ocother}{3,159.5}{right}{1001}{alert}
         {Other:}{}{\overcallothertext}
-
+%
 %Defense vs. NT:
     % define fields width for one or two sets of defenses
-    \ifthenelse{\equal{\secondcondition}{}}
-        { \renewcommand\vsntwidth{190} }
-        { \renewcommand\vsntwidth{90} }
-
+%    \ifthenelse{\equal{\secondcondition}{}}
+%        { \renewcommand\vsntwidth{190} }
+%        { \renewcommand\vsntwidth{90} }
+%
     % first set
     \block{vsnt}{53,189}{right}{1001}{regular}
-        {Vs:@bold,text width=20}{}
-        {\firstcondition@bold,text width=\vsntwidth}
+        {Vs:}{}{\firstcondition}
     \block{vsntdbl}{53,185}{right}{1001}{regular}
-        {Dbl@text width=20}{}
-        {\firstvsdbl@text width=\vsntwidth}
+        {Dbl}{}
+        {\firstvsdbl}
     \block{vsnt2c}{53,181}{right}{1001}{regular}
-        {2\bc@text width=20}{}
-        {\firstvstwocl@text width=\vsntwidth}
+        {2\,\bc}{}
+        {\firstvstwocl}
     \block{vsnt2d}{53,177}{right}{1001}{regular}
-        {2\rd@text width=20}{}
-        {\firstvstwodi@text width=\vsntwidth}
+        {2\,\rd}{}
+        {\firstvstwodi}
     \block{vsnt2h}{53,173}{right}{1001}{regular}
-        {2\rh@text width=20}{}
-        {\firstvstwohe@text width=\vsntwidth}
+        {2\,\rh}{}
+        {\firstvstwohe}
     \block{vsnt2s}{53,169}{right}{1001}{regular}
-        {2\bs@text width=20}{}
-        {\firstvstwosp@text width=\vsntwidth}
+        {2\,\bs}{}
+        {\firstvstwosp}
     \block{vsnt2n}{53,165}{right}{1001}{regular}
-        {2NT@text width=20}{}
-        {\firstvstwont@text width=\vsntwidth}
-
+        {2NT}{}
+        {\firstvstwont}
+%
     % second set if exists
     \ifthenelse{\equal{\secondcondition}{}}
         {}
         {
             \block{vsntalt}{76,189}{right}{1001}{regular}
-                {Vs:@bold,text width=20}{}
-                {\secondcondition@bold,text width=\vsntwidth}
+                {Vs:}{}
+                {\secondcondition}
             \block{vsntaltdbl}{76,185}{right}{1001}{regular}
-                {Dbl@text width=20}{}
-                {\secondvsdbl@text width=\vsntwidth}
+                {Dbl}{}
+                {\secondvsdbl}
             \block{vsntalt2c}{76,181}{right}{1001}{regular}
-                {2\bc@text width=20}{}
-                {\secondvstwocl@text width=\vsntwidth}
+                {2\,\bc}{}
+                {\secondvstwocl}
             \block{vsntalt2d}{76,177}{right}{1001}{regular}
-                {2\rd@text width=20}{}
-                {\secondvstwodi@text width=\vsntwidth}
+                {2\,\rd}{}
+                {\secondvstwodi}
             \block{vsntalt2h}{76,173}{right}{1001}{regular}
-                {2\rh@text width=20}{}
-                {\secondvstwohe@text width=\vsntwidth}
+                {2\,\rh}{}
+                {\secondvstwohe}
             \block{vsntalt2s}{76,169}{right}{1001}{regular}
-                {2\bs@text width=20}{}
-                {\secondvstwosp@text width=\vsntwidth}
+                {2\,\bs}{}
+                {\secondvstwosp}
             \block{vsntalt2n}{76,165}{right}{1001}{regular}
-                {2NT@text width=20}{}
-                {\secondvstwont@text width=\vsntwidth}
+                {2NT}{}
+                {\secondvstwont}
         }
-
+%
     \block{othernt}{53,160}{right}{1001}{alert}
         {Other:}{}{\othernt}
-
+%
 %Direct cuebid
-    \block{cuebidlabel}{10,152}{right}{1000}{regular}
+    \block{cuebidlabel}{3,152}{right}{1000}{regular}
         {Vs:}{}{}
-    \block{cuebidart}{20,154}{right}{1000}{regular}
+    \coordinate (CUEBID) at (0,154);
+    \coordinate (CUEBIDART) at ($(cuebidlabel.east |- CUEBID)$);
+    \block{cuebidart}{CUEBIDART}{right}{1000}{regular}
         {Art}{}{}
-    \block{cuebidartsuits}{20,150}{right}{1000}{regular}
-        {\bc\,\rd}{}{}
-    \block{cuebidquasi}{28,154}{right}{1000}{regular}
+    \block{cuebidquasi}{cuebidart.east}{right}{1000}{regular}
         {Quasi}{}{}
-    \block{cuebidquasisuits}{28,150}{right}{1000}{regular}
-        {\bc\,\rd}{}{}
-    \block{cuebidnatmin}{36,154}{right}{1000}{regular}
+    \block{cuebidnatmin}{cuebidquasi.east}{right}{1000}{regular}
         {Nat}{}{}
-    \block{cuebidnatminsuits}{36,150}{right}{1000}{regular}
-        {\bc\,\rd}{}{}
-    \block{cuebidnatmaj}{44,154}{right}{1000}{regular}
+    \block{cuebidnatmaj}{cuebidnatmin.east}{right}{1000}{regular}
         {Nat}{}{}
-    \block{cuebidnatmajsuits}{44,150}{right}{1000}{regular}
+%
+    \coordinate (CUEBIDSUITS) at (0,150);
+    \coordinate (CUEBIDARTSUITS) at ($(cuebidartLabel.west |- CUEBIDSUITS)$);
+    \block{cuebidartsuits}{CUEBIDARTSUITS}{right}{1000}{regular}
+        {\bc\,\rd}{}{}
+    \coordinate (CUEBIDQUASISUITS) at ($(cuebidquasiLabel.west |- CUEBIDSUITS)$);
+    \block{cuebidquasisuits}{CUEBIDQUASISUITS}{right}{1000}{regular}
+        {\bc\,\rd}{}{}
+    \coordinate (CUEBIDNATMINSUITS) at ($(cuebidnatminLabel.west |- CUEBIDSUITS)$);
+    \block{cuebidnatminsuits}{CUEBIDNATMINSUITS}{right}{1000}{regular}
+        {\bc\,\rd}{}{}
+    \coordinate (CUEBIDNATMAJSUITS) at ($(cuebidnatmajLabel.west |- CUEBIDSUITS)$);
+    \block{cuebidnatmajsuits}{CUEBIDNATMAJSUITS}{right}{1000}{regular}
         {\rh\,\bs}{}{}
+%
     \block{cuebidmichaels}{3,145}{right}{1000}{regular}
         {Michaels}{}{}
     \block{cuebidnatural}{3,141}{right}{1000}{regular}
         {Natural}{}{}
     \block{cuebidother}{3,137}{right}{1000}{regular}
         {Other}{}{}
+%
+    \coordinate (QAMIM) at ($(cuebidart.center |- cuebidmichaels)$);
+    \block{qamim}{QAMIM}{right}{0100}{regular}{}{}{}
+    \coordinate (QAMIN) at ($(cuebidart.center |- cuebidnatural)$);
+    \block{qamin}{QAMIN}{right}{0100}{regular}{}{}{}
+    \coordinate (QAMIO) at ($(cuebidart.center |- cuebidother)$);
+    \block{qamio}{QAMIO}{right}{0100}{regular}{}{}{}
+%
+    \coordinate (QQMIM) at ($(cuebidquasi.center |- cuebidmichaels)$);
+    \block{qqmim}{QQMIM}{right}{0100}{regular}{}{}{}
+    \coordinate (QQMIN) at ($(cuebidquasi.center |- cuebidnatural)$);
+    \block{qqmin}{QQMIN}{right}{0100}{regular}{}{}{}
+    \coordinate (QQMIO) at ($(cuebidquasi.center |- cuebidother)$);
+    \block{qqmio}{QQMIO}{right}{0100}{regular}{}{}{}
+%
+    \coordinate (QNMIM) at ($(cuebidnatmin.center |- cuebidmichaels)$);
+    \block{qnmim}{QNMIM}{right}{0100}{regular}{}{}{}
+    \coordinate (QNMIN) at ($(cuebidnatmin.center |- cuebidnatural)$);
+    \block{qnmin}{QNMIN}{right}{0100}{regular}{}{}{}
+    \coordinate (QNMIO) at ($(cuebidnatmin.center |- cuebidother)$);
+    \block{qnmio}{QNMIO}{right}{0100}{regular}{}{}{}
+%
+    \coordinate (QNMAM) at ($(cuebidnatmaj.center |- cuebidmichaels)$);
+    \block{qnmam}{QNMAM}{right}{0100}{regular}{}{}{}
+    \coordinate (QNMAN) at ($(cuebidnatmaj.center |- cuebidnatural)$);
+    \block{qnman}{QNMAN}{right}{0100}{regular}{}{}{}
+    \coordinate (QNMAO) at ($(cuebidnatmaj.center |- cuebidother)$);
+    \block{qnmao}{QNMAO}{right}{0100}{regular}{}{}{}
+%
     \block{cuebiddesc}{3,131.5}{right}{1001}{alert}
         {Describe:}{}{\cuebiddescribe}
-
-    \block{qamim}{21,145}{right}{0100}{regular}{}{}{}
-    \block{qamin}{21,141}{right}{0100}{regular}{}{}{}
-    \block{qamin}{21,137}{right}{0100}{regular}{}{}{}
-    \block{qqmim}{30,145}{right}{0100}{regular}{}{}{}
-    \block{qqmin}{30,141}{right}{0100}{regular}{}{}{}
-    \block{qqmin}{30,137}{right}{0100}{regular}{}{}{}
-    \block{qnmim}{37,145}{right}{0100}{regular}{}{}{}
-    \block{qnmin}{37,141}{right}{0100}{alert}{}{}{}
-    \block{qnmin}{37,137}{right}{0100}{alert}{}{}{}
-    \block{qnmam}{46,145}{right}{0100}{regular}{}{}{}
-    \block{qnman}{46,141}{right}{0100}{alert}{}{}{}
-    \block{qnman}{46,137}{right}{0100}{alert}{}{}{}
-
+%
 %Over Opp's takeout double:
     \ifthenelse{\equal{\xxtext}{}}
         {\setboolean{xxcon}{false}}
         {\setboolean{xxcon}{true}}
-
+%
     \block{nsflabel}{53,155}{right}{1000}{regular}
         {New Suit F:}{}{}
     \block{nsf2l}{nsflabel.east}{right}{1100}{regular}
         {2 Lvl}{}{}
     \block{xnstf}{nsf2l.east}{right}{1101}{announce}
         {Tfr}{}{\toxtrftext}
-
+%
     \block{jslabel}{53,151}{right}{1000}{regular}
         {Jump Shift:}{}{}
     \block{jswea}{jslabel.east}{right}{1100}{regular}
@@ -1486,49 +1768,55 @@
         {F}{}{}
     \block{jsfit}{jsfor.east}{right}{1100}{alert}
         {Fit}{}{}
-
+%
     \block{xxlabel}{53,147}{right}{1000}{regular}
         {Rdbl:}{}{}
     \block{xximp}{xxlabel.east}{right}{1100}{regular}
         {10+}{}{}
     \block{xxcon}{xximp.east}{right}{1101}{alert}
         {Conv}{}{\xxtext}
-
+%
     \block{2ntolabel}{53,143}{right}{1000}{regular}
-        {2NT Over:@text width=44}{}{}
-    \block{2ntonat}{62,143}{right}{1000}{regular}
+        {2NT Over:}{}{}
+    \block{2ntonat}{2ntolabel.east}{right}{1000}{regular}
         {Nat:}{}{}
-    \block{2ntoraise}{71,143}{right}{1000}{regular}
+    \block{2ntoraise}{2ntonat.east}{right}{1000}{regular}
         {Raise:}{}{}
-    \block{2ntorange}{82,143}{right}{1000}{regular}
+    \block{2ntorange}{2ntoraise.east}{right}{1000}{regular}
         {Range/Describe:}{}{}
-
+%
     \block{2ntomin}{53,139}{right}{1000}{regular}
-        {\bc\,\rd@align=center, text width=44}{}{}
+        {\bc\,\rd}{}{}
     \block{2ntomaj}{53,135}{right}{1000}{regular}
-        {\rh\,\bs@align=center, text width=44}{}{}
-
-    \block{minnt}{64,139}{right}{0100}{regular}{}{}{}
-    \block{minrs}{74,139}{right}{0100}{alert}{}{}{}
-    \block{minrange}{79,139}{right}{0010}{regular}
-        {}{\xtwontminormin@\xtwontminormax@@bold}{}
-
-    \block{majnt}{64,135}{right}{0100}{regular}{}{}{}
-    \block{majrs}{74,135}{right}{0100}{alert}{}{}{}
-    \block{majrange}{79,135}{right}{0010}{regular}
-        {}{\xtwontmajormin@\xtwontmajormax@@bold}{}
-
-    \block{2ntomaj}{53,131}{right}{1000}{alertNoGuide}
+        {\rh\,\bs}{}{}
+%
+    \coordinate (MINNT) at ($(2ntonat.center |- 2ntomin)$);
+    \block{minnt}{MINNT}{right}{0100}{regular}{}{}{}
+    \coordinate (MINRS) at ($(2ntoraise.center |- 2ntomin)$);
+    \block{minrs}{MINRS}{right}{0100}{alert}{}{}{}
+    \coordinate (MINRANGE) at ($(2ntorange.west |- 2ntomin)$);
+    \block{minrange}{MINRANGE}{right}{0010}{regular}
+        {}{\xtwontminormin@\xtwontminormax}{}
+%
+    \coordinate (MAJNT) at ($(2ntonat.center |- 2ntomaj)$);
+    \block{majnt}{MAJNT}{right}{0100}{regular}{}{}{}
+    \coordinate (MAJRS) at ($(2ntoraise.center |- 2ntomaj)$);
+    \block{majrs}{MAJRS}{right}{0100}{alert}{}{}{}
+    \coordinate (MAJRANGE) at ($(2ntorange.west |- 2ntomaj)$);
+    \block{majrange}{MAJRANGE}{right}{0010}{regular}
+        {}{\xtwontmajormin@\xtwontmajormax}{}
+%
+    \block{toother}{53,131}{right}{1000}{alertNoGuide}
         {Other:}{}{\toothertext}
-
+%
 %Preempts
     \block{threeprestyle}{3,126.5}{right}{1001}{regular}
         {3-Lvl Style (Seat/Vul):}{}{\threelevelstyletop}
     \block{threeprestylecont}{3,122.5}{right}{0001}{regular}
         {}{}{\threelevelstylebottom}
     \block{threepreresp}{3,118.5}{right}{1001}{regular}
-        {Resp:}{}{\threelevelresp@text width=225}
-
+        {Resp:}{}{\threelevelresp}
+%
     \block{fourprestyle}{3,113.5}{right}{1001}{regular}
             {4-Lvl Style:}{}{\fourlevelstyle}
     \block{fourpreresp}{3,109.5}{right}{1001}{regular}
@@ -1537,15 +1825,15 @@
         {4\bc/4\rd\ Tfr}{}{}
     \block{fourpreother}{namya.east}{right}{1001}{alert}
         {Other:}{}{\fourlevelother}
-
+%
 %Vs. Opening Preempts
     \block{optwontoc}{53,127}{right}{1001}{regular}
             {2NT Overcall:}{}{\optwontoc}
     \block{opdtothru}{53,122.5}{right}{1001}{regular}
-            {T/O Dbl Thru}{}{\opdtothru@bold}
+            {T/O Dbl Thru}{}{\opdtothru}
     \block{oppen}{100,122.5}{left}{1100}{alert}
         {Penalty}{}{}
-
+%
     \block{opleb}{53,118}{right}{1101}{alert}
             {2NT Lebensohl Resp}{}{\oplebtext}
     \block{opcue}{53,113.5}{right}{1001}{regular}
@@ -1554,7 +1842,7 @@
             {Jump Overcalls:}{}{\opjumpoc}
     \block{opother}{53,105.5}{right}{1001}{alert}
             {Other:}{}{\opothertext}
-
+%
 %Slam conventions
     \block{gedntlabel}{3,101}{right}{1000}{regular}
         {4\bc\ Gerber:}{}{}
@@ -1582,29 +1870,47 @@
         {Vs. Interference:}{}{\slaminterftext}
     \block{slamother}{3,85}{right}{1001}{regular}
         {Other:}{}{\slamothertext}
-
+%
 %Carding
     \block{cardsuits}{3,80}{right}{1000}{regular}
         {Suits}{}{}
-    \block{stasu}{5,77}{right}{0100}{regular}{}{}{}
-    \block{stcsu}{5,74}{right}{0100}{regular}{}{}{}
-    \block{udasu}{5,71}{right}{0100}{regular}{}{}{}
-    \block{udasu}{5,68}{right}{0100}{regular}{}{}{}
-    \block{cardnt}{45,80}{right}{1000}{regular}
+    \block{cardnt}{50,80}{left}{1000}{regular}
         {NT}{}{}
-    \block{stant}{47,77}{right}{0100}{regular}{}{}{}
-    \block{stcnt}{47,74}{right}{0100}{regular}{}{}{}
-    \block{udant}{47,71}{right}{0100}{regular}{}{}{}
-    \block{udant}{47,68}{right}{0100}{regular}{}{}{}
-    \block{stdatt}{18,77}{right}{1000}{regular}
-        {Standard -- Attitude@align=center,text width=100}{}{}
-    \block{stdcnt}{18,74}{right}{1000}{regular}
-        {Standard -- Count@align=center,text width=100}{}{}
-    \block{udatt}{18,71}{right}{1000}{regular}
-        {Upside Down -- Attitude@align=center,text width=100}{}{}
-    \block{udcnt}{18,68}{right}{1000}{regular}
-        {Upside Down -- Count@align=center,text width=100}{}{}
-
+    \coordinate (CARDINGCENTER) at ($(cardsuits.center)!0.5!(cardnt.center)$);
+    \coordinate (STDATT) at (0,77);
+    \coordinate (STDCNT) at (0,74);
+    \coordinate (UDATT) at (0,71);
+    \coordinate (UDCNT) at (0,68);
+    \coordinate (STASU) at ($(cardsuits.center |- STDATT)$);
+    \block{stasu}{STASU}{right}{0100}{regular}{}{}{}
+    \coordinate (STCSU) at ($(cardsuits.center |- STDCNT)$);
+    \block{stcsu}{STCSU}{right}{0100}{regular}{}{}{}
+    \coordinate (UDASU) at ($(cardsuits.center |- UDATT)$);
+    \block{udasu}{UDASU}{right}{0100}{regular}{}{}{}
+    \coordinate (UDCSU) at ($(cardsuits.center |- UDCNT)$);
+    \block{udcsu}{UDCSU}{right}{0100}{regular}{}{}{}
+    \coordinate (STANT) at ($(cardnt.center |- STDATT)$);
+    \block{stant}{STANT}{right}{0100}{regular}{}{}{}
+    \coordinate (STCNT) at ($(cardnt.center |- STDCNT)$);
+    \block{stcnt}{STCNT}{right}{0100}{regular}{}{}{}
+    \coordinate (UDANT) at ($(cardnt.center |- UDATT)$);
+    \block{udant}{UDANT}{right}{0100}{regular}{}{}{}
+    \coordinate (UDCNT) at ($(cardnt.center |- UDCNT)$);
+    \block{udcnt}{UDCNT}{right}{0100}{regular}{}{}{}
+%
+    \coordinate (STDATTLABEL) at ($(CARDINGCENTER |- STDATT)$);
+    \block{stdatt}{STDATTLABEL}{right}{1000}{regularCentered}
+        {Standard -- Attitude}{}{}
+    \coordinate (STDCNTLABEL) at ($(CARDINGCENTER |- STDCNT)$);
+    \block{stdcnt}{STDCNTLABEL}{right}{1000}{regularCentered}
+        {Standard -- Count}{}{}
+    \coordinate (UDATTLABEL) at ($(CARDINGCENTER |- UDATT)$);
+    \block{udatt}{UDATTLABEL}{right}{1000}{regularCentered}
+        {Upside Down -- Attitude}{}{}
+    \coordinate (UDCNTLABEL) at ($(CARDINGCENTER |- UDCNT)$);
+    \block{udcnt}{UDCNTLABEL}{right}{1000}{regularCentered}
+        {Upside Down -- Count}{}{}
+%
     \block{cardexcept}{3,64.5}{right}{1001}{regular}
         {Exceptions:}{}{\cardexcepttext}
     \block{cardother}{3,61}{right}{1001}{regular}
@@ -1621,26 +1927,45 @@
         {}{}{\othercardingtext}
     \block{cardsmith}{3,49}{right}{1001}{regular}
         {Trump Signals:}{}{\trumpsignaltext}
-
+%
 % Signals
-    \block{signalslabel}{70,80}{right}{1000}{regular}
-        {Primary Signals to:@align=center,text width=80}{}{}
-    \block{declarerlead}{57,77}{right}{1000}{regular}
-        {Declarer's Lead@align=center,text width=66}{}{}
-    \block{declarerlead}{85,77}{right}{1000}{regular}
-        {Partner's Lead@align=center,text width=64}{}{}
-    \block{deatt}{61.25,74}{right}{1100}{regular}{}{}{\deattrank}
-    \block{decou}{61.25,71}{right}{1100}{regular}{}{}{\decourank}
-    \block{desui}{61.25,68}{right}{1100}{regular}{}{}{\desuirank}
-    \block{pratt}{90.25,74}{right}{1100}{regular}{}{}{\prattrank}
-    \block{prcou}{90.25,71}{right}{1100}{regular}{}{}{\prcourank}
-    \block{prsui}{90.25,68}{right}{1100}{regular}{}{}{\prsuirank}
-    \block{attlabel}{70,74}{right}{1000}{regular}
-        {Attitude@align=center,text width=80}{}{}
-    \block{cntlabel}{70,71}{right}{1000}{regular}
-        {Count@align=center,text width=80}{}{}
-    \block{splabel}{70,68}{right}{1000}{regular}
-        {Suit Preference@align=center,text width=80}{}{}
+    \block{declarerlead}{53,77}{right}{1000}{regular}
+        {Declarer's Lead}{}{}
+    \block{partnerlead}{101,77}{left}{1000}{regular}
+        {Partner's Lead}{}{}
+    \coordinate (SIGNALSCENTER)
+        at ($(declarerleadLabel.west)!0.5!(partnerleadLabel.east)$);
+    \coordinate (DECLARERCENTER)
+        at ($(declarerleadLabel.west)!0.1!(partnerleadLabel.east)$);
+    \coordinate (PARTNERCENTER)
+        at (partnerleadLabel.center);
+    \coordinate (SIGNALSLABEL) at ($(SIGNALSCENTER |- 0,80)$);
+    \coordinate (SIGATT) at (0,74);
+    \coordinate (SIGCNT) at (0,71);
+    \coordinate (SIGSP) at (0,68);
+    \block{signalslabel}{SIGNALSLABEL}{right}{1000}{regularCentered}
+        {Primary Signals to:}{}{}
+    \coordinate (DEATT) at ($(DECLARERCENTER |- SIGATT)$);
+    \block{deatt}{DEATT}{right}{1100}{regular}{}{}{\deattrank}
+    \coordinate (DECNT) at ($(DECLARERCENTER |- SIGCNT)$);
+    \block{decou}{DECNT}{right}{1100}{regular}{}{}{\decourank}
+    \coordinate (DESP) at ($(DECLARERCENTER |- SIGSP)$);
+    \block{desui}{DESP}{right}{1100}{regular}{}{}{\desuirank}
+    \coordinate (PRATT) at ($(PARTNERCENTER |- SIGATT)$);
+    \block{pratt}{PRATT}{right}{1100}{regular}{}{}{\prattrank}
+    \coordinate (PRCNT) at ($(PARTNERCENTER |- SIGCNT)$);
+    \block{prcou}{PRCNT}{right}{1100}{regular}{}{}{\prcourank}
+    \coordinate (PRSP) at ($(PARTNERCENTER |- SIGSP)$);
+    \block{prsui}{PRSP}{right}{1100}{regular}{}{}{\prsuirank}
+    \coordinate (SIGATTCENTER) at ($(SIGNALSCENTER |- SIGATT)$);
+    \block{attlabel}{SIGATTCENTER}{right}{1000}{regularCentered}
+        {Attitude}{}{}
+    \coordinate (SIGCNTCENTER) at ($(SIGNALSCENTER |- SIGCNT)$);
+    \block{cntlabel}{SIGCNTCENTER}{right}{1000}{regularCentered}
+        {Count}{}{}
+    \coordinate (SIGSPCENTER) at ($(SIGNALSCENTER |- SIGSP)$);
+    \block{splabel}{SIGSPCENTER}{right}{1000}{regularCentered}
+        {Suit Preference}{}{}
     \block{signalexcept}{53,64.5}{right}{1001}{regular}
         {Exceptions:}{}{\signalexcepttext}
     \block{1dlabel}{53,60.5}{right}{1000}{regular}
@@ -1655,17 +1980,17 @@
         {Odd/Even}{}{}
     \block{oth1d}{odd1d.east}{right}{1100}{regular}
         {Other}{}{}
-
+%
     \block{signaltexttop}{53,53}{right}{0001}{regular}
         {}{}{\signaltexttop}
     \block{signaltextbottom}{53,49}{right}{0001}{regular}
         {}{}{\signaltexttop}
-
+%
 %Leads vs suits
     \ifthenelse{\equal{\suitAKxvaries}{}}
         {\setboolean{suakv}{false}}
         {\setboolean{suakv}{true}}
-
+%
     \block{suitlenleadlabel}{3,44}{right}{1000}{regular}
         {Length Leads:}{}{}
     \block{su4th}{suitlenleadlabel.east}{right}{1100}{regular}
@@ -1674,11 +1999,12 @@
         {3\textsuperscript{rd}/5\textsuperscript{th}}{}{}
     \block{su3lo}{su3rd.east}{right}{1100}{regular}
         {3\textsuperscript{rd}/Low}{}{}
-    \block{suatt}{10,40}{right}{1100}{regular}
+    \coordinate (SUATT) at ($(su4thLabel.west |- 0,40)$);
+    \block{suatt}{SUATT}{right}{1100}{regular}
         {Attitude}{}{}
     \block{susxx}{suatt.east}{right}{1100}{regular}
         {Small from xx}{}{}
-
+%
 % format: \showlead{list of cards}{bold cards}{red cards}{circled cards}{x}{y}
     \showlead{x,x}{1}{}{\suitxx}{5}{36}
     \showlead{x,x,x}{1}{}{\suitxxx}{13}{36}
@@ -1687,35 +2013,35 @@
     \showlead{H,x,x}{}{}{\suitHxx}{5}{32}
     \showlead{H,x,x,x}{}{}{\suitHxxx}{16}{32}
     \showlead{H,x,x,x,x}{}{}{\suitHxxxx}{30}{32}
-
+%
     \block{sua1t}{3,28}{right}{1001}{regular}
         {After 1\textsuperscript{st} Trick:}{}{\suitafterfirst}
-
+%
     \block{suithonleadlabel}{3,23.5}{right}{1000}{regular}
         {Honour Leads:}{}{}
-
-    \showlead{A,K,x,(+)}{}{}{\AKx}{5}{19}
-    \block{suakv}{17,19}{right}{1101}{regular}
+%
+    \showlead{A,K,x,(+)}{}{}{\AKx}{3}{19}
+    \block{suakv}{15,19}{right}{1101}{regular}
         {Varies}{}{\suitAKxvaries}
-
-    \showlead{K,Q,x}{1}{}{\KQx}{5}{15}
-    \showlead{Q,J,x}{1}{}{\QJx}{16}{15}
-    \showlead{J,T,x}{1}{}{\JTx}{27}{15}
-    \showlead{T,9,x}{1}{}{\TNx}{38}{15}
-    \showlead{K,J,T,x}{2}{}{\KJTx}{5}{11}
-    \showlead{K,T,9,x}{2}{}{\KTNx}{20}{11}
-    \showlead{Q,T,9,x}{2}{}{\suitQTNx}{35}{11}
-
+%
+    \showlead{K,Q,x}{1}{}{\KQx}{3}{15}
+    \showlead{Q,J,x}{1}{}{\QJx}{14}{15}
+    \showlead{J,T,x}{1}{}{\JTx}{25}{15}
+    \showlead{T,9,x}{1}{}{\TNx}{36}{15}
+    \showlead{K,J,T,x}{2}{}{\KJTx}{3}{11}
+    \showlead{K,T,9,x}{2}{}{\KTNx}{18}{11}
+    \showlead{Q,T,9,x}{2}{}{\suitQTNx}{33}{11}
+%
     \block{suitexcepttop}{3,7}{right}{1001}{regular}
         {Exceptions:}{}{\suitexcepttop}
     \block{suitexceptbottom}{5,3}{right}{0001}{regular}
         {}{}{\suitexceptbottom}
-
+%
 %Leads vs NT
     \ifthenelse{\equal{\ntAKxvaries}{}}
         {\setboolean{ntakv}{false}}
         {\setboolean{ntakv}{true}}
-
+%
     \block{ntlenleadlabel}{53,44}{right}{1000}{regular}
         {Length Leads:}{}{}
     \block{nt4th}{ntlenleadlabel.east}{right}{1100}{regular}
@@ -1724,11 +2050,12 @@
         {3\textsuperscript{rd}/5\textsuperscript{th}}{}{}
     \block{nt3lo}{nt3rd.east}{right}{1100}{regular}
         {3\textsuperscript{rd}/Low}{}{}
-    \block{ntatt}{60,40}{right}{1100}{regular}
+    \coordinate (NTATT) at ($(nt4thLabel.west |- 0,40)$);
+    \block{ntatt}{NTATT}{right}{1100}{regular}
         {Attitude}{}{}
     \block{nt2xx}{ntatt.east}{right}{1100}{regular}
         {2\textsuperscript{nd} from xxxx(+)}{}{}
-
+%
 % format: \showlead{list of cards}{bold cards}{red cards}{circled cards}{x}{y}
     \showlead{x,x}{1}{}{\ntxx}{55}{36}
     \showlead{x,x,x}{1}{}{\ntxxx}{63}{36}
@@ -1737,33 +2064,40 @@
     \showlead{H,x,x}{}{}{\ntHxx}{55}{32}
     \showlead{H,x,x,x}{}{}{\ntHxxx}{70}{32}
     \showlead{H,x,x,x,x}{}{}{\ntHxxxx}{83}{32}
-
+%
     \block{nta1t}{53,28}{right}{1001}{regular}
         {After 1\textsuperscript{st} Trick:}{}{\ntafterfirst}
-
+%
     \block{nthonleadlabel}{53,23.5}{right}{1000}{regular}
         {Honour Leads:}{}{}
-
-    \showlead{A,K,x,x,(+)}{}{}{\AKxx}{55}{19}
-    \block{ntakv}{70,19}{right}{1101}{regular}
+%
+    \showlead{A,K,x,x,(+)}{}{}{\AKxx}{53}{19}
+    \block{ntakv}{68,19}{right}{1101}{regular}
         {Varies}{}{\ntAKxvaries}
-
-    \showlead{K,Q,J,x}{1}{}{\KQJx}{55}{15}
-    \showlead{K,Q,T,9}{2}{}{\ntKQTN}{66}{15}
-    \showlead{Q,J,T,x}{1}{}{\QJTx}{77}{15}
-    \showlead{J,T,9,x}{1}{}{\JTNx}{88}{15}
-    \showlead{A,Q,J,x}{2}{}{\AQJx}{55}{11}
-    \showlead{A,J,T,x}{2}{}{\AJTx}{66}{11}
-    \showlead{K,T,9,x}{2}{}{\ntKTNx}{77}{11}
-    \showlead{Q,T,9,x}{2}{}{\ntQTNx}{88}{11}
-
+%
+    \showlead{K,Q,J,x}{1}{}{\KQJx}{53}{15}
+    \showlead{K,Q,T,9}{2}{}{\ntKQTN}{64}{15}
+    \showlead{Q,J,T,x}{1}{}{\QJTx}{75}{15}
+    \showlead{J,T,9,x}{1}{}{\JTNx}{86}{15}
+    \showlead{A,Q,J,x}{2}{}{\AQJx}{53}{11}
+    \showlead{A,J,T,x}{2}{}{\AJTx}{64}{11}
+    \showlead{K,T,9,x}{2}{}{\ntKTNx}{75}{11}
+    \showlead{Q,T,9,x}{2}{}{\ntQTNx}{86}{11}
+%
     \block{ntexcepttop}{53,7}{right}{1001}{regular}
         {Exceptions:}{}{\ntexcepttop}
     \block{ntexceptbottom}{55,3}{right}{0001}{regular}
         {}{}{\ntexceptbottom}
-
-    \node [right] at (3,-2) {\scriptsize \textsf{\currfilename: \printfdate{ISOext}. Back of Convention Card}};
-    \node [right] at (58,-2) {\scriptsize \textsf{Made with \LaTeX\ and acbl2022cc (github.com/mycroftw/conv-cards)}};
+%
+    \node [footnotebackdateLabel] at (3,-2)
+        (footnotebackdateLabel)
+        {\textsf{\currfilename: \printfdate{ISOext}}};
+    \node [footnotebacktextLabel] at (footnotebackdateLabel.east)
+        (footnotebacktextLabel)
+        {\textsf{Back of Convention Card}};
+    \node [footnotebackmadeLabel] at (101,-2)
+        (footnotebackmadeLabel)
+        {\textsf{Made with \LaTeX\ and acbl2022cc (github.com/mycroftw/conv-cards)}};
     \additionaltikz %optional extra user-defined fields
     \end{tikzpicture}%
     \end{small}%
