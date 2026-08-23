@@ -19,10 +19,11 @@ add_lines = [
     )
 ]
 replace_lines = [
-    ReplaceLine(anchor="% Leads vs. NT", text="\\label{sec:Leads_NT}"),
-    ReplaceLine(anchor="% Leads vs suit", text="\\label{sec:Leads_Suit}"),
-    ReplaceLine(anchor="% Signals", text="\\label{sec:Signals}"),
-    ReplaceLine(anchor="% Carding", text="\\label{sec:Carding}"),
+    ReplaceLine(text="\\label{subsec:Leads_NT}", anchor="% Leads vs. NT"),
+    ReplaceLine(text="\\label{subsec:Leads_Suit}", anchor="% Leads vs suit"),
+    ReplaceLine(text="\\label{sec:Leads_Suit}", anchor="% Leads"),
+    ReplaceLine(text="\\label{sec:Signals}", anchor="% Signals"),
+    ReplaceLine(text="\\label{sec:Carding}", anchor="% Carding"),
     ReplaceLine(text="\\label{sec:Slams}", anchor="% Slam conventions"),
     ReplaceLine(text="\\label{sec:vs_Preempts}", anchor="% vs. opening preempts"),
     ReplaceLine(text="\\label{sec:Preempts}", anchor="% Opening preempts"),
