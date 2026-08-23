@@ -4,7 +4,7 @@ import shutil
 from abc import abstractmethod, ABC
 from operator import attrgetter
 from pathlib import Path
-from typing import Optional, NamedTuple, Callable, List, Iterator
+from typing import Optional, NamedTuple, Callable, List, Iterator, Union
 
 
 # Utility functions
@@ -36,6 +36,7 @@ def read_template(template: Path, backup: bool = True) -> list:
         shutil.copy2(template, template.parent.joinpath("backup"))
     with template.open(encoding="utf-8") as f:
         return f.readlines()
+    return []
 
 
 def write_template(template: Path, text: list) -> None:
@@ -134,7 +135,9 @@ def replace_line_by_match(template: list, repl_text: str, match_text: str) -> bo
     return number is not None
 
 
-def replace_text(template, repl_text: str, match_text: str, replace_all: False) -> bool:
+def replace_text(
+    template, repl_text: str, match_text: str, replace_all: bool = False
+) -> bool:
     """Replace text in file (first match or all).
 
     Note: if multiple matches on one line, "replace_all" will do all on that
@@ -162,7 +165,7 @@ class AddInfo(NamedTuple):
     text: to add
     """
 
-    anchor: int | str
+    anchor: Union[int, str]
     before: bool = False
     text: str = ""
 
@@ -174,7 +177,7 @@ class DeleteInfo(NamedTuple):
     count: number of lines
     """
 
-    anchor: int | str
+    anchor: Union[int, str]
     before: bool = False
     count: int = 1
 
@@ -185,7 +188,7 @@ class ReplaceLine(NamedTuple):
     text: to replace
     """
 
-    anchor: int | str
+    anchor: Union[int, str]
     text: str = ""
 
 
