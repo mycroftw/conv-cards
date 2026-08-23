@@ -5,7 +5,6 @@ from pathlib import Path
 
 from upgrade_tools import StandardUpgrader, AddInfo, ReplaceLine
 
-
 check_tests = [
     "\\label{sec:Names}",
     "\\label{subsec:1NT_left}",

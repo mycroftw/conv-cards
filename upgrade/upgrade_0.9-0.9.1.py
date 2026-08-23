@@ -5,7 +5,6 @@ from pathlib import Path
 
 from upgrade_tools import StandardUpgrader, AddInfo
 
-
 TEXT_TO_CHECK = (  # lines to check against, if we find them, don't auto-fix.
     " {*rank} commands",
     "\\newcommand{\\deattrank}",
