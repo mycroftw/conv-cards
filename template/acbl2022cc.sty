@@ -45,9 +45,11 @@
 \newcommand{\tRegtext}[1]{\scriptsize \textsf{\textls[-70]{#1}}}
 \newcommand{\tRedreg}[1]{\scriptsize \textsf{\textls[-70]{\textcolor{red}{#1}}}}
 \newcommand{\tBluereg}[1]{\scriptsize \textsf{\textls[-70]{\textcolor{blue}{#1}}}}
+\newcommand{\tBlackreg}[1]{\scriptsize \textsf{\textls[-70]{\textcolor{black}{#1}}}}
 \newcommand{\tBoldtext}[1]{\scriptsize \textsf{\textbf{\textls[-70]{#1}}}}
 \newcommand{\tRedbold}[1]{\scriptsize \textsf{\textbf{\textls[-70]{\textcolor{red}{#1}}}}}
 \newcommand{\tBluebold}[1]{\scriptsize \textsf{\textbf{\textls[-70]{\textcolor{blue}{#1}}}}}
+\newcommand{\tBlackbold}[1]{\scriptsize \textsf{\textbf{\textls[-70]{\textcolor{black}{#1}}}}}
 
 %Inline user text
 \newcommand{\usertext}{\ifthenelse{\boolean{serif}}{\textrm}{\textsf}}
@@ -55,10 +57,12 @@
 \newcommand{\regtext}[1]{\usertextsize \usertext{\textls[-70]{#1}}}
 \newcommand{\redreg}[1]{\usertextsize \usertext{\textls[-70]{\textcolor{red}{#1}}}}
 \newcommand{\bluereg}[1]{\usertextsize \usertext{\textls[-70]{\textcolor{blue}{#1}}}}
+\newcommand{\blackreg}[1]{\usertextsize \usertext{\textls[-70]{\textcolor{black}{#1}}}}
 \newcommand{\boldtext}[1]{\usertextsize \usertext{\textbf{\textls[-70]{#1}}}}
 \newcommand{\regbold}[1]{\boldtext}  % alias to match \redbold and \bluebold because I get it wrong
 \newcommand{\redbold}[1]{\usertextsize \usertext{\textbf{\textls[-70]{\textcolor{red}{#1}}}}}
 \newcommand{\bluebold}[1]{\usertextsize \usertext{\textbf{\textls[-70]{\textcolor{blue}{#1}}}}}
+\newcommand{\blackbold}[1]{\usertextsize \usertext{\textbf{\textls[-70]{\textcolor{black}{#1}}}}}
 
 %Bigger text for names/general approach etc - not used on the boilerplate
 \newcommand{\bigboldtext}[1]{\footnotesize \textsf{\textbf{#1}}}
