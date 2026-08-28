@@ -22,8 +22,27 @@
 \RequirePackage{xstring} %allow us to parse the opening-lead strings
 \RequirePackage{xcolor} %red and blue
 \RequirePackage{currfile} %get filename
+\RequirePackage{texdate} %get date, formatted
+\RequirePackage{bitset} %manipulate bitsets (used in \block)
+\RequirePackage{substr} %find substrings (f.ex. Label, NoGuide)
+\RequirePackage{relsize}
+\RequirePackage{listofitems} %manage lists of items param as item1@item2...
+\RequirePackage{lmodern}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{adjustbox}
+\RequirePackage{scalefnt}
+
 \RequirePackage[left=0mm,right=2mm,top=2mm, bottom=2mm]{geometry}
 \ProvidesPackage{acbl2022cc}
+
+%
+%Package initialization:
+%
+\makeatother %use @ as separator in \command1@\command2...
+%
+%texdate
+\initcurrdate %texdate default date is curryear-01-01, this changes that to today
+%
 
 %Suit symbols:
 \newcommand{\h}{\ensuremath{\varheartsuit}}
