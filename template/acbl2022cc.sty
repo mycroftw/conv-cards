@@ -121,6 +121,68 @@
 % \concat
 \newcommand\concat[2]{#1#2}
 
+%Style definitions
+\tikzset{
+    alert/.style={ultra thin},
+    announce/.style={ultra thin},
+    regular/.style={ultra thin},
+    alertRect/.style={draw=red},
+    announceRect/.style={draw=blue},
+    regularRect/.style={draw=black},
+    alertFilled/.style={fill=red},
+    announceFilled/.style={fill=blue},
+    regularFilled/.style={fill=black},
+    alertTextField/.style={text=red},
+    announceTextField/.style={text=blue},
+    regularTextField/.style={text=black},
+    checkBox/.style={rectangle,draw=#1,inner sep=3pt},
+    textBox/.style={rectangle,draw=#1,inner sep=1pt,font=\relsize{-3}},
+    filled/.style={fill=#1},
+    textField/.style={text=#1},
+    centered/.style={align=center},
+    big/.style={font=\relsize{2}},
+    relsize/.style={font=\relsize{#1}},
+    bold/.style={font=\bfseries\relsize{#1}},
+    boldItalics/.style={font=\bfseries\itshape\relsize{#1}},
+    italics/.style={font=\itshape\relsize{#1}},
+    label/.append style={relsize=-1},
+    t/.style={text depth=.1\baselineskip,
+              text height=.5\baselineskip},
+    blackHeader/.style={vertHeader,fill=black},
+    grayHeader/.style={vertHeader,fill=gray},
+    blockFit/.style={},
+    blockFitGoingRight/.style={},
+    blockFitGoingLeft/.style={},
+    rangeFit/.style={},
+    box/.style={rectangle,draw=black,inner sep=3pt},
+    cbox/.style={rectangle,draw=black,fill=black,inner sep=3pt},
+    rbox/.style={rectangle,draw=red,inner sep=3pt},
+    crbox/.style={rectangle,draw=red,fill=red,inner sep=3pt},
+    bbox/.style={rectangle,draw=blue,inner sep=3pt},
+    cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt},
+}
+%
+\tikzset{
+    1nt2cLabel/.style={text width=10},
+    1nt2dLabel/.style={text width=10},
+    1nt2hLabel/.style={text width=10},
+    1nt2sLabel/.style={text width=10},
+    1nt2nLabel/.style={text width=10},
+    nat2d/.style={inner sep=-2},
+    jac2d/.style={inner sep=-2},
+    nat2h/.style={inner sep=-2},
+    jac2h/.style={inner sep=-2},
+    nat2s/.style={inner sep=-2},
+    trf2s/.style={inner sep=-2},
+    nat2n/.style={inner sep=-2},
+    trf2n/.style={inner sep=-2},
+    2doth/.style={inner sep=-2,text width=160},
+    2hoth/.style={inner sep=-2,text width=160},
+    2soth/.style={inner sep=-2,text width=160},
+    2noth/.style={inner sep=-2,text width=160},
+}
+%
+
 %Commands to provide filled vs. empty checkboxes
 %according to whether a boolean is set or cleared:
 \newcommand{\checkbox}[1]{\ifthenelse{\boolean{#1}}{\node [cbox]}{\node [box]}}
