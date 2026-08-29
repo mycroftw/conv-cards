@@ -91,6 +91,36 @@
 \colorlet{announce}{blue}
 \colorlet{regular}{black}
 
+% Functions support:
+%
+% Commands to use/redefine in functions:
+\newcommand\name{}
+\newcommand\position{}
+\newcommand\direction{}
+\newcommand\content{}
+\newcommand\rosewind{}
+\newcommand\aligned{}
+\newcommand\labelIndex{3}
+\newcommand\checkboxIndex{2}
+\newcommand\rangeIndex{1}
+\newcommand\textIndex{0}
+\newcommand\letterspace{}
+\newcommand\categoryAttr{}
+\newcommand\labelCategory{}
+\newcommand\checkboxContent{}
+\newcommand\labelContent{}
+\newcommand\textContent{}
+\newcommand\rangeConnector{to}
+\newcommand\vsntwidth{}
+\newcommand\emptyStringLength{}
+%
+% Booleans:
+\newboolean{guide} %Label, NoGuide will turn it off
+%
+% Functions:
+% \concat
+\newcommand\concat[2]{#1#2}
+
 %Commands to provide filled vs. empty checkboxes
 %according to whether a boolean is set or cleared:
 \newcommand{\checkbox}[1]{\ifthenelse{\boolean{#1}}{\node [cbox]}{\node [box]}}
