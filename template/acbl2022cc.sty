@@ -86,6 +86,11 @@
 %Bigger text for names/general approach etc - not used on the boilerplate
 \newcommand{\bigboldtext}[1]{\footnotesize \textsf{\textbf{#1}}}
 
+%Colors used for different categories
+\colorlet{alert}{red}
+\colorlet{announce}{blue}
+\colorlet{regular}{black}
+
 %Commands to provide filled vs. empty checkboxes
 %according to whether a boolean is set or cleared:
 \newcommand{\checkbox}[1]{\ifthenelse{\boolean{#1}}{\node [cbox]}{\node [box]}}
