@@ -49,42 +49,42 @@
 
 %Suit symbols:
 \newcommand{\h}{\ensuremath{\varheartsuit}}
-\newcommand{\rh}{\textcolor{red}{\ensuremath{\varheartsuit}}}
+\newcommand{\rh}{\ensuremath{\textcolor{red}\varheartsuit}}
 \renewcommand{\d}{\ensuremath{\vardiamondsuit}}
-\newcommand{\rd}{\textcolor{red}{\ensuremath{\vardiamondsuit}}}
-\newcommand{\s}{\ensuremath{\spadesuit}}
-\newcommand{\bs}{\textcolor{black}{\ensuremath{\spadesuit}}}
-\renewcommand{\c}{\ensuremath{\clubsuit}}
-\newcommand{\bc}{\textcolor{black}{\ensuremath{\clubsuit}}}
+\newcommand{\rd}{\ensuremath{\textcolor{red}\vardiamondsuit}}
+\newcommand{\s}{\textsmaller{\ensuremath{\spadesuit}}}
+\newcommand{\bs}{\textsmaller{\ensuremath{\textcolor{black}\spadesuit}}}
+\renewcommand{\c}{\textsmaller{\ensuremath{\clubsuit}}}
+\newcommand{\bc}{\textsmaller{\ensuremath{\textcolor{black}\clubsuit}}}
 %Sizes of text used on the convention card:
 %Big suit symbols in opening bid section
 \newcommand{\bigtext}[1]{\large {\textsf{\textbf{#1}}}}
 \newcommand{\bigblue}[1]{\large {\textsf{\textbf{\textcolor{blue}{#1}}}}} % 1NT
+\newcommand{\bigblack}[1]{\large {\textsf{\textbf{\textcolor{black}{#1}}}}} 
 %Headings for each block of the card
-\newcommand{\headtext}[1]{\scriptsize {\textsf{\textbf{\textls[10]{#1}}}}}
+\newcommand{\headtext}[1]{\small {\textsf{\textbf{\textls[10]{#1}}}}}
 
 %Inline template (non-user) text
-\newcommand{\tRegtext}[1]{\scriptsize \textsf{\textls[-70]{#1}}}
-\newcommand{\tRedreg}[1]{\scriptsize \textsf{\textls[-70]{\textcolor{red}{#1}}}}
-\newcommand{\tBluereg}[1]{\scriptsize \textsf{\textls[-70]{\textcolor{blue}{#1}}}}
-\newcommand{\tBlackreg}[1]{\scriptsize \textsf{\textls[-70]{\textcolor{black}{#1}}}}
-\newcommand{\tBoldtext}[1]{\scriptsize \textsf{\textbf{\textls[-70]{#1}}}}
-\newcommand{\tRedbold}[1]{\scriptsize \textsf{\textbf{\textls[-70]{\textcolor{red}{#1}}}}}
-\newcommand{\tBluebold}[1]{\scriptsize \textsf{\textbf{\textls[-70]{\textcolor{blue}{#1}}}}}
-\newcommand{\tBlackbold}[1]{\scriptsize \textsf{\textbf{\textls[-70]{\textcolor{black}{#1}}}}}
+\newcommand{\tRegtext}[1]{\footnotesize \textsf{\textls[-70]{#1}}}
+\newcommand{\tRedreg}[1]{\footnotesize \textsf{\textls[-70]{\textcolor{red}{#1}}}}
+\newcommand{\tBluereg}[1]{\footnotesize \textsf{\textls[-70]{\textcolor{blue}{#1}}}}
+\newcommand{\tBlackreg}[1]{\footnotesize \textsf{\textls[-70]{\textcolor{black}{#1}}}}
+\newcommand{\tBoldtext}[1]{\footnotesize \textsf{\textbf{\textls[-70]{#1}}}}
+\newcommand{\tRedbold}[1]{\footnotesize \textsf{\textbf{\textls[-70]{\textcolor{red}{#1}}}}}
+\newcommand{\tBluebold}[1]{\footnotesize \textsf{\textbf{\textls[-70]{\textcolor{blue}{#1}}}}}
+\newcommand{\tBlackbold}[1]{\footnotesize \textsf{\textbf{\textls[-70]{\textcolor{black}{#1}}}}}
 
 %Inline user text
 \newcommand{\usertext}{\ifthenelse{\boolean{serif}}{\textrm}{\textsf}}
-\newcommand{\usertextsize}{\ifthenelse{\boolean{serif}}{\footnotesize}{\scriptsize}}  % bigger if serif
-\newcommand{\regtext}[1]{\usertextsize \usertext{\textls[-70]{#1}}}
-\newcommand{\redreg}[1]{\usertextsize \usertext{\textls[-70]{\textcolor{red}{#1}}}}
-\newcommand{\bluereg}[1]{\usertextsize \usertext{\textls[-70]{\textcolor{blue}{#1}}}}
-\newcommand{\blackreg}[1]{\usertextsize \usertext{\textls[-70]{\textcolor{black}{#1}}}}
-\newcommand{\boldtext}[1]{\usertextsize \usertext{\textbf{\textls[-70]{#1}}}}
+\newcommand{\regtext}[1]{\usertext{\textls[-70]{#1}}}
+\newcommand{\redreg}[1]{\usertext{\textls[-70]{\textcolor{red}{#1}}}}
+\newcommand{\bluereg}[1]{\usertext{\textls[-70]{\textcolor{blue}{#1}}}}
+\newcommand{\blackreg}[1]{\usertext{\textls[-70]{\textcolor{black}{#1}}}}
+\newcommand{\boldtext}[1]{\usertext{\textbf{\textls[-70]{#1}}}}
 \newcommand{\regbold}[1]{\boldtext}  % alias to match \redbold and \bluebold because I get it wrong
-\newcommand{\redbold}[1]{\usertextsize \usertext{\textbf{\textls[-70]{\textcolor{red}{#1}}}}}
-\newcommand{\bluebold}[1]{\usertextsize \usertext{\textbf{\textls[-70]{\textcolor{blue}{#1}}}}}
-\newcommand{\blackbold}[1]{\usertextsize \usertext{\textbf{\textls[-70]{\textcolor{black}{#1}}}}}
+\newcommand{\redbold}[1]{\usertext{\textbf{\textls[-70]{\textcolor{red}{#1}}}}}
+\newcommand{\bluebold}[1]{\usertext{\textbf{\textls[-70]{\textcolor{blue}{#1}}}}}
+\newcommand{\blackbold}[1]{\usertext{\textbf{\textls[-70]{\textcolor{black}{#1}}}}}
 
 %Bigger text for names/general approach etc - not used on the boilerplate
 \newcommand{\bigboldtext}[1]{\footnotesize \textsf{\textbf{#1}}}
