@@ -160,6 +160,7 @@
     crbox/.style={rectangle,draw=red,fill=red,inner sep=3pt},
     bbox/.style={rectangle,draw=blue,inner sep=3pt},
     cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt},
+    header/.style={right, rectangle, rotate=90, white, inner sep=3pt},
 }
 %
 \tikzset{
@@ -734,17 +735,7 @@
         footnotebackmadeLabel/.append style={t,left,label},
     }
 %
-    \begin{tikzpicture}[xscale=0.1,yscale=0.1,
-        t/.style={text depth=.1\baselineskip,
-                  text height=.5\baselineskip},
-        box/.style={rectangle,draw=black,inner sep=3pt},
-        cbox/.style={rectangle,draw=black,fill=black,inner sep=3pt},
-        rbox/.style={rectangle,draw=red,inner sep=3pt},
-        crbox/.style={rectangle,draw=red,fill=red,inner sep=3pt},
-        bbox/.style={rectangle,draw=blue,inner sep=3pt},
-        cbbox/.style={rectangle,draw=blue,fill=blue,inner sep=3pt},
-        header/.style={right, rectangle, rotate=90, white, inner sep=3pt},
-    ]
+    \begin{tikzpicture}[xscale=0.1,yscale=0.1]
     % draw a box around everything
     \draw (0, 0) -- (0, 215) -- (203, 215) -- (203, 0) -- cycle;
     % \draw [help lines] (0, 0) grid [step = 10] (203, 215);
