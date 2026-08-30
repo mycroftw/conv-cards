@@ -627,8 +627,14 @@
 % pfix.  Unfortunately this can not be done for "every node" because it
 % expands the checkboxes.
 \newcommand{\drawconventioncard}{%
+    \pagestyle{empty}
+    \let\svmaketitle\maketitle
+    \def\maketitle{\svmaketitle\thispagestyle{empty}}
     \usetikzlibrary{scopes}%
     \usetikzlibrary{calc}%needed to position stuff in strings
+    \usetikzlibrary{positioning}%
+    \usetikzlibrary{fit}%
+%
     \begin{tikzpicture}[xscale=0.1,yscale=0.1,
         t/.style={text depth=.1\baselineskip,
                   text height=.5\baselineskip},
