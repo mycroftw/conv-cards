@@ -220,6 +220,316 @@
 \newcommand{\xfix}{\rule{0pt}{2.0mm}} %re-center text with no capital letters
 \newcommand{\namefix}{\rule{0pt}{3.4mm}} %re-center BigBold text with p,y,g
 
+% Functions:
+\newcommand{\IfNoValueOrEmptyTF}[3] {
+    \IfNoValueTF{#1}
+        {#2}
+        {\ifthenelse{\equal{#1}{}}{#2}{#3}}
+}
+%
+\makeatletter
+\newcommand{\gettikzxy}[3]{%
+  \tikz@scan@one@point\pgfutil@firstofone#1\relax
+  \edef#2{\the\pgf@x}%
+  \edef#3{\the\pgf@y}%
+}
+\makeatother
+%
+\NewDocumentCommand{\textField}{mmmmm}{
+    % #1: name
+    % #2: position
+    % #3: direction
+    % #4: category
+    % #5: content
+%
+    \setboolean{guide}{true}
+    \renewcommand\content{#5}
+    \StrSubstitute{#4}{NoGuide}{}[\category]
+    \StrSubstitute{\category}{IgnoreStyle}{}[\category]
+    \StrSubstitute{\category}{Label}{}[\category]
+    \StrSubstitute{\category}{Centered}{}[\category]
+    \IfSubStringInString{Label}{#4}
+        {\setboolean{guide}{false}}
+        {}
+    \IfSubStringInString{NoGuide}{#4}
+        {\setboolean{guide}{false}}
+        {}
+    \tikzset{#1/.append style = {t, #3, textField=\category}}
+    \IfSubStringInString{Label}{#4}
+        {
+        \IfSubStringInString{IgnoreStyle}{#4}
+            {
+                \tikzset{#1/.append style = {}}
+            }
+            {
+                \tikzset{#1/.append style = {label}}
+            }
+            \node[#1] at (#2) (#1)
+                {
+                    \textls[-50]{\content}
+                };
+        }
+        {
+            \node[#1] at (#2) (#1)
+                {
+                    \adjustbox{max width=\linewidth}{\content}
+                };
+        }
+    \ifthenelse{\boolean{visib} \AND \boolean{guide}}
+        {
+            \path
+                (#1.base west) -- (#1.south west)
+                            coordinate[pos=0.45] (mid-base-sw)
+                (#1.base east) -- (#1.south east)
+                            coordinate[pos=0.45] (mid-base-se);
+            \gettikzxy{(mid-base-sw)}{\xsw}{\ysw}
+            \gettikzxy{(mid-base-se)}{\xse}{\ysw}
+            \pgfmathqparse{\xse - \xsw}
+            \ifdim \pgfmathresult pt > \emptyStringLength
+                \draw[\category, thin] (mid-base-sw) -- (mid-base-se);
+            \fi
+        }
+        {}
+}
+%
+\NewDocumentCommand{\block}{mmmmmmmm}{
+    % #1: name
+    % #2: position
+    % #3: direction
+    % #4: elements (bitset)
+    % #5: category
+    % #6: labelContent
+    % #7: rangeParameter
+    %         rangeContentLow@
+    %         (optional) rangeContentHigh
+    % #8: textContent
+%
+    \renewcommand\position{#2}
+    \renewcommand\labelContent{#6}
+    \renewcommand\textContent{#8}
+    \bitsetSetBin{elements}{#4}
+    \StrSubstitute{#5}{NoGuide}{}[\category]
+    \StrSubstitute{\category}{IgnoreStyle}{}[\category]
+    \StrSubstitute{\category}{Label}{}[\category]
+    \renewcommand\categoryAttr{}
+    \IfSubStringInString{NoGuide}{#5}
+        {\renewcommand\categoryAttr{NoGuide}}
+        {}
+    \IfSubStringInString{Label}{#5}
+        {\renewcommand\categoryAttr{Label}}
+        {}
+    \IfSubStringInString{IgnoreStyle}{#5}
+        {
+            \renewcommand\categoryAttr{IgnoreStyle}
+        }
+        {}
+    \bitsetIsEmpty{elements}{}{
+        \bitsetQuery{elements}{\labelIndex}
+            {
+                \IfSubStringInString{Centered}{#5}
+                   {
+                      \renewcommand\aligned{centered}
+                   }
+                   {
+                      \renewcommand\aligned{#3}
+                   }
+                \IfSubStringInString{IgnoreStyle}{#5}
+                   {
+                      \renewcommand\labelCategory{LabelIgnoreStyle}
+                   }
+                   {
+                      \renewcommand\labelCategory{Label}
+                   }
+            }
+            {}
+        \bitsetQuery{elements}{\checkboxIndex}
+            {
+                \bitsetQuery{elements}{\textIndex}
+                    {
+                        \tikzset{#1Checkbox/.append style = {checkBox=\category}}
+                        \ifthenelse{\boolean{#1}}
+                            {\tikzset{#1Checkbox/.append style = {filled=\category}}}
+                            {}
+                        \renewcommand\checkboxContent{}
+                    }
+                    {
+                        \ifthenelse{\equal{\textContent}{}}
+                            {
+                                \tikzset{#1Checkbox/.append style = {checkBox=\category}}
+                                \ifthenelse{\boolean{#1}}
+                                    {\tikzset{#1Checkbox/.append style = {filled=\category}}}
+                                    {}
+                                \renewcommand\checkboxContent{}
+                            }
+                            {
+                                \tikzset{#1Checkbox/.append style = {textBox=\category}}
+                                \renewcommand\checkboxContent{\textContent}
+                            }
+                    }
+            }
+            {}
+        \bitsetQuery{elements}{\rangeIndex}
+            {
+                \setsepchar{@}
+                \readlist\rangeParameter{#7@@@}
+                \itemtomacro\rangeParameter[1]\rangeContentLow
+                \itemtomacro\rangeParameter[2]\rangeContentHigh
+            }
+            {}
+    }
+    \bitsetIsEmpty{elements}{\node[] at (\position) (#1) {}; }{
+        \IfStrEqCase{#3}{
+            {right}
+                {
+                    \renewcommand\rosewind{east}
+                    \bitsetQuery{elements}{\labelIndex}
+                        {
+                            \textField{#1Label}{\position}{\aligned}
+                                    {\concat{\category}{\labelCategory}}
+                                    {\labelContent}
+                            \renewcommand\position{#1Label.\rosewind}
+                        }
+                        { \node[] at (\position) (#1Label) {}; }
+                    \bitsetQuery{elements}{\checkboxIndex}
+                        {
+                            \node[#1Checkbox]
+                                at ($(\position)+(0.25*\bitsetGet{elements}{\labelIndex},0)$)
+                                (#1Checkbox) {\checkboxContent};
+                            \renewcommand\position{#1Checkbox.\rosewind}
+                        }
+                        { \node[] at (\position) (#1Checkbox) {}; }
+                    \bitsetQuery{elements}{\rangeIndex}
+                        {
+                            \ifthenelse{\equal{\rangeContentLow}{}}
+                                {
+                                    \node[] at (\position) (#1RangeLo) {};
+                                }
+                                {
+                                    \textField{#1RangeLo}{\position}{#3}
+                                            {\concat{\category}{\categoryAttr}}
+                                            {\rangeContentLow}
+                                }
+                            \renewcommand\position{#1RangeLo.\rosewind}
+                            \ifthenelse{\equal{\rangeContentLow}{}
+                                            \OR \equal{\rangeContentHigh}{}}
+                                {
+                                    \node[] at (\position) (#1RangeConnector) {};
+                                }
+                                {
+                                    \textField{#1RangeConnector}{\position}{#3}
+                                            {\concat{\category}{NoGuide}}
+                                            {\rangeConnector}
+                                }
+                            \renewcommand\position{#1RangeConnector.\rosewind}
+                            \ifthenelse{\equal{\rangeContentHigh}{}}
+                                {
+                                    \node[] at (\position) (#1RangeHi) {};
+                                }
+                                {
+                                    \textField{#1RangeHi}{\position}{#3}
+                                            {\concat{\category}{\categoryAttr}}
+                                            {\rangeContentHigh}
+                                }
+                            \renewcommand\position{#1RangeHi.\rosewind}
+                            \tikzset{#1Range/.append style={}}
+                            \node[rangeFit, #1Range, fit=(#1RangeLo)(#1RangeConnector)(#1RangeHi)] (#1Range) {};
+                        }
+                        { \node[] at (\position) (#1Range) {}; }
+                    \bitsetQuery{elements}{\textIndex}
+                        {
+                            \coordinate (P) at
+                                ($(\position)+
+                                    (0.3*\bitsetGet{elements}{\checkboxIndex}+
+                                        0.6*\bitsetGet{elements}{\rangeIndex},0)$);
+                            \textField{#1Text}{P}{#3}
+                                    {\concat{\category}{\categoryAttr}}
+                                    {\textContent}
+                            \renewcommand\position{#1Text.\rosewind}
+                        }
+                        { \node[] at (\position) (#1Text) {}; }
+                }
+            {left}
+                {
+                    \renewcommand\rosewind{west}
+                    \bitsetQuery{elements}{\textIndex}
+                        {
+                            \textField{#1Text}{\position}{#3}
+                                    {\concat{\category}{\categoryAttr}}
+                                    {\textContent}
+                            \renewcommand\position{#1Text.\rosewind}
+                        }
+                        { \node[] at (\position) (#1Text) {}; }
+                    \bitsetQuery{elements}{\rangeIndex}
+                        {
+                            \ifthenelse{\equal{\rangeContentHigh}{}}
+                                {
+                                    \node[] at (\position) (#1RangeHi) {};
+                                }
+                                {
+                                    \textField{#1RangeHi}{\position}{#3}
+                                            {\concat{\category}{\categoryAttr}}
+                                            {\rangeContentHigh}
+                                }
+                            \renewcommand\position{#1RangeHi.\rosewind}
+                            \ifthenelse{\equal{\rangeContentLow}{}
+                                            \OR \equal{\rangeContentHigh}{}}
+                                {
+                                    \node[] at (\position) (#1RangeConnector) {};
+                                }
+                                {
+                                    \textField{#1RangeConnector}{\position}{#3}
+                                            {\concat{\category}{NoGuide}}
+                                            {\rangeConnector}
+                                }
+                            \renewcommand\position{#1RangeConnector.\rosewind}
+                            \ifthenelse{\equal{\rangeContentLow}{}}
+                                {
+                                    \node[] at (\position) (#1RangeLo) {};
+                                }
+                                {
+                                    \textField{#1RangeLo}{\position}{#3}
+                                            {\concat{\category}{\categoryAttr}}
+                                            {\rangeContentLow}
+                                }
+                            \renewcommand\position{#1RangeLo.\rosewind}
+                            \tikzset{#1Range/.append style={}}
+                            \node[rangeFit, #1Range, fit=(#1RangeLo)(#1RangeConnector)(#1RangeHi)] (#1Range) {};
+                        }
+                        { \node[] at (\position) (#1Range) {}; }
+                    \bitsetQuery{elements}{\checkboxIndex}
+                        {
+                            \node[#1Checkbox] at (\position) (#1Checkbox) {\checkboxContent};
+                            \renewcommand\position{#1Checkbox.\rosewind}
+                        }
+                        { \node[] at (\position) (#1Checkbox) {}; }
+                    \bitsetQuery{elements}{\labelIndex}
+                        {
+                            \textField{#1Label}{\position}{\aligned}
+                                    {\concat{\category}{\labelCategory}}
+                                    {\labelContent}
+                            \renewcommand\position{#1Label.\rosewind}
+                        }
+                        { \node[] at (\position) (#1Label) {}; }
+                }
+        }[{Error}]
+        \tikzset{#1/.append style={}}
+        \IfStrEqCase{#3}{
+            {right}
+                {
+                    \node[blockFit, blockFitGoingRight, #1,
+                        fit=(#1Label)(#1Checkbox)(#1Range)(#1Text) ]
+                        (#1) {};
+                }
+            {left}
+                {
+                    \node[blockFit, blockFitGoingLeft, #1,
+                        fit=(#1Label)(#1Checkbox)(#1Range)(#1Text) ]
+                        (#1) {};
+                }
+        }[{Error}]
+    }
+}
+
 %We have to initialize a million booleans (OK, only 207), for the state of every
 %checkbox on the convention card:
 
