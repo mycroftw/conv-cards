@@ -530,12 +530,13 @@
     }
 }
 
-%We have to initialize a million booleans (OK, only 207), for the state of every
+%We have to initialize a million booleans (OK, only 212), for the state of every
 %checkbox on the convention card:
 
 %Listed below in order from top to bottom, front then back, of the card.
 %Generally every item has a 5-letter abbreviated name.
-\newboolean{visib}\newboolean{serif}\newboolean{fo1c}\newboolean{fo2c}
+\newboolean{visib}\newboolean{serif}
+\newboolean{fo1c}\newboolean{fo2c}\newboolean{footh}
 \newboolean{1nts}\newboolean{1ntw}\newboolean{1ntv}
 % 1C - 19
 \newboolean{club5}\newboolean{club4}\newboolean{club3}\newboolean{cl2nf}
@@ -558,13 +559,15 @@
 \newboolean{dru2c}\newboolean{dru2d}\newboolean{drcmp}
 \newboolean{dblrw}\newboolean{dblrm}\newboolean{dblri}
 \newboolean{ocdrw}\newboolean{ocdrm}\newboolean{ocdri}
-% 1NT - 20
-\newboolean{ntasr}\newboolean{nt5cm}
-\newboolean{staym}\newboolean{puppe}\newboolean{2coth}
+% 1NT - 24 (19 public, 5 private)
+% public
+\newboolean{ntasr}\newboolean{nt5cm}\newboolean{staym}\newboolean{puppe}
 \newboolean{nat2d}\newboolean{jac2d}\newboolean{nat2h}\newboolean{jac2h}
 \newboolean{nat2s}\newboolean{trf2s}\newboolean{nat2n}\newboolean{trf2n}
 \newboolean{smole}\newboolean{leben}\newboolean{ntneg}\newboolean{ntpen}
 \newboolean{tex4c}\newboolean{tex4d}\newboolean{tex4h}
+% private
+\newboolean{2coth}\newboolean{2doth}\newboolean{2hoth}\newboolean{2soth}\newboolean{2noth}
 % 2NT/3NT - 6
 \newboolean{pup2n}\newboolean{jac2n}\newboolean{tex2n}
 \newboolean{con2n}\newboolean{neg2n}\newboolean{gam3n}
