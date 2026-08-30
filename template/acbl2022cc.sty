@@ -44,6 +44,9 @@
 \initcurrdate %texdate default date is curryear-01-01, this changes that to today
 %
 
+%Default number of pages for the CC
+\newcommand{\ccNumPages}{1}
+
 %Suit symbols:
 \newcommand{\h}{\ensuremath{\varheartsuit}}
 \newcommand{\rh}{\textcolor{red}{\ensuremath{\varheartsuit}}}
@@ -735,14 +738,198 @@
         footnotebackmadeLabel/.append style={t,left,label},
     }
 %
-    \begin{tikzpicture}[xscale=0.1,yscale=0.1]
+%
+\ifthenelse{\equal{\ccNumPages}{2}}
+    {
+        \renewcommand\emptyStringLength{40pt}% empty string: 38.4954
+        \ifthenelse{\equal{\secondcondition}{}}
+            { \renewcommand\vsntwidth{190} }
+            { \renewcommand\vsntwidth{90} }
+        \tikzset{
+            every picture/.append style={xscale=0.2,yscale=0.125},
+            vertHeader/.append style={inner sep=5pt},
+            frontHeader/.append style={},
+            headerOverview/.append style={text width=68},
+            headerMinors/.append style={text width=154},
+            headerMajors/.append style={text width=86},
+            headerNoTrump/.append style={text width=182},
+            headerTwoLevel/.append style={text width=140},
+            headerOther/.append style={text width=54},
+            headerDoubles/.append style={text width=68},
+            headerNTOvercalls/.append style={text width=68},
+            headerOvercalls/.append style={text width=118},
+            headerVsNTOpening/.append style={text width=118,relsize=-1},
+            headerDirectCuebids/.append style={text width=90},
+            headerVsTakeoutDbl/.append style={text width=90},
+            headerPreempts/.append style={text width=83},
+            headerVsPreempts/.append style={text width=83},
+            headerSlams/.append style={text width=65},
+            headerCarding/.append style={text width=115},
+            headerSignals/.append style={text width=115},
+            headerLeadsVsSuits/.append style={text width=157},
+            headerLeadsVsNT/.append style={text width=157},
+            bidHeader/.append style={bold=2},
+            genapproachText/.append style={text width=455},
+            mhboText/.append style={text width=185},
+            mhbrText/.append style={text width=105},
+            foothText/.append style={text width=150},
+            cldescText/.append style={text width=465},
+            clrespText/.append style={text width=330},
+            clrespdiText/.append style={text width=144},
+            didescText/.append style={text width=465},
+            direspText/.append style={text width=330},
+            btmrp1Label/.append style={text width=78},
+            btmrp1Text/.append style={text width=470},
+            negaxLabel/.append style={text width=42},
+            respxLabel/.append style={text width=42},
+            suppxLabel/.append style={text width=42},
+            dir1ntLabel/.append style={text width=55},
+            bal1ntLabel/.append style={text width=55},
+            vsntlabelWidth/.append style={text width=20},
+            vsnttextWidth/.append style={text width=\vsntwidth},
+            cuebidlabelLabel/.append style={text width=100},
+            cuebidartLabel/.append style={text width=20},
+            cuebidquasiLabel/.append style={text width=20},
+            cuebidnatminLabel/.append style={text width=20},
+            cuebidnatmajLabel/.append style={text width=20},
+            2ntolabelWidth/.append style={text width=44},
+            2ntonatWidth/.append style={text width=20},
+            2ntoraiseWidth/.append style={text width=25},
+            threeprerespText/.append style={text width=225},
+            attlabelLabel/.append style={text width=80},
+            cntlabelLabel/.append style={text width=80},
+            splabelLabel/.append style={text width=80},
+        }
+    }
+    {
+        \renewcommand\emptyStringLength{63pt}% empty string: 62.16904
+        \ifthenelse{\equal{\secondcondition}{}}
+            { \renewcommand\vsntwidth{90} }
+            { \renewcommand\vsntwidth{40} }
+        \tikzset{
+            every picture/.append style={remember picture, overlay, yshift=-750, xscale=0.1, yscale=0.125},
+            vertHeader/.append style={inner sep=1pt},
+            frontHeader/.append style={yshift=-2},
+            headerOverview/.append style={text width=76},
+            headerMinors/.append style={text width=162},
+            headerMajors/.append style={text width=94},
+            headerNoTrump/.append style={text width=190},
+            headerTwoLevel/.append style={text width=148},
+            headerOther/.append style={text width=62},
+            headerDoubles/.append style={text width=76},
+            headerNTOvercalls/.append style={text width=76},
+            headerOvercalls/.append style={text width=126},
+            headerVsNTOpening/.append style={text width=126},
+            headerDirectCuebids/.append style={text width=98},
+            headerVsTakeoutDbl/.append style={text width=98},
+            headerPreempts/.append style={text width=91},
+            headerVsPreempts/.append style={text width=91},
+            headerSlams/.append style={text width=73},
+            headerCarding/.append style={text width=123},
+            headerSignals/.append style={text width=123},
+            headerLeadsVsSuits/.append style={text width=165},
+            headerLeadsVsNT/.append style={text width=165},
+            bidHeader/.style={bold=2},
+            blockFitGoingRight/.append style={inner sep=-3},
+            namesText/.append style={text width=170},
+            genapproachText/.append style={yshift=6,text width=195},
+            mhbLabel/.append style={yshift=10},
+            mhboLabel/.append style={yshift=-10,xshift=-105},
+            mhboText/.append style={text width=140},
+            mhbrText/.append style={text width=55},
+            foothText/.append style={text width=148},
+            cldescText/.append style={text width=250},
+            clrespText/.append style={text width=165},
+            clrespdiText/.append style={text width=72},
+            didescText/.append style={text width=250},
+            direspText/.append style={text width=165},
+            btmrp1Label/.append style={text width=69},
+            btmrp1Text/.append style={text width=200},
+            btmrp2Text/.append style={text width=250},
+            negaxLabel/.append style={text width=36},
+            penaxCheckbox/.append style={xshift=-2},
+            respxLabel/.append style={text width=36},
+            maxixCheckbox/.append style={xshift=-2},
+            suppxLabel/.append style={text width=36},
+            supxxCheckbox/.append style={xshift=-2},
+            dir1ntLabel/.append style={text width=37},
+            bal1ntLabel/.append style={text width=37},
+            dntcoText/.append style={text width=100},
+            vsntlabelWidth/.append style={text width=12},
+            vsnttextWidth/.append style={text width=\vsntwidth},
+            cuebidlabelLabel/.append style={text width=40},
+            cuebidartLabel/.append style={text width=15},
+            cuebidquasiLabel/.append style={text width=15},
+            cuebidnatminLabel/.append style={text width=15},
+            cuebidnatmajLabel/.append style={text width=15},
+            ocotherText/.append style={text width=100},
+            xxlabel/.append style={inner sep=-7},
+            xxconText/.append style={text width=60},
+            2ntolabelLabel/.append style={yshift=4},
+            2ntolabelWidth/.append style={text width=10},
+            2ntonatLabel/.append style={text width=8,yshift=-4},
+            2ntoraiseLabel/.append style={text width=12},
+            2ntorangeLabel/.append style={text width=80,centered},
+            threeprerespText/.append style={text width=105},
+            oppenCheckbox/.append style={xshift=-2},
+            signalslabelLabel/.append style={text width=80},
+            attlabelLabel/.append style={text width=80},
+            cntlabelLabel/.append style={text width=80},
+            splabelLabel/.append style={text width=80},
+            cardotherText/.append style={text width=75},
+            suitlenleadlabelLabel/.append style={text width=20,yshift=4},
+            su4thLabel/.append style={yshift=-4},
+            ntlenleadlabelLabel/.append style={text width=20,yshift=4},
+            nt4thLabel/.append style={yshift=-4},
+            footnotefrontdateLabel/.append style={text width=1, opacity=0},
+            footnotefronttextLabel/.append style={text width=1, opacity=0},
+            footnotebacktextLabel/.append style={text width=1, opacity=0},
+            footnotebackmadeLabel/.append style={text width=1, opacity=0},
+        }
+        \ifthenelse{\equal{\xtwontminormax}{}}
+            {
+                \tikzset{
+                    minrangeRangeLo/.append style={text width=80,centered},
+                }
+            }
+            {}
+        \ifthenelse{\equal{\xtwontmajormax}{}}
+            {
+                \tikzset{
+                    majrangeRangeLo/.append style={text width=80,centered},
+                }
+            }
+            {}
+    }
+%
+    \begin{small}
+    \ifthenelse{\equal{\ccNumPages}{2}}
+        {}
+        {
+            \scalefont{0.65}
+            \renewcommand\RSsmallest{4pt}
+        }
+    \begin{tikzpicture}[]
     % draw a box around everything
-    \draw (0, 0) -- (0, 215) -- (203, 215) -- (203, 0) -- cycle;
+    %\draw (101, 0) -- (101, 215) -- (203, 215) -- (203, 0) -- cycle;
+    \ifthenelse{\equal{\ccNumPages}{2}}
+        {
+            \draw (101, 0) -- (101, 215);
+        }
+        {}
+    \draw (101, 215) -- (203, 215);
+    \draw (203, 215) -- (203, 0);
+    \draw (203, 0) -- (101, 0);
+%
     % \draw [help lines] (0, 0) grid [step = 10] (203, 215);
     % dividers on convention card:
     {
         % Front Side
-        \draw (101, 209) -- (101, 215);
+        \ifthenelse{\equal{\ccNumPages}{2}}
+            {
+                \draw (101, 209) -- (101, 215);
+            }
+            {}
         \draw (104, 209) -- +(99, 0);
         \draw [fill=black] (101, 187) rectangle (104, 209);
         \node [header] at (102.5, 191) {\tBoldtext{OVERVIEW}};
@@ -1264,7 +1451,14 @@
     \guideline{105}{202}{5.5}
     \node [t, right] at (104, 3) {\regtext{\footnotesbottom}};
     \guideline{105}{202}{1.5}
-
+    \end{tikzpicture}%
+    \ifthenelse{\equal{\ccNumPages}{2}}
+        { \newpage }
+        {}
+    \begin{tikzpicture}[]
+    % draw a box around everything
+    \draw (0, 0) -- (0, 215) -- (101, 215) -- (101, 0) -- cycle;
+    %\draw [help lines] (0, 0) grid [step = 10] (101, 215);
     {
         % Back Side
         \draw [fill=black] (0, 193) rectangle (3, 215);
@@ -1770,4 +1964,5 @@
     \node [right] at (103,-2) {\tRegtext{\textls[10]{Made with \LaTeX\ and acbl2022cc (github.com/mycroftw/conv-cards)}}};
     \additionaltikz %optional extra user-defined fields
     \end{tikzpicture}%
+    \end{small}%
 }%end of \drawconventioncard
